@@ -7,27 +7,26 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] float dodgeForce = 30;
 
     Rigidbody rb;
-    PlayerMovement mov;
 
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        mov = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawLine(transform.position, transform.forward * 20, Color.green);
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            rb.AddForce(mov.LookDir * dodgeForce, ForceMode.Impulse);
+            rb.AddForce(transform.forward * dodgeForce, ForceMode.Impulse);
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Debug.DrawLine(transform.position, mov.LookDir * 20, Color.green);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Debug.DrawLine(transform.position, mov.LookDir * 20, Color.green);
+    //}
 }

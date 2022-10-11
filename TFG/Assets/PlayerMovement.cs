@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] Transform lookAtPoint;
+    const float INPUT_THRESHOLD = 0.3f;
+
     [SerializeField] float moveForce = 4;
+    [SerializeField] float rotSpeed = 4;
     [SerializeField] Vector3 maxSpeed;
 
     Rigidbody rb;
-    internal Vector3 LookDir { get { return (lookAtPoint.position - transform.position).normalized; } }
+    [HideInInspector] public Vector3 moveDir = Vector3.zero;
+    bool moving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,29 +23,28 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        moveDir = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        //transform.Translate(moveDir * moveSpeed * Time.deltaTime, Space.World);
+
+        if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
         {
-            rb.AddForce(Vector3.forward * moveForce, ForceMode.Force);
-            //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, transform.position + Vector3.forward);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.position + LookDir), moveForce);
+            moving = true;
+            rb.AddForce(moveDir * moveForce /** Time.deltaTime*/, ForceMode.Force);
+            rb.velocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed);
         }
-        if (Input.GetKey(KeyCode.S))
+        else if(moving)
         {
-            rb.AddForce(Vector3.back * moveForce, ForceMode.Force);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Inverse(Quaternion.Euler(transform.position + LookDir)), moveForce);
-            //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, transform.position + Vector3.back);
+            moving = false;
+            rb.velocity = rb.velocity / 2f;
         }
-        if (Input.GetKey(KeyCode.A))
+
+        if (moveDir != Vector3.zero)
         {
-            rb.AddForce(Vector3.left * moveForce, ForceMode.Force);
-            //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, transform.position + Vector3.left);
+            Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.AddForce(Vector3.right * moveForce, ForceMode.Force);
-            //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, transform.position + Vector3.right);
-        }
-        rb.velocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed);
     }
 
 
