@@ -21,23 +21,22 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        moveDir = new Vector3(horizontalInput, 0, verticalInput).normalized;
-        //transform.Translate(moveDir * moveSpeed * Time.deltaTime, Space.World);
+        moveDir = NormalizeDirection(new Vector3(horizontalInput, 0, verticalInput));
 
         if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
         {
             moving = true;
-            rb.AddForce(moveDir * moveForce /** Time.deltaTime*/, ForceMode.Force);
-            rb.velocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed);
+            rb.AddForce(moveDir * moveForce, ForceMode.Force);
+            Vector3 finalVelocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed) + new Vector3(0, rb.velocity.y, 0);
+            rb.velocity = finalVelocity;
         }
-        else if(moving)
+        else if (moving)
         {
             moving = false;
-            rb.velocity = rb.velocity / 2f;
         }
 
         if (moveDir != Vector3.zero)
@@ -47,6 +46,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    Vector3 NormalizeDirection(Vector3 moveDir)
+    {
+        if (moveDir.x > 0)
+            moveDir = new Vector3(1, moveDir.y, moveDir.z);
+        if (moveDir.x < 0)
+            moveDir = new Vector3(-1, moveDir.y, moveDir.z);
+
+        if (moveDir.z > 0)
+            moveDir = new Vector3(moveDir.x, moveDir.y, 1);
+        if (moveDir.z < 0)
+            moveDir = new Vector3(moveDir.x, moveDir.y, -1);
+
+        return moveDir;
+    }
 
     Vector3 ClampVector(Vector3 _originalVec, Vector3 _minVec, Vector3 _maxVec)
     {
@@ -57,4 +70,15 @@ public class PlayerMovement : MonoBehaviour
         );
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("floor"))
+            rb.useGravity = false;
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("floor"))
+            rb.useGravity = true;
+    }
 }
