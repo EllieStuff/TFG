@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float moveForce = 4;
     [SerializeField] float rotSpeed = 4;
     [SerializeField] Vector3 maxSpeed;
+    [SerializeField] float fallSpeed;
 
     Rigidbody rb;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
@@ -32,11 +33,13 @@ public class PlayerMovement : MonoBehaviour
             moving = true;
             rb.AddForce(moveDir * moveForce, ForceMode.Force);
             Vector3 finalVelocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed) + new Vector3(0, rb.velocity.y, 0);
+            finalVelocity = FallSystem(finalVelocity);
             rb.velocity = finalVelocity;
         }
-        else if (moving)
+        else
         {
             moving = false;
+            rb.velocity = FallSystem(rb.velocity);
         }
 
         if (moveDir != Vector3.zero)
@@ -44,6 +47,14 @@ public class PlayerMovement : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
         }
+    }
+
+    Vector3 FallSystem(Vector3 actualVelocity)
+    {
+        if(actualVelocity.y < 0 && rb.useGravity)
+            actualVelocity.y -= Time.deltaTime * fallSpeed;
+
+        return actualVelocity;
     }
 
     Vector3 NormalizeDirection(Vector3 moveDir)
