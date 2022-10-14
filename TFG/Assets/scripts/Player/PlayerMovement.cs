@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector3 maxSpeed;
     [SerializeField] float fallSpeed;
 
+    const float minFallSpeed = 10;
+
     Rigidbody rb;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     bool moving = false;
@@ -51,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 FallSystem(Vector3 actualVelocity)
     {
-        if(actualVelocity.y < 0 && rb.useGravity)
+        if(actualVelocity.y < minFallSpeed && rb.useGravity)
             actualVelocity.y -= Time.deltaTime * fallSpeed;
 
         return actualVelocity;
