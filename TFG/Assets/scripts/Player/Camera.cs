@@ -6,15 +6,16 @@ public class Camera : MonoBehaviour
 {
     private Transform playerToFollow;
     [SerializeField] private float camSpeed;
+    [SerializeField] Vector3 camMargin = new Vector3(0, 9, -8);
 
     private void Start()
     {
-        playerToFollow = GameObject.Find("Player").transform;
+        playerToFollow = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
     {
-        Vector3 posToFollow = new Vector3(playerToFollow.position.x, playerToFollow.position.y + 9, playerToFollow.position.z - 8);
+        Vector3 posToFollow = new Vector3(playerToFollow.position.x + camMargin.x, playerToFollow.position.y + camMargin.y, playerToFollow.position.z + camMargin.z);
         transform.position = Vector3.Lerp(transform.position, posToFollow, Time.deltaTime * camSpeed);
     }
 }
