@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     const float minFallSpeed = 10;
 
-    const float speedReduction = 1.3f;
+    const float speedReduction = 1.4f;
 
     Rigidbody rb;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
@@ -29,12 +29,17 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
+        if (Mathf.Abs(horizontalInput) < INPUT_THRESHOLD) horizontalInput = 0;
         float verticalInput = Input.GetAxis("Vertical");
+        if (Mathf.Abs(verticalInput) < INPUT_THRESHOLD) verticalInput = 0;
         moveDir = NormalizeDirection(new Vector3(horizontalInput, 0, verticalInput));
+
 
         if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
         {
             moving = true;
+            if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
+                moveDir *= 0.8f;
             rb.AddForce(moveDir * moveForce, ForceMode.Force);
             Vector3 finalVelocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed) + new Vector3(0, rb.velocity.y, 0);
             rb.velocity = finalVelocity;
