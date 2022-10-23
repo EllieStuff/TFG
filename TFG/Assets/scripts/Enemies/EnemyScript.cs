@@ -35,7 +35,7 @@ public class EnemyScript : MonoBehaviour
         {
             Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
-            Debug.Log(transform.rotation);
+            //Debug.Log(transform.rotation);
         }
     }
 
