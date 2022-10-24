@@ -63,11 +63,11 @@ public class DeckManager : MonoBehaviour
         //cards[_idx].transform.localScale = nonSelectedSize;
     }
 
-    public void UseSelectedCard(ref int _idx, PlayerUseCard _playerUseCard)
+    public void UseSelectedCard(ref int _idx, PlayerMovement _playerData)
     {
         int tmpIdx = _idx;
         if (_idx == cards.Count - 1 && _idx > 0) _idx--;
-        cards[tmpIdx].cardBehaviour.Activate(_playerUseCard);
+        cards[tmpIdx].cardBehaviour.Activate(_playerData);
         StartCoroutine(DestroyCard(cards[tmpIdx].transform, tmpIdx));
     }
 
