@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    const float CARD_DIST = 200;
+    const float CARD_DIST = 100;
 
     public enum CardType { FIRE, ICE, COUNT }
 
