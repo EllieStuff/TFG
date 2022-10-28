@@ -4,24 +4,50 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    private enum States { IDLE, MOVE_TO_TARGET, ATTACK }
+    private enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
 
     [SerializeField] float rotSpeed = 4;
     [SerializeField] float playerDetectionDistance;
     [SerializeField] float enemyStartAttackDistance;
+    [SerializeField] float baseDamageTimer;
     [SerializeField] float moveSpeed;
     [SerializeField] Vector3 maxSpeed;
+    [SerializeField] States stats = States.IDLE;
 
-    States stats = States.IDLE;
+    //PROVISIONAL
+
+    [SerializeField] Material enemyMat;
+    private MeshRenderer enemyOwnMat;
+    Material newMatDef;
+
+    //____________________________________________________
+
     Rigidbody rb;
     Transform player;
+    PlayerLifeSystem playerLife;
+    Sword playerSword;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
+
+    float damageTimer = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        player = GameObject.Find("Player").transform;
+
+        //PROVISIONAL
+
+        Material newMat = new Material(enemyMat);
+        enemyOwnMat = GetComponent<MeshRenderer>();
+        newMatDef = newMat;
+        enemyOwnMat.material = newMatDef;
+
+        //____________________________________________________
+
+        GameObject playerGO = GameObject.Find("Player");
+        player = playerGO.transform;
+        playerLife = playerGO.GetComponent<PlayerLifeSystem>();
+        playerSword = playerGO.GetComponent<Sword>();
     }
 
     // Update is called once per frame
@@ -66,6 +92,26 @@ public class EnemyScript : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, player.position) > enemyStartAttackDistance)
                     stats = States.MOVE_TO_TARGET;
+
+                if (Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
+                {
+                    newMatDef.color = Color.red;
+                    damageTimer = baseDamageTimer;
+                    stats = States.DAMAGE;
+                }
+
+                break;
+            case States.DAMAGE:
+                //receive damage
+
+                damageTimer -= Time.deltaTime;
+
+                if(damageTimer <= 0)
+                {
+                    newMatDef.color = Color.white;
+                    damageTimer = baseDamageTimer;
+                    stats = States.IDLE;
+                }
 
                 break;
         }
