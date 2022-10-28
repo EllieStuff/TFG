@@ -20,7 +20,8 @@ public class FireCard_Behaviour : Card_Behaviour
         base.Activate(_playerData);
         _playerData.canMove = _playerData.canRotate = !lockPlayerPos;
         FireAttack fireAttack = GameObject.Instantiate(fireAttackPrefab, _playerData.transform.position, fireAttackPrefab.transform.rotation).GetComponent<FireAttack>();
-        fireAttack.Initialize(_playerData.moveDir);
+        fireAttack.Initialize(_playerData, lockPlayerPos);
+        fireAttack.Shoot(_playerData.transform.forward);
     }
 
     // Update is called once per frame

@@ -38,30 +38,27 @@ public class PlayerMovement : MonoBehaviour
         moveDir = NormalizeDirection(new Vector3(horizontalInput, 0, verticalInput));
 
 
-        if (canMove)
+        if (canMove && Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
         {
-            if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
-            {
-                moving = true;
-                if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
-                    moveDir *= DIAGONAL_SPEED_REDUCTION;
-                rb.AddForce(moveDir * moveForce, ForceMode.Force);
-                Vector3 finalVelocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed) + new Vector3(0, rb.velocity.y, 0);
-                rb.velocity = finalVelocity;
-            }
-            else if (moving)
-            {
-                moving = false;
+            moving = true;
+            if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
+                moveDir *= DIAGONAL_SPEED_REDUCTION;
+            rb.AddForce(moveDir * moveForce, ForceMode.Force);
+            Vector3 finalVelocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed) + new Vector3(0, rb.velocity.y, 0);
+            rb.velocity = finalVelocity;
+        }
+        else if (moving)
+        {
+            moving = false;
 
-                Vector3 reducedVel = rb.velocity;
+            Vector3 reducedVel = rb.velocity;
 
-                if (Mathf.Abs(reducedVel.x) > 0)
-                    reducedVel = new Vector3(rb.velocity.x / SPEED_REDUCTION, rb.velocity.y, rb.velocity.z);
-                if (Mathf.Abs(reducedVel.z) > 0)
-                    reducedVel = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / SPEED_REDUCTION);
+            if (Mathf.Abs(reducedVel.x) > 0)
+                reducedVel = new Vector3(rb.velocity.x / SPEED_REDUCTION, rb.velocity.y, rb.velocity.z);
+            if (Mathf.Abs(reducedVel.z) > 0)
+                reducedVel = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / SPEED_REDUCTION);
 
-                rb.velocity = reducedVel;
-            }
+            rb.velocity = reducedVel;
         }
 
         rb.velocity = FallSystem(rb.velocity);

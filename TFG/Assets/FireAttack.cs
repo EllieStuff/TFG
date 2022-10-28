@@ -6,7 +6,9 @@ public class FireAttack : MonoBehaviour
 {
     [SerializeField] GameObject disappearEffect;
     [SerializeField] float dmg = 10;
-    [SerializeField] float moveForce;
+    [SerializeField] float moveForce = 10;
+    [SerializeField] float moveDelay = 1.5f;
+    [SerializeField] float despawnDelay = 5.0f;
     [SerializeField] Vector3 cadency = Vector3.zero;
 
     Rigidbody rb;
@@ -22,6 +24,9 @@ public class FireAttack : MonoBehaviour
         playerMov = _playerMov;
         lockPlayerMove = _lockPlayerMove;
         playerMov.canMove = playerMov.canRotate = !lockPlayerMove;
+
+        StartCoroutine(MoveOnTime(moveDelay));
+        StartCoroutine(DespawnOnTime(despawnDelay));
     }
 
     public void Shoot(Vector3 _moveDir)
@@ -34,8 +39,12 @@ public class FireAttack : MonoBehaviour
 
     void Despawn(Vector3 _feedbackSpawnPos)
     {
+        StopAllCoroutines();
         playerMov.canMove = playerMov.canRotate = true;
-        GameObject.Instantiate(disappearEffect, _feedbackSpawnPos, Random.rotation);
+        if (disappearEffect != null)
+            GameObject.Instantiate(disappearEffect, _feedbackSpawnPos, Random.rotation);
+        else
+            Debug.LogWarning("FireBall disappearEffect was not set.");
         Destroy(gameObject);
     }
 
@@ -63,6 +72,16 @@ public class FireAttack : MonoBehaviour
         }
     }
 
-    //Fer cas si surt de la pantalla
+
+    IEnumerator MoveOnTime(float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        playerMov.canMove = playerMov.canRotate = true;
+    }
+    IEnumerator DespawnOnTime(float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        Despawn(transform.position);
+    }
 
 }
