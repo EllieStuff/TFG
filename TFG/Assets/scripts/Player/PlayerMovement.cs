@@ -5,15 +5,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     const float INPUT_THRESHOLD = 0.3f;
+    const float MIN_FALL_SPEED = 10;
+    const float SPEED_REDUCTION = 1.4f;
+    const float DIAGONAL_SPEED_REDUCTION = 0.8f;
 
     [SerializeField] float moveForce = 4;
     [SerializeField] float rotSpeed = 4;
     [SerializeField] Vector3 maxSpeed;
     [SerializeField] float fallSpeed;
 
-    const float minFallSpeed = 10;
+    internal bool canMove = true;
+    internal bool canRotate = true;
 
-    const float speedReduction = 1.4f;
 
     Rigidbody rb;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
@@ -35,32 +38,32 @@ public class PlayerMovement : MonoBehaviour
         moveDir = NormalizeDirection(new Vector3(horizontalInput, 0, verticalInput));
 
 
-        if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
+        if (canMove && Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
         {
             moving = true;
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
-                moveDir *= 0.8f;
+                moveDir *= DIAGONAL_SPEED_REDUCTION;
             rb.AddForce(moveDir * moveForce, ForceMode.Force);
             Vector3 finalVelocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed) + new Vector3(0, rb.velocity.y, 0);
             rb.velocity = finalVelocity;
         }
-        else if(moving)
+        else if (moving)
         {
             moving = false;
 
             Vector3 reducedVel = rb.velocity;
 
             if (Mathf.Abs(reducedVel.x) > 0)
-                reducedVel = new Vector3(rb.velocity.x / speedReduction, rb.velocity.y, rb.velocity.z);
+                reducedVel = new Vector3(rb.velocity.x / SPEED_REDUCTION, rb.velocity.y, rb.velocity.z);
             if (Mathf.Abs(reducedVel.z) > 0)
-                reducedVel = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / speedReduction);
+                reducedVel = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / SPEED_REDUCTION);
 
             rb.velocity = reducedVel;
         }
 
         rb.velocity = FallSystem(rb.velocity);
 
-        if (moveDir != Vector3.zero)
+        if (canRotate && moveDir != Vector3.zero)
         {
             Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
@@ -69,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 FallSystem(Vector3 actualVelocity)
     {
-        if(actualVelocity.y < minFallSpeed && rb.useGravity)
+        if(actualVelocity.y < MIN_FALL_SPEED && rb.useGravity)
             actualVelocity.y -= Time.deltaTime * fallSpeed;
 
         return actualVelocity;

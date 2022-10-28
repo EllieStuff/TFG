@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerUseCard : MonoBehaviour
 {
     DeckManager deck;
+    PlayerMovement playerMov;
     int idx = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         deck = FindObjectOfType<DeckManager>();
+        playerMov = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -34,7 +36,7 @@ public class PlayerUseCard : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            deck.UseSelectedCard(ref idx, this);
+            deck.UseSelectedCard(ref idx, playerMov);
         }
     }
 }
