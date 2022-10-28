@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class PlayerSword : MonoBehaviour
 {
     Rigidbody playerRB;
     PlayerLifeSystem playerStatus;
@@ -28,8 +28,8 @@ public class Sword : MonoBehaviour
             AttackWithSword();
         else if (attackCooldown > 0)
             attackCooldown -= Time.deltaTime;
-        else if (playerStatus.playerState == PlayerLifeSystem.playerStates.ATTACKING)
-            playerStatus.playerState = PlayerLifeSystem.playerStates.NORMAL;
+        else if (playerStatus.playerState == PlayerLifeSystem.PlayerStates.ATTACKING)
+            playerStatus.playerState = PlayerLifeSystem.PlayerStates.NORMAL;
     }
 
     void AttackWithSword()
@@ -41,7 +41,7 @@ public class Sword : MonoBehaviour
 
     bool CanAttackWithSword()
     {
-        if (!isHoldingTheKey && Input.GetKey(KeyCode.Mouse0) && attackCooldown <= 0 && playerStatus.playerState == PlayerLifeSystem.playerStates.NORMAL)
+        if (!isHoldingTheKey && Input.GetKey(KeyCode.Mouse0) && attackCooldown <= 0 && playerStatus.playerState == PlayerLifeSystem.PlayerStates.NORMAL)
         {
             isHoldingTheKey = true;
             return true;

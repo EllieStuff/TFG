@@ -7,9 +7,9 @@ public class PlayerLifeSystem : MonoBehaviour
     [SerializeField] internal float life;
 
     internal int playerMaxLife = 100;
-    internal enum playerStates { NORMAL, ATTACKING }
+    internal enum PlayerStates { NORMAL, ATTACKING }
 
-    [SerializeField] internal playerStates playerState;
+    [SerializeField] internal PlayerStates playerState;
 
     private void Update()
     {

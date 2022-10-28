@@ -25,7 +25,7 @@ public class EnemyScript : MonoBehaviour
     Rigidbody rb;
     Transform player;
     PlayerLifeSystem playerLife;
-    Sword playerSword;
+    PlayerSword playerSword;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
 
     float damageTimer = 0;
@@ -47,7 +47,7 @@ public class EnemyScript : MonoBehaviour
         GameObject playerGO = GameObject.Find("Player");
         player = playerGO.transform;
         playerLife = playerGO.GetComponent<PlayerLifeSystem>();
-        playerSword = playerGO.GetComponent<Sword>();
+        playerSword = playerGO.GetComponent<PlayerSword>();
     }
 
     // Update is called once per frame
