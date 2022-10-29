@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3713389193710758987}
   - component: {fileID: 3713389193710758986}
   - component: {fileID: 3713389193710758989}
-  - component: {fileID: 3713389193710758988}
   - component: {fileID: 2054985300287448670}
+  - component: {fileID: 3713389193710758988}
   - component: {fileID: 3713389193710758991}
   m_Layer: 0
   m_Name: Ragloton
@@ -87,20 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3713389193710758988
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3713389193710758990}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2054985300287448670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +105,20 @@ MonoBehaviour:
   moveSpeed: 2
   maxSpeed: {x: 10, y: 0, z: 10}
   moveDir: {x: 0, y: 0, z: 0}
+--- !u!136 &3713389193710758988
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713389193710758990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3713389193710758991
 Rigidbody:
   m_ObjectHideFlags: 0

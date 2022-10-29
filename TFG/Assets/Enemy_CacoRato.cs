@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy_CacoRato : BaseEnemyScript
 {
+    //[Header("CacoRato")]
+
 
     internal override void Start_Call() { base.Start_Call(); }
 
