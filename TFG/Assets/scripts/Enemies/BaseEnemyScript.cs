@@ -6,15 +6,19 @@ public class BaseEnemyScript : MonoBehaviour
 {
     public enum States { IDLE, MOVE_TO_TARGET, ATTACK }
 
-    [SerializeField] float rotSpeed = 4;
-    [SerializeField] float playerDetectionDistance;
-    [SerializeField] float enemyStartAttackDistance;
-    [SerializeField] float moveSpeed;
-    [SerializeField] Vector3 maxSpeed;
+    [Header("BaseEnemy")]
+    [SerializeField] internal float rotSpeed = 4;
+    [SerializeField] internal float playerDetectionDistance;
+    [SerializeField] internal float enemyStartAttackDistance;
+    [SerializeField] internal float moveSpeed;
+    [SerializeField] readonly internal Vector3 
+        baseMinVelocity = new Vector3(-10, 0, -10), 
+        baseMaxVelocity = new Vector3(10, 0, 10);
 
-    States state = States.IDLE;
-    Rigidbody rb;
-    Transform player;
+    internal States state = States.IDLE;
+    internal Rigidbody rb;
+    internal Transform player;
+    readonly internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
 
     // Start is called before the first frame update
@@ -42,6 +46,7 @@ public class BaseEnemyScript : MonoBehaviour
     {
         UpdateStateMachine();
 
+        LimitVelocity();
         moveDir = NormalizeDirection(new Vector3(rb.velocity.x, 0, rb.velocity.z));
 
         if (moveDir != Vector3.zero)
@@ -86,7 +91,6 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void MoveToTargetUpdate()
     {
         rb.velocity -= (transform.position - player.position) * Time.deltaTime * moveSpeed;
-        rb.velocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed);
 
         if (Vector3.Distance(transform.position, player.position) > playerDetectionDistance)
             ChangeState(States.IDLE);
@@ -153,6 +157,16 @@ public class BaseEnemyScript : MonoBehaviour
             Mathf.Clamp(_originalVec.y, _minVec.y, _maxVec.y),
             Mathf.Clamp(_originalVec.z, _minVec.z, _maxVec.z)
         );
+    }
+
+    internal void SetVelocityLimit(Vector3 _minSpeed, Vector3 _maxSpeed)
+    {
+        actualMinVelocity = _minSpeed;
+        actualMaxVelocity = _maxSpeed;
+    }
+    void LimitVelocity()
+    {
+        rb.velocity = ClampVector(rb.velocity, actualMinVelocity, actualMaxVelocity);
     }
 
     internal Vector3 NormalizeDirection(Vector3 moveDir)
