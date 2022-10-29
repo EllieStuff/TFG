@@ -5,14 +5,14 @@ using UnityEngine;
 public class Enemy_Ragloton : BaseEnemyScript
 {
     [Header("Ragloton")]
-    [SerializeField] Transform shieldRef;
+    [SerializeField] Transform shieldContainerRef; 
+    [SerializeField] Transform idleShieldPoint, attackingShieldPoint;
     [SerializeField] bool hasShield = true;
-    [SerializeField] internal bool isAttacking = false;
-    [SerializeField] float attackForce = 5.0f;
-    [SerializeField] Vector3 atkVelocityLimit = new Vector3(10, 0, 10);
+    [SerializeField] float attackForce = 10.0f, attackDuration = 1.0f;
+    [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
 
     
-    Vector3 attackMoveDir;
+    Vector3 attackMoveDir = Vector3.zero;
 
 
     internal override void Start_Call() { base.Start_Call(); }
@@ -27,7 +27,15 @@ public class Enemy_Ragloton : BaseEnemyScript
     internal override void AttackUpdate()
     { 
         base.AttackUpdate();
-        rb.AddForce(attackMoveDir * attackForce, ForceMode.Force);
+
+        if (isAttacking)
+        {
+            MoveRB(attackMoveDir, attackForce);
+        }
+        else
+        {
+
+        }
     }
 
 
@@ -37,8 +45,7 @@ public class Enemy_Ragloton : BaseEnemyScript
     { 
         base.AttackStart();
         SetVelocityLimit(-atkVelocityLimit, atkVelocityLimit);
-        attackMoveDir = (player.position - transform.position).normalized;
-        isAttacking = true;
+        StartCoroutine(AttackCoroutine());
         //ToDo:
         // - Potser fer que l'escut tingui un tag default i quan acabi canviar-lo a EnemyWeapon?
     }
@@ -54,10 +61,41 @@ public class Enemy_Ragloton : BaseEnemyScript
     }
 
     
-    IEnumerator AttackCoroutine(float _delay = 2.0f)
+    IEnumerator AttackCoroutine()
     {
-        yield return new WaitForSeconds(_delay);
+        // Prepares For Attack
+        canMove = false;
+        StopRB(2.0f);
+        yield return new WaitForSeconds(0.1f);
+        yield return LerpTransformsPosition(shieldContainerRef, idleShieldPoint, attackingShieldPoint);
+        yield return new WaitForSeconds(0.1f);
+
+        // Attacks
+        canMove = isAttacking = true;
+        canRotate = false;
+        attackMoveDir = (player.position - transform.position).normalized;
+        yield return new WaitForSeconds(attackDuration);
+
+        // Ends Attack
+        canMove = isAttacking = false;
+        StopRB(4.0f);
+        yield return new WaitForSeconds(1.0f);
+        yield return LerpTransformsPosition(shieldContainerRef, attackingShieldPoint, idleShieldPoint);
+        canMove = canRotate = true;
+
         ChangeState(States.IDLE);
+    }
+    IEnumerator LerpTransformsPosition(Transform _affectedTrans, Transform _initPointTrans, Transform _targetPointTrans, float _lerpDuration = 0.5f)
+    {
+        float timer = 0, maxTime = _lerpDuration;
+        while (timer < maxTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            _affectedTrans.position = Vector3.Lerp(_initPointTrans.position, _targetPointTrans.position, timer / maxTime);
+        }
+        yield return new WaitForEndOfFrame();
+        _affectedTrans.position = _targetPointTrans.position;
     }
 
 }
