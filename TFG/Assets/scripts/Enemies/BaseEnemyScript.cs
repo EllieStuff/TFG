@@ -81,7 +81,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void IdleUpdate()
     {
         if (Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
-            state = States.MOVE_TO_TARGET;
+            ChangeState(States.MOVE_TO_TARGET);
     }
     internal virtual void MoveToTargetUpdate()
     {
@@ -89,10 +89,10 @@ public class BaseEnemyScript : MonoBehaviour
         rb.velocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed);
 
         if (Vector3.Distance(transform.position, player.position) > playerDetectionDistance)
-            state = States.IDLE;
+            ChangeState(States.IDLE);
 
         if (Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
-            state = States.ATTACK;
+            ChangeState(States.ATTACK);
     }
     internal virtual void AttackUpdate()
     {
