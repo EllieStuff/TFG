@@ -30,6 +30,9 @@ public class BaseEnemyScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        actualMinVelocity = baseMinVelocity;
+        actualMaxVelocity = baseMaxVelocity;
     }
 
     private void Update()
