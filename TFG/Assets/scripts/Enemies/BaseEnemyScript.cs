@@ -6,20 +6,24 @@ public class BaseEnemyScript : MonoBehaviour
 {
     public enum States { IDLE, MOVE_TO_TARGET, ATTACK }
 
+    const float DEFAULT_SPEED_REDUCTION = 1.4f;
+
     [Header("BaseEnemy")]
     [SerializeField] internal float rotSpeed = 4;
-    [SerializeField] internal float playerDetectionDistance;
-    [SerializeField] internal float enemyStartAttackDistance;
+    [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
+    [SerializeField] internal float enemyStartAttackDistance, enemyEndAttackDistance;
+    [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float moveSpeed;
     readonly internal Vector3 
-        baseMinVelocity = new Vector3(-10, 0, -10), 
-        baseMaxVelocity = new Vector3(10, 0, 10);
+        baseMinVelocity = new Vector3(-10, -10, -10), 
+        baseMaxVelocity = new Vector3(10, 10, 10);
 
     internal States state = States.IDLE;
     internal Rigidbody rb;
     internal Transform player;
     internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
+    internal bool canMove = true, canRotate = true;
 
     // Start is called before the first frame update
     void Start()
@@ -50,13 +54,21 @@ public class BaseEnemyScript : MonoBehaviour
         UpdateStateMachine();
 
         LimitVelocity();
-        moveDir = NormalizeDirection(new Vector3(rb.velocity.x, 0, rb.velocity.z));
 
-        if (moveDir != Vector3.zero)
+        //moveDir = NormalizeDirection(new Vector3(rb.velocity.x, 0, rb.velocity.z));
+        if (canRotate)
         {
-            Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
-            //Debug.Log(transform.rotation);
+            if (moveDir != Vector3.zero)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+                //Debug.Log(transform.rotation);
+            }
+            else
+            {
+                Quaternion targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -93,9 +105,10 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void MoveToTargetUpdate()
     {
-        rb.velocity -= (transform.position - player.position) * Time.deltaTime * moveSpeed;
+        Vector3 targetMoveDir = (player.position - transform.position).normalized;
+        MoveRB(targetMoveDir, moveSpeed);
 
-        if (Vector3.Distance(transform.position, player.position) > playerDetectionDistance)
+        if (Vector3.Distance(transform.position, player.position) > playerStopDetectionDistance)
             ChangeState(States.IDLE);
 
         if (Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
@@ -103,11 +116,11 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void AttackUpdate()
     {
-        if (Vector3.Distance(transform.position, player.position) > enemyStartAttackDistance)
+        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyEndAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
     }
     
-    internal virtual void IdleStart() { }
+    internal virtual void IdleStart() { StopRB(5.0f); }
     internal virtual void MoveToTargetStart() { }
     internal virtual void AttackStart() { }
     internal virtual void IdleExit() { }
@@ -162,6 +175,15 @@ public class BaseEnemyScript : MonoBehaviour
         );
     }
 
+    internal void MoveRB(Vector3 _moveDir, float _moveForce, ForceMode _forceMode = ForceMode.Force)
+    {
+        if (canMove)
+            rb.AddForce(_moveDir * _moveForce, _forceMode);
+    }
+    internal void StopRB(float _speedReduction = DEFAULT_SPEED_REDUCTION)
+    {
+        rb.velocity = new Vector3(rb.velocity.x / _speedReduction, rb.velocity.y, rb.velocity.z / _speedReduction);
+    }
     internal void SetVelocityLimit(Vector3 _minSpeed, Vector3 _maxSpeed)
     {
         actualMinVelocity = _minSpeed;
