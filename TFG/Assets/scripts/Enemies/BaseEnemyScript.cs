@@ -18,7 +18,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal States state = States.IDLE;
     internal Rigidbody rb;
     internal Transform player;
-    readonly internal Vector3 actualMinVelocity, actualMaxVelocity;
+    internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
 
     // Start is called before the first frame update
