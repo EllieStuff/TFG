@@ -11,7 +11,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float playerDetectionDistance;
     [SerializeField] internal float enemyStartAttackDistance;
     [SerializeField] internal float moveSpeed;
-    [SerializeField] readonly internal Vector3 
+    readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, 0, -10), 
         baseMaxVelocity = new Vector3(10, 0, 10);
 
@@ -30,6 +30,9 @@ public class BaseEnemyScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        actualMinVelocity = baseMinVelocity;
+        actualMaxVelocity = baseMaxVelocity;
     }
 
     private void Update()
