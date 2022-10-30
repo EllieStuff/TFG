@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1679515740618261116}
   - component: {fileID: 1679515740618261091}
   - component: {fileID: 1679515740618261090}
+  - component: {fileID: 1795209562456051381}
   - component: {fileID: 1679515740618261119}
   - component: {fileID: 1679515740618261112}
   - component: {fileID: 1679515740618261113}
@@ -155,6 +156,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1795209562456051381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679515740618261089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d5239de21fc6142ad66b95006443f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1679515740618261119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,9 +270,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1679515740618261089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc52c4a8fe43a5f489d7312403c79064, type: 3}
+  m_Script: {fileID: 11500000, guid: f676cfa987416f8438f8bc3c020d7bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   maxLife: 100
   currLife: 100
-  playerState: 0
