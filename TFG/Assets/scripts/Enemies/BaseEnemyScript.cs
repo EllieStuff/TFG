@@ -11,7 +11,7 @@ public class BaseEnemyScript : MonoBehaviour
     [Header("BaseEnemy")]
     [SerializeField] internal float rotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
-    [SerializeField] internal float enemyStartAttackDistance;
+    [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float moveSpeed;
     [SerializeField] internal float baseDamageTimer;
@@ -48,7 +48,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void Start_Call()
     {
         rb = GetComponent<Rigidbody>();
-        GameObject playerGO = GameObject.Find("Player");
+        GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.transform;
         playerLife = playerGO.GetComponent<PlayerLifeSystem>();
         playerSword = playerGO.GetComponent<PlayerSword>();
@@ -160,7 +160,7 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void AttackUpdate()
     {
-        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStartAttackDistance)
+        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
 
         if (playerTouchRegion && Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
