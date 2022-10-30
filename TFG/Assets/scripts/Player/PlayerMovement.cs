@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     internal bool canMove = true;
     internal bool canRotate = true;
-    PlayerLifeSystem lifeStatus;
+    LifeSystem lifeStatus;
 
     const float minFallSpeed = 10;
 
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        lifeStatus = GetComponent<PlayerLifeSystem>();
+        lifeStatus = GetComponent<LifeSystem>();
     }
 
     // Update is called once per frame
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         moveDir = NormalizeDirection(new Vector3(horizontalInput, 0, verticalInput));
 
 
-        if ((Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && lifeStatus.life > 0)
+        if ((Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && lifeStatus.currLife > 0)
         {
             moving = true;
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = FallSystem(rb.velocity);
 
-        if (canRotate && moveDir != Vector3.zero && lifeStatus.life > 0)
+        if (canRotate && moveDir != Vector3.zero && lifeStatus.currLife > 0)
         {
             Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
