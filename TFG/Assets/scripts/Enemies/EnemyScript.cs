@@ -22,6 +22,7 @@ public class EnemyScript : MonoBehaviour
 
     //____________________________________________________
 
+    bool playerTouchRegion;
     Rigidbody rb;
     Transform player;
     PlayerLifeSystem playerLife;
@@ -34,6 +35,8 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        playerTouchRegion = false;
 
         //PROVISIONAL
 
@@ -93,7 +96,7 @@ public class EnemyScript : MonoBehaviour
                 if (Vector3.Distance(transform.position, player.position) > enemyStartAttackDistance)
                     stats = States.MOVE_TO_TARGET;
 
-                if (Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
+                if (playerTouchRegion && Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
                 {
                     newMatDef.color = Color.red;
                     damageTimer = baseDamageTimer;
@@ -139,6 +142,18 @@ public class EnemyScript : MonoBehaviour
             moveDir = new Vector3(moveDir.x, moveDir.y, -1);
 
         return moveDir;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("SwordRegion"))
+            playerTouchRegion = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("SwordRegion"))
+            playerTouchRegion = false;
     }
 
     void OnCollisionEnter(Collision collision)
