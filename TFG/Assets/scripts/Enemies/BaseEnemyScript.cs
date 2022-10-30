@@ -27,7 +27,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal float damageTimer = 0;
     bool playerTouchRegion;
     PlayerSword playerSword;
-    PlayerLifeSystem playerLife;
+    LifeSystem playerLife;
 
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
@@ -50,7 +50,7 @@ public class BaseEnemyScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.transform;
-        playerLife = playerGO.GetComponent<PlayerLifeSystem>();
+        playerLife = playerGO.GetComponent<LifeSystem>();
         playerSword = playerGO.GetComponent<PlayerSword>();
 
         actualMinVelocity = baseMinVelocity;
