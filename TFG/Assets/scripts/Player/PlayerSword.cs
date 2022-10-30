@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerSword : MonoBehaviour
 {
     Rigidbody playerRB;
-    PlayerLifeSystem playerStatus;
+    LifeSystem playerStatus;
     const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
     [SerializeField] internal float attackDistance = 2;
@@ -19,7 +19,7 @@ public class PlayerSword : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
-        playerStatus = GetComponent<PlayerLifeSystem>();
+        playerStatus = GetComponent<LifeSystem>();
     }
 
     void FixedUpdate()
@@ -28,8 +28,8 @@ public class PlayerSword : MonoBehaviour
             AttackWithSword();
         else if (attackCooldown > 0)
             attackCooldown -= Time.deltaTime;
-        else if (playerStatus.playerState == PlayerLifeSystem.PlayerStates.ATTACKING)
-            playerStatus.playerState = PlayerLifeSystem.PlayerStates.NORMAL;
+        else if (playerStatus.state == LifeSystem.HealthStates.ATTACKING)
+            playerStatus.state = LifeSystem.HealthStates.NORMAL;
     }
 
     void AttackWithSword()
@@ -41,7 +41,7 @@ public class PlayerSword : MonoBehaviour
 
     bool CanAttackWithSword()
     {
-        if (!isHoldingTheKey && Input.GetKey(KeyCode.Mouse0) && attackCooldown <= 0 && playerStatus.playerState == PlayerLifeSystem.PlayerStates.NORMAL)
+        if (!isHoldingTheKey && Input.GetKey(KeyCode.Mouse0) && attackCooldown <= 0 && playerStatus.state == LifeSystem.HealthStates.NORMAL)
         {
             isHoldingTheKey = true;
             return true;

@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
-    PlayerLifeSystem playerLifeStatus;
+    LifeSystem playerLifeStatus;
     [SerializeField] private Slider lifeSlider;
 
     private void Start()
     {
         GameObject player = GameObject.Find("Player");
-        playerLifeStatus = player.GetComponent<PlayerLifeSystem>();
+        playerLifeStatus = player.GetComponent<LifeSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        lifeSlider.value = playerLifeStatus.life / playerLifeStatus.playerMaxLife;
+        lifeSlider.value = playerLifeStatus.currLife / playerLifeStatus.maxLife;
     }
 }

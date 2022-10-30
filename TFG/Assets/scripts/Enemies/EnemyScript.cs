@@ -25,7 +25,7 @@ public class EnemyScript : MonoBehaviour
     bool playerTouchRegion;
     Rigidbody rb;
     Transform player;
-    PlayerLifeSystem playerLife;
+    LifeSystem playerLife;
     PlayerSword playerSword;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
 
@@ -49,7 +49,7 @@ public class EnemyScript : MonoBehaviour
 
         GameObject playerGO = GameObject.Find("Player");
         player = playerGO.transform;
-        playerLife = playerGO.GetComponent<PlayerLifeSystem>();
+        playerLife = playerGO.GetComponent<LifeSystem>();
         playerSword = playerGO.GetComponent<PlayerSword>();
     }
 
