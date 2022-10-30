@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class BaseEnemyScript : MonoBehaviour
 {
-    public enum States { IDLE, MOVE_TO_TARGET, ATTACK }
+    public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
 
     [Header("BaseEnemy")]
     [SerializeField] internal float rotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
-    [SerializeField] internal float enemyStartAttackDistance, enemyEndAttackDistance;
+    [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float moveSpeed;
+    [SerializeField] internal float baseDamageTimer;
+
+    //PROVISIONAL
+
+    [SerializeField] Material enemyMat;
+    private MeshRenderer enemyOwnMat;
+    internal Material newMatDef;
+
+    //____________________________________________________
+
+    internal float damageTimer = 0;
+    bool playerTouchRegion;
+    PlayerSword playerSword;
+    LifeSystem playerLife;
+
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
         baseMaxVelocity = new Vector3(10, 10, 10);
@@ -33,10 +48,22 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void Start_Call()
     {
         rb = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
+        player = playerGO.transform;
+        playerLife = playerGO.GetComponent<LifeSystem>();
+        playerSword = playerGO.GetComponent<PlayerSword>();
 
         actualMinVelocity = baseMinVelocity;
         actualMaxVelocity = baseMaxVelocity;
+
+        //PROVISIONAL
+
+        Material newMat = new Material(enemyMat);
+        enemyOwnMat = GetComponent<MeshRenderer>();
+        newMatDef = newMat;
+        enemyOwnMat.material = newMatDef;
+
+        //____________________________________________________
     }
 
     private void Update()
@@ -92,12 +119,29 @@ public class BaseEnemyScript : MonoBehaviour
 
                 break;
 
+            case States.DAMAGE:
+                //receive damage
+                DamageUpdate();
+
+                break;
+
             default:
                 Debug.LogWarning("State not found");
                 break;
         }
     }
 
+    internal virtual void DamageUpdate()
+    {
+        damageTimer -= Time.deltaTime;
+
+        if (damageTimer <= 0)
+        {
+            newMatDef.color = Color.white;
+            damageTimer = baseDamageTimer;
+            ChangeState(States.IDLE);
+        }
+    }
     internal virtual void IdleUpdate()
     {
         if (Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
@@ -116,36 +160,26 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void AttackUpdate()
     {
-        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyEndAttackDistance)
+        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
+
+        if (playerTouchRegion && Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
+        {
+            newMatDef.color = Color.red;
+            damageTimer = baseDamageTimer;
+            ChangeState(States.DAMAGE);
+        }
     }
     
-    internal virtual void IdleStart() { StopRB(5.0f); }
-    internal virtual void MoveToTargetStart() { }
-    internal virtual void AttackStart() { }
+    internal virtual void IdleStart() { StopRB(5.0f); state = States.IDLE; }
+    internal virtual void MoveToTargetStart() { state = States.MOVE_TO_TARGET; }
+    internal virtual void AttackStart() { state = States.ATTACK; }
     internal virtual void IdleExit() { }
     internal virtual void MoveToTargetExit() { }
     internal virtual void AttackExit() { }
 
     public virtual void ChangeState(States _state)
     {
-        switch (state)
-        {
-            case States.IDLE:
-                IdleExit();
-                break;
-            case States.MOVE_TO_TARGET:
-                MoveToTargetExit();
-                break;
-            case States.ATTACK:
-                AttackExit();
-                break;
-
-            default:
-                Debug.LogWarning("State not found");
-                break;
-        }
-
         state = _state;
         switch (state)
         {
@@ -227,6 +261,18 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (col.gameObject.CompareTag("floor"))
             rb.useGravity = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("SwordRegion"))
+            playerTouchRegion = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("SwordRegion"))
+            playerTouchRegion = false;
     }
 
 }

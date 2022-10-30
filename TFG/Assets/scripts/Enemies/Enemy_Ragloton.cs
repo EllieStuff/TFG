@@ -59,7 +59,6 @@ public class Enemy_Ragloton : BaseEnemyScript
         SetVelocityLimit(baseMinVelocity, baseMaxVelocity);
         isAttacking = false;
     }
-
     
     IEnumerator AttackCoroutine()
     {
@@ -82,6 +81,12 @@ public class Enemy_Ragloton : BaseEnemyScript
         yield return new WaitForSeconds(1.0f);
         yield return LerpTransformsPosition(shieldPivotRef, attackingShieldPoint, idleShieldPoint);
         canMove = canRotate = true;
+
+        if(state.Equals(States.DAMAGE))
+        {
+            base.newMatDef.color = Color.white;
+            base.damageTimer = baseDamageTimer;
+        }
 
         ChangeState(States.IDLE);
     }

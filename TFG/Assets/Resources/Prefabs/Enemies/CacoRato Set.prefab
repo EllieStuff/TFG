@@ -103,9 +103,11 @@ MonoBehaviour:
   playerDetectionDistance: 10
   playerStopDetectionDistance: 16
   enemyStartAttackDistance: 3
-  enemyEndAttackDistance: 3.5
+  enemyStopAttackDistance: 3.5
   isAttacking: 0
   moveSpeed: 6
+  baseDamageTimer: 0
+  enemyMat: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!136 &8326785294998302331
 CapsuleCollider:

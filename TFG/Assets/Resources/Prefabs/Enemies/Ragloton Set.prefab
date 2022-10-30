@@ -137,9 +137,11 @@ MonoBehaviour:
   playerDetectionDistance: 10
   playerStopDetectionDistance: 16
   enemyStartAttackDistance: 5
-  enemyEndAttackDistance: 8
+  enemyStopAttackDistance: 8
   isAttacking: 0
   moveSpeed: 5
+  baseDamageTimer: 2
+  enemyMat: {fileID: 2100000, guid: a5abd5b157926024caaca373a683ffd0, type: 2}
   moveDir: {x: 0, y: 0, z: 0}
   shieldPivotRef: {fileID: 4062570782365389299}
   idleShieldPoint: {fileID: 6350330427524465077}
