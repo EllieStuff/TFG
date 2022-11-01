@@ -88,4 +88,16 @@ public class LifeSystem : MonoBehaviour
     //    Destroy(gameObject);
     //}
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SwordRegion") || other.CompareTag("Weapon"))
+        {
+            //DamageData dmgData = col.GetComponent<DamageData>();
+            //Damage(dmgData.damage, dmgData.effect);
+            Damage(10, new HealthState());
+        }
+    }
+
+
 }

@@ -1058,6 +1058,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1803415854}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1843752360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 483653366639975944, guid: 063aed6076953954a829fe2a30889de5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4062570781790132708}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2067404485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,15 +1103,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1725689437}
     m_Modifications:
-    - target: {fileID: 331556592035321906, guid: 063aed6076953954a829fe2a30889de5,
+    - target: {fileID: 902224499179097987, guid: 063aed6076953954a829fe2a30889de5,
         type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 331556592035321906, guid: 063aed6076953954a829fe2a30889de5,
-        type: 3}
-      propertyPath: m_Mass
-      value: 2
+      propertyPath: m_Color.a
+      value: 0.78431374
       objectReference: {fileID: 0}
     - target: {fileID: 1001946055741319338, guid: 063aed6076953954a829fe2a30889de5,
         type: 3}
@@ -1121,6 +1122,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612430364970327168, guid: 063aed6076953954a829fe2a30889de5,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.8627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268736578969910262, guid: 063aed6076953954a829fe2a30889de5,
+        type: 3}
+      propertyPath: m_Name
+      value: ShieldSafetyCollider
       objectReference: {fileID: 0}
     - target: {fileID: 4026589601293742206, guid: 063aed6076953954a829fe2a30889de5,
         type: 3}
@@ -1192,6 +1203,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8121144527318742833, guid: 063aed6076953954a829fe2a30889de5,
+        type: 3}
+      propertyPath: shieldSetRef
+      value: 
+      objectReference: {fileID: 1843752360}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 063aed6076953954a829fe2a30889de5, type: 3}
 --- !u!1001 &6100856206642715144
