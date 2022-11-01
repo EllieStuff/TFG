@@ -171,16 +171,34 @@ public class BaseEnemyScript : MonoBehaviour
         }
     }
     
-    internal virtual void IdleStart() { StopRB(5.0f); state = States.IDLE; }
-    internal virtual void MoveToTargetStart() { state = States.MOVE_TO_TARGET; }
-    internal virtual void AttackStart() { state = States.ATTACK; }
+    internal virtual void IdleStart() { StopRB(5.0f); }
+    internal virtual void MoveToTargetStart() { }
+    internal virtual void AttackStart() { }
     internal virtual void IdleExit() { }
     internal virtual void MoveToTargetExit() { }
     internal virtual void AttackExit() { }
 
     public virtual void ChangeState(States _state)
     {
+        switch (state)
+        {
+            case States.IDLE:
+                IdleExit();
+                break;
+            case States.MOVE_TO_TARGET:
+                MoveToTargetExit();
+                break;
+            case States.ATTACK:
+                AttackExit();
+                break;
+
+            default:
+                Debug.LogWarning("State not found");
+                break;
+        }
+
         state = _state;
+
         switch (state)
         {
             case States.IDLE:
