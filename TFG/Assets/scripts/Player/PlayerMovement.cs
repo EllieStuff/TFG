@@ -9,11 +9,15 @@ public class PlayerMovement : MonoBehaviour
     const float SPEED_REDUCTION = 1.4f;
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
 
-    [SerializeField] float moveForce = 4;
-    [SerializeField] float rotSpeed = 4;
-    [SerializeField] Vector3 maxSpeed;
+    [SerializeField] float baseMoveForce = 50;
+    [SerializeField] float baseRotSpeed = 300;
+    [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
     [SerializeField] float fallSpeed;
 
+    float actualMoveForce;
+    float actualRotSpeed;
+    internal float speedMultiplier = 1.0f;
+    Vector3 actualMaxSpeed;
     internal bool canMove = true;
     internal bool canRotate = true;
     LifeSystem lifeStatus;
@@ -30,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();
+
+        ResetSpeed();
     }
 
     // Update is called once per frame
@@ -47,8 +53,8 @@ public class PlayerMovement : MonoBehaviour
             moving = true;
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
                 moveDir *= DIAGONAL_SPEED_REDUCTION;
-            rb.AddForce(moveDir * moveForce, ForceMode.Force);
-            Vector3 finalVelocity = ClampVector(rb.velocity, -maxSpeed, maxSpeed) + new Vector3(0, rb.velocity.y, 0);
+            rb.AddForce(moveDir * actualMoveForce * speedMultiplier, ForceMode.Force);
+            Vector3 finalVelocity = ClampVector(rb.velocity, -actualMaxSpeed * speedMultiplier, actualMaxSpeed * speedMultiplier) + new Vector3(0, rb.velocity.y, 0);
             rb.velocity = finalVelocity;
         }
         else if (moving)
@@ -70,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         if (canRotate && moveDir != Vector3.zero && lifeStatus.currLife > 0)
         {
             Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
         }
     }
 
@@ -105,6 +111,20 @@ public class PlayerMovement : MonoBehaviour
             Mathf.Clamp(_originalVec.z, _minVec.z, _maxVec.z)
         );
     }
+
+    public void ChangeSpeed(float _moveForce, float _rotSpeed, Vector3 _maxSpeed)
+    {
+        actualMoveForce = _moveForce;
+        actualRotSpeed = _rotSpeed;
+        actualMaxSpeed = _maxSpeed;
+    }
+    public void ResetSpeed()
+    {
+        actualMoveForce = baseMoveForce;
+        actualRotSpeed = baseRotSpeed;
+        actualMaxSpeed = baseMaxSpeed;
+    }
+
 
     void OnCollisionEnter(Collision collision)
     {

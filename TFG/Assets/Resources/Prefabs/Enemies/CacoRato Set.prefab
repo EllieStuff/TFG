@@ -99,15 +99,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598eb15aa7f7b4d42b2fc9419b593a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 300
+  baseRotSpeed: 300
   playerDetectionDistance: 10
   playerStopDetectionDistance: 16
   enemyStartAttackDistance: 3
   enemyStopAttackDistance: 3.5
   isAttacking: 0
-  moveSpeed: 6
-  baseDamageTimer: 0
-  enemyMat: {fileID: 0}
+  baseMoveSpeed: 6
+  baseDamageTimer: 2
+  enemyMat: {fileID: 2100000, guid: a5abd5b157926024caaca373a683ffd0, type: 2}
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!136 &8326785294998302331
 CapsuleCollider:
