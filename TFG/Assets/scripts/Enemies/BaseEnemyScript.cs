@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class BaseEnemyScript : MonoBehaviour
 {
-    public enum States { IDLE, MOVE_TO_TARGET, ATTACK }
+    public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
 
     [Header("BaseEnemy")]
-    [SerializeField] internal float rotSpeed = 4;
+    [SerializeField] internal float baseRotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
-    [SerializeField] internal float enemyStartAttackDistance, enemyEndAttackDistance;
+    [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
     [SerializeField] internal bool isAttacking = false;
-    [SerializeField] internal float moveSpeed;
+    [SerializeField] internal float baseMoveSpeed;
+    [SerializeField] internal float baseDamageTimer;
+
+    //PROVISIONAL
+
+    [SerializeField] Material enemyMat;
+    private MeshRenderer enemyOwnMat;
+    internal Material newMatDef;
+
+    //____________________________________________________
+
+    internal float damageTimer = 0;
+    bool playerTouchRegion;
+    PlayerSword playerSword;
+    LifeSystem playerLife;
+
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
         baseMaxVelocity = new Vector3(10, 10, 10);
@@ -21,6 +36,9 @@ public class BaseEnemyScript : MonoBehaviour
     internal States state = States.IDLE;
     internal Rigidbody rb;
     internal Transform player;
+    internal float actualMoveSpeed;
+    internal float actualRotSpeed;
+    internal float speedMultiplier = 1.0f;
     internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true;
@@ -33,10 +51,23 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void Start_Call()
     {
         rb = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
+        player = playerGO.transform;
+        playerLife = playerGO.GetComponent<LifeSystem>();
+        playerSword = playerGO.GetComponent<PlayerSword>();
 
-        actualMinVelocity = baseMinVelocity;
-        actualMaxVelocity = baseMaxVelocity;
+        ResetSpeed();
+        //actualMinVelocity = baseMinVelocity;
+        //actualMaxVelocity = baseMaxVelocity;
+
+        //PROVISIONAL
+
+        Material newMat = new Material(enemyMat);
+        enemyOwnMat = GetComponent<MeshRenderer>();
+        newMatDef = newMat;
+        enemyOwnMat.material = newMatDef;
+
+        //____________________________________________________
     }
 
     private void Update()
@@ -61,13 +92,13 @@ public class BaseEnemyScript : MonoBehaviour
             if (moveDir != Vector3.zero)
             {
                 Quaternion targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
                 //Debug.Log(transform.rotation);
             }
             else
             {
                 Quaternion targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
         }
     }
@@ -92,12 +123,29 @@ public class BaseEnemyScript : MonoBehaviour
 
                 break;
 
+            case States.DAMAGE:
+                //receive damage
+                DamageUpdate();
+
+                break;
+
             default:
                 Debug.LogWarning("State not found");
                 break;
         }
     }
 
+    internal virtual void DamageUpdate()
+    {
+        damageTimer -= Time.deltaTime;
+
+        if (damageTimer <= 0)
+        {
+            newMatDef.color = Color.white;
+            damageTimer = baseDamageTimer;
+            ChangeState(States.IDLE);
+        }
+    }
     internal virtual void IdleUpdate()
     {
         if (Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
@@ -106,7 +154,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void MoveToTargetUpdate()
     {
         Vector3 targetMoveDir = (player.position - transform.position).normalized;
-        MoveRB(targetMoveDir, moveSpeed);
+        MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
 
         if (Vector3.Distance(transform.position, player.position) > playerStopDetectionDistance)
             ChangeState(States.IDLE);
@@ -116,8 +164,15 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void AttackUpdate()
     {
-        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyEndAttackDistance)
+        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
+
+        if (playerTouchRegion && Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
+        {
+            newMatDef.color = Color.red;
+            damageTimer = baseDamageTimer;
+            ChangeState(States.DAMAGE);
+        }
     }
     
     internal virtual void IdleStart() { StopRB(5.0f); }
@@ -147,6 +202,7 @@ public class BaseEnemyScript : MonoBehaviour
         }
 
         state = _state;
+
         switch (state)
         {
             case States.IDLE:
@@ -191,8 +247,23 @@ public class BaseEnemyScript : MonoBehaviour
     }
     void LimitVelocity()
     {
-        rb.velocity = ClampVector(rb.velocity, actualMinVelocity, actualMaxVelocity);
+        rb.velocity = ClampVector(rb.velocity, actualMinVelocity * speedMultiplier, actualMaxVelocity * speedMultiplier);
     }
+    public void ChangeSpeed(float _moveForce, float _rotSpeed, Vector3 _minSpeed, Vector3 _maxSpeed)
+    {
+        actualMoveSpeed = _moveForce;
+        actualRotSpeed = _rotSpeed;
+        actualMinVelocity = _minSpeed;
+        actualMaxVelocity = _maxSpeed;
+    }
+    public void ResetSpeed()
+    {
+        actualMoveSpeed = baseMoveSpeed;
+        actualRotSpeed = baseRotSpeed;
+        actualMinVelocity = baseMinVelocity;
+        actualMaxVelocity = baseMaxVelocity;
+    }
+
 
     internal Vector3 NormalizeDirection(Vector3 moveDir)
     {
@@ -227,6 +298,18 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (col.gameObject.CompareTag("floor"))
             rb.useGravity = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("SwordRegion"))
+            playerTouchRegion = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("SwordRegion"))
+            playerTouchRegion = false;
     }
 
 }

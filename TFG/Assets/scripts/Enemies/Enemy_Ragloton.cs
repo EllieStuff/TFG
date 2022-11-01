@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy_Ragloton : BaseEnemyScript
 {
     [Header("Ragloton")]
-    [SerializeField] Transform shieldContainerRef; 
+    [SerializeField] Transform shieldPivotRef; 
     [SerializeField] Transform idleShieldPoint, attackingShieldPoint;
     [SerializeField] bool hasShield = true;
     [SerializeField] float attackForce = 10.0f, attackDuration = 1.0f;
@@ -59,7 +59,6 @@ public class Enemy_Ragloton : BaseEnemyScript
         SetVelocityLimit(baseMinVelocity, baseMaxVelocity);
         isAttacking = false;
     }
-
     
     IEnumerator AttackCoroutine()
     {
@@ -67,7 +66,7 @@ public class Enemy_Ragloton : BaseEnemyScript
         canMove = false;
         StopRB(2.0f);
         yield return new WaitForSeconds(0.1f);
-        yield return LerpTransformsPosition(shieldContainerRef, idleShieldPoint, attackingShieldPoint);
+        yield return LerpTransformsPosition(shieldPivotRef, idleShieldPoint, attackingShieldPoint);
         yield return new WaitForSeconds(0.1f);
 
         // Attacks
@@ -80,8 +79,14 @@ public class Enemy_Ragloton : BaseEnemyScript
         canMove = isAttacking = false;
         StopRB(4.0f);
         yield return new WaitForSeconds(1.0f);
-        yield return LerpTransformsPosition(shieldContainerRef, attackingShieldPoint, idleShieldPoint);
+        yield return LerpTransformsPosition(shieldPivotRef, attackingShieldPoint, idleShieldPoint);
         canMove = canRotate = true;
+
+        if(state.Equals(States.DAMAGE))
+        {
+            base.newMatDef.color = Color.white;
+            base.damageTimer = baseDamageTimer;
+        }
 
         ChangeState(States.IDLE);
     }
