@@ -75,7 +75,7 @@ public class HealthState
 
     public virtual void StartEffect()
     {
-        if (state != Effect.NORMAL && state != Effect.DEAD)
+        if (effectDuration > 0 && state != Effect.NORMAL && state != Effect.DEAD)
             lifeSystem.StartCoroutine(EndEffectByTimeCoroutine());
         //Cambiar posibles variables
     }

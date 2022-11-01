@@ -7,7 +7,7 @@ public class Enemy_Ragloton : BaseEnemyScript
     [Header("Ragloton")]
     [SerializeField] Transform shieldPivotRef; 
     [SerializeField] Transform idleShieldPoint, attackingShieldPoint;
-    [SerializeField] bool hasShield = true;
+    [SerializeField] internal bool hasShield = true;
     [SerializeField] float attackForce = 10.0f, attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
 
@@ -66,7 +66,10 @@ public class Enemy_Ragloton : BaseEnemyScript
         canMove = false;
         StopRB(2.0f);
         yield return new WaitForSeconds(0.1f);
-        yield return LerpTransformsPosition(shieldPivotRef, idleShieldPoint, attackingShieldPoint);
+        if (hasShield)
+            yield return LerpTransformsPosition(shieldPivotRef, idleShieldPoint, attackingShieldPoint);
+        else
+            yield return new WaitForSeconds(0.3f);
         yield return new WaitForSeconds(0.1f);
 
         // Attacks
@@ -79,7 +82,10 @@ public class Enemy_Ragloton : BaseEnemyScript
         canMove = isAttacking = false;
         StopRB(4.0f);
         yield return new WaitForSeconds(1.0f);
-        yield return LerpTransformsPosition(shieldPivotRef, attackingShieldPoint, idleShieldPoint);
+        if(hasShield)
+            yield return LerpTransformsPosition(shieldPivotRef, attackingShieldPoint, idleShieldPoint);
+        else
+            yield return new WaitForSeconds(0.3f);
         canMove = canRotate = true;
 
         if(state.Equals(States.DAMAGE))
