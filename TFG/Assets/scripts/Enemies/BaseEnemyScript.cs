@@ -5,6 +5,11 @@ using UnityEngine;
 public class BaseEnemyScript : MonoBehaviour
 {
     public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
+    private struct PlayerWeaponStats
+    {
+        internal float weaponDamage;
+        internal WeaponStats.WeaponType weaponType;
+    }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
 
@@ -28,6 +33,7 @@ public class BaseEnemyScript : MonoBehaviour
     bool playerTouchRegion;
     PlayerSword playerSword;
     LifeSystem playerLife;
+    LifeSystem enemyLife;
 
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
@@ -43,6 +49,8 @@ public class BaseEnemyScript : MonoBehaviour
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true;
 
+    private PlayerWeaponStats playerWeaponStats;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +58,9 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void Start_Call()
     {
+        playerWeaponStats = new PlayerWeaponStats();
         rb = GetComponent<Rigidbody>();
+        enemyLife = GetComponent<LifeSystem>();
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.transform;
         playerLife = playerGO.GetComponent<LifeSystem>();
@@ -139,6 +149,12 @@ public class BaseEnemyScript : MonoBehaviour
     {
         damageTimer -= Time.deltaTime;
 
+        if(enemyLife.currLife <= 0)
+        {
+            //enemyDies animation and destroy then
+            Destroy(gameObject);
+        }
+
         if (damageTimer <= 0)
         {
             newMatDef.color = Color.white;
@@ -167,8 +183,10 @@ public class BaseEnemyScript : MonoBehaviour
         if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
 
+        //Any Sword Attack goes here
         if (playerTouchRegion && Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
         {
+            enemyLife.Damage(playerWeaponStats.weaponDamage, enemyLife.healthState);
             newMatDef.color = Color.red;
             damageTimer = baseDamageTimer;
             ChangeState(States.DAMAGE);
@@ -280,6 +298,12 @@ public class BaseEnemyScript : MonoBehaviour
         return moveDir;
     }
 
+    private void SetWeaponsParameters(WeaponStats weaponPlayerStats)
+    {
+        playerWeaponStats.weaponDamage = weaponPlayerStats.weaponDamage;
+        playerWeaponStats.weaponType = weaponPlayerStats.weaponType;
+    }
+
     void OnCollisionEnter(Collision col)
     {
         CollisionEnterEvent(col);
@@ -303,7 +327,11 @@ public class BaseEnemyScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("SwordRegion"))
+        {
+            WeaponStats weaponPlayerStats = other.GetComponent<WeaponStats>();
+            SetWeaponsParameters(weaponPlayerStats);
             playerTouchRegion = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
