@@ -30,10 +30,10 @@ public class BaseEnemyScript : MonoBehaviour
     //____________________________________________________
 
     internal float damageTimer = 0;
-    bool playerTouchRegion;
     PlayerSword playerSword;
     LifeSystem playerLife;
     LifeSystem enemyLife;
+    bool SwordTouching;
 
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
@@ -51,6 +51,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     private PlayerWeaponStats playerWeaponStats;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,8 +68,6 @@ public class BaseEnemyScript : MonoBehaviour
         playerSword = playerGO.GetComponent<PlayerSword>();
 
         ResetSpeed();
-        //actualMinVelocity = baseMinVelocity;
-        //actualMaxVelocity = baseMaxVelocity;
 
         //PROVISIONAL
 
@@ -96,20 +95,26 @@ public class BaseEnemyScript : MonoBehaviour
 
         LimitVelocity();
 
-        //moveDir = NormalizeDirection(new Vector3(rb.velocity.x, 0, rb.velocity.z));
         if (canRotate)
         {
             if (moveDir != Vector3.zero)
             {
                 Quaternion targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
-                //Debug.Log(transform.rotation);
             }
             else
             {
                 Quaternion targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
+        }
+
+        if (SwordTouching && playerSword.isAttacking && state != States.DAMAGE)
+        {
+            enemyLife.Damage(playerWeaponStats.weaponDamage, enemyLife.healthState);
+            newMatDef.color = Color.red;
+            damageTimer = baseDamageTimer;
+            ChangeState(States.DAMAGE);
         }
     }
 
@@ -182,23 +187,16 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
-
-        //Any Sword Attack goes here
-        if (playerTouchRegion && Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
-        {
-            enemyLife.Damage(playerWeaponStats.weaponDamage, enemyLife.healthState);
-            newMatDef.color = Color.red;
-            damageTimer = baseDamageTimer;
-            ChangeState(States.DAMAGE);
-        }
     }
     
     internal virtual void IdleStart() { StopRB(5.0f); }
     internal virtual void MoveToTargetStart() { }
     internal virtual void AttackStart() { }
+    internal virtual void DamageStart() { }
     internal virtual void IdleExit() { }
     internal virtual void MoveToTargetExit() { }
     internal virtual void AttackExit() { }
+    internal virtual void DamageExit() { }
 
     public virtual void ChangeState(States _state)
     {
@@ -328,16 +326,15 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (other.tag.Equals("SwordRegion"))
         {
+            SwordTouching = true;
             WeaponStats weaponPlayerStats = other.GetComponent<WeaponStats>();
             SetWeaponsParameters(weaponPlayerStats);
-            playerTouchRegion = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag.Equals("SwordRegion"))
-            playerTouchRegion = false;
+            SwordTouching = false;
     }
-
 }

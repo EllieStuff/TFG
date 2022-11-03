@@ -10,6 +10,7 @@ public class PlayerSword : MonoBehaviour
     const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
     [SerializeField] internal float attackDistance = 2;
+    [SerializeField] Animation swordAnim;
 
     internal bool isAttacking;
 
@@ -36,6 +37,7 @@ public class PlayerSword : MonoBehaviour
 
     void AttackWithSword()
     {
+        swordAnim.Play();
         attackCooldown = attackBaseCooldown;
         isAttacking = true;
         StartCoroutine(AttackCorroutine());

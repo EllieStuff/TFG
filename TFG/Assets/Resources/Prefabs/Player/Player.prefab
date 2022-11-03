@@ -41,11 +41,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2061212978281356993}
-  - component: {fileID: 7983870885651424110}
-  - component: {fileID: 2339183281403163161}
   m_Layer: 0
   m_Name: CommonSword
-  m_TagString: SwordRegion
+  m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,33 +64,6 @@ Transform:
   m_Father: {fileID: 1577539975}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7983870885651424110
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896858787057249767}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2.3351383}
-  m_Center: {x: 0, y: 0, z: 0.66756916}
---- !u!114 &2339183281403163161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896858787057249767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponDamage: 25
-  weaponType: 0
 --- !u!1 &1679515740085647293
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDistance: 6
+  swordAnim: {fileID: 537293753}
   attackCooldown: 0.5
 --- !u!114 &3995069159848829880
 MonoBehaviour:
@@ -385,9 +357,12 @@ GameObject:
   - component: {fileID: 8761524330412800297}
   - component: {fileID: 5123423468216895584}
   - component: {fileID: 8953832560272560892}
+  - component: {fileID: 537293752}
+  - component: {fileID: 537293753}
+  - component: {fileID: 537293751}
   m_Layer: 0
   m_Name: SwordModel
-  m_TagString: Untagged
+  m_TagString: SwordRegion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -400,7 +375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8579388654259402660}
   m_LocalRotation: {x: 0.38142216, y: -0, z: -0, w: 0.924401}
-  m_LocalPosition: {x: -0.29, y: 0.6309999, z: -0.000000059604645}
+  m_LocalPosition: {x: -0.29, y: 0.6309999, z: -0.00000005960464}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -457,3 +432,47 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8579388654259402660}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &537293752
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8579388654259402660}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!111 &537293753
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8579388654259402660}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 5b66c90de5c3485488d4e73552523d04, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 5b66c90de5c3485488d4e73552523d04, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &537293751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8579388654259402660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDamage: 25
+  weaponType: 0
