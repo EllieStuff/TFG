@@ -9,7 +9,6 @@ public class PlayerSword : MonoBehaviour
     PlayerController playerController;
     const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
-    [SerializeField] internal float attackDistance = 2;
     [SerializeField] Animation swordAnim;
 
     internal bool isAttacking;
