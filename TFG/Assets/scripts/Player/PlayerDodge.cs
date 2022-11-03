@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerDodge : MonoBehaviour
 {
     [SerializeField] float dodgeForce = 30;
+    [SerializeField] float dodgeRechargeDelay = 1f;
 
     Rigidbody rb;
-
+    float dodgeRechargeTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +20,14 @@ public class PlayerDodge : MonoBehaviour
     void Update()
     {
         Debug.DrawLine(transform.position, transform.forward * 20, Color.green);
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dodgeRechargeTimer <= 0)
         {
             rb.AddForce(transform.forward * dodgeForce, ForceMode.Impulse);
+            dodgeRechargeTimer = dodgeRechargeDelay;
+        }
+        else if(dodgeRechargeTimer > 0)
+        {
+            dodgeRechargeTimer -= Time.deltaTime;
         }
     }
 

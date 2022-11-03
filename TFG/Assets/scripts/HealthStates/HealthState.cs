@@ -82,6 +82,7 @@ public class HealthState
 
     public virtual void EndEffect()
     {
+        lifeSystem.StopCoroutine(EndEffectByTimeCoroutine());
         //Cambiar posibles variables
     }
 
@@ -96,6 +97,30 @@ public class HealthState
     {
         yield return new WaitForSeconds(effectDuration);
         EndEffectByTime();
+    }
+
+
+
+    public static HealthState GetHealthStateByEffect(Effect _effect)
+    {
+        switch (_effect)
+        {
+            case Effect.NORMAL: case Effect.DEAD:
+                return new HealthState();
+
+            case Effect.BURNED:
+                return new Burned_HealthState();
+
+            case Effect.COLD:
+                return new Cold_HealthState();
+
+            case Effect.FROZEN:
+                return new Frozen_HealthState();
+
+
+            default:
+                return null;
+        }
     }
 
 }

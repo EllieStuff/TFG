@@ -5,13 +5,9 @@ using UnityEngine;
 public class BaseEnemyScript : MonoBehaviour
 {
     public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
-    private struct PlayerWeaponStats
-    {
-        internal float weaponDamage;
-        internal WeaponStats.WeaponType weaponType;
-    }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
+
 
     [Header("BaseEnemy")]
     [SerializeField] internal float baseRotSpeed = 4;
@@ -49,7 +45,7 @@ public class BaseEnemyScript : MonoBehaviour
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true;
 
-    private PlayerWeaponStats playerWeaponStats;
+    //private WeaponStats playerWeaponStats;
 
 
     // Start is called before the first frame update
@@ -59,7 +55,6 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void Start_Call()
     {
-        playerWeaponStats = new PlayerWeaponStats();
         rb = GetComponent<Rigidbody>();
         enemyLife = GetComponent<LifeSystem>();
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
@@ -109,13 +104,13 @@ public class BaseEnemyScript : MonoBehaviour
             }
         }
 
-        if (SwordTouching && playerSword.isAttacking && state != States.DAMAGE)
-        {
-            enemyLife.Damage(playerWeaponStats.weaponDamage, enemyLife.healthState);
-            newMatDef.color = Color.red;
-            damageTimer = baseDamageTimer;
-            ChangeState(States.DAMAGE);
-        }
+        //if (SwordTouching && playerSword.isAttacking && state != States.DAMAGE)
+        //{
+        //    enemyLife.Damage(playerWeaponStats.weaponDamage, enemyLife.healthState);
+        //    newMatDef.color = Color.red;
+        //    damageTimer = baseDamageTimer;
+        //    ChangeState(States.DAMAGE);
+        //}
     }
 
     internal virtual void UpdateStateMachine()
@@ -296,11 +291,6 @@ public class BaseEnemyScript : MonoBehaviour
         return moveDir;
     }
 
-    private void SetWeaponsParameters(WeaponStats weaponPlayerStats)
-    {
-        playerWeaponStats.weaponDamage = weaponPlayerStats.weaponDamage;
-        playerWeaponStats.weaponType = weaponPlayerStats.weaponType;
-    }
 
     void OnCollisionEnter(Collision col)
     {
@@ -327,8 +317,12 @@ public class BaseEnemyScript : MonoBehaviour
         if (other.tag.Equals("SwordRegion"))
         {
             SwordTouching = true;
-            WeaponStats weaponPlayerStats = other.GetComponent<WeaponStats>();
-            SetWeaponsParameters(weaponPlayerStats);
+            WeaponStats weaponStats = other.GetComponent<WeaponStats>();
+            //playerWeaponStats = weaponStats;
+            enemyLife.Damage(weaponStats.weaponDamage, weaponStats.healthStateEffect);
+            newMatDef.color = Color.red;
+            damageTimer = baseDamageTimer;
+            ChangeState(States.DAMAGE);
         }
     }
 

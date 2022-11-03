@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dodgeForce: 30
+  dodgeRechargeDelay: 1
 --- !u!114 &8105998836987631726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,8 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08883f6095af9424ca41d022118e0b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 6
   swordAnim: {fileID: 537293753}
+  swordCollider: {fileID: 537293752}
   attackCooldown: 0.5
 --- !u!114 &3995069159848829880
 MonoBehaviour:
@@ -475,4 +476,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponDamage: 25
-  weaponType: 0
+  weaponEffect: 0

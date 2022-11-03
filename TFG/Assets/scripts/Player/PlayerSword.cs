@@ -10,6 +10,7 @@ public class PlayerSword : MonoBehaviour
     const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
     [SerializeField] Animation swordAnim;
+    [SerializeField] Collider swordCollider;
 
     internal bool isAttacking;
 
@@ -22,6 +23,9 @@ public class PlayerSword : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
         //lifeSystem = GetComponent<LifeSystem>();
+
+        swordCollider.enabled = false;
+
     }
 
     void FixedUpdate()
@@ -39,6 +43,7 @@ public class PlayerSword : MonoBehaviour
         swordAnim.Play();
         attackCooldown = attackBaseCooldown;
         isAttacking = true;
+        swordCollider.enabled = true;
         StartCoroutine(AttackCorroutine());
     }
 
@@ -60,6 +65,7 @@ public class PlayerSword : MonoBehaviour
         yield return new WaitForSeconds(attackBoolTimeEnabled);
 
         isAttacking = false;
+        swordCollider.enabled = false;
 
         yield return 0;
     }
