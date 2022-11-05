@@ -12,6 +12,11 @@ public class PlayerSword : MonoBehaviour
     [SerializeField] Animation swordAnim;
     [SerializeField] Collider swordCollider;
 
+    //
+    AudioSource audioSource;
+    public AudioClip[] clips;
+    //
+
     internal bool isAttacking;
 
     bool isHoldingTheKey = false;
@@ -22,6 +27,7 @@ public class PlayerSword : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
         //lifeSystem = GetComponent<LifeSystem>();
 
         swordCollider.enabled = false;
@@ -41,6 +47,12 @@ public class PlayerSword : MonoBehaviour
     void AttackWithSword()
     {
         swordAnim.Play();
+
+        //
+        AudioClip chosenClip = AudioManager.ChoseClip(clips);
+        audioSource.PlayOneShot(chosenClip);
+        //
+
         attackCooldown = attackBaseCooldown;
         isAttacking = true;
         swordCollider.enabled = true;
