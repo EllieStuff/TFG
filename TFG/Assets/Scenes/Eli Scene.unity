@@ -1165,12 +1165,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1803415854}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1843752360 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 483653366639975944, guid: 063aed6076953954a829fe2a30889de5,
-    type: 3}
-  m_PrefabInstance: {fileID: 4062570781790132708}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2067404485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,17 +1299,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5182679141473545498, guid: 063aed6076953954a829fe2a30889de5,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthStates_Feedback Shield
+      objectReference: {fileID: 0}
     - target: {fileID: 7111012433872944182, guid: 063aed6076953954a829fe2a30889de5,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8121144527318742833, guid: 063aed6076953954a829fe2a30889de5,
-        type: 3}
-      propertyPath: shieldSetRef
-      value: 
-      objectReference: {fileID: 1843752360}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6165390517372384787, guid: 063aed6076953954a829fe2a30889de5, type: 3}
+    - {fileID: 3520018137796392945, guid: 063aed6076953954a829fe2a30889de5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 063aed6076953954a829fe2a30889de5, type: 3}
 --- !u!1001 &6100856206642715144
 PrefabInstance:
