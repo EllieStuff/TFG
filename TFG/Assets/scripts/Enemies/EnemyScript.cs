@@ -96,7 +96,7 @@ public class EnemyScript : MonoBehaviour
                 if (Vector3.Distance(transform.position, player.position) > enemyStartAttackDistance)
                     stats = States.MOVE_TO_TARGET;
 
-                if (playerTouchRegion && Vector3.Distance(transform.position, player.position) <= playerSword.attackDistance && playerSword.isAttacking)
+                if (playerTouchRegion && playerSword.isAttacking)
                 {
                     newMatDef.color = Color.red;
                     damageTimer = baseDamageTimer;

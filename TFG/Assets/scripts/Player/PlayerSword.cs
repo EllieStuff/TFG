@@ -9,7 +9,13 @@ public class PlayerSword : MonoBehaviour
     PlayerController playerController;
     const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
-    [SerializeField] internal float attackDistance = 2;
+    [SerializeField] Animation swordAnim;
+    [SerializeField] Collider swordCollider;
+
+    //
+    AudioSource audioSource;
+    public AudioClip[] clips;
+    //
 
     internal bool isAttacking;
 
@@ -21,7 +27,11 @@ public class PlayerSword : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
         //lifeSystem = GetComponent<LifeSystem>();
+
+        swordCollider.enabled = false;
+
     }
 
     void FixedUpdate()
@@ -36,8 +46,16 @@ public class PlayerSword : MonoBehaviour
 
     void AttackWithSword()
     {
+        swordAnim.Play();
+
+        //
+        AudioClip chosenClip = AudioManager.ChoseClip(clips);
+        audioSource.PlayOneShot(chosenClip);
+        //
+
         attackCooldown = attackBaseCooldown;
         isAttacking = true;
+        swordCollider.enabled = true;
         StartCoroutine(AttackCorroutine());
     }
 
@@ -59,6 +77,7 @@ public class PlayerSword : MonoBehaviour
         yield return new WaitForSeconds(attackBoolTimeEnabled);
 
         isAttacking = false;
+        swordCollider.enabled = false;
 
         yield return 0;
     }

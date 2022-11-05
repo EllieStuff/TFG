@@ -95,7 +95,7 @@ public class LifeSystem : MonoBehaviour
         {
             //DamageData dmgData = col.GetComponent<DamageData>();
             //Damage(dmgData.damage, dmgData.effect);
-            Damage(10, new HealthState());
+            //Damage(10, new HealthState());
         }
     }
 
