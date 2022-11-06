@@ -5,9 +5,21 @@ using UnityEngine;
 public class Enemy_CacoRato : BaseEnemyScript
 {
     //[Header("CacoRato")]
+    [SerializeField] float attackDistance;
+    [SerializeField] float baseAttackTimer;
+    [SerializeField] float attackAnimationTime;
+    [SerializeField] float attackDamage;
+    [SerializeField] EnemyWeaponHand handWeapon;
 
+    float attackTimer;
 
-    internal override void Start_Call() { base.Start_Call(); }
+    LifeSystem playerLife;
+
+    //PROVISIONAL
+    [SerializeField] Animation swordAnim;
+    //______________________________
+
+    internal override void Start_Call() { base.Start_Call(); playerLife = player.GetComponent<LifeSystem>(); }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -28,6 +40,31 @@ public class Enemy_CacoRato : BaseEnemyScript
     {
         base.AttackUpdate();
 
+        if(Vector3.Distance(player.position, transform.position) > attackDistance)
+        {
+            Vector3 targetMoveDir = (player.position - transform.position).normalized;
+            MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
+        }
+        else
+        {
+            attackTimer -= Time.deltaTime;
+
+            if(attackTimer <= 0)
+            {
+                StartCoroutine(AttackCorroutine());
+                attackTimer = baseAttackTimer;
+            }
+        }
+    }
+
+    IEnumerator AttackCorroutine()
+    {
+        swordAnim.Play();
+
+        yield return new WaitForSeconds(attackAnimationTime);
+
+        if (handWeapon.isTouchingPlayer)
+            playerLife.Damage(attackDamage, playerLife.healthState);
     }
 
 
