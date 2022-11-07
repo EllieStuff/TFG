@@ -25,6 +25,21 @@ public class HealthState
 
 
     public HealthState() { }
+    public HealthState(HealthState _hs)
+    {
+        this.state = _hs.state;
+        this.effectWhenFinished = _hs.effectWhenFinished;
+        this.effectDuration = _hs.effectDuration;
+        this.initialized = _hs.initialized;
+        this.lifeSystem = _hs.lifeSystem;
+        this.burnedCompatibility_DmgMultiplier = _hs.burnedCompatibility_DmgMultiplier;
+        this.coldCompatibility_DmgMultiplier = _hs.coldCompatibility_DmgMultiplier;
+        this.frozenCompatibility_DmgMultiplier = _hs.frozenCompatibility_DmgMultiplier;
+        this.burnedCompatibility_FinalEffect = _hs.burnedCompatibility_FinalEffect;
+        this.coldCompatibility_FinalEffect = _hs.coldCompatibility_FinalEffect;
+        this.frozenCompatibility_FinalEffect = _hs.frozenCompatibility_FinalEffect;
+    }
+
     public HealthState(LifeSystem _lifeSystem)
     {
         Init(_lifeSystem);

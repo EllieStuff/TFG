@@ -73,9 +73,10 @@ public class LifeSystem : MonoBehaviour
 
     internal void ChangeHealthState(HealthState _newHealthState)
     {
-        healthState.EndEffect();
+        if (healthState != null)
+            healthState.EndEffect();
 
-        if (!healthState.initialized) _newHealthState.Init(this);
+        if (!_newHealthState.initialized) _newHealthState.Init(this);
         healthState = _newHealthState;
 
         healthState.StartEffect();
