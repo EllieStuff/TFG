@@ -167,6 +167,7 @@ MonoBehaviour:
   healthState:
     state: 0
     effectDuration: -1
+  healthStatesFeedback: {fileID: 0}
   maxLife: 50
   currLife: 50
 --- !u!136 &331556592035321905
@@ -369,6 +370,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7324585632590650368, guid: 2c8e9e905f9eaef4bb093df4f6cdff65,
+        type: 3}
+      propertyPath: currLife
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7507924054309062822, guid: 2c8e9e905f9eaef4bb093df4f6cdff65,
         type: 3}
