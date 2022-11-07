@@ -2,24 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireAttack : MonoBehaviour
+public class FireAttack : CardAttack
 {
+    [SerializeField] Transform fireBallRef;
     [SerializeField] GameObject disappearEffect;
     [SerializeField] float dmg = 10;
     [SerializeField] float moveForce = 10;
     [SerializeField] float moveDelay = 1.5f;
     [SerializeField] float despawnDelay = 5.0f;
+    [SerializeField] float rotSpeed = 120;
     [SerializeField] Vector3 cadency = Vector3.zero;
 
     Rigidbody rb;
     PlayerMovement playerMov;
     bool lockPlayerMove;
+    Vector3 rotAxis = Vector3.zero;
 
+
+    private void Update()
+    {
+        fireBallRef.Rotate(rotAxis, rotSpeed * Time.deltaTime, Space.Self);
+    }
 
 
     public void Initialize(PlayerMovement _playerMov, bool _lockPlayerMove)
     {
         rb = GetComponent<Rigidbody>();
+        rotAxis = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
 
         playerMov = _playerMov;
         lockPlayerMove = _lockPlayerMove;
@@ -34,15 +43,16 @@ public class FireAttack : MonoBehaviour
         Vector3 finalMove = _moveDir * moveForce;
         Vector3 rndCadency = GetRndVector3(-cadency, cadency);
         finalMove = finalMove + rndCadency;
+        transform.rotation = Quaternion.LookRotation(finalMove, transform.up);
         rb.AddForce(finalMove, ForceMode.Impulse);
     }
 
-    void Despawn(Vector3 _feedbackSpawnPos)
+    public override void Despawn(Vector3 _feedbackDespawnPos)
     {
         StopAllCoroutines();
         playerMov.canMove = playerMov.canRotate = true;
         if (disappearEffect != null)
-            GameObject.Instantiate(disappearEffect, _feedbackSpawnPos, Random.rotation);
+            GameObject.Instantiate(disappearEffect, _feedbackDespawnPos, Random.rotation);
         else
             Debug.LogWarning("FireBall disappearEffect was not set.");
         Destroy(gameObject);
@@ -61,11 +71,11 @@ public class FireAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            //other.GetComponent<Health>().Damage(dmg);
-            Despawn(other.ClosestPoint(transform.position));
-        }
+        //if (other.CompareTag("Enemy"))
+        //{
+        //    //other.GetComponent<Health>().Damage(dmg);
+        //    Despawn(other.ClosestPoint(transform.position));
+        //}
         if (other.CompareTag("Wall"))
         {
             Despawn(other.ClosestPoint(transform.position));

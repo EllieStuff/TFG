@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    const float CARD_DIST = 100;
+    const float CARD_DIST = 120;
 
     public enum CardType { FIRE, ICE, COUNT }
 
@@ -13,8 +13,8 @@ public class DeckManager : MonoBehaviour
     [SerializeField] int maxCards = 3;
 
     internal List<Card_Data> cards = new List<Card_Data>();
-    Vector3 selectedSize = Vector3.one;
-    Vector3 nonSelectedSize = new Vector3(0.5f, 0.5f, 0.5f);
+    Vector3 selectedSize = new Vector3(1.4f, 1.4f, 1.4f);
+    Vector3 nonSelectedSize = Vector3.one;
     //PlayerUseCard playerUseCard;
     //int idx = 0;
 

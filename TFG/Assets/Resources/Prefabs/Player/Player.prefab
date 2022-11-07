@@ -327,7 +327,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordAnim: {fileID: 537293753}
-  swordCollider: {fileID: 537293752}
+  swordCollider: {fileID: 0}
+  clips: []
   attackCooldown: 0.5
 --- !u!114 &3995069159848829880
 MonoBehaviour:
@@ -345,6 +346,7 @@ MonoBehaviour:
   healthState:
     state: 0
     effectDuration: -1
+  healthStatesFeedback: {fileID: 0}
   maxLife: 100
   currLife: 100
 --- !u!1 &8579388654259402660
@@ -358,7 +360,7 @@ GameObject:
   - component: {fileID: 8761524330412800297}
   - component: {fileID: 5123423468216895584}
   - component: {fileID: 8953832560272560892}
-  - component: {fileID: 537293752}
+  - component: {fileID: 6509785557001155272}
   - component: {fileID: 537293753}
   - component: {fileID: 537293751}
   m_Layer: 0
@@ -375,8 +377,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8579388654259402660}
-  m_LocalRotation: {x: 0.38142216, y: -0, z: -0, w: 0.924401}
-  m_LocalPosition: {x: -0.29, y: 0.6309999, z: -0.00000005960464}
+  m_LocalRotation: {x: -0.2700964, y: 0, z: 0, w: 0.9628333}
+  m_LocalPosition: {x: 0.31, y: 0.41, z: 0.06}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -432,9 +434,9 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8579388654259402660}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &537293752
-MeshCollider:
+  m_Mesh: {fileID: -951608786083511892, guid: 663c7871fcb934e42b7ae74c04c919ee, type: 3}
+--- !u!136 &6509785557001155272
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -443,10 +445,10 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Radius: 0.15
+  m_Height: 2.5
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.0000004185581, z: 1}
 --- !u!111 &537293753
 Animation:
   m_ObjectHideFlags: 0

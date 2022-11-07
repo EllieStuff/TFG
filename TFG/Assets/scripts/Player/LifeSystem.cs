@@ -9,6 +9,7 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] internal EntityType entityType = EntityType.PLAYER;
     //[SerializeField] internal HealthState.Effect state = HealthState.Effect.NORMAL;
     [SerializeField] internal HealthState healthState;
+    [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
     [SerializeField] internal float maxLife = 100;
     [SerializeField] internal float currLife = 100;
 
@@ -72,13 +73,14 @@ public class LifeSystem : MonoBehaviour
 
     internal void ChangeHealthState(HealthState _newHealthState)
     {
-        healthState.EndEffect();
+        if (healthState != null)
+            healthState.EndEffect();
 
-        if (!healthState.initialized) _newHealthState.Init(this);
+        if (!_newHealthState.initialized) _newHealthState.Init(this);
         healthState = _newHealthState;
 
         healthState.StartEffect();
-
+        healthStatesFeedback.ActivateFeedback(healthState.state, healthState.effectDuration);
     }
 
 
