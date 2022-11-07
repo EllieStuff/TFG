@@ -113,7 +113,7 @@ public class RaglotonShield : MonoBehaviour
         {
             Physics.IgnoreCollision(other, raglotonCollider, true);
             WeaponStats weapon = other.GetComponent<WeaponStats>();
-            lifeSystem.Damage(weapon.weaponDamage, new HealthState(weapon.healthStateEffect));
+            lifeSystem.Damage(weapon.weaponDamage, HealthState.GetHealthStateByEffect(weapon.weaponEffect));
             CardAttack cardAttack = other.GetComponent<CardAttack>();
             if (cardAttack != null)
                 cardAttack.Despawn(other.ClosestPoint(transform.position));

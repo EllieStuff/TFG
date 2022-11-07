@@ -319,7 +319,7 @@ public class BaseEnemyScript : MonoBehaviour
             SwordTouching = true;
             WeaponStats weaponStats = other.GetComponent<WeaponStats>();
             //playerWeaponStats = weaponStats;
-            enemyLife.Damage(weaponStats.weaponDamage, weaponStats.healthStateEffect);
+            enemyLife.Damage(weaponStats.weaponDamage, HealthState.GetHealthStateByEffect(weaponStats.weaponEffect));
             newMatDef.color = Color.red;
             damageTimer = baseDamageTimer;
             ChangeState(States.DAMAGE);
