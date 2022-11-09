@@ -15,6 +15,8 @@ public class LifeSystem : MonoBehaviour
 
     internal float dmgInc = 1.0f;
 
+    PlayerMovement playerMovementScript;
+
     // Crec que serà millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
     //[SerializeField] internal bool managesDeath = true;
     //[SerializeField] internal float deathDelay = 3.0f;
@@ -22,6 +24,9 @@ public class LifeSystem : MonoBehaviour
     private void Start()
     {
         healthState = new HealthState(this);
+
+        if (entityType.Equals(EntityType.PLAYER))
+            playerMovementScript = GetComponent<PlayerMovement>();
 
         CheckPlayerLifeLimits();
     }
@@ -57,13 +62,17 @@ public class LifeSystem : MonoBehaviour
 
     public void Damage(float _dmg, HealthState _healthState)
     {
+
+
         currLife -= _dmg * dmgInc;
         CheckPlayerLifeLimits();
 
         if (!healthState.initialized) _healthState.Init(this);
+        if (entityType.Equals(EntityType.PLAYER) && healthState.state != HealthState.Effect.DEAD) playerMovementScript.DamageStartCorroutine();
+
         if(healthState.state != HealthState.Effect.DEAD && _healthState.state != HealthState.Effect.NORMAL)
         {
-            if (healthState.state != HealthState.Effect.NORMAL)
+            if (healthState.state != HealthState.Effect.NORMAL) //<------ Això sempre passarà per aquí i guess (per la eli)
                 healthState.CheckEffectsCompatibility(_healthState, _dmg * dmgInc);
             else
                 ChangeHealthState(_healthState);

@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float baseRotSpeed = 300;
     [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
     [SerializeField] float fallSpeed;
+    [SerializeField] float damageAnimationTime;
 
     float actualMoveForce;
     float actualRotSpeed;
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         moveDir = NormalizeDirection(new Vector3(horizontalInput, 0, verticalInput));
 
 
-        if ((Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && lifeStatus.currLife > 0)
+        if (canMove && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && lifeStatus.currLife > 0)
         {
             moving = true;
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
@@ -124,7 +125,24 @@ public class PlayerMovement : MonoBehaviour
         actualRotSpeed = baseRotSpeed;
         actualMaxSpeed = baseMaxSpeed;
     }
+    public void DamageStartCorroutine()
+    {
+        StartCoroutine(DamageCorroutine());
+    }
+    IEnumerator DamageCorroutine()
+    {
+        canMove = false;
+        canRotate = false;
 
+        //Play animation here and sound
+
+        //_____________________________
+
+        yield return new WaitForSeconds(damageAnimationTime);
+
+        canMove = true;
+        canRotate = true;
+    }
 
     void OnCollisionEnter(Collision collision)
     {
