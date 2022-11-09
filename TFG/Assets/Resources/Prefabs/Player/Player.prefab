@@ -250,6 +250,7 @@ MonoBehaviour:
   baseRotSpeed: 300
   baseMaxSpeed: {x: 50, y: 0, z: 50}
   fallSpeed: 50
+  damageAnimationTime: 2
   moveDir: {x: 0, y: 0, z: 0}
 --- !u!114 &1679515740618261112
 MonoBehaviour:
@@ -328,6 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swordAnim: {fileID: 537293753}
   swordCollider: {fileID: 537293752}
+  clips: []
   attackCooldown: 0.5
 --- !u!114 &3995069159848829880
 MonoBehaviour:
