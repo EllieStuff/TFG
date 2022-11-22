@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
     [SerializeField] float fallSpeed;
     [SerializeField] float damageAnimationTime;
+    [SerializeField] Animator playerAnimator;
 
     float actualMoveForce;
     float actualRotSpeed;
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         if (canMove && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && lifeStatus.currLife > 0)
         {
             moving = true;
+            playerAnimator.SetFloat("state", 1);
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
                 moveDir *= DIAGONAL_SPEED_REDUCTION;
             rb.AddForce(moveDir * actualMoveForce * speedMultiplier, ForceMode.Force);
@@ -61,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         else if (moving)
         {
             moving = false;
-
+            playerAnimator.SetFloat("state", 0);
             Vector3 reducedVel = rb.velocity;
 
             if (Mathf.Abs(reducedVel.x) > 0)
