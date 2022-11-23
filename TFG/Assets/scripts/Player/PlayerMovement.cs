@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    const float INPUT_THRESHOLD = 0.3f;
+    const float INPUT_THRESHOLD = 0;
     const float MIN_FALL_SPEED = 10;
+    const float MIN_SPEED_WALK = 0.8f;
     const float SPEED_REDUCTION = 1.4f;
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
+    const float SCREEN_WIDTH = 1000;
+    const float SCREEN_HEIGHT = 500;
 
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
@@ -29,13 +32,16 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
+    [HideInInspector] public Vector3 lookDir = Vector3.zero;
     bool moving = false;
+    Camera mainCam;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();
+        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         ResetSpeed();
     }
@@ -43,17 +49,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        if (Mathf.Abs(horizontalInput) < INPUT_THRESHOLD) horizontalInput = 0;
-        float verticalInput = Input.GetAxis("Vertical");
-        if (Mathf.Abs(verticalInput) < INPUT_THRESHOLD) verticalInput = 0;
-        moveDir = NormalizeDirection(new Vector3(horizontalInput, 0, verticalInput));
+        Vector2 mouseLookVec = GetMouseLookVector();
+        float horizontalInput = mouseLookVec.x;
+        //if (Mathf.Abs(horizontalInput) < INPUT_THRESHOLD) horizontalInput = 0;
+        float verticalInput = mouseLookVec.y;
+        //if (Mathf.Abs(verticalInput) < INPUT_THRESHOLD) verticalInput = 0;
+        lookDir = new Vector3(horizontalInput, 0, verticalInput);
+        moveDir = NormalizeDirection(lookDir);
 
 
-        if (canMove && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && lifeStatus.currLife > 0)
+        if (canMove && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && Input.GetKey(KeyCode.Mouse1) && lifeStatus.currLife > 0)
         {
             moving = true;
-            playerAnimator.SetFloat("state", 1);
+
+            if(rb.velocity.magnitude > MIN_SPEED_WALK)
+                playerAnimator.SetFloat("state", 1);
+            else
+                playerAnimator.SetFloat("state", 0);
+
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
                 moveDir *= DIAGONAL_SPEED_REDUCTION;
             rb.AddForce(moveDir * actualMoveForce * speedMultiplier, ForceMode.Force);
@@ -78,9 +91,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (canRotate && moveDir != Vector3.zero && lifeStatus.currLife > 0)
         {
-            Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
+            Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
         }
+    }
+
+    Vector2 GetMouseLookVector()
+    {
+        Vector3 MousePosWithPlayer = Input.mousePosition - mainCam.WorldToScreenPoint(transform.position);
+        MousePosWithPlayer.z = 5.23f;
+
+        return MousePosWithPlayer;
     }
 
     Vector3 FallSystem(Vector3 actualVelocity)
@@ -93,15 +114,21 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 NormalizeDirection(Vector3 moveDir)
     {
-        if (moveDir.x > 0)
-            moveDir = new Vector3(1, moveDir.y, moveDir.z);
-        if (moveDir.x < 0)
-            moveDir = new Vector3(-1, moveDir.y, moveDir.z);
+        Vector2 MoveDirWithScreen = new Vector2(moveDir.x / SCREEN_WIDTH, moveDir.z / SCREEN_HEIGHT);
 
-        if (moveDir.z > 0)
-            moveDir = new Vector3(moveDir.x, moveDir.y, 1);
-        if (moveDir.z < 0)
-            moveDir = new Vector3(moveDir.x, moveDir.y, -1);
+        if (moveDir.x > 0 && MoveDirWithScreen.x > 0.1f)
+            moveDir = new Vector3(MIN_SPEED_WALK + (moveDir.x / SCREEN_WIDTH), moveDir.y, moveDir.z);
+        else if (moveDir.x < 0 && MoveDirWithScreen.x < -0.1f)
+            moveDir = new Vector3(-MIN_SPEED_WALK + (moveDir.x / SCREEN_WIDTH), moveDir.y, moveDir.z);
+        else
+            moveDir.x = 0;
+
+        if (moveDir.z > 0 && MoveDirWithScreen.y > 0.1f)
+            moveDir = new Vector3(moveDir.x, moveDir.y, MIN_SPEED_WALK + (moveDir.z / SCREEN_HEIGHT));
+        else if (moveDir.z < 0 && MoveDirWithScreen.y < -0.1f)
+            moveDir = new Vector3(moveDir.x, moveDir.y, -MIN_SPEED_WALK + (moveDir.z / SCREEN_HEIGHT));
+        else
+            moveDir.z = 0;
 
         return moveDir;
     }
