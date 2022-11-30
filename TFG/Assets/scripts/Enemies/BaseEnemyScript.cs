@@ -70,6 +70,7 @@ public class BaseEnemyScript : MonoBehaviour
         enemyOwnMat = GetComponent<MeshRenderer>();
         newMatDef = newMat;
         enemyOwnMat.material = newMatDef;
+        newMatDef.color = new Color(1, 1, 1, 0);
 
         //____________________________________________________
     }
@@ -157,7 +158,7 @@ public class BaseEnemyScript : MonoBehaviour
 
         if (damageTimer <= 0)
         {
-            newMatDef.color = Color.white;
+            newMatDef.color = new Color(1, 1, 1, 0);
             damageTimer = baseDamageTimer;
             ChangeState(States.IDLE);
         }
@@ -320,7 +321,7 @@ public class BaseEnemyScript : MonoBehaviour
             WeaponStats weaponStats = other.GetComponent<WeaponStats>();
             //playerWeaponStats = weaponStats;
             enemyLife.Damage(weaponStats.weaponDamage, HealthState.GetHealthStateByEffect(weaponStats.weaponEffect));
-            newMatDef.color = Color.red;
+            newMatDef.color = new Color(1, 0, 0, 0.5f);
             damageTimer = baseDamageTimer;
             ChangeState(States.DAMAGE);
         }
