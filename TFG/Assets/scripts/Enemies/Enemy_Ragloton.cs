@@ -10,7 +10,7 @@ public class Enemy_Ragloton : BaseEnemyScript
     [SerializeField] internal bool hasShield = true;
     [SerializeField] float attackForce = 10.0f, attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
-
+    [SerializeField] Animator enemyAnimator;
     
     Vector3 attackMoveDir = Vector3.zero;
 
@@ -22,19 +22,29 @@ public class Enemy_Ragloton : BaseEnemyScript
     internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
 
 
-    internal override void IdleUpdate() { base.IdleUpdate(); }
-    internal override void MoveToTargetUpdate() { base.MoveToTargetUpdate(); }
+    internal override void IdleUpdate() 
+    {
+        enemyAnimator.SetFloat("state", 0);
+        base.IdleUpdate(); 
+    }
+    internal override void MoveToTargetUpdate() 
+    {
+        enemyAnimator.SetFloat("state", 1);
+        base.MoveToTargetUpdate(); 
+    }
     internal override void AttackUpdate()
-    { 
+    {
+        enemyAnimator.SetFloat("state", 0);
         base.AttackUpdate();
 
         if (isAttacking)
         {
+            enemyAnimator.SetFloat("state", 1);
             MoveRB(attackMoveDir, attackForce);
         }
         else
         {
-
+            enemyAnimator.SetFloat("state", 0);
         }
     }
 
@@ -76,9 +86,11 @@ public class Enemy_Ragloton : BaseEnemyScript
         canMove = isAttacking = true;
         canRotate = false;
         attackMoveDir = (player.position - transform.position).normalized;
+        enemyAnimator.SetFloat("state", 1);
         yield return new WaitForSeconds(attackDuration);
 
         // Ends Attack
+        enemyAnimator.SetFloat("state", 0);
         canMove = isAttacking = false;
         StopRB(4.0f);
         yield return new WaitForSeconds(1.0f);

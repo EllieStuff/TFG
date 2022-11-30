@@ -10,6 +10,7 @@ public class Enemy_CacoRato : BaseEnemyScript
     [SerializeField] float attackAnimationTime;
     [SerializeField] float attackDamage;
     [SerializeField] EnemyWeaponHand handWeapon;
+    [SerializeField] Animator enemyAnimator;
 
     float attackTimer;
 
@@ -28,13 +29,13 @@ public class Enemy_CacoRato : BaseEnemyScript
 
     internal override void IdleUpdate()
     {
+        enemyAnimator.SetFloat("state", 0);
         base.IdleUpdate();
-
     }
     internal override void MoveToTargetUpdate()
     {
+        enemyAnimator.SetFloat("state", 1);
         base.MoveToTargetUpdate();
-
     }
     internal override void AttackUpdate()
     {
@@ -42,11 +43,13 @@ public class Enemy_CacoRato : BaseEnemyScript
 
         if(Vector3.Distance(player.position, transform.position) > attackDistance)
         {
+            enemyAnimator.SetFloat("state", 1);
             Vector3 targetMoveDir = (player.position - transform.position).normalized;
             MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
         }
         else
         {
+            enemyAnimator.SetFloat("state", 0);
             attackTimer -= Time.deltaTime;
 
             if(attackTimer <= 0)
