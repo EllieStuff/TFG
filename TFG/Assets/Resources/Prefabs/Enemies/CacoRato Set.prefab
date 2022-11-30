@@ -232,21 +232,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseRotSpeed: 300
-  playerDetectionDistance: 10
+  playerDetectionDistance: 16
   playerStopDetectionDistance: 16
-  enemyStartAttackDistance: 3
-  enemyStopAttackDistance: 3.5
+  enemyStartAttackDistance: 10
+  enemyStopAttackDistance: 10.5
   isAttacking: 0
   baseMoveSpeed: 6
   baseDamageTimer: 0.5
   enemyMat: {fileID: 2100000, guid: a5abd5b157926024caaca373a683ffd0, type: 2}
   moveDir: {x: 0, y: 0, z: 0}
-  attackDistance: 1.8
+  attackDistance: 15
   baseAttackTimer: 2
   attackAnimationTime: 0.15
   attackDamage: 10
   handWeapon: {fileID: 3263372810948528373}
   enemyAnimator: {fileID: 5797065431143097780}
+  knifePrefab: {fileID: 507451495234348787, guid: 91818808c2a1b284592b5e8ab8168790,
+    type: 3}
   swordAnim: {fileID: 975362699361286487}
 --- !u!114 &4461585698483356605
 MonoBehaviour:

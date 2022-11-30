@@ -11,6 +11,7 @@ public class Enemy_CacoRato : BaseEnemyScript
     [SerializeField] float attackDamage;
     [SerializeField] EnemyWeaponHand handWeapon;
     [SerializeField] Animator enemyAnimator;
+    [SerializeField] GameObject knifePrefab;
 
     float attackTimer;
 
@@ -66,8 +67,12 @@ public class Enemy_CacoRato : BaseEnemyScript
 
         yield return new WaitForSeconds(attackAnimationTime);
 
-        if (handWeapon.isTouchingPlayer)
-            playerLife.Damage(attackDamage, playerLife.healthState);
+        KnifeThrown knife = Instantiate(knifePrefab, transform).GetComponent<KnifeThrown>();
+        knife.knifeDir = (player.position - transform.position).normalized;
+        knife.entityThrowingIt = transform;
+
+        //if (handWeapon.isTouchingPlayer)
+        //playerLife.Damage(attackDamage, playerLife.healthState);
     }
 
 

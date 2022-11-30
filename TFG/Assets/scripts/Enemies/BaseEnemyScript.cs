@@ -44,6 +44,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true;
+    internal Quaternion targetRot;
 
     //private WeaponStats playerWeaponStats;
 
@@ -95,12 +96,12 @@ public class BaseEnemyScript : MonoBehaviour
         {
             if (moveDir != Vector3.zero)
             {
-                Quaternion targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
+                targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
             else
             {
-                Quaternion targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
+                targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
         }
