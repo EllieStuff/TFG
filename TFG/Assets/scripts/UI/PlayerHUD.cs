@@ -7,9 +7,11 @@ public class PlayerHUD : MonoBehaviour
 {
     LifeSystem playerLifeStatus;
     [SerializeField] private Slider lifeSlider;
+    Animation shakeLifeBarAnim;
 
     private void Start()
     {
+        shakeLifeBarAnim = GetComponent<Animation>();
         GameObject player = GameObject.Find("Player");
         playerLifeStatus = player.GetComponent<LifeSystem>();
     }
@@ -18,5 +20,10 @@ public class PlayerHUD : MonoBehaviour
     void Update()
     {
         lifeSlider.value = playerLifeStatus.currLife / playerLifeStatus.maxLife;
+    }
+
+    public void ShakeLifeBar()
+    {
+        shakeLifeBarAnim.Play();
     }
 }
