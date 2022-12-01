@@ -17,10 +17,6 @@ public class Enemy_CacoRato : BaseEnemyScript
 
     LifeSystem playerLife;
 
-    //PROVISIONAL
-    [SerializeField] Animation swordAnim;
-    //______________________________
-
     internal override void Start_Call() { base.Start_Call(); playerLife = player.GetComponent<LifeSystem>(); }
 
     internal override void Update_Call() { base.Update_Call(); }
@@ -50,6 +46,9 @@ public class Enemy_CacoRato : BaseEnemyScript
         }
         else
         {
+            if(!state.Equals(States.DAMAGE))
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+
             enemyAnimator.SetFloat("state", 0);
             attackTimer -= Time.deltaTime;
 
@@ -63,16 +62,13 @@ public class Enemy_CacoRato : BaseEnemyScript
 
     IEnumerator AttackCorroutine()
     {
-        swordAnim.Play();
+        //place shoot animation here
 
         yield return new WaitForSeconds(attackAnimationTime);
 
         KnifeThrown knife = Instantiate(knifePrefab, transform).GetComponent<KnifeThrown>();
         knife.knifeDir = (player.position - transform.position).normalized;
         knife.entityThrowingIt = transform;
-
-        //if (handWeapon.isTouchingPlayer)
-        //playerLife.Damage(attackDamage, playerLife.healthState);
     }
 
 
