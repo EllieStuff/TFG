@@ -138,6 +138,9 @@ public class BaseEnemyScript : MonoBehaviour
 
         if(enemyLife.currLife <= 0 && !deadNPC)
         {
+            if (Vector3.Distance(transform.position, player.position) <= PLAYER_HIT_DISTANCE_SWORD)
+                playerSword.mustAttack = true;
+
             damageTimer = baseDeathTime;
             deadNPC = true;
         }
