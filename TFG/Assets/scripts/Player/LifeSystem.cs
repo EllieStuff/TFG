@@ -66,7 +66,7 @@ public class LifeSystem : MonoBehaviour
     public void Damage(float _dmg, HealthState _healthState)
     {
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
-            playerLifeBar.ShakeLifeBar();
+            playerLifeBar.ShakeBar();
 
         if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY))
         {

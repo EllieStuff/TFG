@@ -8,8 +8,6 @@ public class PlayerHUD : MonoBehaviour
     LifeSystem playerLifeStatus;
     PlayerDodge playerDodge;
 
-    [SerializeField] private GameObject particles;
-
     [SerializeField] private Slider lifeSlider;
     [SerializeField] private Slider dashSlider;
     Animation shakeLifeBarAnim;
@@ -17,12 +15,9 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] bool lifeHUD;
     [SerializeField] bool dashHUD;
 
-    bool dashParticlesPlayed = true;
-
     private void Start()
     {
-        if (lifeHUD)
-            shakeLifeBarAnim = GetComponent<Animation>();
+        shakeLifeBarAnim = GetComponent<Animation>();
 
         GameObject player = GameObject.Find("Player");
 
@@ -38,29 +33,11 @@ public class PlayerHUD : MonoBehaviour
         if (lifeHUD)
             lifeSlider.value = playerLifeStatus.currLife / playerLifeStatus.maxLife;
         if (dashHUD)
-        {
             dashSlider.value = 1 - (playerDodge.dodgeRechargeTimer / playerDodge.dodgeRechargeDelay);
-            DashParticles();
-        }
     }
 
-    public void ShakeLifeBar()
+    public void ShakeBar()
     {
-        if (lifeHUD)
-        {
-            shakeLifeBarAnim.Play();
-            Instantiate(particles, lifeSlider.transform);
-        }
-    }
-
-    public void DashParticles()
-    {
-        if (!dashParticlesPlayed && dashSlider.value >= 1)
-        {
-            Instantiate(particles, dashSlider.transform);
-            dashParticlesPlayed = true;
-        }
-        else if (dashSlider.value < 1 && dashParticlesPlayed)
-            dashParticlesPlayed = false;
+        shakeLifeBarAnim.Play();
     }
 }

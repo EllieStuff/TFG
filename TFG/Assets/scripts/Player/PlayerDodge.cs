@@ -6,6 +6,7 @@ public class PlayerDodge : MonoBehaviour
 {
     [SerializeField] float dodgeForce = 30;
     [SerializeField] internal float dodgeRechargeDelay = 1f;
+    [SerializeField] PlayerHUD sprintHUD;
 
     Rigidbody rb;
     internal float dodgeRechargeTimer = 0f;
@@ -22,6 +23,7 @@ public class PlayerDodge : MonoBehaviour
         Debug.DrawLine(transform.position, transform.forward * 20, Color.green);
         if (Input.GetKeyDown(KeyCode.LeftShift) && dodgeRechargeTimer <= 0)
         {
+            sprintHUD.ShakeBar();
             rb.AddForce(transform.forward * dodgeForce, ForceMode.Impulse);
             dodgeRechargeTimer = dodgeRechargeDelay;
         }
