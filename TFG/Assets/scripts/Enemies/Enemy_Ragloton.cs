@@ -102,7 +102,6 @@ public class Enemy_Ragloton : BaseEnemyScript
 
         if(state.Equals(States.DAMAGE))
         {
-            base.newMatDef.color = new Color(1, 1, 1, 0);
             base.damageTimer = baseDamageTimer;
         }
 

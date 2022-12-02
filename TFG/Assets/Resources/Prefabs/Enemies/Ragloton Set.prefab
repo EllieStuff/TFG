@@ -40,8 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 331556592035321910}
-  - component: {fileID: 331556592035321911}
-  - component: {fileID: 331556592035321904}
   - component: {fileID: 3140610948224209443}
   - component: {fileID: 5214939055855186185}
   - component: {fileID: 331556592035321905}
@@ -73,56 +71,6 @@ Transform:
   m_Father: {fileID: 4062570782981934075}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &331556592035321911
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 331556592035321907}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &331556592035321904
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 331556592035321907}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a5abd5b157926024caaca373a683ffd0, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3140610948224209443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +91,7 @@ MonoBehaviour:
   isAttacking: 0
   baseMoveSpeed: 10
   baseDamageTimer: 0.5
-  enemyMat: {fileID: 2100000, guid: a5abd5b157926024caaca373a683ffd0, type: 2}
+  baseDeathTime: 5
   moveDir: {x: 0, y: 0, z: 0}
   shieldPivotRef: {fileID: 4062570782365389299}
   idleShieldPoint: {fileID: 6350330427524465077}
@@ -172,6 +120,10 @@ MonoBehaviour:
   healthStatesFeedback: {fileID: 0}
   maxLife: 50
   currLife: 50
+  bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
+    type: 3}
+  deathParticlesPrefab: {fileID: 8161046788835331719, guid: 4dbd5e376662b544bb4895c6abb1687a,
+    type: 3}
 --- !u!136 &331556592035321905
 CapsuleCollider:
   m_ObjectHideFlags: 0

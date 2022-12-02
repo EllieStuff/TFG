@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_CacoRato : BaseEnemyScript
+public class Enemy_CacoRato_Melee : BaseEnemyScript
 {
     //[Header("CacoRato")]
     [SerializeField] float attackDistance;
@@ -11,11 +11,15 @@ public class Enemy_CacoRato : BaseEnemyScript
     [SerializeField] float attackDamage;
     [SerializeField] EnemyWeaponHand handWeapon;
     [SerializeField] Animator enemyAnimator;
-    [SerializeField] GameObject knifePrefab;
+    [SerializeField] TrailRenderer trailsEffect;
 
     float attackTimer;
 
+    bool attacking;
+
     LifeSystem playerLife;
+
+    [SerializeField] Animation swordAnim;
 
     internal override void Start_Call() { base.Start_Call(); playerLife = player.GetComponent<LifeSystem>(); }
 
@@ -33,23 +37,26 @@ public class Enemy_CacoRato : BaseEnemyScript
     {
         enemyAnimator.SetFloat("state", 1);
         base.MoveToTargetUpdate();
+
     }
     internal override void AttackUpdate()
     {
         base.AttackUpdate();
 
-        if(Vector3.Distance(player.position, transform.position) > attackDistance)
+        if (attacking && handWeapon.isTouchingPlayer)
+            playerLife.Damage(attackDamage, playerLife.healthState);
+
+        if (Vector3.Distance(player.position, transform.position) > attackDistance)
         {
-            enemyAnimator.SetFloat("state", 1);
             Vector3 targetMoveDir = (player.position - transform.position).normalized;
             MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
         }
         else
         {
-            if(!state.Equals(States.DAMAGE))
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
-
             enemyAnimator.SetFloat("state", 0);
+
+            rb.velocity = Vector3.zero;
+
             attackTimer -= Time.deltaTime;
 
             if(attackTimer <= 0)
@@ -62,13 +69,15 @@ public class Enemy_CacoRato : BaseEnemyScript
 
     IEnumerator AttackCorroutine()
     {
-        //place shoot animation here
+        swordAnim.Play();
+
+        trailsEffect.enabled = true;
+        attacking = true;
 
         yield return new WaitForSeconds(attackAnimationTime);
 
-        KnifeThrown knife = Instantiate(knifePrefab, transform).GetComponent<KnifeThrown>();
-        knife.knifeDir = (player.position - transform.position).normalized;
-        knife.entityThrowingIt = transform;
+        attacking = false;
+        trailsEffect.enabled = false;
     }
 
 

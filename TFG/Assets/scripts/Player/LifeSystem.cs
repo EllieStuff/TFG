@@ -12,6 +12,9 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
     [SerializeField] internal float maxLife = 100;
     [SerializeField] internal float currLife = 100;
+    [SerializeField] private GameObject bloodPrefab;
+    [SerializeField] private GameObject deathParticlesPrefab;
+    [SerializeField] private PlayerHUD playerLifeBar;
 
     internal float dmgInc = 1.0f;
 
@@ -62,7 +65,16 @@ public class LifeSystem : MonoBehaviour
 
     public void Damage(float _dmg, HealthState _healthState)
     {
+        if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
+            playerLifeBar.ShakeBar();
 
+        if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY))
+        {
+            if (currLife > 0)
+                Instantiate(bloodPrefab, transform);
+            else
+                Instantiate(deathParticlesPrefab, transform);
+        }
 
         currLife -= _dmg * dmgInc;
         CheckPlayerLifeLimits();

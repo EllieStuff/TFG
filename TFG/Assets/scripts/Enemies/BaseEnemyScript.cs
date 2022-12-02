@@ -16,20 +16,14 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float baseMoveSpeed;
     [SerializeField] internal float baseDamageTimer;
-
-    //PROVISIONAL
-
-    [SerializeField] Material enemyMat;
-    private MeshRenderer enemyOwnMat;
-    internal Material newMatDef;
-
-    //____________________________________________________
+    [SerializeField] internal float baseDeathTime;
 
     internal float damageTimer = 0;
     PlayerSword playerSword;
     LifeSystem playerLife;
     LifeSystem enemyLife;
     bool SwordTouching;
+    bool deadNPC = false;
 
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
@@ -64,16 +58,6 @@ public class BaseEnemyScript : MonoBehaviour
         playerSword = playerGO.GetComponent<PlayerSword>();
 
         ResetSpeed();
-
-        //PROVISIONAL
-
-        Material newMat = new Material(enemyMat);
-        enemyOwnMat = GetComponent<MeshRenderer>();
-        newMatDef = newMat;
-        enemyOwnMat.material = newMatDef;
-        newMatDef.color = new Color(1, 1, 1, 0);
-
-        //____________________________________________________
     }
 
     private void Update()
@@ -151,15 +135,16 @@ public class BaseEnemyScript : MonoBehaviour
     {
         damageTimer -= Time.deltaTime;
 
-        if(enemyLife.currLife <= 0)
+        if(enemyLife.currLife <= 0 && !deadNPC)
         {
-            //enemyDies animation and destroy then
-            Destroy(gameObject);
+            damageTimer = baseDeathTime;
+            deadNPC = true;
         }
 
-        if (damageTimer <= 0)
+        if(damageTimer <= 0 && deadNPC)
+            Destroy(gameObject);
+        else if (damageTimer <= 0)
         {
-            newMatDef.color = new Color(1, 1, 1, 0);
             damageTimer = baseDamageTimer;
             ChangeState(States.IDLE);
         }
@@ -320,9 +305,7 @@ public class BaseEnemyScript : MonoBehaviour
         {
             SwordTouching = true;
             WeaponStats weaponStats = other.GetComponent<WeaponStats>();
-            //playerWeaponStats = weaponStats;
             enemyLife.Damage(weaponStats.weaponDamage, HealthState.GetHealthStateByEffect(weaponStats.weaponEffect));
-            newMatDef.color = new Color(1, 0, 0, 0.5f);
             damageTimer = baseDamageTimer;
             ChangeState(States.DAMAGE);
         }

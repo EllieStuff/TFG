@@ -30,7 +30,9 @@ public class KnifeThrown : MonoBehaviour
         else if (knifeMesh.isTrigger)
             knifeMesh.isTrigger = false;
 
-        if (Vector3.Distance(transform.position, entityThrowingIt.position) >= knifeMaxDistance)
+        if (entityThrowingIt != null && Vector3.Distance(transform.position, entityThrowingIt.position) >= knifeMaxDistance)
+            Destroy(gameObject);
+        else if(entityThrowingIt == null)
             Destroy(gameObject);
     }
 

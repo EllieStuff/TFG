@@ -9,8 +9,10 @@ public class PlayerSword : MonoBehaviour
     PlayerController playerController;
     const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
+    const float disableParticlesTime = 0.5f;
     [SerializeField] Animation swordAnim;
     [SerializeField] Collider swordCollider;
+    [SerializeField] TrailRenderer swordTrails;
 
     //
     AudioSource audioSource;
@@ -25,6 +27,7 @@ public class PlayerSword : MonoBehaviour
 
     void Start()
     {
+        swordTrails.enabled = false;
         playerRB = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
         audioSource = GetComponent<AudioSource>();
@@ -61,6 +64,8 @@ public class PlayerSword : MonoBehaviour
 
     bool CanAttackWithSword()
     {
+        //modificar perquè sigui automàtic
+
         if (!isHoldingTheKey && Input.GetKey(KeyCode.Mouse0) && attackCooldown <= 0 && playerController.StateEquals(PlayerController.PlayerState.NORMAL))
         {
             isHoldingTheKey = true;
@@ -74,10 +79,15 @@ public class PlayerSword : MonoBehaviour
 
     IEnumerator AttackCorroutine()
     {
+        swordTrails.enabled = true;
         yield return new WaitForSeconds(attackBoolTimeEnabled);
 
         isAttacking = false;
         swordCollider.enabled = false;
+
+        yield return new WaitForSeconds(disableParticlesTime);
+
+        swordTrails.enabled = false;
 
         yield return 0;
     }
