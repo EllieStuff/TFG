@@ -64,6 +64,8 @@ public class PlayerSword : MonoBehaviour
 
     bool CanAttackWithSword()
     {
+        //modificar perquè sigui automàtic
+
         if (!isHoldingTheKey && Input.GetKey(KeyCode.Mouse0) && attackCooldown <= 0 && playerController.StateEquals(PlayerController.PlayerState.NORMAL))
         {
             isHoldingTheKey = true;
