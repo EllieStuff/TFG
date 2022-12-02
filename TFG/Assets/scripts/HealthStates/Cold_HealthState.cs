@@ -21,16 +21,13 @@ public class Cold_HealthState : HealthState
         state = HealthState.Effect.COLD;
         effectDuration = 7.0f;
 
-        burnedCompatibility_DmgMultiplier = 3.0f;
-        coldCompatibility_DmgMultiplier = 2.0f;
-        frozenCompatibility_DmgMultiplier = 2.0f;
+        burnedCompatibility_DmgMultiplier = 0.0f;
+        coldCompatibility_DmgMultiplier = 0.5f;
+        frozenCompatibility_DmgMultiplier = 0.5f;
 
         burnedCompatibility_FinalEffect = new HealthState();
-        ///De forma temporal ho deixarem com a cold
-        coldCompatibility_FinalEffect = new Cold_HealthState();
-        frozenCompatibility_FinalEffect = new Cold_HealthState();
-        //coldCompatibility_FinalEffect = new Frozen_HealthState();
-        //frozenCompatibility_FinalEffect = new Frozen_HealthState();
+        coldCompatibility_FinalEffect = new Frozen_HealthState();
+        frozenCompatibility_FinalEffect = new Frozen_HealthState();
 
     }
 

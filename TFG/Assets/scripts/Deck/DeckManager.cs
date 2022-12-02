@@ -72,8 +72,10 @@ public class DeckManager : MonoBehaviour
     Vector3 GetCardPos(int _cardIdx)
     {
         float xPos;
-        if (cards.Count > 1)
+        if (cards.Count > 2)
             xPos = cardsFatherRef.position.x + (cardsFatherRef.rect.width * _cardIdx / (cards.Count - 1));
+        else if (cards.Count == 2)
+            xPos = cardsFatherRef.position.x + cardsFatherRef.rect.width / 4f + (cardsFatherRef.rect.width * _cardIdx / 2f);
         else
             xPos = cardsFatherRef.position.x + (cardsFatherRef.rect.width / 2f);
         return new Vector3(xPos, cardsFatherRef.position.y, cardsFatherRef.position.z);

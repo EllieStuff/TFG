@@ -8,7 +8,7 @@ public class LifeSystem : MonoBehaviour
 
     [SerializeField] internal EntityType entityType = EntityType.PLAYER;
     //[SerializeField] internal HealthState.Effect state = HealthState.Effect.NORMAL;
-    [SerializeField] internal HealthState healthState;
+    [SerializeField] internal List<HealthState> healthStates = new List<HealthState>();
     [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
     [SerializeField] internal float maxLife = 100;
     [SerializeField] internal float currLife = 100;
@@ -17,6 +17,7 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] private PlayerHUD playerLifeBar;
 
     internal float dmgInc = 1.0f;
+    internal bool isDead = false;
 
     PlayerMovement playerMovementScript;
 
@@ -26,8 +27,6 @@ public class LifeSystem : MonoBehaviour
 
     private void Start()
     {
-        healthState = new HealthState(this);
-
         if (entityType.Equals(EntityType.PLAYER))
             playerMovementScript = GetComponent<PlayerMovement>();
 
@@ -48,7 +47,7 @@ public class LifeSystem : MonoBehaviour
         else if (currLife < 0)
         {
             currLife = 0;
-            healthState.state = HealthState.Effect.DEAD;
+            isDead = true;
             //if (managesDeath)
             //{
             //    //Trigger animation
@@ -79,29 +78,65 @@ public class LifeSystem : MonoBehaviour
         currLife -= _dmg * dmgInc;
         CheckPlayerLifeLimits();
 
-        if (!healthState.initialized) _healthState.Init(this);
-        if (entityType.Equals(EntityType.PLAYER) && healthState.state != HealthState.Effect.DEAD) playerMovementScript.DamageStartCorroutine();
+        //if (!healthState.initialized) _healthState.Init(this);
+        if (entityType.Equals(EntityType.PLAYER) && !isDead) playerMovementScript.DamageStartCorroutine();
 
-        if(healthState.state != HealthState.Effect.DEAD && _healthState.state != HealthState.Effect.NORMAL)
+        if(!isDead)
         {
-            if (healthState.state != HealthState.Effect.NORMAL) //<------ Això sempre passarà per aquí i guess (per la eli)
-                healthState.CheckEffectsCompatibility(_healthState, _dmg * dmgInc);
+            if (healthStates.Count > 0)
+            {
+                bool foundEffectWithCompatibility = false;
+                foreach (HealthState healthState in healthStates)
+                {
+                    if (healthState.CheckEffectsCompatibility(_healthState, _dmg * dmgInc))
+                        foundEffectWithCompatibility = true;
+                }
+                CleanRepeatedHealthEffects();
+                if (!foundEffectWithCompatibility) 
+                    StartHealthState(_healthState);
+            }
             else
-                ChangeHealthState(_healthState);
+            {
+                StartHealthState(_healthState);
+            }
         }
 
     }
 
-    internal void ChangeHealthState(HealthState _newHealthState)
+    public void StartHealthState(HealthState _healthState)
     {
-        if (healthState != null)
-            healthState.EndEffect();
+        healthStates.Add(_healthState);
+        _healthState.StartEffect();
+        healthStatesFeedback.ActivateFeedback(_healthState.state, _healthState.effectDuration);
+    }
+
+    internal void ChangeHealthState(HealthState _currHealthState, HealthState _newHealthState)
+    {
+        if (_currHealthState != null)
+            _currHealthState.EndEffect();
 
         if (!_newHealthState.initialized) _newHealthState.Init(this);
-        healthState = _newHealthState;
+        _currHealthState = _newHealthState;
 
-        healthState.StartEffect();
-        healthStatesFeedback.ActivateFeedback(healthState.state, healthState.effectDuration);
+        _currHealthState.StartEffect();
+        healthStatesFeedback.ActivateFeedback(_currHealthState.state, _currHealthState.effectDuration);
+    }
+
+    void CleanRepeatedHealthEffects()
+    {
+        for(int i = 0; i < healthStates.Count; i++)
+        {
+            HealthState.Effect searchedEffect = healthStates[i].state;
+            for (int j = 0; j < healthStates.Count; j++)
+            {
+                if (i == j) continue;
+                if(searchedEffect == healthStates[j].state)
+                {
+                    healthStates.RemoveAt(j);
+                    j--;
+                }
+            }
+        }
     }
 
 
