@@ -44,6 +44,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true;
+    internal Quaternion targetRot;
 
     //private WeaponStats playerWeaponStats;
 
@@ -70,6 +71,7 @@ public class BaseEnemyScript : MonoBehaviour
         enemyOwnMat = GetComponent<MeshRenderer>();
         newMatDef = newMat;
         enemyOwnMat.material = newMatDef;
+        newMatDef.color = new Color(1, 1, 1, 0);
 
         //____________________________________________________
     }
@@ -94,12 +96,12 @@ public class BaseEnemyScript : MonoBehaviour
         {
             if (moveDir != Vector3.zero)
             {
-                Quaternion targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
+                targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
             else
             {
-                Quaternion targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
+                targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
         }
@@ -157,7 +159,7 @@ public class BaseEnemyScript : MonoBehaviour
 
         if (damageTimer <= 0)
         {
-            newMatDef.color = Color.white;
+            newMatDef.color = new Color(1, 1, 1, 0);
             damageTimer = baseDamageTimer;
             ChangeState(States.IDLE);
         }
@@ -320,7 +322,7 @@ public class BaseEnemyScript : MonoBehaviour
             WeaponStats weaponStats = other.GetComponent<WeaponStats>();
             //playerWeaponStats = weaponStats;
             enemyLife.Damage(weaponStats.weaponDamage, HealthState.GetHealthStateByEffect(weaponStats.weaponEffect));
-            newMatDef.color = Color.red;
+            newMatDef.color = new Color(1, 0, 0, 0.5f);
             damageTimer = baseDamageTimer;
             ChangeState(States.DAMAGE);
         }
