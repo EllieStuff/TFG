@@ -48,7 +48,6 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
 
         if (Vector3.Distance(player.position, transform.position) > attackDistance)
         {
-            enemyAnimator.SetFloat("state", 1);
             Vector3 targetMoveDir = (player.position - transform.position).normalized;
             MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
         }
