@@ -7,6 +7,7 @@ public class BaseEnemyScript : MonoBehaviour
     public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
+    const float PLAYER_HIT_DISTANCE_SWORD = 3;
 
 
     [Header("BaseEnemy")]
@@ -167,7 +168,12 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void AttackUpdate()
     {
-        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStopAttackDistance)
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if(distance <= PLAYER_HIT_DISTANCE_SWORD)
+            playerSword.mustAttack = true;
+
+        if (!isAttacking && distance > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
     }
     
