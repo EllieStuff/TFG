@@ -44,7 +44,7 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
         base.AttackUpdate();
 
         if (attacking && handWeapon.isTouchingPlayer)
-            playerLife.Damage(attackDamage, playerLife.healthState);
+            playerLife.Damage(attackDamage, new HealthState());
 
         if (Vector3.Distance(player.position, transform.position) > attackDistance)
         {

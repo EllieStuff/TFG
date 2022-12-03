@@ -42,7 +42,7 @@ public class KnifeThrown : MonoBehaviour
         if(col.tag.Equals("Player"))
         {
             LifeSystem life = col.GetComponent<LifeSystem>();
-            life.Damage(knifeDamage, life.healthState);
+            life.Damage(knifeDamage, new HealthState());
         }
 
         if(timerKnife <= 0)
