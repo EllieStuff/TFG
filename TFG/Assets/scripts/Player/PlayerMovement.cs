@@ -21,10 +21,11 @@ public class PlayerMovement : MonoBehaviour
 
     float actualMoveForce;
     float actualRotSpeed;
-    internal float speedMultiplier = 1.0f;
+    internal float speedMultiplier = 2.0f;
     Vector3 actualMaxSpeed;
     internal bool canMove = true;
     internal bool canRotate = true;
+    internal Vector3 targetMousePos;
     LifeSystem lifeStatus;
 
     const float minFallSpeed = 10;
@@ -55,10 +56,10 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = mouseLookVec.y;
         //if (Mathf.Abs(verticalInput) < INPUT_THRESHOLD) verticalInput = 0;
         lookDir = new Vector3(horizontalInput, 0, verticalInput);
-        moveDir = NormalizeDirection(lookDir);
+        moveDir = MoveToTargetVector(targetMousePos);
 
 
-        if (canMove && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && Input.GetKey(KeyCode.Mouse1) && lifeStatus.currLife > 0)
+        if (canMove && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero && lifeStatus.currLife > 0)
         {
             moving = true;
 
@@ -89,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = FallSystem(rb.velocity);
 
-        if (canRotate && moveDir != Vector3.zero && lifeStatus.currLife > 0)
+        if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
         {
             Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
@@ -110,6 +111,17 @@ public class PlayerMovement : MonoBehaviour
             actualVelocity.y -= Time.deltaTime * fallSpeed;
 
         return actualVelocity;
+    }
+
+    Vector3 MoveToTargetVector(Vector3 mousePositionInWorld)
+    {
+        if (Vector3.Distance(mousePositionInWorld, transform.position) <= 1)
+            return Vector3.zero;
+
+        Vector3 vectorToMove = (mousePositionInWorld - transform.position).normalized;
+        vectorToMove.y = 0;
+
+        return vectorToMove;
     }
 
     Vector3 NormalizeDirection(Vector3 moveDir)
