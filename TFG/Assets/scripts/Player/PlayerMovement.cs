@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     float actualMoveForce;
     float actualRotSpeed;
+    float speedMultiplierRot = 10;
     internal float speedMultiplier = 2.0f;
     Vector3 actualMaxSpeed;
     internal bool canMove = true;
@@ -93,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
         {
             Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
     }
 
