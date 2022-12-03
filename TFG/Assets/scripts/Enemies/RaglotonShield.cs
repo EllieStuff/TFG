@@ -112,7 +112,7 @@ public class RaglotonShield : MonoBehaviour
         if(other.CompareTag("SwordRegion") || other.CompareTag("Weapon"))
         {
             Physics.IgnoreCollision(other, raglotonCollider, true);
-            WeaponStats weapon = other.GetComponent<WeaponStats>();
+            DamageData weapon = other.GetComponent<DamageData>();
             lifeSystem.Damage(weapon.weaponDamage, HealthState.GetHealthStateByEffect(weapon.weaponEffect));
             CardAttack cardAttack = other.GetComponent<CardAttack>();
             if (cardAttack != null)

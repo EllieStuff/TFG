@@ -8,6 +8,7 @@ public class HealthState
 {
     public enum Effect { NORMAL, DEAD, BURNED, BLEEDING, WET, COLD, FROZEN, PARALIZED, ELECTROCUTED, WIND, STRONG_BLOW, COUNT }
 
+    [HideInInspector] public string name = "Default State";
     public Effect state = Effect.NORMAL;
     [SerializeField] internal HealthState effectWhenFinished;
     public float effectDuration = -1f;
@@ -15,13 +16,25 @@ public class HealthState
     
     internal LifeSystem lifeSystem;
     internal float
-        burnedCompatibility_DmgMultiplier = 1f,
-        coldCompatibility_DmgMultiplier = 1f,
-        frozenCompatibility_DmgMultiplier = 1f;
+        burnedCompatibility_DmgMultiplier = 0f,
+        bleedingCompatibility_DmgMultiplier = 0f,
+        wetCompatibility_DmgMultiplier = 0f,
+        coldCompatibility_DmgMultiplier = 0f,
+        frozenCompatibility_DmgMultiplier = 0f,
+        paralizedCompatibility_DmgMultiplier = 0f,
+        electrocutedCompatibility_DmgMultiplier = 0f,
+        windCompatibility_DmgMultiplier = 0f,
+        strongBlowCompatibility_DmgMultiplier = 0f;
     internal HealthState
-        burnedCompatibility_FinalEffect,
-        coldCompatibility_FinalEffect,
-        frozenCompatibility_FinalEffect;
+        burnedCompatibility_FinalEffect = null,
+        bleedingCompatibility_FinalEffect = null,
+        wetCompatibility_FinalEffect = null,
+        coldCompatibility_FinalEffect = null,
+        frozenCompatibility_FinalEffect = null,
+        paralizedCompatibility_FinalEffect = null,
+        electrocutedCompatibility_FinalEffect = null,
+        windCompatibility_FinalEffect = null,
+        strongBlowCompatibility_FinalEffect = null;
 
 
     public HealthState() { }
@@ -59,17 +72,26 @@ public class HealthState
         switch (_appliedEffect.state)
         {
             case HealthState.Effect.BURNED:
-                if(burnedCompatibility_FinalEffect != null) burnedCompatibility_FinalEffect.Init(lifeSystem);
+                if (burnedCompatibility_FinalEffect == null) return false; 
+                burnedCompatibility_FinalEffect.Init(lifeSystem);
                 return ApplyCompatibilityEffect(_baseDmg, burnedCompatibility_DmgMultiplier, burnedCompatibility_FinalEffect);
                 break;
 
+            case HealthState.Effect.BLEEDING:
+                if (bleedingCompatibility_FinalEffect == null) return false; 
+                bleedingCompatibility_FinalEffect.Init(lifeSystem);
+                return ApplyCompatibilityEffect(_baseDmg, bleedingCompatibility_DmgMultiplier, bleedingCompatibility_FinalEffect);
+                break;
+
             case HealthState.Effect.COLD:
-                if (coldCompatibility_FinalEffect != null) coldCompatibility_FinalEffect.Init(lifeSystem);
+                if (coldCompatibility_FinalEffect == null) return false; 
+                coldCompatibility_FinalEffect.Init(lifeSystem);
                 return ApplyCompatibilityEffect(_baseDmg, coldCompatibility_DmgMultiplier, coldCompatibility_FinalEffect);
                 break;
 
             case HealthState.Effect.FROZEN:
-                if (frozenCompatibility_FinalEffect != null) frozenCompatibility_FinalEffect.Init(lifeSystem);
+                if (frozenCompatibility_FinalEffect == null) return false; 
+                frozenCompatibility_FinalEffect.Init(lifeSystem);
                 return ApplyCompatibilityEffect(_baseDmg, frozenCompatibility_DmgMultiplier, frozenCompatibility_FinalEffect);
                 break;
 
@@ -108,7 +130,7 @@ public class HealthState
 
     public virtual void StartEffect()
     {
-        if (effectDuration > 0 && state != Effect.NORMAL && state != Effect.DEAD)
+        if (effectDuration > 0 && state != Effect.NORMAL && !lifeSystem.isDead)
             lifeSystem.StartCoroutine(EndEffectByTimeCoroutine());
         //Cambiar posibles variables
     }
@@ -139,11 +161,17 @@ public class HealthState
     {
         switch (_effect)
         {
-            case Effect.NORMAL: case Effect.DEAD:
+            case Effect.NORMAL:
                 return new HealthState();
 
             case Effect.BURNED:
                 return new Burned_HealthState();
+
+            case Effect.BLEEDING:
+                return new Bleeding_HealthState();
+
+            case Effect.WET:
+                return new Wind_HealthState();
 
             case Effect.COLD:
                 return new Cold_HealthState();
@@ -151,10 +179,29 @@ public class HealthState
             case Effect.FROZEN:
                 return new Frozen_HealthState();
 
+            case Effect.PARALIZED:
+                return new Paralized_HealthState();
+
+            case Effect.ELECTROCUTED:
+                return new Electrocuted_HealthState();
+
+            case Effect.WIND:
+                return new Wind_HealthState();
+
+            case Effect.STRONG_BLOW:
+                return new StrongBlow_HealthState();
+
 
             default:
                 return null;
         }
     }
+    public static HealthState GetHealthStateByEffect(Effect _effect, LifeSystem _lifeSystem)
+    {
+        HealthState effect = GetHealthStateByEffect(_effect);
+        effect.Init(_lifeSystem);
+        return effect;
+    }
+
 
 }

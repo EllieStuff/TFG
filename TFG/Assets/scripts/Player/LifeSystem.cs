@@ -44,10 +44,12 @@ public class LifeSystem : MonoBehaviour
         {
             currLife = maxLife;
         }
-        else if (currLife < 0)
+        else if (currLife <= 0)
         {
             currLife = 0;
             isDead = true;
+            StopAllCoroutines();
+            //healthStates.Clear();
             //if (managesDeath)
             //{
             //    //Trigger animation
@@ -81,7 +83,7 @@ public class LifeSystem : MonoBehaviour
         //if (!healthState.initialized) _healthState.Init(this);
         if (entityType.Equals(EntityType.PLAYER) && !isDead) playerMovementScript.DamageStartCorroutine();
 
-        if(!isDead)
+        if(!isDead && _healthState != null && _healthState.state != HealthState.Effect.NORMAL)
         {
             if (healthStates.Count > 0)
             {
@@ -127,6 +129,8 @@ public class LifeSystem : MonoBehaviour
         for(int i = 0; i < healthStates.Count; i++)
         {
             HealthState.Effect searchedEffect = healthStates[i].state;
+            if (searchedEffect == HealthState.Effect.BLEEDING) continue;
+
             for (int j = 0; j < healthStates.Count; j++)
             {
                 if (i == j) continue;

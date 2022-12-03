@@ -18,8 +18,9 @@ public class Cold_HealthState : HealthState
     {
         base.Init(_lifeSystem);
 
+        name = "Cold State";
         state = HealthState.Effect.COLD;
-        effectDuration = 7.0f;
+        effectDuration = 10.0f;
 
         burnedCompatibility_DmgMultiplier = 0.0f;
         coldCompatibility_DmgMultiplier = 0.5f;
@@ -27,7 +28,8 @@ public class Cold_HealthState : HealthState
 
         burnedCompatibility_FinalEffect = new HealthState();
         coldCompatibility_FinalEffect = new Frozen_HealthState();
-        frozenCompatibility_FinalEffect = new Frozen_HealthState();
+        wetCompatibility_FinalEffect = new Frozen_HealthState();
+        //frozenCompatibility_FinalEffect = new Frozen_HealthState();
 
     }
 

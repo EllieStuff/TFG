@@ -68,7 +68,7 @@ public class Enemy_CacoRato : BaseEnemyScript
 
         KnifeThrown knife = Instantiate(knifePrefab, transform).GetComponent<KnifeThrown>();
         knife.knifeDir = (player.position - transform.position).normalized;
-        knife.entityThrowingIt = transform;
+        knife.SetOwnerTransform(transform);
     }
 
 

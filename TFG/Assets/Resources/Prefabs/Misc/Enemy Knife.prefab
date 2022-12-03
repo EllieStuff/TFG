@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1496977152432559415}
   - component: {fileID: 5580650151585918938}
   - component: {fileID: 9071994881330443458}
+  - component: {fileID: -1873489517449642779}
   - component: {fileID: -5686168875871474000}
   m_Layer: 0
   m_Name: Enemy Knife
@@ -117,7 +118,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knifeMaxDistance: 20
   knifeSpeed: 10
-  knifeDamage: 10
+--- !u!114 &-1873489517449642779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507451495234348787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTransform: {fileID: 0}
+  weaponDamage: 10
+  weaponEffect: 0
+  alwaysAttacking: 1
 --- !u!64 &-5686168875871474000
 MeshCollider:
   m_ObjectHideFlags: 0

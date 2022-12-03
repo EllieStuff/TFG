@@ -5,11 +5,13 @@ using UnityEngine;
 public class BaseEnemyScript : MonoBehaviour
 {
     public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
+    public enum EnemyType { SKINY_RAT, FAT_RAT, LITTLE_SNAKE, BIG_SNAKE, CROCODILE }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
 
 
     [Header("BaseEnemy")]
+    [SerializeField] internal EnemyType enemyType;
     [SerializeField] internal float baseRotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
     [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
@@ -19,10 +21,10 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseDeathTime;
 
     internal float damageTimer = 0;
-    PlayerSword playerSword;
-    LifeSystem playerLife;
+    //PlayerSword playerSword;
+    //LifeSystem playerLife;
     LifeSystem enemyLife;
-    bool SwordTouching;
+    //bool SwordTouching;
     bool deadNPC = false;
 
     readonly internal Vector3 
@@ -54,8 +56,8 @@ public class BaseEnemyScript : MonoBehaviour
         enemyLife = GetComponent<LifeSystem>();
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.transform;
-        playerLife = playerGO.GetComponent<LifeSystem>();
-        playerSword = playerGO.GetComponent<PlayerSword>();
+        //playerLife = playerGO.GetComponent<LifeSystem>();
+        //playerSword = playerGO.GetComponent<PlayerSword>();
 
         ResetSpeed();
     }
@@ -287,6 +289,7 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (col.gameObject.CompareTag("floor"))
             rb.useGravity = false;
+
     }
 
     void OnCollisionExit(Collision col)
@@ -297,23 +300,26 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (col.gameObject.CompareTag("floor"))
             rb.useGravity = true;
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("SwordRegion"))
-        {
-            SwordTouching = true;
-            WeaponStats weaponStats = other.GetComponent<WeaponStats>();
-            enemyLife.Damage(weaponStats.weaponDamage, HealthState.GetHealthStateByEffect(weaponStats.weaponEffect));
-            damageTimer = baseDamageTimer;
-            ChangeState(States.DAMAGE);
-        }
+        //if (other.tag.Equals("SwordRegion") || other.tag.Equals("Weapon"))
+        //{
+        //    SwordTouching = true;
+        //    WeaponStats weaponStats = other.GetComponent<WeaponStats>();
+        //    enemyLife.Damage(weaponStats.weaponDamage, HealthState.GetHealthStateByEffect(weaponStats.weaponEffect, enemyLife));
+        //    damageTimer = baseDamageTimer;
+        //    ChangeState(States.DAMAGE);
+        //}
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag.Equals("SwordRegion"))
-            SwordTouching = false;
+        //if (other.tag.Equals("SwordRegion") || other.tag.Equals("Weapon"))
+        //{
+        //    SwordTouching = false;
+        //}
     }
 }
