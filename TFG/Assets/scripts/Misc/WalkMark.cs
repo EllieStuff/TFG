@@ -9,9 +9,13 @@ public class WalkMark : MonoBehaviour
     Vector3 worldPosition = Vector3.zero;
     Plane plane = new Plane(Vector3.up, 0);
     PlayerMovement playerScript;
+    [SerializeField] GameObject walkMark;
+
+    const float DISTANCE_TO_DISABLE_MARK = 2;
 
     private void Start()
     {
+        walkMark.transform.parent = null;
         cameraMain = Camera.main;
         playerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
@@ -24,7 +28,19 @@ public class WalkMark : MonoBehaviour
         if(Input.GetKey(KeyCode.Mouse1))
         {
             playerScript.targetMousePos = worldPosition;
+
+            if(walkMark.activeSelf)
+                walkMark.SetActive(false);
         }
+
+        if(Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            walkMark.transform.position = worldPosition;
+            walkMark.SetActive(true);
+        }
+
+        if(walkMark.activeSelf && Vector3.Distance(playerScript.transform.position, walkMark.transform.position) <= DISTANCE_TO_DISABLE_MARK)
+            walkMark.SetActive(false);
     }
 
     void SetMarkPositionWithRaycast()
