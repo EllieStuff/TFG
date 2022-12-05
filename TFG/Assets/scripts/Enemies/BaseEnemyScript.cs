@@ -21,6 +21,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     internal float damageTimer = 0;
     PlayerSword playerSword;
+    PlayerMovement playerMovement;
     LifeSystem playerLife;
     LifeSystem enemyLife;
     bool SwordTouching;
@@ -55,6 +56,7 @@ public class BaseEnemyScript : MonoBehaviour
         enemyLife = GetComponent<LifeSystem>();
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.transform;
+        playerMovement = playerGO.GetComponent<PlayerMovement>();
         playerLife = playerGO.GetComponent<LifeSystem>();
         playerSword = playerGO.GetComponent<PlayerSword>();
 
@@ -174,7 +176,10 @@ public class BaseEnemyScript : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
 
         if(distance <= PLAYER_HIT_DISTANCE_SWORD)
+        {
+            playerMovement.attackDir = transform.position;
             playerSword.mustAttack = true;
+        }
 
         if (!isAttacking && distance > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);

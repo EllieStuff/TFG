@@ -27,7 +27,9 @@ public class PlayerMovement : MonoBehaviour
     internal bool canMove = true;
     internal bool canRotate = true;
     internal Vector3 targetMousePos;
+    internal Vector3 attackDir;
     LifeSystem lifeStatus;
+    PlayerSword playerSword;
 
     const float minFallSpeed = 10;
 
@@ -43,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();
+        playerSword = GetComponent<PlayerSword>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         ResetSpeed();
@@ -91,9 +94,16 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = FallSystem(rb.velocity);
 
-        if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
+        Quaternion targetRot;
+
+        if (playerSword.mustAttack && rb.velocity.magnitude <= playerSword.minAttackMovespeed)
         {
-            Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
+            targetRot = Quaternion.LookRotation(attackDir - transform.position, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
+        }
+        else if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
+        {
+            targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
     }

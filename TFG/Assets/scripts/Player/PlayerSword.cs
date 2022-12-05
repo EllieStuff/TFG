@@ -10,7 +10,7 @@ public class PlayerSword : MonoBehaviour
     const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
     const float disableParticlesTime = 0.5f;
-    const float minAttackMovespeed = 1;
+    internal float minAttackMovespeed = 1;
     [SerializeField] Animation swordAnim;
     [SerializeField] Collider swordCollider;
     [SerializeField] TrailRenderer swordTrails;
