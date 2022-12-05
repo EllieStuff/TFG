@@ -15,8 +15,6 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
 
     float attackTimer;
 
-    bool attacking;
-
     LifeSystem playerLife;
 
     [SerializeField] Animation swordAnim;
@@ -42,9 +40,6 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
     internal override void AttackUpdate()
     {
         base.AttackUpdate();
-
-        //if (attacking && handWeapon.isTouchingPlayer)
-        //    playerLife.Damage(attackDamage, new HealthState(playerLife));
 
         if (Vector3.Distance(player.position, transform.position) > attackDistance)
         {
@@ -72,11 +67,11 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
         swordAnim.Play();
 
         trailsEffect.enabled = true;
-        attacking = true;
+        isAttacking = true;
 
         yield return new WaitForSeconds(attackAnimationTime);
 
-        attacking = false;
+        isAttacking = false;
         trailsEffect.enabled = false;
     }
 

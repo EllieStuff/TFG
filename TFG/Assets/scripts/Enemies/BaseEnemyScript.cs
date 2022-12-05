@@ -8,6 +8,7 @@ public class BaseEnemyScript : MonoBehaviour
     public enum EnemyType { SKINY_RAT, FAT_RAT, LITTLE_SNAKE, BIG_SNAKE, CROCODILE }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
+    const float PLAYER_HIT_DISTANCE_SWORD = 3;
 
 
     [Header("BaseEnemy")]
@@ -21,10 +22,11 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseDeathTime;
 
     internal float damageTimer = 0;
-    //PlayerSword playerSword;
-    //LifeSystem playerLife;
+    PlayerSword playerSword;
+    LifeSystem playerLife;
     LifeSystem enemyLife;
-    //bool SwordTouching;
+    PlayerMovement playerMovement;
+    bool SwordTouching;
     bool deadNPC = false;
 
     readonly internal Vector3 
@@ -56,8 +58,9 @@ public class BaseEnemyScript : MonoBehaviour
         enemyLife = GetComponent<LifeSystem>();
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.transform;
-        //playerLife = playerGO.GetComponent<LifeSystem>();
-        //playerSword = playerGO.GetComponent<PlayerSword>();
+        playerLife = playerGO.GetComponent<LifeSystem>();
+        playerSword = playerGO.GetComponent<PlayerSword>();
+        playerMovement = playerGO.GetComponent<PlayerMovement>();
 
         ResetSpeed();
     }
@@ -139,6 +142,9 @@ public class BaseEnemyScript : MonoBehaviour
 
         if(enemyLife.currLife <= 0 && !deadNPC)
         {
+            if (Vector3.Distance(transform.position, player.position) <= PLAYER_HIT_DISTANCE_SWORD)
+                playerSword.mustAttack = true;
+
             damageTimer = baseDeathTime;
             deadNPC = true;
         }
@@ -169,7 +175,15 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void AttackUpdate()
     {
-        if (!isAttacking && Vector3.Distance(transform.position, player.position) > enemyStopAttackDistance)
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if(distance <= PLAYER_HIT_DISTANCE_SWORD)
+        {
+            playerMovement.attackDir = transform.position;
+            playerSword.mustAttack = true;
+        }
+
+        if (!isAttacking && distance > enemyStopAttackDistance)
             ChangeState(States.MOVE_TO_TARGET);
     }
     
@@ -195,6 +209,9 @@ public class BaseEnemyScript : MonoBehaviour
             case States.ATTACK:
                 AttackExit();
                 break;
+            case States.DAMAGE:
+                DamageExit();
+                break;
 
             default:
                 Debug.LogWarning("State not found");
@@ -213,6 +230,9 @@ public class BaseEnemyScript : MonoBehaviour
                 break;
             case States.ATTACK:
                 AttackStart();
+                break;
+            case States.DAMAGE:
+                DamageStart();
                 break;
 
             default:
