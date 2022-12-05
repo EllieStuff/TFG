@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    public enum CardType { FIRE, ICE, COUNT }
+    //public enum CardType { FIRE, ICE, COUNT }
 
     [SerializeField] RectTransform cardsFatherRef;
     [SerializeField] GameObject cardUIPrefab;

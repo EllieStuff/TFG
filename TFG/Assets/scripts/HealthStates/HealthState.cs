@@ -15,26 +15,28 @@ public class HealthState
     internal bool initialized = false;
     
     internal LifeSystem lifeSystem;
-    internal float
-        burnedCompatibility_DmgMultiplier = 0f,
-        bleedingCompatibility_DmgMultiplier = 0f,
-        wetCompatibility_DmgMultiplier = 0f,
-        coldCompatibility_DmgMultiplier = 0f,
-        frozenCompatibility_DmgMultiplier = 0f,
-        paralizedCompatibility_DmgMultiplier = 0f,
-        electrocutedCompatibility_DmgMultiplier = 0f,
-        windCompatibility_DmgMultiplier = 0f,
-        strongBlowCompatibility_DmgMultiplier = 0f;
-    internal HealthState
-        burnedCompatibility_FinalEffect = null,
-        bleedingCompatibility_FinalEffect = null,
-        wetCompatibility_FinalEffect = null,
-        coldCompatibility_FinalEffect = null,
-        frozenCompatibility_FinalEffect = null,
-        paralizedCompatibility_FinalEffect = null,
-        electrocutedCompatibility_FinalEffect = null,
-        windCompatibility_FinalEffect = null,
-        strongBlowCompatibility_FinalEffect = null;
+    internal Dictionary<Effect, float> compatibilityMap_DmgMultipliers = new Dictionary<Effect, float>();
+    internal Dictionary<Effect, HealthState> compatibilityMap_FinalEffects = new Dictionary<Effect, HealthState>();
+    //internal float
+    //    burnedCompatibility_DmgMultiplier = 0f,
+    //    bleedingCompatibility_DmgMultiplier = 0f,
+    //    wetCompatibility_DmgMultiplier = 0f,
+    //    coldCompatibility_DmgMultiplier = 0f,
+    //    frozenCompatibility_DmgMultiplier = 0f,
+    //    paralizedCompatibility_DmgMultiplier = 0f,
+    //    electrocutedCompatibility_DmgMultiplier = 0f,
+    //    windCompatibility_DmgMultiplier = 0f,
+    //    strongBlowCompatibility_DmgMultiplier = 0f;
+    //internal HealthState
+    //    burnedCompatibility_FinalEffect = null,
+    //    bleedingCompatibility_FinalEffect = null,
+    //    wetCompatibility_FinalEffect = null,
+    //    coldCompatibility_FinalEffect = null,
+    //    frozenCompatibility_FinalEffect = null,
+    //    paralizedCompatibility_FinalEffect = null,
+    //    electrocutedCompatibility_FinalEffect = null,
+    //    windCompatibility_FinalEffect = null,
+    //    strongBlowCompatibility_FinalEffect = null;
 
 
     public HealthState() { }
@@ -45,12 +47,8 @@ public class HealthState
         this.effectDuration = _hs.effectDuration;
         this.initialized = _hs.initialized;
         this.lifeSystem = _hs.lifeSystem;
-        this.burnedCompatibility_DmgMultiplier = _hs.burnedCompatibility_DmgMultiplier;
-        this.coldCompatibility_DmgMultiplier = _hs.coldCompatibility_DmgMultiplier;
-        this.frozenCompatibility_DmgMultiplier = _hs.frozenCompatibility_DmgMultiplier;
-        this.burnedCompatibility_FinalEffect = _hs.burnedCompatibility_FinalEffect;
-        this.coldCompatibility_FinalEffect = _hs.coldCompatibility_FinalEffect;
-        this.frozenCompatibility_FinalEffect = _hs.frozenCompatibility_FinalEffect;
+        this.compatibilityMap_DmgMultipliers = new Dictionary<Effect, float>(_hs.compatibilityMap_DmgMultipliers);
+        this.compatibilityMap_FinalEffects = new Dictionary<Effect, HealthState>(_hs.compatibilityMap_FinalEffects);
     }
 
     public HealthState(LifeSystem _lifeSystem)
@@ -69,6 +67,15 @@ public class HealthState
 
     public virtual bool CheckEffectsCompatibility(HealthState _appliedEffect, float _baseDmg)
     {
+        float appliedEffect_DmgMultiplier = compatibilityMap_DmgMultipliers.GetValueOrDefault(_appliedEffect.state, 0.0f);
+        HealthState appliedEffect_FinalEffect = compatibilityMap_FinalEffects.GetValueOrDefault(_appliedEffect.state, null);
+
+        if (appliedEffect_FinalEffect == null) return false;
+        appliedEffect_FinalEffect.Init(lifeSystem);
+        return ApplyCompatibilityEffect(_baseDmg, appliedEffect_DmgMultiplier, appliedEffect_FinalEffect);
+
+
+        /*
         switch (_appliedEffect.state)
         {
             case HealthState.Effect.BURNED:
@@ -83,6 +90,12 @@ public class HealthState
                 return ApplyCompatibilityEffect(_baseDmg, bleedingCompatibility_DmgMultiplier, bleedingCompatibility_FinalEffect);
                 break;
 
+            case HealthState.Effect.WET:
+                if (wetCompatibility_FinalEffect == null) return false;
+                wetCompatibility_FinalEffect.Init(lifeSystem);
+                return ApplyCompatibilityEffect(_baseDmg, wetCompatibility_DmgMultiplier, wetCompatibility_FinalEffect);
+                break;
+
             case HealthState.Effect.COLD:
                 if (coldCompatibility_FinalEffect == null) return false; 
                 coldCompatibility_FinalEffect.Init(lifeSystem);
@@ -95,14 +108,40 @@ public class HealthState
                 return ApplyCompatibilityEffect(_baseDmg, frozenCompatibility_DmgMultiplier, frozenCompatibility_FinalEffect);
                 break;
 
+            case HealthState.Effect.PARALIZED:
+                if (paralizedCompatibility_FinalEffect == null) return false;
+                paralizedCompatibility_FinalEffect.Init(lifeSystem);
+                return ApplyCompatibilityEffect(_baseDmg, paralizedCompatibility_DmgMultiplier, paralizedCompatibility_FinalEffect);
+                break;
+
+            case HealthState.Effect.ELECTROCUTED:
+                if (electrocutedCompatibility_FinalEffect == null) return false;
+                electrocutedCompatibility_FinalEffect.Init(lifeSystem);
+                return ApplyCompatibilityEffect(_baseDmg, electrocutedCompatibility_DmgMultiplier, electrocutedCompatibility_FinalEffect);
+                break;
+
+            case HealthState.Effect.WIND:
+                if (windCompatibility_FinalEffect == null) return false;
+                windCompatibility_FinalEffect.Init(lifeSystem);
+                return ApplyCompatibilityEffect(_baseDmg, windCompatibility_DmgMultiplier, windCompatibility_FinalEffect);
+                break;
+
+            case HealthState.Effect.STRONG_BLOW:
+                if (strongBlowCompatibility_FinalEffect == null) return false;
+                strongBlowCompatibility_FinalEffect.Init(lifeSystem);
+                return ApplyCompatibilityEffect(_baseDmg, strongBlowCompatibility_DmgMultiplier, strongBlowCompatibility_FinalEffect);
+                break;
+
 
             default:
                 //if (!_appliedEffect.initialized) _appliedEffect.Init(lifeSystem);
                 //lifeSystem.StartHealthState(_appliedEffect);
                 break;
+
         }
 
         return false;
+        */
     }
     internal virtual bool ApplyCompatibilityEffect(float _baseDmg, float _dmgMultiplier, HealthState _finalHealthState)
     {
@@ -116,8 +155,8 @@ public class HealthState
         }
         else if(_finalHealthState.state == Effect.NORMAL) //El efecto resultante es que se anulan mutuamente
         {
-            EndEffect();
             lifeSystem.healthStates.Remove(this);
+            EndEffect();
         }
         else //El efecto resultante es otro, asi que se sustituye el efecto actual por el resultante
         {

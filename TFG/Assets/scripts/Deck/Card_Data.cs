@@ -6,7 +6,7 @@ using TMPro;
 
 public class Card_Data : MonoBehaviour
 {
-    [SerializeField] internal DeckManager.CardType cardType;
+    //[SerializeField] internal DeckManager.CardType cardType;
     [SerializeField] internal Card_Behaviour cardBehaviour;
     [SerializeField] internal float useDelay;
     [SerializeField] internal bool inCooldown = false;
@@ -33,7 +33,7 @@ public class Card_Data : MonoBehaviour
 
     public void Init(Card_Data _cardData)
     {
-        cardType = _cardData.cardType;
+        //cardType = _cardData.cardType;
         cardBehaviour = _cardData.cardBehaviour;
         iconSprite = _cardData.iconSprite;
         assignedKey = _cardData.assignedKey;

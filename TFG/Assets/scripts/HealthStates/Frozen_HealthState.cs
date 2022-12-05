@@ -19,7 +19,7 @@ public class Frozen_HealthState : HealthState
 
         //No tiene damage multipliers
 
-        burnedCompatibility_FinalEffect = new HealthState();
+        compatibilityMap_FinalEffects.Add(Effect.BURNED, new HealthState());
 
     }
 

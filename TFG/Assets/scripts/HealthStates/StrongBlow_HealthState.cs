@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class StrongBlow_HealthState : HealthState
 {
-    // Start is called before the first frame update
-    void Start()
+    public StrongBlow_HealthState()
     {
-        
+        state = HealthState.Effect.STRONG_BLOW;
+    }
+    public override void Init(LifeSystem _lifeSystem)
+    {
+        base.Init(_lifeSystem);
+
+        name = "StrongBlow State";
+        state = HealthState.Effect.STRONG_BLOW;
+        effectDuration = 1.0f;
+
+        //Has no dmg multiplier compatibility
+
+        //Has no compatibilities with this or other effects
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void StartEffect()
     {
-        
+        base.StartEffect();
+
+
+        //Se tiene que desactivar en cuanto se active
+        EndEffect();
     }
+
+    public override void EndEffect()
+    {
+        base.EndEffect();
+    }
+
 }

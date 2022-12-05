@@ -25,13 +25,12 @@ public class Burned_HealthState : HealthState
         state = HealthState.Effect.BURNED;
         effectDuration = 20.0f;
 
-        electrocutedCompatibility_DmgMultiplier = 0.5f;
-        windCompatibility_DmgMultiplier = 0.5f;
+        compatibilityMap_DmgMultipliers.Add(Effect.ELECTROCUTED, 0.5f);
+        compatibilityMap_DmgMultipliers.Add(Effect.WIND, 0.5f);
 
-        burnedCompatibility_FinalEffect = new Burned_HealthState();
-        wetCompatibility_FinalEffect = new HealthState();
-        coldCompatibility_FinalEffect = new HealthState();
-        //frozenCompatibility_FinalEffect = new Cold_HealthState();
+        compatibilityMap_FinalEffects.Add(Effect.BURNED, new Burned_HealthState());
+        compatibilityMap_FinalEffects.Add(Effect.WET, new HealthState());
+        compatibilityMap_FinalEffects.Add(Effect.COLD, new HealthState());
 
     }
 

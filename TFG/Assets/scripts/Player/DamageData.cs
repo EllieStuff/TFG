@@ -9,6 +9,9 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal HealthState.Effect weaponEffect = HealthState.Effect.NORMAL;
     [SerializeField] internal bool alwaysAttacking = false;
 
+    internal HealthState customHealthState = null;
+
+
     public bool IsAttacking
     {
         get
@@ -37,17 +40,31 @@ public class DamageData : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-            lifeSystem.Damage(weaponDamage, HealthState.GetHealthStateByEffect(weaponEffect, lifeSystem));
+            ApplyDamage(lifeSystem);
             //other.GetComponent<PlayerController>().ChangeState(PlayerController.PlayerState.DAMAGED);
         }
 
         if (other.CompareTag("Enemy"))
         {
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-            lifeSystem.Damage(weaponDamage, HealthState.GetHealthStateByEffect(weaponEffect, lifeSystem));
+            ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
         }
 
+    }
+
+
+    void ApplyDamage(LifeSystem _lifeSystem)
+    {
+        if (customHealthState == null)
+        {
+            _lifeSystem.Damage(weaponDamage, HealthState.GetHealthStateByEffect(weaponEffect, _lifeSystem));
+        }
+        else
+        {
+            customHealthState.Init(_lifeSystem);
+            _lifeSystem.Damage(weaponDamage, customHealthState);
+        }
     }
 
 }

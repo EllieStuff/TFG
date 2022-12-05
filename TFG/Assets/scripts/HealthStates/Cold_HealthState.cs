@@ -22,14 +22,12 @@ public class Cold_HealthState : HealthState
         state = HealthState.Effect.COLD;
         effectDuration = 10.0f;
 
-        burnedCompatibility_DmgMultiplier = 0.0f;
-        coldCompatibility_DmgMultiplier = 0.5f;
-        frozenCompatibility_DmgMultiplier = 0.5f;
+        compatibilityMap_DmgMultipliers.Add(Effect.COLD, 0.5f);
+        compatibilityMap_DmgMultipliers.Add(Effect.FROZEN, 0.5f);
 
-        burnedCompatibility_FinalEffect = new HealthState();
-        coldCompatibility_FinalEffect = new Frozen_HealthState();
-        wetCompatibility_FinalEffect = new Frozen_HealthState();
-        //frozenCompatibility_FinalEffect = new Frozen_HealthState();
+        compatibilityMap_FinalEffects.Add(Effect.BURNED, new HealthState());
+        compatibilityMap_FinalEffects.Add(Effect.COLD, new Frozen_HealthState());
+        compatibilityMap_FinalEffects.Add(Effect.WET, new Frozen_HealthState());
 
     }
 

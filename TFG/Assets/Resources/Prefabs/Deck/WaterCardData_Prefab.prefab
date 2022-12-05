@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 76dd11672b000d146a3a6a545dea00f3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dbcd664ed598c8445a1396669743955f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,9 +94,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1895366661881393145}
   - component: {fileID: 4984360439865314513}
-  - component: {fileID: 2329670602019367201}
+  - component: {fileID: 7476233247378485780}
   m_Layer: 0
-  m_Name: FireCardData_Prefab
+  m_Name: WaterCardData_Prefab
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,11 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0700a3fe868234478317231b680140d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardType: 0
-  cardBehaviour: {fileID: 2329670602019367201}
-  useDelay: 5
+  cardType: 1
+  cardBehaviour: {fileID: 7476233247378485780}
+  useDelay: 6
   inCooldown: 0
---- !u!114 &2329670602019367201
+--- !u!114 &7476233247378485780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,9 +143,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9020046031894405120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e06bca812d3b4e45bc113c9df983183, type: 3}
+  m_Script: {fileID: 11500000, guid: e08fa0f2808e9df40925593339a1d9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireAttackPrefab: {fileID: 847807358951107024, guid: dc7f5cafbab5c0948adf6d3d93fd00b1,
+  iceAttackPrefab: {fileID: 847807358951107024, guid: 54fcaf6b36bc89d41888034f33e52e20,
     type: 3}
   lockPlayerPos: 0
