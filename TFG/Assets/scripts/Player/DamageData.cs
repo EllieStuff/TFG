@@ -21,7 +21,7 @@ public class DamageData : MonoBehaviour
 
             if(ownerTransform.GetComponent<LifeSystem>().entityType == LifeSystem.EntityType.PLAYER)
             {
-                return ownerTransform.GetComponent<PlayerController>().state == PlayerController.PlayerState.ATTACKING;
+                return ownerTransform.GetComponent<PlayerSword>().isAttacking;
             }
             else
             {
@@ -47,7 +47,6 @@ public class DamageData : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-            Debug.Log("Enemy Attacks");
             ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
         }
