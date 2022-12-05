@@ -33,6 +33,9 @@ public class WalkMark : MonoBehaviour
                 walkMark.SetActive(false);
         }
 
+        if(Input.GetKey(KeyCode.LeftShift) && walkMark.activeSelf)
+            walkMark.SetActive(false);
+
         if(Input.GetKeyUp(KeyCode.Mouse1))
         {
             walkMark.transform.position = worldPosition;
