@@ -41,12 +41,13 @@ public class DamageData : MonoBehaviour
         {
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
             ApplyDamage(lifeSystem);
-            //other.GetComponent<PlayerController>().ChangeState(PlayerController.PlayerState.DAMAGED);
+            other.GetComponent<PlayerMovement>().DamageStartCorroutine();
         }
 
         if (other.CompareTag("Enemy"))
         {
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
+            Debug.Log("Enemy Attacks");
             ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
         }

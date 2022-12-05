@@ -22,10 +22,11 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseDeathTime;
 
     internal float damageTimer = 0;
-    //PlayerSword playerSword;
-    //LifeSystem playerLife;
+    PlayerSword playerSword;
+    LifeSystem playerLife;
     LifeSystem enemyLife;
-    //bool SwordTouching;
+    PlayerMovement playerMovement;
+    bool SwordTouching;
     bool deadNPC = false;
 
     readonly internal Vector3 
@@ -57,8 +58,9 @@ public class BaseEnemyScript : MonoBehaviour
         enemyLife = GetComponent<LifeSystem>();
         GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
         player = playerGO.transform;
-        //playerLife = playerGO.GetComponent<LifeSystem>();
-        //playerSword = playerGO.GetComponent<PlayerSword>();
+        playerLife = playerGO.GetComponent<LifeSystem>();
+        playerSword = playerGO.GetComponent<PlayerSword>();
+        playerMovement = playerGO.GetComponent<PlayerMovement>();
 
         ResetSpeed();
     }
@@ -207,6 +209,9 @@ public class BaseEnemyScript : MonoBehaviour
             case States.ATTACK:
                 AttackExit();
                 break;
+            case States.DAMAGE:
+                DamageExit();
+                break;
 
             default:
                 Debug.LogWarning("State not found");
@@ -225,6 +230,9 @@ public class BaseEnemyScript : MonoBehaviour
                 break;
             case States.ATTACK:
                 AttackStart();
+                break;
+            case States.DAMAGE:
+                DamageStart();
                 break;
 
             default:
