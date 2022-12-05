@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8326785294998302328}
   m_Layer: 0
   m_Name: CacoRato
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,9 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 1
-  healthState:
-    state: 0
-    effectDuration: -1
+  healthStates: []
   healthStatesFeedback: {fileID: 0}
   maxLife: 50
   currLife: 50
@@ -184,6 +182,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9032294187696142322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 436f89e4c628df24a80175b7dff5c046,
+    type: 3}
+  m_PrefabInstance: {fileID: 8185378516304988835}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8508134337076817224}
+  - component: {fileID: 5797065431143097780}
+  m_Layer: 0
+  m_Name: 'character (Missing Prefab with guid: 436f89e4c628df24a80175b7dff5c046)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8508134337076817224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 436f89e4c628df24a80175b7dff5c046,
+    type: 3}
+  m_PrefabInstance: {fileID: 8185378516304988835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032294187696142322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8326785294998302332}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8185378516304988835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -273,18 +305,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 436f89e4c628df24a80175b7dff5c046, type: 3}
---- !u!4 &8508134337076817224 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 436f89e4c628df24a80175b7dff5c046,
-    type: 3}
-  m_PrefabInstance: {fileID: 8185378516304988835}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &9032294187696142322 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 436f89e4c628df24a80175b7dff5c046,
-    type: 3}
-  m_PrefabInstance: {fileID: 8185378516304988835}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5797065431143097780
 Animator:
   serializedVersion: 4

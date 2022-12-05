@@ -18,25 +18,38 @@ public class PlayerUseCard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            deck.UnSelectCard(idx);
-            idx++;
-            if (idx >= deck.cards.Count) idx = 0;
-            //Feedback
-            deck.SelectCard(idx);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            deck.UnSelectCard(idx);
-            idx--;
-            if (idx < 0) idx = deck.cards.Count - 1;
-            //Feedback
-            deck.SelectCard(idx);
-        }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            deck.UseSelectedCard(ref idx, playerMov);
-        }
+        ManageInputs();
+
     }
+
+
+    void ManageInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            deck.UseSelectedCard(0, playerMov);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            deck.UseSelectedCard(1, playerMov);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            deck.UseSelectedCard(2, playerMov);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            deck.UseSelectedCard(3, playerMov);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            deck.UseSelectedCard(4, playerMov);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            deck.UseSelectedCard(5, playerMov);
+        }
+
+    }
+
 }

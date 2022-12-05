@@ -19,9 +19,9 @@ public class IceCard_Behaviour : Card_Behaviour
     {
         base.Activate(_playerData);
         _playerData.canMove = _playerData.canRotate = !lockPlayerPos;
-        //FireAttack iceAttack = GameObject.Instantiate(iceAttackPrefab, _playerData.transform.position, iceAttackPrefab.transform.rotation).GetComponent<FireAttack>();
-        //iceAttack.Initialize(_playerData, lockPlayerPos);
-        //iceAttack.Shoot(_playerData.transform.forward);
+        FireAttack iceAttack = GameObject.Instantiate(iceAttackPrefab, _playerData.transform.position, iceAttackPrefab.transform.rotation).GetComponent<FireAttack>();
+        iceAttack.Initialize(_playerData, lockPlayerPos);
+        iceAttack.Shoot(_playerData.transform.forward);
     }
 
     // Update is called once per frame

@@ -18,19 +18,16 @@ public class Cold_HealthState : HealthState
     {
         base.Init(_lifeSystem);
 
+        name = "Cold State";
         state = HealthState.Effect.COLD;
-        effectDuration = 7.0f;
+        effectDuration = 10.0f;
 
-        burnedCompatibility_DmgMultiplier = 3.0f;
-        coldCompatibility_DmgMultiplier = 2.0f;
-        frozenCompatibility_DmgMultiplier = 2.0f;
+        compatibilityMap_DmgMultipliers.Add(Effect.COLD, 0.5f);
+        compatibilityMap_DmgMultipliers.Add(Effect.FROZEN, 0.5f);
 
-        burnedCompatibility_FinalEffect = new HealthState();
-        ///De forma temporal ho deixarem com a cold
-        coldCompatibility_FinalEffect = new Cold_HealthState();
-        frozenCompatibility_FinalEffect = new Cold_HealthState();
-        //coldCompatibility_FinalEffect = new Frozen_HealthState();
-        //frozenCompatibility_FinalEffect = new Frozen_HealthState();
+        compatibilityMap_FinalEffects.Add(Effect.BURNED, new HealthState());
+        compatibilityMap_FinalEffects.Add(Effect.COLD, new Frozen_HealthState());
+        compatibilityMap_FinalEffects.Add(Effect.WET, new Frozen_HealthState());
 
     }
 

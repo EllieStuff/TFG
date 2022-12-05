@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 331556592035321906}
   m_Layer: 0
   m_Name: Ragloton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4914c012560bc4ab652bd22aa55e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 1
   baseRotSpeed: 300
   playerDetectionDistance: 10
   playerStopDetectionDistance: 16
@@ -114,9 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 1
-  healthState:
-    state: 0
-    effectDuration: -1
+  healthStates: []
   healthStatesFeedback: {fileID: 0}
   maxLife: 50
   currLife: 50
@@ -124,6 +123,7 @@ MonoBehaviour:
     type: 3}
   deathParticlesPrefab: {fileID: 8161046788835331719, guid: 4dbd5e376662b544bb4895c6abb1687a,
     type: 3}
+  playerLifeBar: {fileID: 0}
 --- !u!136 &331556592035321905
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -216,6 +216,40 @@ Transform:
   - {fileID: 331556592035321910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4530307189375667108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 436f89e4c628df24a80175b7dff5c046,
+    type: 3}
+  m_PrefabInstance: {fileID: 3611759028133148405}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3861048116968083742}
+  - component: {fileID: 8185870037358269488}
+  m_Layer: 0
+  m_Name: 'character (Missing Prefab with guid: 436f89e4c628df24a80175b7dff5c046)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3861048116968083742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 436f89e4c628df24a80175b7dff5c046,
+    type: 3}
+  m_PrefabInstance: {fileID: 3611759028133148405}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4530307189375667108}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 331556592035321910}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6416194897257442791
 GameObject:
@@ -448,18 +482,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 436f89e4c628df24a80175b7dff5c046, type: 3}
---- !u!4 &3861048116968083742 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 436f89e4c628df24a80175b7dff5c046,
-    type: 3}
-  m_PrefabInstance: {fileID: 3611759028133148405}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4530307189375667108 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 436f89e4c628df24a80175b7dff5c046,
-    type: 3}
-  m_PrefabInstance: {fileID: 3611759028133148405}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &8185870037358269488
 Animator:
   serializedVersion: 4

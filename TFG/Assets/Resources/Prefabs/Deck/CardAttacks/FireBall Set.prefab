@@ -51,7 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireBallRef: {fileID: 5468450734716319378}
   disappearEffect: {fileID: 0}
-  dmg: 10
   moveForce: 10
   moveDelay: 1.5
   despawnDelay: 5
@@ -69,8 +68,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 30
+  ownerTransform: {fileID: 0}
+  weaponDamage: 10
   weaponEffect: 2
+  alwaysAttacking: 1
 --- !u!54 &842541647403669468
 Rigidbody:
   m_ObjectHideFlags: 0

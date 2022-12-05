@@ -6,6 +6,12 @@ public class EnemyWeaponHand : MonoBehaviour
 {
     [SerializeField] internal bool isTouchingPlayer;
 
+    private void Start()
+    {
+        
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("Player"))

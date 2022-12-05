@@ -15,23 +15,40 @@ public class Frozen_HealthState : HealthState
         base.Init(_lifeSystem);
 
         state = HealthState.Effect.FROZEN;
-        effectDuration = 5.0f;
+        effectDuration = 8.0f;
 
-        burnedCompatibility_DmgMultiplier = 1.5f;
-        coldCompatibility_DmgMultiplier = 1.5f;
-        frozenCompatibility_DmgMultiplier = 2.0f;
+        //No tiene damage multipliers
 
-        burnedCompatibility_FinalEffect = new Cold_HealthState();
-        coldCompatibility_FinalEffect = new Frozen_HealthState();
-        frozenCompatibility_FinalEffect = new Frozen_HealthState();
+        compatibilityMap_FinalEffects.Add(Effect.BURNED, new HealthState());
 
     }
 
     public override void StartEffect()
     {
+        if(lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
+        {
+            BaseEnemyScript.EnemyType enemyType = lifeSystem.GetComponent<BaseEnemyScript>().enemyType;
+            if (enemyType == BaseEnemyScript.EnemyType.LITTLE_SNAKE) effectDuration = 15f;
+            else if (enemyType == BaseEnemyScript.EnemyType.SKINY_RAT) effectDuration = 8f;
+            else if (enemyType == BaseEnemyScript.EnemyType.FAT_RAT || enemyType == BaseEnemyScript.EnemyType.BIG_SNAKE) 
+                effectDuration = 5f;
+            else if (enemyType == BaseEnemyScript.EnemyType.CROCODILE) effectDuration = 3f;
+        }
         base.StartEffect();
 
-        // TODO
+        // TODO:
+        // - Crear el Frozen_Feedback
+        // - Congelar animación
+        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
+        {
+            PlayerMovement player = lifeSystem.GetComponent<PlayerMovement>();
+            player.canMove = player.canRotate = false;
+        }
+        else
+        {
+            BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
+            enemy.canMove = enemy.canRotate = false;
+        }
 
     }
 
@@ -39,8 +56,19 @@ public class Frozen_HealthState : HealthState
     {
         base.EndEffect();
 
-        // TODO
-
+        // TODO:
+        // - Deshacer frozen feedback? Creo que se deshacia solo pero not sure ahora
+        // - Descongelar animación
+        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
+        {
+            PlayerMovement player = lifeSystem.GetComponent<PlayerMovement>();
+            player.canMove = player.canRotate = true;
+        }
+        else
+        {
+            BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
+            enemy.canMove = enemy.canRotate = true;
+        }
     }
 
 

@@ -5024,6 +5024,7 @@ GameObject:
   - component: {fileID: 618625516609878970}
   - component: {fileID: 6448951985272293695}
   - component: {fileID: 3263372810948528373}
+  - component: {fileID: 6812522115273168520}
   - component: {fileID: 975362699361286487}
   - component: {fileID: 2938729570274102285}
   m_Layer: 0
@@ -5106,12 +5107,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6334732185038707522}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b06a36ad4e85fb43a5eb479fef5a297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isTouchingPlayer: 0
+--- !u!114 &6812522115273168520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6334732185038707522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTransform: {fileID: 8326785294998302332}
+  weaponDamage: 0
+  weaponEffect: 0
+  alwaysAttacking: 0
 --- !u!111 &975362699361286487
 Animation:
   m_ObjectHideFlags: 0
@@ -5157,7 +5174,7 @@ GameObject:
   - component: {fileID: 8326785294998302328}
   m_Layer: 0
   m_Name: CacoRato
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5200,6 +5217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3877a275a903f24e9478cecf8bcc19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   baseRotSpeed: 300
   playerDetectionDistance: 10
   playerStopDetectionDistance: 16
@@ -5231,12 +5249,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 1
-  healthState:
-    state: 0
-    effectDuration: -1
+  healthStates: []
   healthStatesFeedback: {fileID: 0}
-  maxLife: 50
-  currLife: 50
+  maxLife: 40
+  currLife: 40
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   deathParticlesPrefab: {fileID: 8161046788835331719, guid: 4dbd5e376662b544bb4895c6abb1687a,
@@ -5335,6 +5351,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8675888082080283277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 436f89e4c628df24a80175b7dff5c046,
+    type: 3}
+  m_PrefabInstance: {fileID: 8405858682717177820}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8299327702830211127}
+  - component: {fileID: 5329491029880192229}
+  m_Layer: 0
+  m_Name: 'character (Missing Prefab with guid: 436f89e4c628df24a80175b7dff5c046)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8299327702830211127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 436f89e4c628df24a80175b7dff5c046,
+    type: 3}
+  m_PrefabInstance: {fileID: 8405858682717177820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8675888082080283277}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8326785294998302332}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8405858682717177820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5424,18 +5474,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 436f89e4c628df24a80175b7dff5c046, type: 3}
---- !u!4 &8299327702830211127 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 436f89e4c628df24a80175b7dff5c046,
-    type: 3}
-  m_PrefabInstance: {fileID: 8405858682717177820}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8675888082080283277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 436f89e4c628df24a80175b7dff5c046,
-    type: 3}
-  m_PrefabInstance: {fileID: 8405858682717177820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5329491029880192229
 Animator:
   serializedVersion: 4

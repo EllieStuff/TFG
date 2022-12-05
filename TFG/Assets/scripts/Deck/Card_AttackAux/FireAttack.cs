@@ -6,7 +6,6 @@ public class FireAttack : CardAttack
 {
     [SerializeField] Transform fireBallRef;
     [SerializeField] GameObject disappearEffect;
-    [SerializeField] float dmg = 10;
     [SerializeField] float moveForce = 10;
     [SerializeField] float moveDelay = 1.5f;
     [SerializeField] float despawnDelay = 5.0f;
@@ -15,6 +14,7 @@ public class FireAttack : CardAttack
 
     Rigidbody rb;
     PlayerMovement playerMov;
+    DamageData dmgData;
     bool lockPlayerMove;
     Vector3 rotAxis = Vector3.zero;
 
@@ -29,6 +29,9 @@ public class FireAttack : CardAttack
     {
         rb = GetComponent<Rigidbody>();
         rotAxis = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+
+        dmgData = GetComponent<DamageData>();
+        dmgData.ownerTransform = _playerMov.transform;
 
         playerMov = _playerMov;
         lockPlayerMove = _lockPlayerMove;
