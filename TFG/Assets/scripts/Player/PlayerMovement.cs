@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     internal bool canRotate = true;
     internal Vector3 targetMousePos;
     internal Vector3 attackDir;
+    internal Vector2 mouseLookVec;
     LifeSystem lifeStatus;
     PlayerSword playerSword;
 
@@ -54,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 mouseLookVec = GetMouseLookVector();
+        mouseLookVec = GetMouseLookVector();
         float horizontalInput = mouseLookVec.x;
         //if (Mathf.Abs(horizontalInput) < INPUT_THRESHOLD) horizontalInput = 0;
         float verticalInput = mouseLookVec.y;
@@ -63,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         moveDir = MoveToTargetVector(targetMousePos);
 
 
-        if (canMove && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero && lifeStatus.currLife > 0)
+        if (canMove && targetMousePos != Vector3.zero && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero && lifeStatus.currLife > 0)
         {
             moving = true;
 

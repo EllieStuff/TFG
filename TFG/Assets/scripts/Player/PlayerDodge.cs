@@ -9,12 +9,14 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] PlayerHUD sprintHUD;
 
     Rigidbody rb;
+    PlayerMovement playerMovement;
     internal float dodgeRechargeTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -24,7 +26,8 @@ public class PlayerDodge : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && dodgeRechargeTimer <= 0)
         {
             sprintHUD.ShakeBar();
-            rb.AddForce(transform.forward * dodgeForce, ForceMode.Impulse);
+            rb.AddForce(new Vector3(playerMovement.mouseLookVec.x, 0, playerMovement.mouseLookVec.y).normalized * dodgeForce, ForceMode.Impulse);
+            playerMovement.targetMousePos = Vector3.zero;
             dodgeRechargeTimer = dodgeRechargeDelay;
         }
         else if(dodgeRechargeTimer > 0)
