@@ -14,6 +14,7 @@ public class Frozen_HealthState : HealthState
     {
         base.Init(_lifeSystem);
 
+        name = "Frozen State";
         state = HealthState.Effect.FROZEN;
         effectDuration = 8.0f;
 
@@ -54,7 +55,7 @@ public class Frozen_HealthState : HealthState
 
     public override void EndEffect()
     {
-        base.EndEffect();
+        //compatibilityMap_FinalEffects.Remove(Effect.BURNED);
 
         // TODO:
         // - Deshacer frozen feedback? Creo que se deshacia solo pero not sure ahora
@@ -69,6 +70,8 @@ public class Frozen_HealthState : HealthState
             BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
             enemy.canMove = enemy.canRotate = true;
         }
+
+        base.EndEffect();
     }
 
 

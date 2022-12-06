@@ -19,7 +19,12 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
 
     [SerializeField] Animation swordAnim;
 
-    internal override void Start_Call() { base.Start_Call(); playerLife = player.GetComponent<LifeSystem>(); }
+    internal override void Start_Call()
+    {
+        base.Start_Call();
+        playerLife = player.GetComponent<LifeSystem>();
+        attackTimer = baseAttackTimer / 2f;
+    }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -52,7 +57,7 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
 
             rb.velocity = Vector3.zero;
 
-            attackTimer -= Time.deltaTime;
+            attackTimer -= Time.fixedDeltaTime;
 
             if(attackTimer <= 0)
             {

@@ -109,19 +109,26 @@ public class LifeSystem : MonoBehaviour
     {
         healthStates.Add(_healthState);
         _healthState.StartEffect();
-        healthStatesFeedback.ActivateFeedback(_healthState.state, _healthState.effectDuration);
+        if (healthStatesFeedback != null) healthStatesFeedback.ActivateFeedback(_healthState.state, _healthState.effectDuration);
+        else Debug.LogWarning("HealthStatesFeedback for " + healthStates[healthStates.Count - 1].state.ToString() + " was not assigned");
     }
 
     internal void ChangeHealthState(HealthState _currHealthState, HealthState _newHealthState)
     {
         if (_currHealthState != null)
+        {
             _currHealthState.EndEffect();
+            //healthStates.Remove(_currHealthState);
+        }
 
         if (!_newHealthState.initialized) _newHealthState.Init(this);
-        _currHealthState = _newHealthState;
+        healthStates[healthStates.IndexOf(_currHealthState)] = _newHealthState;
+        //healthStates.Add(_newHealthState);
+        //_currHealthState = _newHealthState;
 
-        _currHealthState.StartEffect();
-        healthStatesFeedback.ActivateFeedback(_currHealthState.state, _currHealthState.effectDuration);
+        _newHealthState.StartEffect();
+        if (healthStatesFeedback != null) healthStatesFeedback.ActivateFeedback(_newHealthState.state, _newHealthState.effectDuration);
+        else Debug.LogWarning("HealthStatesFeedback for " + healthStates[healthStates.Count - 1].state.ToString() + " was not assigned");
     }
 
     void CleanRepeatedHealthEffects()

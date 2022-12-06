@@ -10,9 +10,9 @@ public class HealthStates_FrozenFeedback : HealthStates_Feedback
     Material[] originalMats;
 
 
-    public override void ActivateFeedback(float _feedbackDuration)
+    public override void ActivateFeedback(HealthStates_FeedbackManager _manager, float _feedbackDuration)
     {
-        base.ActivateFeedback(_feedbackDuration);
+        base.ActivateFeedback(_manager, _feedbackDuration);
         originalMats = targetRenderer.materials;
         targetRenderer.materials = new Material[1] { iceMat };
     }

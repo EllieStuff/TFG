@@ -47,9 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d9d08a00f3f8543b85d6eda8b4c137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  burnedFeedbackRef: {fileID: 3283073643216646453}
-  coldFeedbackRef: {fileID: 4819625677735216783}
-  frozenFeedbackRef: {fileID: 2039716180872096321}
+  lifeSystem: {fileID: 0}
+  healthStatesFeedbacks:
+  - {fileID: 3283073643216646453}
+  - {fileID: 4819625677735216783}
+  - {fileID: 2039716180872096321}
 --- !u!1 &1346529374175112873
 GameObject:
   m_ObjectHideFlags: 0
@@ -4916,6 +4918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66e89cf2f6cc2e4b85c6fd435d6f9ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relatedEffect: 0
   iceParticles: {fileID: 4742419269224022377}
 --- !u!1 &5971527898604812359
 GameObject:
@@ -4961,6 +4964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eca97cc16800e9488afecfb0237af9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relatedEffect: 0
   targetRenderer: {fileID: 0}
   iceMat: {fileID: 2100000, guid: d3ea76eecbe4e454ebd92982f6b512e4, type: 2}
 --- !u!1 &6783420719258813362
@@ -9829,4 +9833,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a4e37a2688c904596dc9a3562d43ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relatedEffect: 0
   fireParticles: {fileID: 1346529374175112878}

@@ -30,6 +30,11 @@ public class Electrocuted_HealthState : HealthState
     {
         base.StartEffect();
 
+        Paralized_HealthState paralisis = new Paralized_HealthState();
+        paralisis.Init(lifeSystem);
+        paralisis.effectDuration = paralisisDuration;
+        lifeSystem.Damage(0f, paralisis);
+
     }
 
     public override void EndEffect()

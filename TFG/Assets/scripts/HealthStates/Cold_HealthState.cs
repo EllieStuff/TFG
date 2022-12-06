@@ -27,7 +27,7 @@ public class Cold_HealthState : HealthState
 
         compatibilityMap_FinalEffects.Add(Effect.BURNED, new HealthState());
         compatibilityMap_FinalEffects.Add(Effect.COLD, new Frozen_HealthState());
-        compatibilityMap_FinalEffects.Add(Effect.WET, new Frozen_HealthState());
+        //compatibilityMap_FinalEffects.Add(Effect.WET, new Frozen_HealthState());
 
     }
 

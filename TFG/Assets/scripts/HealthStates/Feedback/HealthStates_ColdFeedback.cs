@@ -6,9 +6,9 @@ public class HealthStates_ColdFeedback : HealthStates_Feedback
 {
     [SerializeField] ParticleSystem iceParticles;
 
-    public override void ActivateFeedback(float _feedbackDuration)
+    public override void ActivateFeedback(HealthStates_FeedbackManager _manager, float _feedbackDuration)
     {
-        base.ActivateFeedback(_feedbackDuration);
+        base.ActivateFeedback(_manager, _feedbackDuration);
         iceParticles.Play();
     }
 
