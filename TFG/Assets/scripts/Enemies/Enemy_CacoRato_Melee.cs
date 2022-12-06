@@ -62,6 +62,12 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
         }
     }
 
+    internal override void DamageUpdate()
+    {
+        enemyAnimator.SetFloat("state", 2);
+        base.DamageUpdate();
+    }
+
     IEnumerator AttackCorroutine()
     {
         swordAnim.Play();
