@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerSword playerSword;
 
     const float minFallSpeed = 10;
+    bool damage;
 
 
     Rigidbody rb;
@@ -82,7 +83,10 @@ public class PlayerMovement : MonoBehaviour
         else if (moving)
         {
             moving = false;
-            playerAnimator.SetFloat("state", 0);
+
+            if(!damage)
+                playerAnimator.SetFloat("state", 0);
+
             Vector3 reducedVel = rb.velocity;
 
             if (Mathf.Abs(reducedVel.x) > 0)
@@ -186,13 +190,17 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = false;
         canRotate = false;
+        damage = true;
 
         //Play animation here and sound
-
+        playerAnimator.SetFloat("state", 2);
         //_____________________________
 
         yield return new WaitForSeconds(damageAnimationTime);
 
+        playerAnimator.SetFloat("state", 0);
+
+        damage = false;
         canMove = true;
         canRotate = true;
     }
