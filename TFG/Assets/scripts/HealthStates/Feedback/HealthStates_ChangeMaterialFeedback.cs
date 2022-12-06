@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthStates_FrozenFeedback : HealthStates_Feedback
+public class HealthStates_ChangeMaterialFeedback : HealthStates_Feedback
 {
-    [SerializeField] MeshRenderer targetRenderer;
-    [SerializeField] Material iceMat;
+    [SerializeField] SkinnedMeshRenderer targetRenderer;
+    [SerializeField] Material mat;
 
     Material[] originalMats;
 
@@ -14,7 +14,7 @@ public class HealthStates_FrozenFeedback : HealthStates_Feedback
     {
         base.ActivateFeedback(_manager, _feedbackDuration);
         originalMats = targetRenderer.materials;
-        targetRenderer.materials = new Material[1] { iceMat };
+        targetRenderer.materials = new Material[1] { mat };
     }
 
     public override void EndFeedback()

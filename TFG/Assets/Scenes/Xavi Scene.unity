@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &5 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3861048116968083742, guid: 063aed6076953954a829fe2a30889de5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4062570781790132708}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &59727538
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +461,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1725689437}
     m_Modifications:
+    - target: {fileID: 3368021394727997921, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359647404628770479, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: addd2fab16739cf4ab8e53a3ed71ff91, type: 2}
+    - target: {fileID: 4482781618100806492, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296597673709025993, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
+        type: 3}
+      propertyPath: mat
+      value: 
+      objectReference: {fileID: 2100000, guid: d3ea76eecbe4e454ebd92982f6b512e4, type: 2}
+    - target: {fileID: 8296597673709025993, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
+        type: 3}
+      propertyPath: targetRenderer
+      value: 
+      objectReference: {fileID: 1042535560}
     - target: {fileID: 8666937206496994572, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
         type: 3}
       propertyPath: m_Name
@@ -1112,6 +1143,12 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!137 &1042535560 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3672014365812204735, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
+    type: 3}
+  m_PrefabInstance: {fileID: 277160557}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1142703268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,12 +1627,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93a7e384ad51e2d4f8a8049f5b7173ca, type: 3}
---- !u!4 &1241485855 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4062570782981934075, guid: 063aed6076953954a829fe2a30889de5,
-    type: 3}
-  m_PrefabInstance: {fileID: 4062570781790132708}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1273770117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8666937206496994573, guid: b2cded7929ee9684bb86651415d47b5b,
@@ -1940,7 +1971,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1273770117}
-  - {fileID: 1241485855}
+  - {fileID: 5}
   - {fileID: 1806289333}
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -2828,6 +2859,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldSafetyCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 3861048116968083742, guid: 063aed6076953954a829fe2a30889de5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4026589601293742206, guid: 063aed6076953954a829fe2a30889de5,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3692,7 +3728,7 @@ PrefabInstance:
     - target: {fileID: 8666937206496994572, guid: b2cded7929ee9684bb86651415d47b5b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8666937206496994573, guid: b2cded7929ee9684bb86651415d47b5b,
         type: 3}

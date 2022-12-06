@@ -62,7 +62,6 @@ public class DamageData : MonoBehaviour
         }
         else
         {
-            customHealthState.Init(_lifeSystem);
             _lifeSystem.Damage(weaponDamage, customHealthState);
         }
     }
