@@ -27,10 +27,32 @@ public class Paralized_HealthState : HealthState
     {
         base.StartEffect();
 
+        if(lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
+        {
+            PlayerMovement player = lifeSystem.GetComponent<PlayerMovement>();
+            player.canMove = player.canRotate = false;
+        }
+        if(lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
+        {
+            BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
+            enemy.canMove = enemy.canRotate = false;
+        }
+
     }
 
     public override void EndEffect()
     {
+        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
+        {
+            PlayerMovement player = lifeSystem.GetComponent<PlayerMovement>();
+            player.canMove = player.canRotate = true;
+        }
+        if (lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
+        {
+            BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
+            enemy.canMove = enemy.canRotate = true;
+        }
+
         base.EndEffect();
     }
 

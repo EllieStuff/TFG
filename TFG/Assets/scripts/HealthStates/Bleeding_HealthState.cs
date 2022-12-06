@@ -7,7 +7,7 @@ public class Bleeding_HealthState : HealthState
     [SerializeField]
     float
         dmgFreq = 1f,
-        dmg = 2;
+        dmg = 2f;
 
 
     public Bleeding_HealthState()
@@ -18,7 +18,8 @@ public class Bleeding_HealthState : HealthState
     {
         base.Init(_lifeSystem);
 
-        state = HealthState.Effect.BURNED;
+        name = "Bleeding State";
+        state = HealthState.Effect.BLEEDING;
         effectDuration = 20.0f;
 
         //No dmg multiplying 
@@ -39,7 +40,6 @@ public class Bleeding_HealthState : HealthState
         base.EndEffect();
         lifeSystem.StopCoroutine(BleedingEffectCoroutine());
 
-        lifeSystem.dmgInc = 1.0f;
     }
 
 

@@ -7,7 +7,6 @@ public class PlayerSword : MonoBehaviour
     Rigidbody playerRB;
     //LifeSystem lifeSystem;
     PlayerController playerController;
-    const float attackBaseCooldown = 0.5f;
     const float attackBoolTimeEnabled = 0.25f;
     const float disableParticlesTime = 0.5f;
     internal float minAttackMovespeed = 1;
@@ -15,23 +14,18 @@ public class PlayerSword : MonoBehaviour
     [SerializeField] Collider swordCollider;
     [SerializeField] TrailRenderer swordTrails;
 
-    //
-    AudioSource audioSource;
-    public AudioClip[] clips;
-    //
-
     internal bool isAttacking;
 
     internal bool mustAttack;
 
-    [SerializeField] float attackCooldown;
+    [SerializeField] float attackBaseCooldown = 2.5f;
+    float attackCooldown = 0f;
 
     void Start()
     {
         swordTrails.enabled = false;
         playerRB = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
-        audioSource = GetComponent<AudioSource>();
         //lifeSystem = GetComponent<LifeSystem>();
 
         swordCollider.enabled = false;
@@ -51,11 +45,6 @@ public class PlayerSword : MonoBehaviour
     void AttackWithSword()
     {
         swordAnim.Play();
-
-        //
-        AudioClip chosenClip = AudioManager.ChoseClip(clips);
-        audioSource.PlayOneShot(chosenClip);
-        //
 
         attackCooldown = attackBaseCooldown;
         isAttacking = true;

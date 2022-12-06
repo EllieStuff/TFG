@@ -4,45 +4,32 @@ using UnityEngine;
 
 public class HealthStates_FeedbackManager : MonoBehaviour
 {
-    [SerializeField] HealthStates_BurnedFeedback burnedFeedbackRef;
-    [SerializeField] HealthStates_ColdFeedback coldFeedbackRef;
-    [SerializeField] HealthStates_FrozenFeedback frozenFeedbackRef;
+    [SerializeField] internal LifeSystem lifeSystem;
 
-    HealthStates_Feedback currFeedback = null;
+    Dictionary<HealthState.Effect, HealthStates_Feedback> healthStatesFeedbacks = new Dictionary<HealthState.Effect, HealthStates_Feedback>();
+    internal Dictionary<HealthState.Effect, HealthStates_Feedback> currActiveFeedbacks = new Dictionary<HealthState.Effect, HealthStates_Feedback>();
 
 
-    private void Start()
+    private void Awake()
     {
-        //ActivateFeedback(HealthState.Effect.BURNED, 10);
-        //ActivateFeedback(HealthState.Effect.COLD, 10);
-        //ActivateFeedback(HealthState.Effect.FROZEN, 10);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            HealthStates_Feedback childFeedback = transform.GetChild(i).GetComponent<HealthStates_Feedback>();
+            healthStatesFeedbacks.Add(childFeedback.relatedEffect, childFeedback);
+        }
     }
 
     public void ActivateFeedback(HealthState.Effect _effect, float _effectDuration)
     {
-        if (currFeedback != null)
-            currFeedback.EndFeedback();
-
-        switch (_effect)
+        if (!healthStatesFeedbacks.ContainsKey(_effect))
         {
-            case HealthState.Effect.BURNED:
-                currFeedback = burnedFeedbackRef;
-                break;
-
-            case HealthState.Effect.COLD:
-                currFeedback = coldFeedbackRef;
-                break;
-
-            case HealthState.Effect.FROZEN:
-                currFeedback = frozenFeedbackRef;
-                break;
-
-
-            default:
-                break;
+            Debug.LogWarning("HealthState Feedback was not found.");
+            return;
         }
 
-        currFeedback.ActivateFeedback(_effectDuration);
+        if (!currActiveFeedbacks.ContainsKey(_effect))
+            currActiveFeedbacks.Add(_effect, healthStatesFeedbacks[_effect]);
+        currActiveFeedbacks[_effect].ActivateFeedback(this, _effectDuration);
     }
 
 

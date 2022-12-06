@@ -6,9 +6,9 @@ public class HealthStates_BurnedFeedback : HealthStates_Feedback
 {
     [SerializeField] ParticleSystem fireParticles;
 
-    public override void ActivateFeedback(float _feedbackDuration)
+    public override void ActivateFeedback(HealthStates_FeedbackManager _manager, float _feedbackDuration)
     {
-        base.ActivateFeedback(_feedbackDuration);
+        base.ActivateFeedback(_manager, _feedbackDuration);
         fireParticles.Play();
     }
 

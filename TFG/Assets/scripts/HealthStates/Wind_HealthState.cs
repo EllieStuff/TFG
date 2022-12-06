@@ -5,6 +5,12 @@ using UnityEngine;
 public class Wind_HealthState : HealthState
 {
     //Nota: el efecto del viento puede que fuera mejor controlarlo desde el prefab de la habilidad como tal como tal, pero ya veremos
+    public enum WindBehaviour { PUSH_TOWARDS_DIRECTION, PUSH_TOWARDS_POINT, PUSH_AGAINST_POINT }
+
+    [SerializeField] internal WindBehaviour windBehaviour;
+    [SerializeField] internal Vector3 windDirection, windPoint;
+    [SerializeField] internal float windForce = 10f;
+
 
     public Wind_HealthState()
     {
@@ -20,7 +26,7 @@ public class Wind_HealthState : HealthState
 
         compatibilityMap_DmgMultipliers.Add(Effect.BURNED, 0.5f);
 
-        compatibilityMap_FinalEffects.Add(Effect.WIND, new Wind_HealthState());
+        //Has no compatibilities with this or other effects
 
     }
 
@@ -28,11 +34,45 @@ public class Wind_HealthState : HealthState
     {
         base.StartEffect();
 
+        lifeSystem.StartCoroutine(WindCoroutine());
     }
 
     public override void EndEffect()
     {
+        lifeSystem.StopCoroutine(WindCoroutine());
         base.EndEffect();
+    }
+
+
+    IEnumerator WindCoroutine()
+    {
+        Rigidbody affectedEntityRb = lifeSystem.GetComponent<Rigidbody>();
+        float endEffectTimeStamp = Time.timeSinceLevelLoad + effectDuration;
+
+        while (Time.timeSinceLevelLoad < endEffectTimeStamp)
+        {
+            switch (windBehaviour)
+            {
+                case WindBehaviour.PUSH_TOWARDS_DIRECTION:
+                    affectedEntityRb.AddForce(windDirection.normalized * windForce * Time.deltaTime, ForceMode.Acceleration);
+                    break;
+
+                case WindBehaviour.PUSH_TOWARDS_POINT:
+                    windDirection = (windPoint - affectedEntityRb.position).normalized;
+                    affectedEntityRb.AddForce(windDirection.normalized * windForce * Time.deltaTime, ForceMode.Acceleration);
+                    break;
+
+                case WindBehaviour.PUSH_AGAINST_POINT:
+                    windDirection = (affectedEntityRb.position - windPoint).normalized;
+                    affectedEntityRb.AddForce(windDirection.normalized * windForce * Time.deltaTime, ForceMode.Acceleration);
+                    break;
+
+
+                default:
+                    break;
+            }
+            yield return new WaitForEndOfFrame();
+        }
 
     }
 

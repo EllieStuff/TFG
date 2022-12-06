@@ -332,10 +332,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordAnim: {fileID: 537293753}
-  swordCollider: {fileID: 0}
+  swordCollider: {fileID: 6509785557001155272}
   swordTrails: {fileID: 2745058435923019550}
-  clips: []
-  attackCooldown: 0.5
+  attackBaseCooldown: 2
 --- !u!114 &3995069159848829880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5532,7 +5531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerTransform: {fileID: 1679515740618261118}
-  weaponDamage: 15
+  weaponDamage: 8
   weaponEffect: 0
   alwaysAttacking: 0
 --- !u!1001 &5019226416801411965
