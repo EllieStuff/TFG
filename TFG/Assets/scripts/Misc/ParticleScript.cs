@@ -9,12 +9,15 @@ public class ParticleScript : MonoBehaviour
     [SerializeField] float minTime;
     [SerializeField] float maxTime;
     [SerializeField] bool removeParent;
+    [SerializeField] bool followPlayer;
     float destroyTimer;
 
     private void Start()
     {
         if (removeParent)
             transform.parent = null;
+        if (followPlayer)
+            transform.parent = GameObject.Find("Player").transform;
 
         if (!randomTime)
             destroyTimer = timeToDestroy;

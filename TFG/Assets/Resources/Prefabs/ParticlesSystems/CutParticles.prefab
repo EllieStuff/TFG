@@ -4825,7 +4825,7 @@ GameObject:
   - component: {fileID: 1160711761074079527}
   - component: {fileID: 5532841816238061968}
   m_Layer: 0
-  m_Name: dashBarPS
+  m_Name: CutParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4928,7 +4928,7 @@ ParticleSystem:
   m_GameObject: {fileID: 8161046788835331719}
   serializedVersion: 8
   lengthInSec: 1
-  simulationSpeed: 1.5
+  simulationSpeed: 5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -5171,7 +5171,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9638,7 +9638,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea53c8e7e59cae14092e24026f7e9924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroy: 0.5
+  timeToDestroy: 0.2
   randomTime: 0
   minTime: 0.5
   maxTime: 0.8
+  removeParent: 0
+  followPlayer: 0
