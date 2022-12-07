@@ -34,6 +34,11 @@ public class Enemy_CacoRato : BaseEnemyScript
         enemyAnimator.SetFloat("state", 1);
         base.MoveToTargetUpdate();
     }
+    internal override void DamageUpdate()
+    {
+        enemyAnimator.SetFloat("state", 2);
+        base.DamageUpdate();
+    }
     internal override void AttackUpdate()
     {
         base.AttackUpdate();

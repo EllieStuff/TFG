@@ -7,7 +7,7 @@ public class PlayerSword : MonoBehaviour
     Rigidbody playerRB;
     //LifeSystem lifeSystem;
     PlayerController playerController;
-    const float attackBoolTimeEnabled = 0.25f;
+    const float attackBoolTimeEnabled = 0.5f;
     const float disableParticlesTime = 0.5f;
     internal float minAttackMovespeed = 1;
     [SerializeField] Animation swordAnim;

@@ -8,10 +8,14 @@ public class ParticleScript : MonoBehaviour
     [SerializeField] bool randomTime;
     [SerializeField] float minTime;
     [SerializeField] float maxTime;
+    [SerializeField] bool removeParent;
     float destroyTimer;
 
     private void Start()
     {
+        if (removeParent)
+            transform.parent = null;
+
         if (!randomTime)
             destroyTimer = timeToDestroy;
         else

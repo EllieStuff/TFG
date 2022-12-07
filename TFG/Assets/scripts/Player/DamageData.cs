@@ -8,6 +8,7 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal float weaponDamage;
     [SerializeField] internal HealthState.Effect weaponEffect = HealthState.Effect.NORMAL;
     [SerializeField] internal bool alwaysAttacking = false;
+    [SerializeField] bool isACardEffect = false;
 
     internal HealthState customHealthState = null;
 
@@ -16,7 +17,7 @@ public class DamageData : MonoBehaviour
     {
         get
         {
-            if (alwaysAttacking) return true;
+            if (isACardEffect || alwaysAttacking) return true;
             if (ownerTransform == null) return false;
 
             if(ownerTransform.GetComponent<LifeSystem>().entityType == LifeSystem.EntityType.PLAYER)
@@ -34,10 +35,10 @@ public class DamageData : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!IsAttacking) return;
-        if (ownerTransform == null || other.transform == ownerTransform) return;
+        if (!isACardEffect && (ownerTransform == null || other.transform == ownerTransform)) return;
 
 
-        if (other.CompareTag("Player"))
+        if (!isACardEffect && other.CompareTag("Player"))
         {
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
             ApplyDamage(lifeSystem);
@@ -46,6 +47,8 @@ public class DamageData : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
+            if (isACardEffect)
+                Debug.Log("enter");
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
             ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
