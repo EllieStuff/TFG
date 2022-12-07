@@ -15,11 +15,13 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] private GameObject bloodPrefab;
     [SerializeField] private GameObject deathParticlesPrefab;
     [SerializeField] private PlayerHUD playerLifeBar;
+    [SerializeField] private Transform EnemyLifeBar;
 
     internal float dmgInc = 1.0f;
     internal bool isDead = false;
 
     PlayerMovement playerMovementScript;
+    Transform camera;
 
     // Crec que serà millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
     //[SerializeField] internal bool managesDeath = true;
@@ -29,8 +31,19 @@ public class LifeSystem : MonoBehaviour
     {
         if (entityType.Equals(EntityType.PLAYER))
             playerMovementScript = GetComponent<PlayerMovement>();
+        if (entityType.Equals(EntityType.ENEMY))
+            camera = Camera.main.transform;
 
         CheckPlayerLifeLimits();
+    }
+
+    private void Update()
+    {
+        if (entityType.Equals(EntityType.ENEMY))
+        {
+            EnemyLifeBar.localScale = new Vector3(currLife / maxLife, EnemyLifeBar.localScale.y, EnemyLifeBar.localScale.z);
+            EnemyLifeBar.LookAt(camera);
+        }
     }
 
     public float GetLifePercentage(float _multiplier = 1.0f)
@@ -157,6 +170,17 @@ public class LifeSystem : MonoBehaviour
     //    Destroy(gameObject);
     //}
 
+    void OnMouseOver()
+    {
+        if(entityType.Equals(EntityType.ENEMY))
+            EnemyLifeBar.gameObject.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        if (entityType.Equals(EntityType.ENEMY))
+            EnemyLifeBar.gameObject.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
