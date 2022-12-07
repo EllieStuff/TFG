@@ -164,6 +164,8 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void MoveToTargetUpdate()
     {
+        rb.useGravity = false;
+
         Vector3 targetMoveDir = (player.position - transform.position).normalized;
         MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
 
@@ -179,6 +181,7 @@ public class BaseEnemyScript : MonoBehaviour
 
         if(distance <= PLAYER_HIT_DISTANCE_SWORD)
         {
+            rb.useGravity = true;
             playerMovement.attackDir = transform.position;
             playerSword.mustAttack = true;
         }

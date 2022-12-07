@@ -69,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = true;
 
+            rb.useGravity = false;
+
             if(rb.velocity.magnitude > MIN_SPEED_WALK)
                 playerAnimator.SetFloat("state", 1);
             else
@@ -83,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
         else if (moving)
         {
             moving = false;
+
+            rb.useGravity = true;
 
             if(!damage)
                 playerAnimator.SetFloat("state", 0);
