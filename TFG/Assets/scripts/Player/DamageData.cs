@@ -47,8 +47,6 @@ public class DamageData : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            if (isACardEffect)
-                Debug.Log("enter");
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
             ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
