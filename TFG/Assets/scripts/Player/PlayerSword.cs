@@ -15,7 +15,7 @@ public class PlayerSword : MonoBehaviour
     [SerializeField] TrailRenderer swordTrails;
 
     internal bool isAttacking;
-
+    internal bool canAttack = true;
     internal bool mustAttack;
 
     [SerializeField] float attackBaseCooldown = 2.5f;
@@ -34,6 +34,8 @@ public class PlayerSword : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!canAttack) return;
+
         if (CanAttackWithSword())
             AttackWithSword();
         else if (attackCooldown > 0)

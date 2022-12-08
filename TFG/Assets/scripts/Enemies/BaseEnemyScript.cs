@@ -41,7 +41,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal float speedMultiplier = 1.0f;
     internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
-    internal bool canMove = true, canRotate = true;
+    internal bool canMove = true, canRotate = true, canAttack = true;
     internal Quaternion targetRot;
 
     //private WeaponStats playerWeaponStats;
@@ -138,6 +138,8 @@ public class BaseEnemyScript : MonoBehaviour
 
     internal virtual void DamageUpdate()
     {
+        //if (!canAttack) ChangeState(States.IDLE);
+
         damageTimer -= Time.deltaTime;
 
         if(enemyLife.currLife <= 0 && !deadNPC)
@@ -159,7 +161,7 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void IdleUpdate()
     {
-        if (Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
+        if (canMove && Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
             ChangeState(States.MOVE_TO_TARGET);
     }
     internal virtual void MoveToTargetUpdate()
@@ -172,13 +174,14 @@ public class BaseEnemyScript : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) > playerStopDetectionDistance)
             ChangeState(States.IDLE);
 
-        if (Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
+        if (canAttack && Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
             ChangeState(States.ATTACK);
     }
     internal virtual void AttackUpdate()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        if (!canAttack) ChangeState(States.IDLE);
 
+        float distance = Vector3.Distance(transform.position, player.position);
         if(distance <= PLAYER_HIT_DISTANCE_SWORD)
         {
             rb.useGravity = true;

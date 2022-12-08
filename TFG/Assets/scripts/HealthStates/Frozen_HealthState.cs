@@ -43,12 +43,12 @@ public class Frozen_HealthState : HealthState
         if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
         {
             PlayerMovement player = lifeSystem.GetComponent<PlayerMovement>();
-            player.canMove = player.canRotate = false;
+            player.canMove = player.canRotate = player.GetComponent<PlayerSword>().canAttack = false;
         }
         else
         {
             BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
-            enemy.canMove = enemy.canRotate = false;
+            enemy.canMove = enemy.canRotate = enemy.canAttack = false;
         }
 
     }
@@ -68,7 +68,7 @@ public class Frozen_HealthState : HealthState
         else
         {
             BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
-            enemy.canMove = enemy.canRotate = true;
+            enemy.canMove = enemy.canRotate = enemy.canAttack = true;
         }
 
         base.EndEffect();
