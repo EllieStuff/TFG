@@ -475,11 +475,6 @@ PrefabInstance:
       propertyPath: mat
       value: 
       objectReference: {fileID: 2100000, guid: d3ea76eecbe4e454ebd92982f6b512e4, type: 2}
-    - target: {fileID: 8296597673709025993, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
-        type: 3}
-      propertyPath: targetRenderer
-      value: 
-      objectReference: {fileID: 1042535560}
     - target: {fileID: 8666937206496994572, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
         type: 3}
       propertyPath: m_Name
@@ -1231,12 +1226,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 063aed6076953954a829fe2a30889de5, type: 3}
---- !u!137 &1042535560 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3672014365812204735, guid: 69a2f4c50cdb4c34494e5b320c19cf49,
-    type: 3}
-  m_PrefabInstance: {fileID: 277160557}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1142703268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1473,6 +1462,11 @@ PrefabInstance:
     - target: {fileID: 1679515740618261118, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096256547233024601, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2096256547233024601, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
@@ -3493,13 +3487,13 @@ PrefabInstance:
         type: 3}
       propertyPath: cardsRef.Array.data[1]
       value: 
-      objectReference: {fileID: 9020046031894405120, guid: 3826278ddf5e7254a8e4c2c8f855f80b,
+      objectReference: {fileID: 9020046031894405120, guid: 9e94447648fda9b40aba7aa50e154aa5,
         type: 3}
     - target: {fileID: 7144693315455674271, guid: 9d5bbf40cbc39564389ad2952d296458,
         type: 3}
       propertyPath: cardsRef.Array.data[2]
       value: 
-      objectReference: {fileID: 9020046031894405120, guid: a2bbba8fc98c7774caec0ed5a8861335,
+      objectReference: {fileID: 9020046031894405120, guid: c35fd7edfa59495499743ae8f696a7cc,
         type: 3}
     - target: {fileID: 7144693315455674271, guid: 9d5bbf40cbc39564389ad2952d296458,
         type: 3}
