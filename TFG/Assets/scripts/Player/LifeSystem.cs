@@ -92,18 +92,23 @@ public class LifeSystem : MonoBehaviour
 
         currLife -= _dmg * dmgInc;
         CheckPlayerLifeLimits();
+        if (isDead)
+        {
+            //Activate death anim
+            return;
+        }
 
         //if (!healthState.initialized) _healthState.Init(this);
-        if (entityType.Equals(EntityType.PLAYER) && !isDead) playerMovementScript.DamageStartCorroutine();
+        if (entityType.Equals(EntityType.PLAYER)/* && !isDead*/) playerMovementScript.DamageStartCorroutine();
 
-        if(!isDead && _healthState != null && _healthState.state != HealthState.Effect.NORMAL)
+        if(/*!isDead && */_healthState != null && _healthState.state != HealthState.Effect.NORMAL)
         {
             if (healthStates.Count > 0)
             {
                 bool foundEffectWithCompatibility = false;
-                foreach (HealthState healthState in healthStates)
+                for (int i = 0; i < healthStates.Count; i++)
                 {
-                    if (healthState.CheckEffectsCompatibility(_healthState, _dmg * dmgInc))
+                    if (healthStates[i].CheckEffectsCompatibility(_healthState, _dmg * dmgInc))
                         foundEffectWithCompatibility = true;
                 }
                 CleanRepeatedHealthEffects();

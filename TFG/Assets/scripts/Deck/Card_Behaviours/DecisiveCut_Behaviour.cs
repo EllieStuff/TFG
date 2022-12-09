@@ -10,8 +10,9 @@ public class DecisiveCut_Behaviour : Card_Behaviour
     public override void Activate(PlayerMovement _playerData)
     {
         base.Activate(_playerData);
-        Transform player = GameObject.Find("Player").transform;
+        Transform player = _playerData.transform;
         Instantiate(cutEffectParticles, player);
-        Instantiate(cutDamageZone, player);
+        DamageData dmgZoneData = Instantiate(cutDamageZone, player).GetComponent<DamageData>();
+        dmgZoneData.ownerTransform = _playerData.transform;
     }
 }

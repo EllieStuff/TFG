@@ -6,11 +6,12 @@ public class DamageData : MonoBehaviour
 {
     [SerializeField] internal Transform ownerTransform;
     [SerializeField] internal float weaponDamage;
-    [SerializeField] internal HealthState.Effect weaponEffect = HealthState.Effect.NORMAL;
+    //[SerializeField] internal HealthState.Effect weaponEffect = HealthState.Effect.NORMAL;
+    [SerializeField] internal HealthState.Effect[] weaponEffects = new HealthState.Effect[1] { HealthState.Effect.NORMAL };
     [SerializeField] internal bool alwaysAttacking = false;
     [SerializeField] bool isACardEffect = false;
 
-    internal HealthState customHealthState = null;
+    internal HealthState[] customHealthStates = new HealthState[0];
 
 
     public bool IsAttacking
@@ -57,14 +58,17 @@ public class DamageData : MonoBehaviour
 
     void ApplyDamage(LifeSystem _lifeSystem)
     {
-        if (customHealthState == null)
+        float tmpWeaponDmg = weaponDamage;
+        foreach(HealthState.Effect weaponEffect in weaponEffects)
         {
-            _lifeSystem.Damage(weaponDamage, HealthState.GetHealthStateByEffect(weaponEffect, _lifeSystem));
+            _lifeSystem.Damage(tmpWeaponDmg, HealthState.GetHealthStateByEffect(weaponEffect, _lifeSystem));
+            tmpWeaponDmg = 0;
         }
-        else
+        foreach (HealthState customHealthState in customHealthStates)
         {
-            _lifeSystem.Damage(weaponDamage, customHealthState);
+            _lifeSystem.Damage(0, customHealthState);
         }
+
     }
 
 }
