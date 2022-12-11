@@ -69,9 +69,9 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = true;
 
-            rb.useGravity = false;
+            rb.constraints = (RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation);
 
-            if(rb.velocity.magnitude > MIN_SPEED_WALK)
+            if (rb.velocity.magnitude > MIN_SPEED_WALK)
                 playerAnimator.SetFloat("state", 1);
             else
                 playerAnimator.SetFloat("state", 0);
@@ -86,12 +86,9 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = false;
 
-            rb.constraints = RigidbodyConstraints.None;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
 
-            rb.useGravity = true;
-
-            if(!damage)
+            if (!damage)
                 playerAnimator.SetFloat("state", 0);
 
             Vector3 reducedVel = rb.velocity;
