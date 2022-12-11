@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     internal Vector2 mouseLookVec;
     LifeSystem lifeStatus;
     PlayerSword playerSword;
+    PlayerDodge playerDodge;
 
     const float minFallSpeed = 10;
     bool damage;
@@ -49,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         lifeStatus = GetComponent<LifeSystem>();
         playerSword = GetComponent<PlayerSword>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        playerDodge = GetComponent<PlayerDodge>();
 
         ResetSpeed();
     }
@@ -86,7 +88,8 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = false;
 
-            rb.constraints = RigidbodyConstraints.FreezeAll;
+            if(playerDodge.dodgeRechargeTimer <= 0)
+                rb.constraints = RigidbodyConstraints.FreezeAll;
 
             if (!damage)
                 playerAnimator.SetFloat("state", 0);
@@ -211,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag.Equals("floor"))
+        if (rb.useGravity && collision.gameObject.tag.Equals("floor"))
         {
             rb.useGravity = false;
             rb.constraints = RigidbodyConstraints.FreezePositionY;
