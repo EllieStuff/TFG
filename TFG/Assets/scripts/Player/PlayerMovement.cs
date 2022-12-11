@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
     const float SCREEN_WIDTH = 1000;
     const float SCREEN_HEIGHT = 500;
+    const float STOP_SPEED = 20;
 
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     internal Vector3 targetMousePos;
     internal Vector3 attackDir;
     internal Vector2 mouseLookVec;
+    internal bool cardEffect;
     LifeSystem lifeStatus;
     PlayerSword playerSword;
     PlayerDodge playerDodge;
@@ -88,8 +90,12 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = false;
 
-            if(playerDodge.dodgeRechargeTimer <= 0)
+            Debug.Log(rb.velocity.magnitude);
+
+            if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
                 rb.constraints = RigidbodyConstraints.FreezeAll;
+            else if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
+                cardEffect = false;
 
             if (!damage)
                 playerAnimator.SetFloat("state", 0);
