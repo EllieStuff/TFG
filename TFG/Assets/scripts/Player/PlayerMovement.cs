@@ -86,6 +86,9 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = false;
 
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+
             rb.useGravity = true;
 
             if(!damage)
@@ -212,12 +215,9 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag.Equals("floor"))
+        {
             rb.useGravity = false;
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag.Equals("floor"))
-            rb.useGravity = true;
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+        }
     }
 }
