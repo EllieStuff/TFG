@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
     const float SCREEN_WIDTH = 1000;
     const float SCREEN_HEIGHT = 500;
+    const float STOP_SPEED = 20;
 
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
@@ -29,8 +30,10 @@ public class PlayerMovement : MonoBehaviour
     internal Vector3 targetMousePos;
     internal Vector3 attackDir;
     internal Vector2 mouseLookVec;
+    internal bool cardEffect;
     LifeSystem lifeStatus;
     PlayerSword playerSword;
+    PlayerDodge playerDodge;
 
     const float minFallSpeed = 10;
     bool damage;
@@ -49,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         lifeStatus = GetComponent<LifeSystem>();
         playerSword = GetComponent<PlayerSword>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        playerDodge = GetComponent<PlayerDodge>();
 
         ResetSpeed();
     }
@@ -69,9 +73,9 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = true;
 
-            rb.useGravity = false;
+            rb.constraints = (RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation);
 
-            if(rb.velocity.magnitude > MIN_SPEED_WALK)
+            if (rb.velocity.magnitude > MIN_SPEED_WALK)
                 playerAnimator.SetFloat("state", 1);
             else
                 playerAnimator.SetFloat("state", 0);
@@ -86,9 +90,14 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = false;
 
-            rb.useGravity = true;
+            Debug.Log(rb.velocity.magnitude);
 
-            if(!damage)
+            if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+            else if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
+                cardEffect = false;
+
+            if (!damage)
                 playerAnimator.SetFloat("state", 0);
 
             Vector3 reducedVel = rb.velocity;
@@ -211,13 +220,10 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag.Equals("floor"))
+        if (rb.useGravity && collision.gameObject.tag.Equals("floor"))
+        {
             rb.useGravity = false;
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag.Equals("floor"))
-            rb.useGravity = true;
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+        }
     }
 }

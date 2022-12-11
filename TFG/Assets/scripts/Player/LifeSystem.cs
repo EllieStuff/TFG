@@ -13,7 +13,7 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] internal float maxLife = 100;
     [SerializeField] internal float currLife = 100;
     [SerializeField] private GameObject bloodPrefab;
-    [SerializeField] private GameObject deathParticlesPrefab;
+    //[SerializeField] private GameObject deathParticlesPrefab;
     [SerializeField] private PlayerHUD playerLifeBar;
     [SerializeField] private Transform EnemyLifeBar;
 
@@ -86,8 +86,6 @@ public class LifeSystem : MonoBehaviour
         {
             if (currLife > 0)
                 Instantiate(bloodPrefab, transform);
-            else
-                Instantiate(deathParticlesPrefab, transform);
         }
 
         currLife -= _dmg * dmgInc;
