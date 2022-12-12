@@ -27,7 +27,7 @@ public class BaseEnemyScript : MonoBehaviour
     LifeSystem enemyLife;
     PlayerMovement playerMovement;
     bool SwordTouching;
-    bool deadNPC = false;
+    internal bool deadNPC = false;
 
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
@@ -43,6 +43,11 @@ public class BaseEnemyScript : MonoBehaviour
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true, canAttack = true;
     internal Quaternion targetRot;
+
+    //PLACEHOLDER
+        Material enemyMat;
+        [SerializeField] SkinnedMeshRenderer enemyMesh;
+    //_________________________________________
 
     //private WeaponStats playerWeaponStats;
 
@@ -61,6 +66,8 @@ public class BaseEnemyScript : MonoBehaviour
         playerLife = playerGO.GetComponent<LifeSystem>();
         playerSword = playerGO.GetComponent<PlayerSword>();
         playerMovement = playerGO.GetComponent<PlayerMovement>();
+        enemyMat = new Material(enemyMesh.material);
+        enemyMesh.material = enemyMat;
 
         ResetSpeed();
     }
@@ -83,12 +90,12 @@ public class BaseEnemyScript : MonoBehaviour
 
         if (canRotate)
         {
-            if (moveDir != Vector3.zero)
+            if (!deadNPC && moveDir != Vector3.zero)
             {
                 targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
-            else
+            else if (!deadNPC)
             {
                 targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
@@ -145,10 +152,15 @@ public class BaseEnemyScript : MonoBehaviour
         if(enemyLife.currLife <= 0 && !deadNPC)
         {
             if (Vector3.Distance(transform.position, player.position) <= PLAYER_HIT_DISTANCE_SWORD)
-                playerSword.mustAttack = true;
+                playerSword.mustAttack = false;
 
             damageTimer = baseDeathTime;
             deadNPC = true;
+        }
+
+        if(deadNPC && enemyMat.color.a > 0)
+        {
+            enemyMat.color -= new Color(0, 0, 0, Time.deltaTime);
         }
 
         if(damageTimer <= 0 && deadNPC)
@@ -186,7 +198,9 @@ public class BaseEnemyScript : MonoBehaviour
         {
             rb.useGravity = true;
             playerMovement.attackDir = transform.position;
-            playerSword.mustAttack = true;
+
+            if(playerLife.currLife > 0)
+                playerSword.mustAttack = true;
         }
 
         if (!isAttacking && distance > enemyStopAttackDistance)

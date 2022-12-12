@@ -145,6 +145,7 @@ MonoBehaviour:
   baseDamageTimer: 0.5
   baseDeathTime: 5
   moveDir: {x: 0, y: 0, z: 0}
+  enemyMesh: {fileID: 1099689971723826617}
   attackDistance: 15
   baseAttackTimer: 2
   attackAnimationTime: 0.15
@@ -171,8 +172,6 @@ MonoBehaviour:
   maxLife: 50
   currLife: 50
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
-    type: 3}
-  deathParticlesPrefab: {fileID: 8161046788835331719, guid: 4dbd5e376662b544bb4895c6abb1687a,
     type: 3}
   playerLifeBar: {fileID: 0}
   EnemyLifeBar: {fileID: 301527826653558296}
