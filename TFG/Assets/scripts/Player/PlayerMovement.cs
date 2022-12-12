@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector3 lookDir = Vector3.zero;
     bool moving = false;
     Camera mainCam;
+    MusicJukebox music;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         playerSword = GetComponent<PlayerSword>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerDodge = GetComponent<PlayerDodge>();
+        music = GameObject.Find("Jukebox").GetComponent<MusicJukebox>();
 
         ResetSpeed();
     }
@@ -197,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void DamageStartCorroutine()
     {
+        music.EnableBattleMode();
         StartCoroutine(DamageCorroutine());
     }
     IEnumerator DamageCorroutine()

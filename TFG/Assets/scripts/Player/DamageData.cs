@@ -13,6 +13,8 @@ public class DamageData : MonoBehaviour
 
     internal HealthState[] customHealthStates = new HealthState[0];
 
+    [SerializeField] AudioManager audio;
+
 
     public bool IsAttacking
     {
@@ -41,6 +43,9 @@ public class DamageData : MonoBehaviour
 
         if (!isACardEffect && other.CompareTag("Player"))
         {
+            if (audio != null)
+                audio.PlaySound();
+
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
             ApplyDamage(lifeSystem);
             other.GetComponent<PlayerMovement>().DamageStartCorroutine();
@@ -48,6 +53,9 @@ public class DamageData : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
+            if (audio != null)
+                audio.PlaySound();
+
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
             ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
