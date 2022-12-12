@@ -6,6 +6,7 @@ public class TornadoScript : MonoBehaviour
 {
     [SerializeField] float tornadoDamage;
     [SerializeField] float suctionSpeed;
+    [SerializeField] AudioManager audioManager;
     HealthState state;
 
     private void Start()
@@ -19,7 +20,14 @@ public class TornadoScript : MonoBehaviour
         {
             Transform otherTransform = other.transform;
             otherTransform.position = Vector3.Lerp(otherTransform.position, transform.position, Time.deltaTime * suctionSpeed);
-            otherTransform.gameObject.GetComponent<LifeSystem>().Damage(tornadoDamage, state);
+            GameObject otherGO = otherTransform.gameObject;
+            LifeSystem life = otherGO.GetComponent<LifeSystem>();
+
+            if (!audioManager.IsPlayingSound() && life.currLife > 0)
+                audioManager.PlaySound();
+
+            life.Damage(tornadoDamage, state);
+            otherGO.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
         }
     }
 }

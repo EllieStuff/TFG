@@ -92,8 +92,6 @@ public class PlayerMovement : MonoBehaviour
         {
             moving = false;
 
-            Debug.Log(rb.velocity.magnitude);
-
             if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
                 rb.constraints = RigidbodyConstraints.FreezeAll;
             else if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)

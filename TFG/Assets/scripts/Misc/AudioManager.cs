@@ -23,6 +23,11 @@ public class AudioManager : MonoBehaviour
             PlaySound();
     }
 
+    public bool IsPlayingSound()
+    {
+        return audioSource.isPlaying;
+    }
+
     public void PlaySound()
     {
         audioSource.clip = ChooseClip(clips);
