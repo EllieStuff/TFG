@@ -34,6 +34,9 @@ public class LifeSystem : MonoBehaviour
         if (entityType.Equals(EntityType.ENEMY))
             camera = Camera.main.transform;
 
+        if (EnemyLifeBar != null)
+            EnemyLifeBar.gameObject.SetActive(true);
+
         CheckPlayerLifeLimits();
     }
 
@@ -173,7 +176,7 @@ public class LifeSystem : MonoBehaviour
     //    Destroy(gameObject);
     //}
 
-    void OnMouseOver()
+    /*void OnMouseOver()
     {
         if(entityType.Equals(EntityType.ENEMY))
             EnemyLifeBar.gameObject.SetActive(true);
@@ -183,7 +186,7 @@ public class LifeSystem : MonoBehaviour
     {
         if (entityType.Equals(EntityType.ENEMY))
             EnemyLifeBar.gameObject.SetActive(false);
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
