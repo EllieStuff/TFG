@@ -14,6 +14,7 @@ public class DeckManager : MonoBehaviour
     internal List<Card_Data> cards = new List<Card_Data>();
     Vector3 activeSize = new Vector3(1.05f, 0.89f, 0.89f);
     Vector3 nonActiveSize = new Vector3(1.0f, 0.84f, 0.84f);
+    LifeSystem playerLife;
     //PlayerUseCard playerUseCard;
     //int idx = 0;
 
@@ -22,6 +23,7 @@ public class DeckManager : MonoBehaviour
     void Start()
     {
         //playerUseCard = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerUseCard>();
+        playerLife = GameObject.Find("Player").GetComponent<LifeSystem>();
 
         for(int i = 0; i < cardsRef.Length; i++)
         {
@@ -42,7 +44,7 @@ public class DeckManager : MonoBehaviour
 
     public void UseSelectedCard(int _idx, PlayerMovement _playerData)
     {
-        if (_idx < cards.Count && !cards[_idx].inCooldown)
+        if (playerLife.currLife > 0 && _idx < cards.Count && !cards[_idx].inCooldown)
         {
             cards[_idx].cardBehaviour.Activate(_playerData);
             cards[_idx].StartCooldown();
