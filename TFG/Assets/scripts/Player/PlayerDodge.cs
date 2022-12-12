@@ -26,6 +26,8 @@ public class PlayerDodge : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && dodgeRechargeTimer <= 0)
         {
             sprintHUD.ShakeBar();
+            rb.constraints = (RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY);
+
             rb.AddForce(new Vector3(playerMovement.mouseLookVec.x, 0, playerMovement.mouseLookVec.y).normalized * dodgeForce, ForceMode.Impulse);
             playerMovement.targetMousePos = Vector3.zero;
             dodgeRechargeTimer = dodgeRechargeDelay;
