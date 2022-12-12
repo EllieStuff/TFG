@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     float actualMoveForce;
     float actualRotSpeed;
     float speedMultiplierRot = 10;
-    internal float speedMultiplier = 2.0f;
+    internal float speedMultiplier = 0.2f;
     Vector3 actualMaxSpeed;
     internal bool canMove = true;
     internal bool canRotate = true;
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
                 moveDir *= DIAGONAL_SPEED_REDUCTION;
-            rb.AddForce(moveDir * actualMoveForce * speedMultiplier, ForceMode.Force);
+            rb.velocity = moveDir * actualMoveForce * speedMultiplier;
             Vector3 finalVelocity = ClampVector(rb.velocity, -actualMaxSpeed * speedMultiplier, actualMaxSpeed * speedMultiplier) + new Vector3(0, rb.velocity.y, 0);
             rb.velocity = finalVelocity;
         }

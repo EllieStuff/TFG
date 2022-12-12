@@ -38,7 +38,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal Transform player;
     internal float actualMoveSpeed;
     internal float actualRotSpeed;
-    internal float speedMultiplier = 1.0f;
+    internal float speedMultiplier = 0.5f;
     internal Vector3 actualMinVelocity, actualMaxVelocity;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true, canAttack = true;
@@ -260,7 +260,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal void MoveRB(Vector3 _moveDir, float _moveForce, ForceMode _forceMode = ForceMode.Force)
     {
         if (canMove)
-            rb.AddForce(_moveDir * _moveForce, _forceMode);
+            rb.velocity = _moveDir * _moveForce;
     }
     internal void StopRB(float _speedReduction = DEFAULT_SPEED_REDUCTION)
     {
