@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     const float SCREEN_WIDTH = 1000;
     const float SCREEN_HEIGHT = 500;
     const float STOP_SPEED = 5;
+    const float RESET_LEVEL_TIMER_DEATH = 5;
 
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     float actualMoveForce;
     float actualRotSpeed;
     float speedMultiplierRot = 10;
+    float timerDeath;
     internal float speedMultiplier = 0.2f;
     Vector3 actualMaxSpeed;
     internal bool canMove = true;
@@ -46,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
     Camera mainCam;
     MusicJukebox music;
 
+    //JUST FOR THE PROTOYPE
+        [SerializeField] GameObject deathScreen;
+    //_____________________
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerDodge = GetComponent<PlayerDodge>();
         music = GameObject.Find("Jukebox").GetComponent<MusicJukebox>();
+        timerDeath = RESET_LEVEL_TIMER_DEATH;
 
         ResetSpeed();
     }
@@ -123,6 +131,17 @@ public class PlayerMovement : MonoBehaviour
         {
             targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
+        }
+
+        if(lifeStatus.currLife <= 0)
+        {
+            if (deathScreen != null && !deathScreen.activeSelf)
+                deathScreen.SetActive(true);
+
+            if (timerDeath > 0)
+                timerDeath -= Time.deltaTime;
+            else
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
