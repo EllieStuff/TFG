@@ -43,12 +43,7 @@ public class DamageData : MonoBehaviour
 
         if (!isACardEffect && other.CompareTag("Player"))
         {
-            if (audio != null)
-                audio.PlaySound();
-
-            LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-            ApplyDamage(lifeSystem);
-            other.GetComponent<PlayerMovement>().DamageStartCorroutine();
+            DamageToPlayer(other);
         }
 
         if (other.CompareTag("Enemy"))
@@ -63,6 +58,15 @@ public class DamageData : MonoBehaviour
 
     }
 
+    public void DamageToPlayer(Collider other)
+    {
+        if (audio != null)
+            audio.PlaySound();
+
+        LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
+        ApplyDamage(lifeSystem);
+        other.GetComponent<PlayerMovement>().DamageStartCorroutine();
+    }
 
     void ApplyDamage(LifeSystem _lifeSystem)
     {
