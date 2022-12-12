@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
     const float SCREEN_WIDTH = 1000;
     const float SCREEN_HEIGHT = 500;
-    const float STOP_SPEED = 20;
+    const float STOP_SPEED = 5;
 
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
@@ -70,8 +70,9 @@ public class PlayerMovement : MonoBehaviour
         lookDir = new Vector3(horizontalInput, 0, verticalInput);
         moveDir = MoveToTargetVector(targetMousePos);
 
+        Debug.Log(rb.velocity.magnitude);
 
-        if (canMove && targetMousePos != Vector3.zero && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero && lifeStatus.currLife > 0)
+        if (canMove && playerDodge.dodgeRechargeTimer <= playerDodge.dodgeRechargeDelay - 0.2f && !cardEffect && targetMousePos != Vector3.zero && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero && lifeStatus.currLife > 0)
         {
             moving = true;
 
@@ -94,8 +95,6 @@ public class PlayerMovement : MonoBehaviour
 
             if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
                 rb.constraints = RigidbodyConstraints.FreezeAll;
-            else if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
-                cardEffect = false;
 
             if (!damage)
                 playerAnimator.SetFloat("state", 0);
@@ -109,6 +108,9 @@ public class PlayerMovement : MonoBehaviour
 
             rb.velocity = reducedVel;
         }
+
+        if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
+            cardEffect = false;
 
         rb.velocity = FallSystem(rb.velocity);
 
