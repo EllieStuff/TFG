@@ -70,8 +70,6 @@ public class PlayerMovement : MonoBehaviour
         lookDir = new Vector3(horizontalInput, 0, verticalInput);
         moveDir = MoveToTargetVector(targetMousePos);
 
-        Debug.Log(rb.velocity.magnitude);
-
         if (canMove && playerDodge.dodgeRechargeTimer <= playerDodge.dodgeRechargeDelay - 0.2f && !cardEffect && targetMousePos != Vector3.zero && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero && lifeStatus.currLife > 0)
         {
             moving = true;
