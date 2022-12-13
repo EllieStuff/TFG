@@ -83,7 +83,10 @@ public class LifeSystem : MonoBehaviour
     public void Damage(float _dmg, HealthState _healthState)
     {
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
+        {
             playerLifeBar.ShakeBar();
+            //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.5f, 0.00001f));
+        }
 
         if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY))
         {

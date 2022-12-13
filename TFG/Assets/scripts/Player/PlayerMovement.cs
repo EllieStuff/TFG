@@ -47,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector3 lookDir = Vector3.zero;
     bool moving = false;
     Camera mainCam;
-    MusicJukebox music;
 
     //JUST FOR THE PROTOYPE
         [SerializeField] GameObject deathScreen;
@@ -61,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
         playerSword = GetComponent<PlayerSword>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerDodge = GetComponent<PlayerDodge>();
-        music = GameObject.Find("Jukebox").GetComponent<MusicJukebox>();
         timerDeath = RESET_LEVEL_TIMER_DEATH;
 
         ResetSpeed();
@@ -78,7 +76,10 @@ public class PlayerMovement : MonoBehaviour
         lookDir = new Vector3(horizontalInput, 0, verticalInput);
         moveDir = MoveToTargetVector(targetMousePos);
 
-        if (canMove && playerDodge.dodgeRechargeTimer <= playerDodge.dodgeRechargeDelay - 0.2f && !cardEffect && targetMousePos != Vector3.zero && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero && lifeStatus.currLife > 0)
+        if (!canMove) moveDir = Vector3.zero;
+        if (canMove && playerDodge.dodgeRechargeTimer <= playerDodge.dodgeRechargeDelay - 0.2f && !cardEffect && targetMousePos != Vector3.zero 
+            && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero 
+            && lifeStatus.currLife > 0)
         {
             moving = true;
 
@@ -216,7 +217,6 @@ public class PlayerMovement : MonoBehaviour
     }
     public void DamageStartCorroutine()
     {
-        music.EnableBattleMode();
         StartCoroutine(DamageCorroutine());
     }
     IEnumerator DamageCorroutine()

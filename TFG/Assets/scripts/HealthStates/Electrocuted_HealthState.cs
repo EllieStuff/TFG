@@ -16,7 +16,7 @@ public class Electrocuted_HealthState : HealthState
 
         name = "Electrocuted State";
         state = HealthState.Effect.ELECTROCUTED;
-        effectDuration = 6.0f;
+        effectDuration = 1.0f;
         paralisisDuration = 1.0f; //Depende de la carta (0.5s a 6s)
 
         compatibilityMap_DmgMultipliers.Add(Effect.BURNED, 0.5f);

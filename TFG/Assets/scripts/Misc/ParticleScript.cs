@@ -17,7 +17,7 @@ public class ParticleScript : MonoBehaviour
         if (removeParent)
             transform.parent = null;
         if (followPlayer)
-            transform.parent = GameObject.Find("Player").transform;
+            transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
 
         if (!randomTime)
             destroyTimer = timeToDestroy;

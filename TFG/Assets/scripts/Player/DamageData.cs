@@ -23,14 +23,18 @@ public class DamageData : MonoBehaviour
             if (isACardEffect || alwaysAttacking) return true;
             if (ownerTransform == null) return false;
 
-            if(ownerTransform.GetComponent<LifeSystem>().entityType == LifeSystem.EntityType.PLAYER)
+            LifeSystem.EntityType entityType = ownerTransform.GetComponent<LifeSystem>().entityType;
+            if (entityType == LifeSystem.EntityType.PLAYER)
             {
                 return ownerTransform.GetComponent<PlayerSword>().isAttacking;
             }
-            else
+            else if (entityType == LifeSystem.EntityType.ENEMY)
             {
                 return ownerTransform.GetComponent<BaseEnemyScript>().isAttacking;
             }
+
+            Debug.LogWarning("Entity not assigned");
+            return false;
         }
     }
 
@@ -52,6 +56,7 @@ public class DamageData : MonoBehaviour
                 audio.PlaySound();
 
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
+            Debug.Log("Damaged by: " + this.name);
             ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
         }

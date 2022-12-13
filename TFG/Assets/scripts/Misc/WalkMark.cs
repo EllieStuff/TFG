@@ -17,7 +17,7 @@ public class WalkMark : MonoBehaviour
     {
         walkMark.transform.parent = null;
         cameraMain = Camera.main;
-        playerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -55,4 +55,10 @@ public class WalkMark : MonoBehaviour
 
         transform.position = worldPosition;
     }
+
+    public void SetWalkMarkActive(bool _active)
+    {
+        walkMark.SetActive(_active);
+    }
+
 }

@@ -5035,8 +5035,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2155454945957530461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 7}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2155454945942666699}
@@ -5073,7 +5073,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c07f5748f19694191edb722442f818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tornadoDuration: 4
   tornadoDamage: 0.5
+  dmgFrequency: 0.5
   suctionSpeed: 2
   audioManager: {fileID: 4613025438725009392}
 --- !u!114 &-8729682293099291480
@@ -5088,7 +5090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea53c8e7e59cae14092e24026f7e9924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroy: 10
+  timeToDestroy: 4.2
   randomTime: 0
   minTime: 0
   maxTime: 0
@@ -5119,7 +5121,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 90d8565f4b5c56146bfb2f0831739206, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5163,7 +5165,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7449609058154040098
+--- !u!1 &6923929180203437599
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,115 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7449609058154040096}
-  - component: {fileID: 7449609058154040097}
-  - component: {fileID: 3328291446348779619}
-  - component: {fileID: 7200012060778358322}
-  - component: {fileID: 5280073715403012101}
-  - component: {fileID: 2446804110387523763}
+  - component: {fileID: 3730484101683907293}
+  - component: {fileID: 1719385478790377363}
+  - component: {fileID: 4951978968872810832}
   m_Layer: 0
-  m_Name: DamageTriggerBox
-  m_TagString: Damage
+  m_Name: SoundEffect base
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7449609058154040096
+--- !u!4 &3730484101683907293
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449609058154040098}
+  m_GameObject: {fileID: 6923929180203437599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5182047702932684481}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 7449609058154040096}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7449609058154040097
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449609058154040098}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 1, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3328291446348779619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449609058154040098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea53c8e7e59cae14092e24026f7e9924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToDestroy: 1
-  randomTime: 0
-  minTime: 0
-  maxTime: 0
-  removeParent: 0
-  followPlayer: 0
---- !u!114 &7200012060778358322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449609058154040098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerTransform: {fileID: 0}
-  weaponDamage: 50
-  weaponEffects: 00000000
-  alwaysAttacking: 1
-  isACardEffect: 1
-  audio: {fileID: 3666481069046704728}
---- !u!114 &5280073715403012101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449609058154040098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3b12d8a80166344b812d5c8507f6a37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 2446804110387523763}
-  clips:
-  - {fileID: 8300000, guid: 904c33f0af7f1124db4932e59cf6ac68, type: 3}
-  minPitch: 0.8
-  maxPitch: 1.5
-  playOnStart: 1
-  playOnEnable: 0
---- !u!82 &2446804110387523763
+--- !u!82 &1719385478790377363
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449609058154040098}
+  m_GameObject: {fileID: 6923929180203437599}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
@@ -201,7 +129,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &7971267394289316993
+--- !u!114 &4951978968872810832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6923929180203437599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b12d8a80166344b812d5c8507f6a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 1719385478790377363}
+  clips:
+  - {fileID: 8300000, guid: 33b16ad8956a3f44bafcc6a767c65aca, type: 3}
+  minPitch: 1
+  maxPitch: 1.25
+  playOnStart: 1
+  playOnEnable: 0
+--- !u!1 &7449609058154040098
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,58 +156,111 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5182047702932684481}
-  - component: {fileID: 3666481069046704728}
-  - component: {fileID: 5143720620061306229}
+  - component: {fileID: 7449609058154040096}
+  - component: {fileID: 7449609058154040097}
+  - component: {fileID: 3328291446348779619}
+  - component: {fileID: 7200012060778358322}
+  - component: {fileID: 550253573294161413}
+  - component: {fileID: 7115614396398973563}
   m_Layer: 0
-  m_Name: DamageSoundEffect
-  m_TagString: Untagged
+  m_Name: DecisiveCut
+  m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5182047702932684481
+--- !u!4 &7449609058154040096
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7971267394289316993}
+  m_GameObject: {fileID: 7449609058154040098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7449609058154040096}
+  m_Children:
+  - {fileID: 3730484101683907293}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3666481069046704728
+--- !u!65 &7449609058154040097
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449609058154040098}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 1, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3328291446348779619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7971267394289316993}
+  m_GameObject: {fileID: 7449609058154040098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea53c8e7e59cae14092e24026f7e9924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDestroy: 3
+  randomTime: 0
+  minTime: 0
+  maxTime: 0
+  removeParent: 0
+  followPlayer: 0
+--- !u!114 &7200012060778358322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449609058154040098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTransform: {fileID: 0}
+  weaponDamage: 25
+  weaponEffects: 030000000a000000
+  alwaysAttacking: 1
+  isACardEffect: 1
+  audio: {fileID: 550253573294161413}
+--- !u!114 &550253573294161413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449609058154040098}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3b12d8a80166344b812d5c8507f6a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 5143720620061306229}
+  audioSource: {fileID: 7115614396398973563}
   clips:
-  - {fileID: 8300000, guid: 4011b02765f3bb9419dee56bc355b22a, type: 3}
-  - {fileID: 8300000, guid: a44f347a6715e4349b1d679036f10f3a, type: 3}
+  - {fileID: 8300000, guid: b2c5a691d66b961469c782d8aafbf1ff, type: 3}
+  - {fileID: 8300000, guid: 86f562cf86d0e814da1588b6dbe5f1b7, type: 3}
   minPitch: 1
-  maxPitch: 1.25
+  maxPitch: 1.5
   playOnStart: 0
   playOnEnable: 0
---- !u!82 &5143720620061306229
+--- !u!82 &7115614396398973563
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7971267394289316993}
+  m_GameObject: {fileID: 7449609058154040098}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
