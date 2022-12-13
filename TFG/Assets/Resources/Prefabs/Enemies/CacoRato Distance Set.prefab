@@ -56,6 +56,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8666937206496994573}
     m_Modifications:
+    - target: {fileID: 545308016016653416, guid: 2c2af4859f9416c4b84bae8a888f08ad,
+        type: 3}
+      propertyPath: baseAttackTimer
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_RootOrder
@@ -115,6 +120,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CacoRato Distance
+      objectReference: {fileID: 0}
+    - target: {fileID: 8272157962908863554, guid: 2c2af4859f9416c4b84bae8a888f08ad,
+        type: 3}
+      propertyPath: maxLife
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8272157962908863554, guid: 2c2af4859f9416c4b84bae8a888f08ad,
+        type: 3}
+      propertyPath: currLife
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c2af4859f9416c4b84bae8a888f08ad, type: 3}

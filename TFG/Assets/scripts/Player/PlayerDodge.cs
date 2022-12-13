@@ -23,7 +23,7 @@ public class PlayerDodge : MonoBehaviour
     void Update()
     {
         Debug.DrawLine(transform.position, transform.forward * 20, Color.green);
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dodgeRechargeTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.Space) && dodgeRechargeTimer <= 0)
         {
             sprintHUD.ShakeBar();
             rb.constraints = (RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY);
