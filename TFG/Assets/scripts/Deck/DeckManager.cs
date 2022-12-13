@@ -38,7 +38,7 @@ public class DeckManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //ReallocCards();
     }
 
 
@@ -74,12 +74,14 @@ public class DeckManager : MonoBehaviour
     Vector3 GetCardPos(int _cardIdx)
     {
         float xPos;
+        float resolutionWidth = transform.GetComponentInParent<Canvas>().renderingDisplaySize.x;
+        float screenIncFactor = resolutionWidth / 1920f;
         if (cards.Count > 2)
-            xPos = cardsFatherRef.position.x + (cardsFatherRef.rect.width * _cardIdx / (cards.Count - 1));
+            xPos = cardsFatherRef.position.x + (cardsFatherRef.rect.width * screenIncFactor * _cardIdx / (cards.Count - 1));
         else if (cards.Count == 2)
-            xPos = cardsFatherRef.position.x + cardsFatherRef.rect.width / 4f + (cardsFatherRef.rect.width * _cardIdx / 2f);
+            xPos = cardsFatherRef.position.x + cardsFatherRef.rect.width * screenIncFactor / 4f + (cardsFatherRef.rect.width * screenIncFactor * _cardIdx / 2f);
         else
-            xPos = cardsFatherRef.position.x + (cardsFatherRef.rect.width / 2f);
+            xPos = cardsFatherRef.position.x + (cardsFatherRef.rect.width * screenIncFactor / 2f);
         return new Vector3(xPos, cardsFatherRef.position.y, cardsFatherRef.position.z);
     }
 

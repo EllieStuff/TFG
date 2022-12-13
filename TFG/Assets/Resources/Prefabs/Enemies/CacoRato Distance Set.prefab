@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8666937206496994573}
-  - component: {fileID: 8663678063475017711}
+  - component: {fileID: 3494215887435016777}
   m_Layer: 0
-  m_Name: CacoRato Set Melee
+  m_Name: CacoRato Distance Set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8663678063475017711
+--- !u!114 &3494215887435016777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,81 +46,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyRef: {fileID: 8326785294998302332}
-  enemyPrefab: {fileID: 307127351556125052, guid: aaf07ece76789b34eaa788e73fb456ad,
+  enemyPrefab: {fileID: 4370893250066358662, guid: 2c2af4859f9416c4b84bae8a888f08ad,
     type: 3}
   respawnDist: 40
---- !u!1001 &8632711818787086085
+--- !u!1001 &5703289250108821503
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 8666937206496994573}
     m_Modifications:
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.00000008784177
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00000008058957
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 307127351556125052, guid: aaf07ece76789b34eaa788e73fb456ad,
+    - target: {fileID: 4370893250066358662, guid: 2c2af4859f9416c4b84bae8a888f08ad,
         type: 3}
       propertyPath: m_Name
-      value: CacoRato Melee
+      value: CacoRato Distance
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: aaf07ece76789b34eaa788e73fb456ad, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 2c2af4859f9416c4b84bae8a888f08ad, type: 3}
 --- !u!4 &8326785294998302332 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 307127351556125049, guid: aaf07ece76789b34eaa788e73fb456ad,
+  m_CorrespondingSourceObject: {fileID: 4370893250066358659, guid: 2c2af4859f9416c4b84bae8a888f08ad,
     type: 3}
-  m_PrefabInstance: {fileID: 8632711818787086085}
+  m_PrefabInstance: {fileID: 5703289250108821503}
   m_PrefabAsset: {fileID: 0}
