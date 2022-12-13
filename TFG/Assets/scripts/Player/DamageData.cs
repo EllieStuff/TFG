@@ -56,7 +56,7 @@ public class DamageData : MonoBehaviour
                 audio.PlaySound();
 
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-            Debug.Log("Damaged by: " + this.name);
+            //Debug.Log("Damaged by: " + this.name);
             ApplyDamage(lifeSystem);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
         }

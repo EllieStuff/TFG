@@ -64,6 +64,10 @@ public class LifeSystem : MonoBehaviour
         {
             currLife = 0;
             isDead = true;
+            if(entityType == EntityType.ENEMY)
+            {
+                GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
+            }
             StopAllCoroutines();
             //healthStates.Clear();
             //if (managesDeath)

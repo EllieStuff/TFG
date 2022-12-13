@@ -35,7 +35,7 @@ public class Paralized_HealthState : HealthState
         if(lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
         {
             BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
-            enemy.canMove = enemy.canRotate = false;
+            enemy.canMove = enemy.canRotate = enemy.canAttack = false;
         }
 
     }
@@ -50,7 +50,7 @@ public class Paralized_HealthState : HealthState
         if (lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
         {
             BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
-            enemy.canMove = enemy.canRotate = true;
+            enemy.canMove = enemy.canRotate = enemy.canAttack = true;
         }
 
         base.EndEffect();

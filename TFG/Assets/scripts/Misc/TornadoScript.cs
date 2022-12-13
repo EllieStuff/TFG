@@ -13,12 +13,13 @@ public class TornadoScript : MonoBehaviour
 
 
     float timer;
-    bool tornadoCorroutineStarted;
+    bool destroyOrder = false;
+    //bool tornadoCorroutineStarted;
 
     private void Start()
     {
         timer = tornadoDuration;
-        tornadoCorroutineStarted = false;
+        //tornadoCorroutineStarted = false;
         transform.parent = null;
     }
 
@@ -27,9 +28,10 @@ public class TornadoScript : MonoBehaviour
         if (timer > 0)
             timer -= Time.deltaTime;
 
-        if(!tornadoCorroutineStarted && timer <= 0)
+        if(timer <= 0 && !destroyOrder)
         {
-            Destroy(gameObject);
+            destroyOrder = true;
+            Destroy(gameObject, 0.1f);
         }
     }
 
@@ -37,7 +39,7 @@ public class TornadoScript : MonoBehaviour
     {
         if(other.CompareTag("Enemy"))
         {
-            tornadoCorroutineStarted = true;
+            //tornadoCorroutineStarted = true;
             other.GetComponent<BaseEnemyScript>().StartCoroutine(TornadoCoroutine(other.transform));
         }
     }
@@ -46,7 +48,7 @@ public class TornadoScript : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            tornadoCorroutineStarted = false;
+            //tornadoCorroutineStarted = false;
             other.GetComponent<BaseEnemyScript>().StopCoroutine(TornadoCoroutine(other.transform));
         }
     }
@@ -66,18 +68,15 @@ public class TornadoScript : MonoBehaviour
 
         while (Time.realtimeSinceStartup < endTornadoTimeStamp) 
         {
-            if (_enemy == null)
-                break;
+            if (destroyOrder) yield break;
 
-            yield return new WaitForEndOfFrame();
-
-            if (_enemy != null)
-                _enemy.position = Vector3.Lerp(_enemy.position, transform.position, Time.deltaTime * suctionSpeed);           
+            if (_enemy == null) break;
+            else _enemy.position = Vector3.Lerp(_enemy.position, transform.position, Time.deltaTime * suctionSpeed);           
 
             dmgTimer -= Time.deltaTime;
             if (dmgTimer <= 0)
             {
-                yield return new WaitForEndOfFrame();
+                //yield return new WaitForEndOfFrame();
 
                 if (!audioManager.IsPlayingSound() && life.currLife > 0)
                     audioManager.PlaySound();
@@ -97,7 +96,7 @@ public class TornadoScript : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 }

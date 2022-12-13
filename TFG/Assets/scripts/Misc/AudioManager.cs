@@ -6,8 +6,8 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] clips;
-    [SerializeField] float minPitch;
-    [SerializeField] float maxPitch;
+    [SerializeField] float minPitch = 0.8f;
+    [SerializeField] float maxPitch = 1.2f;
     [SerializeField] bool playOnStart;
     [SerializeField] bool playOnEnable;
 
