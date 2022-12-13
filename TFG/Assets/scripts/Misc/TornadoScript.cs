@@ -11,16 +11,33 @@ public class TornadoScript : MonoBehaviour
     [SerializeField] AudioManager audioManager;
     //HealthState windState = new Wind_HealthState();
 
+
+    float timer;
+    bool tornadoCorroutineStarted;
+
     private void Start()
     {
-
+        timer = tornadoDuration;
+        tornadoCorroutineStarted = false;
+        transform.parent = null;
     }
 
+    private void Update()
+    {
+        if (timer > 0)
+            timer -= Time.deltaTime;
+
+        if(!tornadoCorroutineStarted && timer <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Enemy"))
         {
+            tornadoCorroutineStarted = true;
             other.GetComponent<BaseEnemyScript>().StartCoroutine(TornadoCoroutine(other.transform));
         }
     }
@@ -29,6 +46,7 @@ public class TornadoScript : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            tornadoCorroutineStarted = false;
             other.GetComponent<BaseEnemyScript>().StopCoroutine(TornadoCoroutine(other.transform));
         }
     }
@@ -46,23 +64,40 @@ public class TornadoScript : MonoBehaviour
         life.Damage(tornadoDamage, windState);
         _enemy.gameObject.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
 
-        while (Time.realtimeSinceStartup < endTornadoTimeStamp) {
-            _enemy.position = Vector3.Lerp(_enemy.position, transform.position, Time.deltaTime * suctionSpeed);           
+        while (Time.realtimeSinceStartup < endTornadoTimeStamp) 
+        {
+            if (_enemy == null)
+                break;
+
+            yield return new WaitForEndOfFrame();
+
+            if (_enemy != null)
+                _enemy.position = Vector3.Lerp(_enemy.position, transform.position, Time.deltaTime * suctionSpeed);           
 
             dmgTimer -= Time.deltaTime;
             if (dmgTimer <= 0)
             {
+                yield return new WaitForEndOfFrame();
+
                 if (!audioManager.IsPlayingSound() && life.currLife > 0)
                     audioManager.PlaySound();
 
                 dmgTimer = dmgFrequency;
-                life.Damage(tornadoDamage, null);
-                _enemy.gameObject.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
+
+                if(life != null)
+                    life.Damage(tornadoDamage, null);
+
+                if (_enemy != null)
+                    _enemy.gameObject.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
+
+                if (_enemy == null)
+                    break;
             }
 
             yield return new WaitForEndOfFrame();
         }
 
+        Destroy(gameObject);
     }
 
 }
