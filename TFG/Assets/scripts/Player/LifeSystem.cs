@@ -7,6 +7,7 @@ public class LifeSystem : MonoBehaviour
     public enum EntityType { PLAYER, ENEMY, SHIELD }
 
     [SerializeField] internal EntityType entityType = EntityType.PLAYER;
+    [SerializeField] internal PlayerAttack.AttackData.Type entityElement;
     //[SerializeField] internal HealthState.Effect state = HealthState.Effect.NORMAL;
     [SerializeField] internal List<HealthState> healthStates = new List<HealthState>();
     [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
@@ -84,7 +85,7 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
     }
 
-    public void Damage(float _dmg, HealthState _healthState)
+    public void Damage(float _dmg, BaseElements _element)
     {
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
         {
@@ -109,24 +110,9 @@ public class LifeSystem : MonoBehaviour
         //if (!healthState.initialized) _healthState.Init(this);
         if (entityType.Equals(EntityType.PLAYER)/* && !isDead*/) playerMovementScript.DamageStartCorroutine();
 
-        if(/*!isDead && */_healthState != null && _healthState.state != HealthState.Effect.NORMAL)
+        if(/*!isDead && */_element != null && _element.attackType != PlayerAttack.AttackData.Type.NORMAL)
         {
-            if (healthStates.Count > 0)
-            {
-                bool foundEffectWithCompatibility = false;
-                for (int i = 0; i < healthStates.Count; i++)
-                {
-                    if (healthStates[i].CheckEffectsCompatibility(_healthState, _dmg * dmgInc))
-                        foundEffectWithCompatibility = true;
-                }
-                CleanRepeatedHealthEffects();
-                if (!foundEffectWithCompatibility) 
-                    StartHealthState(_healthState);
-            }
-            else
-            {
-                StartHealthState(_healthState);
-            }
+
         }
 
     }
