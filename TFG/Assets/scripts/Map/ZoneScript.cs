@@ -20,8 +20,7 @@ public class ZoneScript : MonoBehaviour
     {
         if(zoneEnabled && !zoneDefused && enemiesQuantity <= 0)
         {
-            if(!doorOpenAnim.isPlaying)
-                doorOpenAnim.Play();
+            PlayAnimation(doorOpenAnim);
 
             closeDoorAnimDestroyTime -= Time.deltaTime;
             if(closeDoorAnimDestroyTime <= 0)
@@ -38,7 +37,17 @@ public class ZoneScript : MonoBehaviour
         {
             zoneEnabled = true;
             doorCloseAnim.gameObject.SetActive(true);
-            doorCloseAnim.Play();
+            PlayAnimation(doorCloseAnim);
+        }
+    }
+
+
+    void PlayAnimation(Animation item)
+    {
+        if(!item.isPlaying)
+        {
+            //play sound and particles
+            item.Play();
         }
     }
 }
