@@ -20,6 +20,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseMoveSpeed;
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
+    [SerializeField] internal ZoneScript zoneSystem;
 
     internal float damageTimer = 0;
     PlayerSword playerSword;
@@ -164,7 +165,12 @@ public class BaseEnemyScript : MonoBehaviour
         }
 
         if(damageTimer <= 0 && deadNPC)
+        {
+            if(zoneSystem != null)
+                zoneSystem.enemiesQuantity -= 1;
+
             Destroy(gameObject);
+        }
         else if (damageTimer <= 0)
         {
             damageTimer = baseDamageTimer;
