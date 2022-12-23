@@ -29438,9 +29438,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesQuantity: 2
+  closeDoorAnimDestroyTime: 1
   doorCloseAnim: {fileID: 337540254}
   doorOpenAnim: {fileID: 453278185}
-  closeDoorAnimDestroyTime: 1
 --- !u!1 &1611477791
 GameObject:
   m_ObjectHideFlags: 0
@@ -39637,6 +39637,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239786001522635671, guid: b2cded7929ee9684bb86651415d47b5b,
+        type: 3}
+      propertyPath: attackStyle
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5714615985957231170, guid: b2cded7929ee9684bb86651415d47b5b,
         type: 3}

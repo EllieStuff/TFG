@@ -9,6 +9,7 @@ public class KnifeThrown : MonoBehaviour
     const float timerInmunnityKnife = 0.1f;
     internal Transform entityThrowingIt;
     internal Vector3 knifeDir;
+    internal bool localDir;
 
     float timerKnife;
     MeshCollider knifeMesh;
@@ -20,7 +21,18 @@ public class KnifeThrown : MonoBehaviour
         knifeMesh.isTrigger = true;
 
         timerKnife = timerInmunnityKnife;
+
         GetComponent<Rigidbody>().velocity = knifeDir * knifeSpeed;
+        transform.rotation = Quaternion.LookRotation(knifeDir);
+
+        if(localDir)
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.velocity = entityThrowingIt.TransformDirection(knifeDir * knifeSpeed);
+            transform.rotation = Quaternion.LookRotation(rb.velocity.normalized);
+        }
+
+
         transform.parent = null;
     }
 
@@ -55,7 +67,7 @@ public class KnifeThrown : MonoBehaviour
         if(col.tag.Equals("Player"))
             dmgData.DamageToPlayer(collision.collider);
 
-        if(timerKnife <= 0)
+        if(timerKnife <= 0 && !col.tag.Equals("Projectile"))
             Destroy(gameObject);
     }
 }
