@@ -8586,8 +8586,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 439454833}
-  - component: {fileID: 439454835}
   - component: {fileID: 439454834}
+  - component: {fileID: 439454836}
   m_Layer: 0
   m_Name: door2
   m_TagString: Untagged
@@ -8713,7 +8713,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!111 &439454835
+--- !u!111 &439454836
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8722,9 +8722,9 @@ Animation:
   m_GameObject: {fileID: 439454832}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 42932970587abf94186abae021eebe20, type: 2}
+  m_Animation: {fileID: 7400000, guid: 57f640b6affe379408c29d2595038fbc, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 42932970587abf94186abae021eebe20, type: 2}
+  - {fileID: 7400000, guid: 57f640b6affe379408c29d2595038fbc, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -34827,7 +34827,7 @@ MonoBehaviour:
   enemiesQuantity: 7
   closeDoorAnimDestroyTime: 5
   doorCloseAnim: {fileID: 1854727119}
-  doorOpenAnim: {fileID: 439454835}
+  doorOpenAnim: {fileID: 439454836}
 --- !u!65 &1551177179
 BoxCollider:
   m_ObjectHideFlags: 0
