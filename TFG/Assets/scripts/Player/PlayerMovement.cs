@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     const float STOP_SPEED = 5;
     const float RESET_LEVEL_TIMER_DEATH = 5;
 
+    //[SerializeField] RoomEnemyManager roomEnemyManager;
+    //[Space]
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
     [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
@@ -37,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     LifeSystem lifeStatus;
     PlayerSword playerSword;
     PlayerDodge playerDodge;
+    PlayerAttack attackScript;
 
     const float minFallSpeed = 10;
     bool damage;
@@ -47,9 +50,10 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector3 lookDir = Vector3.zero;
     bool moving = false;
     Camera mainCam;
+    internal Quaternion targetRot;
 
     //JUST FOR THE PROTOYPE
-        [SerializeField] GameObject deathScreen;
+    [SerializeField] GameObject deathScreen;
     //_____________________
 
     // Start is called before the first frame update
@@ -60,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         playerSword = GetComponent<PlayerSword>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerDodge = GetComponent<PlayerDodge>();
+        attackScript = GetComponent<PlayerAttack>();
         timerDeath = RESET_LEVEL_TIMER_DEATH;
 
         ResetSpeed();
@@ -99,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
         else if (moving)
         {
             moving = false;
+            attackScript.target = attackScript.roomEnemyManager.GetCloserEnemy(transform);
+            targetRot = Quaternion.LookRotation(attackScript.target.position - transform.position, Vector3.up);
 
             if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
                 rb.constraints = RigidbodyConstraints.FreezeAll;
@@ -121,7 +128,6 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = FallSystem(rb.velocity);
 
-        Quaternion targetRot;
 
         if (playerSword.mustAttack && rb.velocity.magnitude <= playerSword.minAttackMovespeed)
         {
@@ -131,6 +137,10 @@ public class PlayerMovement : MonoBehaviour
         else if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
         {
             targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
+        }
+        else if(!moving && lifeStatus.currLife > 0)
+        {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
 

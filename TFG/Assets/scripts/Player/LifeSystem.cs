@@ -7,6 +7,7 @@ public class LifeSystem : MonoBehaviour
     public enum EntityType { PLAYER, ENEMY, SHIELD }
 
     [SerializeField] internal EntityType entityType = EntityType.PLAYER;
+    [SerializeField] internal ElementsManager.Elements entityElement;
     //[SerializeField] internal HealthState.Effect state = HealthState.Effect.NORMAL;
     [SerializeField] internal List<HealthState> healthStates = new List<HealthState>();
     [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
@@ -84,7 +85,7 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
     }
 
-    public void Damage(float _dmg, HealthState _healthState)
+    public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
         {
@@ -98,7 +99,14 @@ public class LifeSystem : MonoBehaviour
                 Instantiate(bloodPrefab, transform);
         }
 
-        currLife -= _dmg * dmgInc;
+        if (_attackElement != ElementsManager.Elements.NORMAL)
+        {
+            currLife -= _dmg * dmgInc * ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
+        }
+        else
+        {
+            currLife -= _dmg * dmgInc;
+        }
         CheckPlayerLifeLimits();
         if (isDead)
         {
@@ -108,26 +116,6 @@ public class LifeSystem : MonoBehaviour
 
         //if (!healthState.initialized) _healthState.Init(this);
         if (entityType.Equals(EntityType.PLAYER)/* && !isDead*/) playerMovementScript.DamageStartCorroutine();
-
-        if(/*!isDead && */_healthState != null && _healthState.state != HealthState.Effect.NORMAL)
-        {
-            if (healthStates.Count > 0)
-            {
-                bool foundEffectWithCompatibility = false;
-                for (int i = 0; i < healthStates.Count; i++)
-                {
-                    if (healthStates[i].CheckEffectsCompatibility(_healthState, _dmg * dmgInc))
-                        foundEffectWithCompatibility = true;
-                }
-                CleanRepeatedHealthEffects();
-                if (!foundEffectWithCompatibility) 
-                    StartHealthState(_healthState);
-            }
-            else
-            {
-                StartHealthState(_healthState);
-            }
-        }
 
     }
 

@@ -33,7 +33,7 @@ public class Electrocuted_HealthState : HealthState
         Paralized_HealthState paralisis = new Paralized_HealthState();
         paralisis.Init(lifeSystem);
         paralisis.effectDuration = paralisisDuration;
-        lifeSystem.Damage(0f, paralisis);
+        //lifeSystem.Damage(0f, paralisis);
 
     }
 
