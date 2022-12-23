@@ -5,13 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class BaseElements
 {
-    [SerializeField] internal PlayerAttack.AttackData.Type attackType;
-    Dictionary<PlayerAttack.AttackData.Type, float> compatibilitiesData;
+    [SerializeField] internal ElementsManager.Elements attackType;
+    Dictionary<ElementsManager.Elements, float> compatibilitiesData;
 
 
     public BaseElements() { }
 
-    static BaseElements GetElementByType(PlayerAttack.AttackData.Type _type)
+    static BaseElements GetElementByType(ElementsManager.Elements _type)
     {
         //ToDo
         return new BaseElements();

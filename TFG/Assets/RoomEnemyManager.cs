@@ -8,7 +8,7 @@ public class RoomEnemyManager : MonoBehaviour
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         InitEnemies();
     }

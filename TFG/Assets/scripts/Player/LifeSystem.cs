@@ -7,7 +7,7 @@ public class LifeSystem : MonoBehaviour
     public enum EntityType { PLAYER, ENEMY, SHIELD }
 
     [SerializeField] internal EntityType entityType = EntityType.PLAYER;
-    [SerializeField] internal PlayerAttack.AttackData.Type entityElement;
+    [SerializeField] internal ElementsManager.Elements entityElement;
     //[SerializeField] internal HealthState.Effect state = HealthState.Effect.NORMAL;
     [SerializeField] internal List<HealthState> healthStates = new List<HealthState>();
     [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
@@ -85,7 +85,7 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
     }
 
-    public void Damage(float _dmg, BaseElements _element)
+    public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
         {
@@ -99,7 +99,14 @@ public class LifeSystem : MonoBehaviour
                 Instantiate(bloodPrefab, transform);
         }
 
-        currLife -= _dmg * dmgInc;
+        if (_attackElement != ElementsManager.Elements.NORMAL)
+        {
+            currLife -= _dmg * dmgInc * ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
+        }
+        else
+        {
+            currLife -= _dmg * dmgInc;
+        }
         CheckPlayerLifeLimits();
         if (isDead)
         {
@@ -109,11 +116,6 @@ public class LifeSystem : MonoBehaviour
 
         //if (!healthState.initialized) _healthState.Init(this);
         if (entityType.Equals(EntityType.PLAYER)/* && !isDead*/) playerMovementScript.DamageStartCorroutine();
-
-        if(/*!isDead && */_element != null && _element.attackType != PlayerAttack.AttackData.Type.NORMAL)
-        {
-
-        }
 
     }
 

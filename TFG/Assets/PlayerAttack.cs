@@ -7,9 +7,9 @@ public class PlayerAttack : MonoBehaviour
     [System.Serializable]
     public class AttackData
     {
-        public enum Type { NORMAL, FIRE, GRASS, WATER }
+        //public enum Type { NORMAL, FIRE, GRASS, WATER }
         //[HideInInspector] public string name;
-        public Type type;
+        public ElementsManager.Elements type;
         public GameObject prefab;
         //public Attack()
         //{
@@ -21,14 +21,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] internal RoomEnemyManager roomEnemyManager;
 
     [Header("Attacks")]
-    [SerializeField] AttackData.Type currentAttack = AttackData.Type.WATER;
+    [SerializeField] internal ElementsManager.Elements currentAttackElement = ElementsManager.Elements.WATER;
     [SerializeField] float attackDelay = 1.5f;
     [Space]
     //[SerializeField] List<Attack> attacks = new List<Attack>();
     [SerializeField] AttackData fireAttack;
     [SerializeField] AttackData grassAttack, waterAttack;
 
-    Dictionary<AttackData.Type, GameObject> attacksDictionary = new Dictionary<AttackData.Type, GameObject>();
+    Dictionary<ElementsManager.Elements, GameObject> attacksDictionary = new Dictionary<ElementsManager.Elements, GameObject>();
 
     internal Transform target;
     PlayerMovement playerMovement;
@@ -42,6 +42,8 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+
+        target = roomEnemyManager.GetCloserEnemy(transform);
 
         attackTimer = attackDelay;
         attacksDictionary.Add(fireAttack.type, fireAttack.prefab);
@@ -71,10 +73,9 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
-        Transform attack = Instantiate(attacksDictionary[currentAttack], transform).transform;
-        attack.SetParent(null);
-        attack.rotation = playerMovement.targetRot;
-
+        PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
+        attack.transform.SetParent(null);
+        attack.Init(this);
     }
 
 

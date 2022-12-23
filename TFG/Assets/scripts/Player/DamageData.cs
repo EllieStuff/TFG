@@ -5,8 +5,8 @@ using UnityEngine;
 public class DamageData : MonoBehaviour
 {
     [SerializeField] internal Transform ownerTransform;
-    [SerializeField] internal float weaponDamage;
-    [SerializeField] internal BaseElements attackElement;
+    [SerializeField] internal float weaponDamage = 10;
+    [SerializeField] internal ElementsManager.Elements attackElement;
     [SerializeField] internal bool alwaysAttacking = false;
 
     [SerializeField] AudioManager audio;

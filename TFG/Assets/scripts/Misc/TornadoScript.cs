@@ -84,7 +84,7 @@ public class TornadoScript : MonoBehaviour
                 dmgTimer = dmgFrequency;
 
                 if(life != null)
-                    life.Damage(tornadoDamage, null);
+                    life.Damage(tornadoDamage, ElementsManager.Elements.NORMAL);
 
                 if (_enemy != null)
                     _enemy.gameObject.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
