@@ -47,6 +47,7 @@ public class ZoneScript : MonoBehaviour
         if(!item.isPlaying)
         {
             //play sound and particles
+            item.GetComponent<AudioSource>().Play();
             item.Play();
         }
     }
