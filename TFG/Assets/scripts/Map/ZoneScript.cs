@@ -47,7 +47,7 @@ public class ZoneScript : MonoBehaviour
 
         if (zoneDefused)
         {
-            float distance = (Mathf.Clamp((endPivots[navArrivedIndex].position.z - player.transform.position.z), 0, MAX_TILE_DISTANCE) / MAX_TILE_DISTANCE);
+            float distance = Vector3.Distance(endPivots[navArrivedIndex].position, player.transform.position);
             float distance2 = (Mathf.Clamp((endPivots[1].position.z - player.transform.position.z), 0, MAX_TILE_DISTANCE) / MAX_TILE_DISTANCE);
 
             blackTile.material.color = new Color(tileColor.r, tileColor.g, tileColor.b, 1 - distance2);
@@ -56,13 +56,13 @@ public class ZoneScript : MonoBehaviour
 
             player.targetMousePos = new Vector3(endPivots[navArrivedIndex].position.x, player.transform.position.y, endPivots[navArrivedIndex].position.z);
 
-            if (navArrivedIndex == 1 && distance2 <= 0.2f)
+            if (navArrivedIndex == 1 && distance <= 2)
             {
                 walkMarkScript.transition = false;
                 camScript.camSpeed = old_cam_speed;
                 Destroy(this);
             }
-            else if (navArrivedIndex == 0 && distance <= 0.2f)
+            else if (navArrivedIndex == 0 && distance <= 2)
                 navArrivedIndex++;
 
         }
