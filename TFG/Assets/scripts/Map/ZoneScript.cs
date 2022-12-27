@@ -7,27 +7,23 @@ public class ZoneScript : MonoBehaviour
     bool zoneEnabled;
     bool zoneDefused;
     [SerializeField] internal int enemiesQuantity;
-    [SerializeField] float closeDoorAnimDestroyTime;
-    [SerializeField] Animation doorCloseAnim;
     [SerializeField] Animation doorOpenAnim;
+    [SerializeField] BoxCollider blockedPath;
+    CameraFollow camLimitSystem;
 
     private void Start()
     {
-        doorCloseAnim.gameObject.SetActive(false);
+        camLimitSystem = GameObject.Find("CameraHolder").transform.GetChild(0).GetComponent<CameraFollow>();
     }
 
     void Update()
     {
         if(zoneEnabled && !zoneDefused && enemiesQuantity <= 0)
         {
+            camLimitSystem.UpdateCamLimit();
             PlayAnimation(doorOpenAnim);
-
-            closeDoorAnimDestroyTime -= Time.deltaTime;
-            if(closeDoorAnimDestroyTime <= 0)
-            {
-                zoneDefused = true;
-                Destroy(doorOpenAnim.gameObject);
-            }
+            blockedPath.enabled = false;
+            zoneDefused = true;
         }
     }
 
@@ -35,9 +31,8 @@ public class ZoneScript : MonoBehaviour
     {
         if(other.tag.Equals("Player") && !zoneEnabled)
         {
+            blockedPath.enabled = true;
             zoneEnabled = true;
-            doorCloseAnim.gameObject.SetActive(true);
-            PlayAnimation(doorCloseAnim);
         }
     }
 
@@ -47,7 +42,7 @@ public class ZoneScript : MonoBehaviour
         if(!item.isPlaying)
         {
             //play sound and particles
-            item.GetComponent<AudioSource>().Play();
+            //item.GetComponent<AudioSource>().Play();
             item.Play();
         }
     }
