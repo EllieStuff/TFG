@@ -5,10 +5,12 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     private Transform playerToFollow;
-    [SerializeField] private float camSpeed;
+    [SerializeField] internal float camSpeed;
     [SerializeField] private float limitY;
 
     float limitForEveryTile;
+
+    const float MARGIN_PLUS_BACK = 6;
 
     private void Start()
     {
@@ -23,7 +25,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        Vector3 posToFollow = new Vector3(0, transform.position.y, Mathf.Clamp(playerToFollow.position.z, -limitY, limitY));
-        transform.parent.position = Vector3.Lerp(transform.position, posToFollow, Time.deltaTime * camSpeed);
+        Vector3 posToFollow = new Vector3(0, transform.parent.position.y, Mathf.Clamp(playerToFollow.position.z, limitY - (limitForEveryTile + MARGIN_PLUS_BACK), limitY));
+        transform.parent.position = Vector3.Lerp(transform.parent.position, posToFollow, Time.deltaTime * camSpeed);
     }
 }
