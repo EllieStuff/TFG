@@ -114,33 +114,36 @@ public class BaseEnemyScript : MonoBehaviour
 
     internal virtual void UpdateStateMachine()
     {
-        switch (state)
+        if (zoneSystem != null && zoneSystem.zoneEnabled)
         {
-            case States.IDLE:
-                //patrol
-                IdleUpdate();
+            switch (state)
+            {
+                case States.IDLE:
+                    //patrol
+                    IdleUpdate();
 
-                break;
-            case States.MOVE_TO_TARGET:
-                //approach to player
-                MoveToTargetUpdate();
+                    break;
+                case States.MOVE_TO_TARGET:
+                    //approach to player
+                    MoveToTargetUpdate();
 
-                break;
-            case States.ATTACK:
-                //attack
-                AttackUpdate();
+                    break;
+                case States.ATTACK:
+                    //attack
+                    AttackUpdate();
 
-                break;
+                    break;
 
-            case States.DAMAGE:
-                //receive damage
-                DamageUpdate();
+                case States.DAMAGE:
+                    //receive damage
+                    DamageUpdate();
 
-                break;
+                    break;
 
-            default:
-                Debug.LogWarning("State not found");
-                break;
+                default:
+                    Debug.LogWarning("State not found");
+                    break;
+            }
         }
     }
 

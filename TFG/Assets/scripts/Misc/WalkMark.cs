@@ -10,6 +10,7 @@ public class WalkMark : MonoBehaviour
     Plane plane = new Plane(Vector3.up, 0);
     PlayerMovement playerScript;
     [SerializeField] GameObject walkMark;
+    internal bool transition;
 
     const float DISTANCE_TO_DISABLE_MARK = 2;
 
@@ -25,7 +26,7 @@ public class WalkMark : MonoBehaviour
     {
         SetMarkPositionWithRaycast();
 
-        if(Input.GetKey(KeyCode.Mouse1))
+        if(!transition && Input.GetKey(KeyCode.Mouse1))
         {
             playerScript.targetMousePos = worldPosition;
 
