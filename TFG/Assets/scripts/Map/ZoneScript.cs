@@ -7,84 +7,86 @@ public class ZoneScript : MonoBehaviour
     internal bool zoneEnabled;
     bool zoneDefused;
     [SerializeField] internal int enemiesQuantity;
-    [SerializeField] Animation doorOpenAnim;
-    [SerializeField] BoxCollider blockedPath;
+    [SerializeField] Animation[] doorOpenAnims;
+    [SerializeField] BoxCollider[] blockedPaths;
     [SerializeField] MeshRenderer blackTile;
-    [SerializeField] Transform[] endPivots;
-    CameraFollow camLimitSystem;
+    CameraFollow camSystem;
 
     PlayerMovement player;
-    CameraFollow camScript;
-    WalkMark walkMarkScript;
 
-    float old_cam_speed;
-    const float MAX_TILE_DISTANCE = 20;
+    const float LERP_SPEED = 5f;
 
     int navArrivedIndex = 0;
 
+    bool showRoom;
+
     private void Start()
     {
-        camLimitSystem = GameObject.Find("CameraHolder").transform.GetChild(0).GetComponent<CameraFollow>();
+        camSystem = GameObject.Find("CameraHolder").transform.GetChild(0).GetComponent<CameraFollow>();
         blackTile.material = new Material(blackTile.material);
-        camScript = GameObject.Find("CameraHolder").transform.GetChild(0).GetComponent<CameraFollow>();
-        old_cam_speed = camScript.camSpeed;
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        walkMarkScript = GameObject.Find("UI_Walk").GetComponent<WalkMark>();
     }
 
     void Update()
     {
         if(zoneEnabled && !zoneDefused && enemiesQuantity <= 0)
         {
-            camLimitSystem.UpdateCamLimit();
-            PlayAnimation(doorOpenAnim);
+            PlayAnimation(doorOpenAnims);
+            UnlockPaths();
             blackTile.enabled = true;
-            walkMarkScript.transition = true;
             zoneDefused = true;
         }
 
         Color tileColor = blackTile.material.color;
 
-        if (zoneDefused)
-        {
-            float distance = Vector3.Distance(endPivots[navArrivedIndex].position, player.transform.position);
-            float distance2 = (Mathf.Clamp((endPivots[1].position.z - player.transform.position.z), 0, MAX_TILE_DISTANCE) / MAX_TILE_DISTANCE);
-
-            blackTile.material.color = new Color(tileColor.r, tileColor.g, tileColor.b, 1 - distance2);
-
-            camScript.camSpeed = 0.5f;
-
-            player.targetMousePos = new Vector3(endPivots[navArrivedIndex].position.x, player.transform.position.y, endPivots[navArrivedIndex].position.z);
-
-            if (navArrivedIndex == 1 && distance <= 2)
-            {
-                walkMarkScript.transition = false;
-                camScript.camSpeed = old_cam_speed;
-                Destroy(this);
-            }
-            else if (navArrivedIndex == 0 && distance <= 2)
-                navArrivedIndex++;
-
-        }
+        if (showRoom)
+            blackTile.material.color = Color.Lerp(blackTile.material.color, new Color(tileColor.r, tileColor.g, tileColor.b, 0), Time.deltaTime * LERP_SPEED);
+        else
+            blackTile.material.color = Color.Lerp(blackTile.material.color, new Color(tileColor.r, tileColor.g, tileColor.b, 1), Time.deltaTime * LERP_SPEED);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Equals("Player") && !zoneEnabled)
+        bool isPlayer = other.tag.Equals("Player");
+
+        if (isPlayer && !zoneEnabled)
         {
-            blockedPath.enabled = true;
+            BlockPaths();
             zoneEnabled = true;
+        }
+
+        if(isPlayer)
+            showRoom = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("Player") && zoneDefused)
+            showRoom = false;
+    }
+
+    void PlayAnimation(Animation[] items)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if(!items[i].isPlaying && items[i].enabled)
+            {
+                //play sound and particles
+                items[i].GetComponent<AudioSource>().Play();
+                items[i].Play();
+            }
         }
     }
 
-
-    void PlayAnimation(Animation item)
+    void BlockPaths()
     {
-        if(!item.isPlaying)
-        {
-            //play sound and particles
-            item.GetComponent<AudioSource>().Play();
-            item.Play();
-        }
+        for (int i = 0; i < blockedPaths.Length; i++)
+            blockedPaths[i].enabled = true;
+    }
+
+    void UnlockPaths()
+    {
+        for (int i = 0; i < blockedPaths.Length; i++)
+            blockedPaths[i].enabled = false;
     }
 }

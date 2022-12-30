@@ -30972,7 +30972,7 @@ PrefabInstance:
     - target: {fileID: 3913077315541481415, guid: a88728279c9ff77439e3768970fce445,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3913077315541481415, guid: a88728279c9ff77439e3768970fce445,
         type: 3}
@@ -33321,10 +33321,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesQuantity: 7
-  doorOpenAnim: {fileID: 439454836}
-  blockedPath: {fileID: 0}
+  doorOpenAnims: []
+  blockedPaths: []
   blackTile: {fileID: 0}
-  endPivot: {fileID: 0}
 --- !u!65 &1551177179
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34718,10 +34717,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesQuantity: 2
-  doorOpenAnim: {fileID: 453278185}
-  blockedPath: {fileID: 0}
+  doorOpenAnims: []
+  blockedPaths: []
   blackTile: {fileID: 0}
-  endPivot: {fileID: 0}
 --- !u!1 &1611477791
 GameObject:
   m_ObjectHideFlags: 0
@@ -45056,10 +45054,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 635293014358745467, guid: d826c056ddc3fd14a9bc0a3e917d1644,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5267126326931561954, guid: d826c056ddc3fd14a9bc0a3e917d1644,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609135774119555558, guid: d826c056ddc3fd14a9bc0a3e917d1644,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5659295619468157563, guid: d826c056ddc3fd14a9bc0a3e917d1644,
         type: 3}
