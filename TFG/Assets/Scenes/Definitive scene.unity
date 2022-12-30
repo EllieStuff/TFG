@@ -14214,9 +14214,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519869619}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 15.5, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 15.5, z: 0}
+  m_LocalScale: {x: 0.9999999, y: 1.0000002, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1602143306}
@@ -18780,6 +18780,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CacoRato Distance
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370893250066358662, guid: 2c2af4859f9416c4b84bae8a888f08ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c2af4859f9416c4b84bae8a888f08ad, type: 3}
@@ -33324,6 +33329,8 @@ MonoBehaviour:
   doorOpenAnims: []
   blockedPaths: []
   blackTile: {fileID: 0}
+  roomLimits: {x: 0, y: 0, z: 0}
+  parentTransform: {fileID: 0}
 --- !u!65 &1551177179
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34720,6 +34727,8 @@ MonoBehaviour:
   doorOpenAnims: []
   blockedPaths: []
   blackTile: {fileID: 0}
+  roomLimits: {x: 0, y: 0, z: 0}
+  parentTransform: {fileID: 0}
 --- !u!1 &1611477791
 GameObject:
   m_ObjectHideFlags: 0

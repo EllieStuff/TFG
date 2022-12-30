@@ -10,6 +10,8 @@ public class ZoneScript : MonoBehaviour
     [SerializeField] Animation[] doorOpenAnims;
     [SerializeField] BoxCollider[] blockedPaths;
     [SerializeField] MeshRenderer blackTile;
+    [SerializeField] Vector3 roomLimits;
+    [SerializeField] Transform parentTransform;
     CameraFollow camSystem;
 
     PlayerMovement player;
@@ -56,7 +58,20 @@ public class ZoneScript : MonoBehaviour
         }
 
         if(isPlayer)
+        {
+            camSystem.camLimits = roomLimits;
+            camSystem.transform.parent.parent = parentTransform;
             showRoom = true;
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if(other.tag.Equals("Player") && !camSystem.transform.parent.parent.Equals(parentTransform))
+        {
+            camSystem.camLimits = roomLimits;
+            camSystem.transform.parent.parent = parentTransform;
+        }
     }
 
     private void OnTriggerExit(Collider other)

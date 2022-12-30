@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3726501352153816921}
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.52, y: 0, z: 0}
   m_LocalScale: {x: 0.4231036, y: 10, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -97,6 +97,8 @@ MonoBehaviour:
   blockedPaths:
   - {fileID: 4172070166916056821}
   blackTile: {fileID: 5609135774119555558}
+  roomLimits: {x: 0.3, y: 0, z: 0.1}
+  parentTransform: {fileID: 9175693272906605509}
 --- !u!65 &4839819387261850876
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -108,8 +110,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 1, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.9652856, y: 1, z: 5}
+  m_Center: {x: 0.0072523495, y: -0, z: -0}
 --- !u!1 &4388761803810566184
 GameObject:
   m_ObjectHideFlags: 0
