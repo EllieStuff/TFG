@@ -24,6 +24,7 @@ public class ZoneScript : MonoBehaviour
 
     private void Start()
     {
+        blackTile.enabled = true;
         camSystem = GameObject.Find("CameraHolder").transform.GetChild(0).GetComponent<CameraFollow>();
         blackTile.material = new Material(blackTile.material);
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
@@ -84,11 +85,12 @@ public class ZoneScript : MonoBehaviour
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if(!items[i].isPlaying && items[i].enabled)
+            if(!items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor)
             {
                 //play sound and particles
                 items[i].GetComponent<AudioSource>().Play();
                 items[i].Play();
+                items[i].GetComponent<DoorVariables>().openedDoor = true;
             }
         }
     }
