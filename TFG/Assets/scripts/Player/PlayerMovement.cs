@@ -104,8 +104,11 @@ public class PlayerMovement : MonoBehaviour
         else if (moving)
         {
             moving = false;
-            attackScript.target = attackScript.roomEnemyManager.GetCloserEnemy(transform);
-            targetRot = Quaternion.LookRotation(attackScript.target.position - transform.position, Vector3.up);
+            if (attackScript.roomEnemyManager.HasEnemiesRemainging())
+            {
+                attackScript.target = attackScript.roomEnemyManager.GetCloserEnemy(transform);
+                targetRot = Quaternion.LookRotation(attackScript.target.position - transform.position, Vector3.up);
+            }
 
             if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
                 rb.constraints = RigidbodyConstraints.FreezeAll;

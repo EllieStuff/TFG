@@ -47,6 +47,13 @@ public class RoomEnemyManager : MonoBehaviour
         float closerDist = Vector3.Distance(enemies[0].transform.position, _trans.position);
         for(int i = 1; i < enemies.Count; i++)
         {
+            if(enemies[i] == null)
+            {
+                enemies.RemoveAt(i);
+                i--;
+                continue;
+            }
+
             float newDist = Vector3.Distance(enemies[i].transform.position, _trans.position);
             if(newDist < closerDist)
             {
