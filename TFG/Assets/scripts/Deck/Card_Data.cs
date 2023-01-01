@@ -19,7 +19,6 @@ public class Card_Data : MonoBehaviour
     private void Awake()
     {
         Init();
-
     }
 
     public void Init()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ZoneScript : MonoBehaviour
 {
     internal bool zoneEnabled;
-    bool zoneDefused;
+    internal bool zoneDefused;
     [SerializeField] internal int enemiesQuantity;
     [SerializeField] Animation[] doorOpenAnims;
     [SerializeField] BoxCollider[] blockedPaths;

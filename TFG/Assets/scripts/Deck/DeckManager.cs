@@ -66,6 +66,7 @@ public class DeckManager : MonoBehaviour
     {
         //Vector3 newCardPos = GetCardPos(cards.Count);
         Card_Data newCard = Instantiate(cardUIPrefab, Vector3.zero, Quaternion.identity, cardsFatherRef).GetComponent<Card_Data>();
+        newCard.transform.rotation = new Quaternion(0, 0, 0, 0);
         newCard.Init(_cardData);
         cards.Add(newCard);
         StartCoroutine(LerpCardSize(cards[cards.Count - 1].transform, Vector3.zero, activeSize));
