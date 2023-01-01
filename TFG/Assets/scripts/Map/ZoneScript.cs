@@ -21,7 +21,7 @@ public class ZoneScript : MonoBehaviour
 
     int navArrivedIndex = 0;
 
-    bool showRoom;
+    internal bool showRoom;
 
     private void Start()
     {

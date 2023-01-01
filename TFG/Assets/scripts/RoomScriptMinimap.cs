@@ -7,8 +7,11 @@ public class RoomScriptMinimap : MonoBehaviour
     enum RoomState { UNDISCOVERED, CURRENT, CLEANED, TRAP_ROOM_CLEANED }
 
     [SerializeField] RoomState roomState = RoomState.UNDISCOVERED;
+    [SerializeField] Transform camTransform;
     [SerializeField] ZoneScript roomReference;
     MeshRenderer roomMesh;
+
+    const float LERP_SPEED = 2;
 
     private void Start()
     {
@@ -22,13 +25,13 @@ public class RoomScriptMinimap : MonoBehaviour
     {
         if (roomReference != null)
         {
-            if(roomReference.zoneEnabled && !roomReference.zoneDefused)
-                roomState = RoomState.CURRENT;
-            else if (roomReference.zoneDefused)
+            if((roomReference.zoneEnabled && !roomReference.zoneDefused) || roomReference.showRoom)
             {
-                roomState = RoomState.CLEANED;
-                roomReference = null;
+                roomState = RoomState.CURRENT;
+                camTransform.position = Vector3.Lerp(camTransform.position, new Vector3(transform.position.x, camTransform.position.y, transform.position.z), Time.deltaTime * LERP_SPEED);
             }
+            else if (roomReference.zoneDefused)
+                roomState = RoomState.CLEANED;
         }
 
         switch (roomState)
