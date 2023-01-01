@@ -17,6 +17,7 @@ public class ZoneScript : MonoBehaviour
     PlayerMovement player;
 
     const float LERP_SPEED = 5f;
+    const float DOOR_DISTANCE = 5;
 
     int navArrivedIndex = 0;
 
@@ -34,11 +35,13 @@ public class ZoneScript : MonoBehaviour
     {
         if(zoneEnabled && !zoneDefused && enemiesQuantity <= 0)
         {
-            PlayAnimation(doorOpenAnims);
             UnlockPaths();
             blackTile.enabled = true;
             zoneDefused = true;
         }
+
+        if(zoneDefused)
+            PlayAnimation(doorOpenAnims);
 
         Color tileColor = blackTile.material.color;
 
@@ -85,7 +88,7 @@ public class ZoneScript : MonoBehaviour
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if(!items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor)
+            if(Vector3.Distance(items[i].transform.position, player.transform.position) <= DOOR_DISTANCE && !items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor)
             {
                 //play sound and particles
                 items[i].GetComponent<AudioSource>().Play();
