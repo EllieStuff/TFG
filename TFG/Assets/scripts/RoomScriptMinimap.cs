@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class RoomScriptMinimap : MonoBehaviour
 {
-    enum RoomState { UNDISCOVERED, CURRENT, CLEANED, TRAP_ROOM_CLEANED }
+    enum RoomState { UNDISCOVERED, CURRENT, CLEANED, TRAP_ROOM_CURRENT }
 
     [SerializeField] RoomState roomState = RoomState.UNDISCOVERED;
     [SerializeField] Transform camTransform;
     [SerializeField] ZoneScript roomReference;
+    [SerializeField] bool trapRoom;
     MeshRenderer roomMesh;
 
     const float LERP_SPEED = 2;
