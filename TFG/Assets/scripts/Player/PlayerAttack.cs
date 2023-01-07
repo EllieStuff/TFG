@@ -22,11 +22,11 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("Attacks")]
     [SerializeField] internal ElementsManager.Elements currentAttackElement = ElementsManager.Elements.WATER;
-    [SerializeField] float attackDelay = 1.5f;
+    [SerializeField] internal float attackDelay = 1.5f;
     [Space]
     //[SerializeField] List<Attack> attacks = new List<Attack>();
     [SerializeField] AttackData fireAttack;
-    [SerializeField] AttackData grassAttack, waterAttack;
+    [SerializeField] AttackData grassAttack, waterAttack, normalAttack;
 
     Dictionary<ElementsManager.Elements, GameObject> attacksDictionary = new Dictionary<ElementsManager.Elements, GameObject>();
 
@@ -34,6 +34,9 @@ public class PlayerAttack : MonoBehaviour
     PlayerMovement playerMovement;
     internal bool canAttack = true;
     float attackTimer;
+    internal float dmgIncrease = 0f;
+    internal int extraProjectiles = 0;
+    float extraProjectilesDelay = 0.2f;
 
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero; } }
 
@@ -46,10 +49,10 @@ public class PlayerAttack : MonoBehaviour
         target = roomEnemyManager.GetCloserEnemy(transform);
 
         attackTimer = attackDelay;
-        attacksDictionary.Add(fireAttack.type, fireAttack.prefab);
-        attacksDictionary.Add(grassAttack.type, grassAttack.prefab);
-        attacksDictionary.Add(waterAttack.type, waterAttack.prefab);
-
+        attacksDictionary.Add(ElementsManager.Elements.FIRE, fireAttack.prefab);
+        attacksDictionary.Add(ElementsManager.Elements.GRASS, grassAttack.prefab);
+        attacksDictionary.Add(ElementsManager.Elements.WATER, waterAttack.prefab);
+        attacksDictionary.Add(ElementsManager.Elements.NORMAL, normalAttack.prefab);
     }
 
     // Update is called once per frame
@@ -58,6 +61,7 @@ public class PlayerAttack : MonoBehaviour
         if (CanAttack() && roomEnemyManager.HasEnemiesRemainging())
         {
             Attack();
+            if(extraProjectiles > 0) StartCoroutine(ExtraAttacksCoroutine());
             attackTimer = attackDelay;
         }
 
@@ -76,6 +80,18 @@ public class PlayerAttack : MonoBehaviour
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
         attack.Init(this);
+        attack.dmgData.weaponDamage += dmgIncrease;
+    }
+
+
+    IEnumerator ExtraAttacksCoroutine()
+    {
+        for(int i = 0; i < extraProjectiles; i++)
+        {
+            yield return new WaitForSeconds(extraProjectilesDelay);
+            Attack();
+        }
+        yield return new WaitForEndOfFrame();
     }
 
 

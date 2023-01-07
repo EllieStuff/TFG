@@ -7,7 +7,7 @@ public class PlayerProjectileData : MonoBehaviour
     [SerializeField] float moveForce = 10f;
     [SerializeField] Vector3 maxVelocity = new Vector3(10, 10, 10);
 
-    DamageData dmgData;
+    internal DamageData dmgData;
     Rigidbody rb;
     Vector3 moveDir;
 
