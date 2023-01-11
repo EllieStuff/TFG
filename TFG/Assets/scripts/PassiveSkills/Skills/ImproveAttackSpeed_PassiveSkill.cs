@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ImproveAttackSpeed_PassiveSkill : PassiveSkill_Base
 {
-    float delayDecrease = 0.2f;
+    float delayDecrease = 0.4f;
 
     public ImproveAttackSpeed_PassiveSkill()
     {
