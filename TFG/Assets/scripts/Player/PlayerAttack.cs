@@ -22,21 +22,22 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("Attacks")]
     [SerializeField] internal ElementsManager.Elements currentAttackElement = ElementsManager.Elements.WATER;
-    [SerializeField] internal float attackDelay = 1.5f;
+    [SerializeField] internal float attackDelay = 1.5f, changeAttackDelay = 2f;
     [Space]
     //[SerializeField] List<Attack> attacks = new List<Attack>();
-    [SerializeField] AttackData fireAttack;
-    [SerializeField] AttackData grassAttack, waterAttack, normalAttack;
+    [SerializeField] AttackData normalAttack;
+    [SerializeField] AttackData fireAttack, grassAttack, waterAttack;
 
     Dictionary<ElementsManager.Elements, GameObject> attacksDictionary = new Dictionary<ElementsManager.Elements, GameObject>();
 
     internal Transform target;
     PlayerMovement playerMovement;
     internal bool canAttack = true;
-    float attackTimer;
+    float attackTimer, changeAttackTimer;
     internal float dmgIncrease = 0f;
     internal int extraProjectiles = 0;
     float extraProjectilesDelay = 0.2f;
+    internal bool changingAttackType = false;
 
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero; } }
 
@@ -49,6 +50,7 @@ public class PlayerAttack : MonoBehaviour
         target = roomEnemyManager.GetCloserEnemy(transform);
 
         attackTimer = attackDelay;
+        changeAttackTimer = changeAttackDelay;
         attacksDictionary.Add(ElementsManager.Elements.FIRE, fireAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.GRASS, grassAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.WATER, waterAttack.prefab);
@@ -65,7 +67,14 @@ public class PlayerAttack : MonoBehaviour
             attackTimer = attackDelay;
         }
 
-        if (attackTimer > 0) attackTimer -= Time.deltaTime;
+        if (attackTimer > 0 && !changingAttackType) attackTimer -= Time.deltaTime;
+        else if (changeAttackTimer > 0 && changingAttackType) attackTimer -= Time.deltaTime;
+        else if(changeAttackTimer <= 0 && changingAttackType)
+        {
+            changingAttackType = false;
+            changeAttackTimer = changeAttackDelay;
+            attackTimer = attackTimer / 2f;
+        }
 
     }
 
@@ -93,6 +102,5 @@ public class PlayerAttack : MonoBehaviour
         }
         yield return new WaitForEndOfFrame();
     }
-
 
 }

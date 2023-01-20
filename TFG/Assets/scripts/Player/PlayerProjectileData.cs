@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerProjectileData : MonoBehaviour
 {
-    [SerializeField] float moveForce = 10f;
-    [SerializeField] Vector3 maxVelocity = new Vector3(10, 10, 10);
+    [SerializeField] float moveSpeed = 25f;
 
     internal DamageData dmgData;
     Rigidbody rb;
@@ -29,8 +28,7 @@ public class PlayerProjectileData : MonoBehaviour
     private void Update()
     {
         if (rb == null) return;
-        rb.AddForce(moveDir * moveForce * Time.deltaTime, ForceMode.Force);
-        rb.velocity = ClampVector(rb.velocity, -maxVelocity, maxVelocity);
+        rb.MovePosition(transform.position + moveDir * moveSpeed * Time.deltaTime);
         transform.rotation = Quaternion.LookRotation(rb.velocity, transform.up);
     }
 

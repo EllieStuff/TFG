@@ -13,10 +13,13 @@ public class ElementsManager : MonoBehaviour
 
     static Dictionary<Elements, ElementClass> elementsData = new Dictionary<Elements, ElementClass>();
 
+    PlayerAttack attackManager;
 
     // Start is called before the first frame update
     void Awake()
     {
+        attackManager = GetComponent<PlayerAttack>();
+
         InitElementsData();
     }
 
