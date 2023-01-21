@@ -37,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
     internal float dmgIncrease = 0f;
     internal int extraProjectiles = 0;
     float extraProjectilesDelay = 0.2f;
-    internal bool changingAttackType = false;
+    //internal bool changingAttackType = false;
 
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero; } }
 
@@ -67,14 +67,14 @@ public class PlayerAttack : MonoBehaviour
             attackTimer = attackDelay;
         }
 
-        if (attackTimer > 0 && !changingAttackType) attackTimer -= Time.deltaTime;
-        else if (changeAttackTimer > 0 && changingAttackType) attackTimer -= Time.deltaTime;
-        else if(changeAttackTimer <= 0 && changingAttackType)
-        {
-            changingAttackType = false;
-            changeAttackTimer = changeAttackDelay;
-            attackTimer = attackTimer / 2f;
-        }
+        if (attackTimer > 0 /*&& !changingAttackType*/) attackTimer -= Time.deltaTime;
+        //else if (changeAttackTimer > 0 && changingAttackType) attackTimer -= Time.deltaTime;
+        //else if(changeAttackTimer <= 0 && changingAttackType)
+        //{
+        //    changingAttackType = false;
+        //    changeAttackTimer = changeAttackDelay;
+        //    attackTimer = attackTimer / 2f;
+        //}
 
     }
 
@@ -90,6 +90,12 @@ public class PlayerAttack : MonoBehaviour
         attack.transform.SetParent(null);
         attack.Init(this);
         attack.dmgData.weaponDamage += dmgIncrease;
+    }
+
+
+    public void SetAttackTimer(float _timer)
+    {
+        attackTimer = _timer;
     }
 
 
