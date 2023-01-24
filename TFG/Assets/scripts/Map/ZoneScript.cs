@@ -12,6 +12,7 @@ public class ZoneScript : MonoBehaviour
     [SerializeField] MeshRenderer blackTile;
     [SerializeField] Vector3 roomLimits;
     [SerializeField] Transform parentTransform;
+    [SerializeField] RoomEnemyManager assignedRoom;
     CameraFollow camSystem;
 
     PlayerMovement player;
@@ -66,6 +67,7 @@ public class ZoneScript : MonoBehaviour
             camSystem.camLimits = roomLimits;
             camSystem.transform.parent.parent = parentTransform;
             showRoom = true;
+            assignedRoom.ActivateRoom(true);
         }
     }
 
@@ -81,7 +83,10 @@ public class ZoneScript : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.tag.Equals("Player") && zoneDefused)
+        {
             showRoom = false;
+            assignedRoom.ActivateRoom(false);
+        }
     }
 
     void PlayAnimation(Animation[] items)
@@ -109,4 +114,6 @@ public class ZoneScript : MonoBehaviour
         for (int i = 0; i < blockedPaths.Length; i++)
             blockedPaths[i].enabled = false;
     }
+
+
 }

@@ -47,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
 
-        target = roomEnemyManager.GetCloserEnemy(transform);
+        //target = roomEnemyManager.GetCloserEnemy(transform);
 
         attackTimer = attackDelay;
         changeAttackTimer = changeAttackDelay;

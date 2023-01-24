@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomEnemyManager : MonoBehaviour
 {
-    public bool roomActive = false;
+    [SerializeField] bool roomActive = false;
 
     PlayerAttack playerAttack;
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
@@ -17,17 +17,14 @@ public class RoomEnemyManager : MonoBehaviour
         InitEnemies();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        //if (!roomActive) return;
-
-        //int destroyedEnemyIdx = enemies.FindIndex(_enemy => _enemy == null);
-        //if(destroyedEnemyIdx < enemies.Count && destroyedEnemyIdx >= 0)
-        //{
-        //    enemies.RemoveAt(destroyedEnemyIdx);
-        //    playerAttack.target = GetCloserEnemy(playerAttack.transform);
-        //}
+        ActivateEnemies(roomActive);
+        if (roomActive)
+        {
+            playerAttack.roomEnemyManager = this;
+            playerAttack.target = GetCloserEnemy(playerAttack.target);
+        }
     }
 
 
@@ -51,12 +48,12 @@ public class RoomEnemyManager : MonoBehaviour
         return enemies.Count > 0;
     }
 
-    public Transform GetCloserEnemy(Transform _trans)
+    public Transform GetCloserEnemy(Transform _playerTransform)
     {
         if (!HasEnemiesRemainging()) return null;
 
         Transform closerEnemy = enemies[0].transform;
-        float closerDist = Vector3.Distance(enemies[0].transform.position, _trans.position);
+        float closerDist = Vector3.Distance(enemies[0].transform.position, _playerTransform.position);
         for(int i = 1; i < enemies.Count; i++)
         {
             if(enemies[i] == null)
@@ -66,7 +63,7 @@ public class RoomEnemyManager : MonoBehaviour
                 continue;
             }
 
-            float newDist = Vector3.Distance(enemies[i].transform.position, _trans.position);
+            float newDist = Vector3.Distance(enemies[i].transform.position, _playerTransform.position);
             if(newDist < closerDist)
             {
                 closerEnemy = enemies[i].transform;
@@ -81,6 +78,25 @@ public class RoomEnemyManager : MonoBehaviour
     {
         enemies.Remove(_enemy);
         playerAttack.target = GetCloserEnemy(playerAttack.transform);
+    }
+
+    public void ActivateRoom(bool _active)
+    {
+        roomActive = _active;
+        ActivateEnemies(roomActive);
+        if (roomActive)
+        {
+            playerAttack.roomEnemyManager = this;
+            playerAttack.target = GetCloserEnemy(playerAttack.target);
+        }
+    }
+
+    void ActivateEnemies(bool _active)
+    {
+        foreach(BaseEnemyScript enemy in enemies)
+        {
+            enemy.gameObject.SetActive(_active);
+        }
     }
 
 }
