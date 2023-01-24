@@ -23,7 +23,7 @@ public class RoomEnemyManager : MonoBehaviour
         if (roomActive)
         {
             playerAttack.roomEnemyManager = this;
-            playerAttack.target = GetCloserEnemy(playerAttack.target);
+            playerAttack.target = GetCloserEnemy(playerAttack.transform);
         }
     }
 
@@ -87,7 +87,7 @@ public class RoomEnemyManager : MonoBehaviour
         if (roomActive)
         {
             playerAttack.roomEnemyManager = this;
-            playerAttack.target = GetCloserEnemy(playerAttack.target);
+            playerAttack.target = GetCloserEnemy(playerAttack.transform);
         }
     }
 

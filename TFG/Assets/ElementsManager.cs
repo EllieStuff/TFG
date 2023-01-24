@@ -138,7 +138,7 @@ public class ElementsManager : MonoBehaviour
     IEnumerator ChangeElementCor(Elements _element, float _changeAttackDelay)
     {
         attackManager.canAttack = moveManager.canMove = false;
-        //yield return new WaitForSeconds(0.2f);
+        attackManager.SetAttackTimer(attackManager.attackDelay);
         moveManager.targetMousePos = Vector3.zero;
         walkMark.SetWalkMarkActive(false);
         nearSliderElementIcon.sprite = uiElementIcon.sprite = icons[(int)_element];
@@ -153,6 +153,7 @@ public class ElementsManager : MonoBehaviour
             {
                 StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
                 attackManager.canAttack = moveManager.canMove = true;
+                elementIdx = attackManager.currentAttackElement;
                 changeElementSlider.value = 0;
                 yield break;
             }
@@ -162,12 +163,12 @@ public class ElementsManager : MonoBehaviour
         }
 
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
-        yield return new WaitForEndOfFrame();
-        if (elementChanging != _element) yield break;
+        //yield return new WaitForEndOfFrame();
+        //if (elementChanging != _element) yield break;
         changeElementSlider.value = 0;
         attackManager.currentAttackElement = _element;
         attackManager.canAttack = moveManager.canMove = true;
-        attackManager.SetAttackTimer(attackManager.attackDelay / 2f);
+        attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
     }
 
     IEnumerator LerpImageAlpha(Image _image, float _initAlpha, float _targetAlpha, float _lerpTime = 0.5f)

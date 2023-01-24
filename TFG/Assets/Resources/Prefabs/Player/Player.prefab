@@ -253,7 +253,7 @@ MonoBehaviour:
   baseRotSpeed: 300
   baseMaxSpeed: {x: 50, y: 0, z: 50}
   fallSpeed: 50
-  damageAnimationTime: 1.25
+  damageAnimationTime: 0.3
   playerAnimator: {fileID: 8126311951818066503}
   moveDir: {x: 0, y: 0, z: 0}
   lookDir: {x: 0, y: 0, z: 0}
@@ -350,15 +350,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38304d0eafcb1474c95fcdf28634d72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attacks:
-  - name: 
+  roomEnemyManager: {fileID: 0}
+  currentAttackElement: 2
+  attackDelay: 1.5
+  changeAttackDelay: 2
+  normalAttack:
     type: 0
     prefab: {fileID: 0}
-  - name: 
-    type: 1
+  fireAttack:
+    type: 0
     prefab: {fileID: 0}
-  - name: 
-    type: 2
+  grassAttack:
+    type: 0
+    prefab: {fileID: 0}
+  waterAttack:
+    type: 0
     prefab: {fileID: 0}
 --- !u!114 &3995069159848829880
 MonoBehaviour:
@@ -373,6 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 0
+  entityElement: 0
   healthStates: []
   healthStatesFeedback: {fileID: 0}
   maxLife: 100
@@ -393,6 +400,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b90c29ef2f11964fbfdc4819eaa9b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterGem: 0
+  fireGem: 0
+  magicGem: 0
 --- !u!1 &3293805493985140030
 GameObject:
   m_ObjectHideFlags: 0
@@ -5686,9 +5696,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerTransform: {fileID: 1679515740618261118}
   weaponDamage: 8
-  weaponEffects: 00000000
+  attackElement: 0
   alwaysAttacking: 0
-  isACardEffect: 0
   audio: {fileID: 4537330359178066787}
 --- !u!1001 &5019226416801411965
 PrefabInstance:

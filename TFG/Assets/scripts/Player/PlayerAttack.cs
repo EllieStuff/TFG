@@ -39,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
     float extraProjectilesDelay = 0.2f;
     //internal bool changingAttackType = false;
 
-    bool IsMoving { get { return playerMovement.moveDir != Vector3.zero; } }
+    bool IsMoving { get { return playerMovement.moveDir != Vector3.zero && playerMovement.targetMousePos != Vector3.zero; } }
 
 
     // Start is called before the first frame update

@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float baseRotSpeed = 300;
     [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
     [SerializeField] float fallSpeed;
-    [SerializeField] float damageAnimationTime;
+    [SerializeField] float damageAnimationTime = 0.3f;
     [SerializeField] Animator playerAnimator;
 
     float actualMoveForce;
@@ -129,8 +129,16 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!moving)
         {
-            if(attackScript.roomEnemyManager.HasEnemiesRemainging())
+            if (attackScript.roomEnemyManager.HasEnemiesRemainging())
+            {
+                Debug.Log("giranding");
                 lookDir = (attackScript.target.position - transform.position).normalized;
+            }
+            //else
+            //{
+            //    Debug.Log("giranding2");
+            //    lookDir = new Vector3(horizontalInput, 0, verticalInput);
+            //}
         }
 
         if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
@@ -139,22 +147,18 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = FallSystem(rb.velocity);
 
 
-        if (playerSword.mustAttack && rb.velocity.magnitude <= playerSword.minAttackMovespeed)
-        {
-            targetRot = Quaternion.LookRotation(attackDir - transform.position, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
-        }
-        else if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
+        if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
         {
             targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
-        else if(!moving && lifeStatus.currLife > 0)
+        else if (!moving && lifeStatus.currLife > 0)
         {
+            targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
 
-        if(lifeStatus.currLife <= 0)
+        if (lifeStatus.currLife <= 0)
         {
             if (deathScreen != null && !deathScreen.activeSelf)
                 deathScreen.SetActive(true);
