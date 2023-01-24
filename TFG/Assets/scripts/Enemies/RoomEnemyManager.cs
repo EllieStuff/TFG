@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class RoomEnemyManager : MonoBehaviour
 {
+    public bool roomActive = false;
 
+    PlayerAttack playerAttack;
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
 
     // Start is called before the first frame update
     void Awake()
     {
+        playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
+
         InitEnemies();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if (!roomActive) return;
+
+        //int destroyedEnemyIdx = enemies.FindIndex(_enemy => _enemy == null);
+        //if(destroyedEnemyIdx < enemies.Count && destroyedEnemyIdx >= 0)
+        //{
+        //    enemies.RemoveAt(destroyedEnemyIdx);
+        //    playerAttack.target = GetCloserEnemy(playerAttack.transform);
+        //}
     }
 
 
@@ -26,11 +37,12 @@ public class RoomEnemyManager : MonoBehaviour
         {
             BaseEnemyScript enemy = transform.GetChild(i).GetComponent<BaseEnemyScript>();
             if (enemy == null)
-            {
                 enemy = transform.GetChild(i).GetComponentInChildren<BaseEnemyScript>();
-            }
-            if (enemy == null) Debug.LogWarning("BaseEnemyScript not found");
-            else enemies.Add(enemy);
+
+            if (enemy == null) 
+                Debug.LogWarning("BaseEnemyScript not found");
+            else 
+                enemies.Add(enemy);
         }
     }
 
@@ -64,5 +76,11 @@ public class RoomEnemyManager : MonoBehaviour
         return closerEnemy;
     }
 
+
+    public void DiscardEnemy(BaseEnemyScript _enemy)
+    {
+        enemies.Remove(_enemy);
+        playerAttack.target = GetCloserEnemy(playerAttack.transform);
+    }
 
 }

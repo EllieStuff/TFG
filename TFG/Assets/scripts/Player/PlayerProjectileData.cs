@@ -9,7 +9,8 @@ public class PlayerProjectileData : MonoBehaviour
     internal DamageData dmgData;
     Rigidbody rb;
     Vector3 moveDir;
-
+    int pierceAmount = 0;
+    int bounceAmount = 0;
 
     public void Init(PlayerAttack _player)
     {
@@ -40,6 +41,31 @@ public class PlayerProjectileData : MonoBehaviour
             Mathf.Clamp(_originalVec.y, _minVec.y, _maxVec.y),
             Mathf.Clamp(_originalVec.z, _minVec.z, _maxVec.z)
         );
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Enemy"))
+        {
+            if(pierceAmount > 0)
+            {
+                pierceAmount--;
+                return;
+            }
+            Destroy(gameObject, 0.1f);
+        }
+
+        if (other.CompareTag("Wall"))
+        {
+            if (bounceAmount > 0)
+            {
+                bounceAmount--;
+                //DoBound
+                return;
+            }
+            Destroy(gameObject, 0.1f);
+        }
     }
 
 }

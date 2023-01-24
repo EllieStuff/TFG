@@ -79,9 +79,9 @@ public class PlayerAttack : MonoBehaviour
     }
 
 
-    bool CanAttack()
+    public bool CanAttack()
     {
-        return canAttack && !IsMoving && attackTimer <= 0;
+        return canAttack && !IsMoving && attackTimer <= 0 && target != null;
     }
 
     void Attack()

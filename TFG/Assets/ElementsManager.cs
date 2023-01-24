@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ElementsManager : MonoBehaviour
 {
-    public enum Elements { NORMAL, FIRE, GRASS, WATER }
+    public enum Elements { FIRE, GRASS, WATER, NORMAL, COUNT }
     public class ElementClass
     {
         public Dictionary<Elements, float> receiveDamage = new Dictionary<Elements, float>();
@@ -20,6 +20,9 @@ public class ElementsManager : MonoBehaviour
     WalkMark walkMark;
     [SerializeField] Slider changeElementSlider;
     Elements elementChanging = Elements.NORMAL;
+    Elements elementIdx;
+    [SerializeField] Image nearSliderElementIcon, uiElementIcon;
+    [SerializeField] Sprite[] icons;
 
 
     // Start is called before the first frame update
@@ -28,6 +31,9 @@ public class ElementsManager : MonoBehaviour
         attackManager = GetComponent<PlayerAttack>();
         moveManager = GetComponent<PlayerMovement>();
         walkMark = FindObjectOfType<WalkMark>();
+
+        elementIdx = attackManager.currentAttackElement;
+        nearSliderElementIcon.color = new Color(1, 1, 1, 0);
 
         InitElementsData();
     }
@@ -82,6 +88,12 @@ public class ElementsManager : MonoBehaviour
 
     private void Update()
     {
+        KeyboardInputsManager();
+        MouseInputsManager();
+    }
+
+    void KeyboardInputsManager()
+    {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeElement(Elements.FIRE, elementsData[Elements.FIRE].chargeElementDelay);
@@ -100,6 +112,23 @@ public class ElementsManager : MonoBehaviour
         }
     }
 
+    void MouseInputsManager()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            elementIdx--;
+            if (elementIdx < 0) elementIdx = Elements.COUNT - 1;
+            ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            elementIdx++;
+            if (elementIdx >= Elements.COUNT) elementIdx = 0;
+            ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
+        }
+    }
+
+
     void ChangeElement(Elements _element, float _changeAttackDelay)
     {
         elementChanging = _element;
@@ -109,15 +138,20 @@ public class ElementsManager : MonoBehaviour
     IEnumerator ChangeElementCor(Elements _element, float _changeAttackDelay)
     {
         attackManager.canAttack = moveManager.canMove = false;
+        //yield return new WaitForSeconds(0.2f);
         moveManager.targetMousePos = Vector3.zero;
         walkMark.SetWalkMarkActive(false);
+        nearSliderElementIcon.sprite = uiElementIcon.sprite = icons[(int)_element];
+        StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 0, 1, 0.3f));
+
         float timer = 0, maxTime = _changeAttackDelay;
         while(timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
             if (elementChanging != _element) yield break;
-            else if (moveManager.targetMousePos != Vector3.zero)
+            else if (moveManager.targetMousePos != Vector3.zero /*!moveManager.Moving*/)
             {
+                StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
                 attackManager.canAttack = moveManager.canMove = true;
                 changeElementSlider.value = 0;
                 yield break;
@@ -127,12 +161,26 @@ public class ElementsManager : MonoBehaviour
             changeElementSlider.value = Mathf.Lerp(1, 0, timer / maxTime);
         }
 
+        StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
         yield return new WaitForEndOfFrame();
         if (elementChanging != _element) yield break;
         changeElementSlider.value = 0;
         attackManager.currentAttackElement = _element;
         attackManager.canAttack = moveManager.canMove = true;
         attackManager.SetAttackTimer(attackManager.attackDelay / 2f);
+    }
+
+    IEnumerator LerpImageAlpha(Image _image, float _initAlpha, float _targetAlpha, float _lerpTime = 0.5f)
+    {
+        float timer = 0, maxTime = _lerpTime;
+        while (timer < maxTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+            _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, Mathf.Lerp(_initAlpha, _targetAlpha, timer / maxTime));
+        }
+        yield return new WaitForEndOfFrame();
+        _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, _targetAlpha);
     }
 
 

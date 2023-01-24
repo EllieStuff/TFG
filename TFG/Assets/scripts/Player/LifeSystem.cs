@@ -15,7 +15,7 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] internal float currLife = 100;
     [SerializeField] private GameObject bloodPrefab;
     //[SerializeField] private GameObject deathParticlesPrefab;
-    [SerializeField] private PlayerHUD playerLifeBar;
+    [SerializeField] private PlayerLifeBar playerLifeBar;
     [SerializeField] private Transform EnemyLifeBar;
 
     internal float dmgInc = 1.0f;
@@ -89,7 +89,7 @@ public class LifeSystem : MonoBehaviour
     {
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
         {
-            playerLifeBar.ShakeBar();
+            playerLifeBar.Damage();
             //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.5f, 0.00001f));
         }
 
@@ -110,6 +110,14 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
         if (isDead)
         {
+            if(entityType.Equals(EntityType.ENEMY))
+            {
+                RoomEnemyManager assignedRoom = transform.GetComponentInParent<RoomEnemyManager>();
+                if (assignedRoom == null) assignedRoom = transform.parent.GetComponentInParent<RoomEnemyManager>();
+                if (assignedRoom == null) Debug.LogWarning("Assigned Room not found.");
+                else assignedRoom.DiscardEnemy(GetComponent<BaseEnemyScript>());
+            }
+
             //Activate death anim
             return;
         }

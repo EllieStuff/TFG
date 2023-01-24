@@ -52,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
     Camera mainCam;
     internal Quaternion targetRot;
 
+    public bool Moving { get { return moving; } }
+
     //JUST FOR THE PROTOYPE
     [SerializeField] GameObject deathScreen;
     //_____________________
@@ -107,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
             if (attackScript.roomEnemyManager.HasEnemiesRemainging())
             {
                 attackScript.target = attackScript.roomEnemyManager.GetCloserEnemy(transform);
-                targetRot = Quaternion.LookRotation(attackScript.target.position - transform.position, Vector3.up);
+                attackScript.SetAttackTimer(attackScript.attackDelay / 4f);
             }
 
             if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
@@ -124,6 +126,11 @@ public class PlayerMovement : MonoBehaviour
                 reducedVel = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / SPEED_REDUCTION);
 
             rb.velocity = reducedVel;
+        }
+        else if (!moving)
+        {
+            if(attackScript.roomEnemyManager.HasEnemiesRemainging())
+                lookDir = (attackScript.target.position - transform.position).normalized;
         }
 
         if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
