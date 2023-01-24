@@ -141,7 +141,7 @@ public class ElementsManager : MonoBehaviour
         attackManager.SetAttackTimer(attackManager.attackDelay);
         moveManager.targetMousePos = Vector3.zero;
         walkMark.SetWalkMarkActive(false);
-        nearSliderElementIcon.sprite = uiElementIcon.sprite = icons[(int)_element];
+        nearSliderElementIcon.sprite = icons[(int)_element];
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 0, 1, 0.3f));
 
         float timer = 0, maxTime = _changeAttackDelay;
@@ -168,6 +168,7 @@ public class ElementsManager : MonoBehaviour
         changeElementSlider.value = 0;
         attackManager.currentAttackElement = _element;
         attackManager.canAttack = moveManager.canMove = true;
+        uiElementIcon.sprite = icons[(int)_element];
         attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
     }
 

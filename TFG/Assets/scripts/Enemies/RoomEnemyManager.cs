@@ -20,11 +20,7 @@ public class RoomEnemyManager : MonoBehaviour
     private void Start()
     {
         ActivateEnemies(roomActive);
-        if (roomActive)
-        {
-            playerAttack.roomEnemyManager = this;
-            playerAttack.target = GetCloserEnemy(playerAttack.transform);
-        }
+        SetPlayerData();
     }
 
 
@@ -70,6 +66,8 @@ public class RoomEnemyManager : MonoBehaviour
                 closerDist = newDist;
             }
         }
+
+
         return closerEnemy;
     }
 
@@ -84,6 +82,12 @@ public class RoomEnemyManager : MonoBehaviour
     {
         roomActive = _active;
         ActivateEnemies(roomActive);
+        SetPlayerData();
+    }
+
+
+    void SetPlayerData()
+    {
         if (roomActive)
         {
             playerAttack.roomEnemyManager = this;
