@@ -5,7 +5,7 @@ using UnityEngine;
 public class BaseEnemyScript : MonoBehaviour
 {
     public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
-    public enum EnemyType { SKINY_RAT, FAT_RAT, LITTLE_SNAKE, BIG_SNAKE, CROCODILE }
+    public enum EnemyType { PLANT, BAT, RAT, GHOST }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     const float PLAYER_HIT_DISTANCE_SWORD = 3;
@@ -20,8 +20,9 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseMoveSpeed;
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
-    [SerializeField] internal ZoneScript zoneSystem;
+    [SerializeField] protected bool movesToTarget = true;
 
+    internal ZoneScript zoneSystem;
     internal float damageTimer = 0;
     PlayerSword playerSword;
     LifeSystem playerLife;
@@ -182,8 +183,16 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void IdleUpdate()
     {
-        if (canMove && Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
-            ChangeState(States.MOVE_TO_TARGET);
+        if (movesToTarget)
+        {
+            if (canMove && Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
+                ChangeState(States.MOVE_TO_TARGET);
+        }
+        else
+        {
+            if (canAttack && Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
+                ChangeState(States.ATTACK);
+        }
     }
     internal virtual void MoveToTargetUpdate()
     {
@@ -202,8 +211,8 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (!canAttack) ChangeState(States.IDLE);
 
-        float distance = Vector3.Distance(transform.position, player.position);
-        if(distance <= PLAYER_HIT_DISTANCE_SWORD)
+        float playerDistance = Vector3.Distance(transform.position, player.position);
+        if(playerDistance <= PLAYER_HIT_DISTANCE_SWORD)
         {
             rb.useGravity = true;
             playerMovement.attackDir = transform.position;
@@ -212,8 +221,11 @@ public class BaseEnemyScript : MonoBehaviour
                 playerSword.mustAttack = true;
         }
 
-        if (!isAttacking && distance > enemyStopAttackDistance)
-            ChangeState(States.MOVE_TO_TARGET);
+        if (!isAttacking && playerDistance > enemyStopAttackDistance)
+        {
+            if (movesToTarget) ChangeState(States.MOVE_TO_TARGET);
+            else ChangeState(States.IDLE);
+        }
     }
     
     internal virtual void IdleStart() { StopRB(5.0f); }

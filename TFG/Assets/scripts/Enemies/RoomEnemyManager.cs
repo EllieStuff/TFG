@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoomEnemyManager : MonoBehaviour
 {
+    [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
 
     PlayerAttack playerAttack;
@@ -13,6 +14,8 @@ public class RoomEnemyManager : MonoBehaviour
     void Awake()
     {
         playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
+
+        linkedZone.assignedRoom = this;
 
         InitEnemies();
     }
@@ -32,10 +35,13 @@ public class RoomEnemyManager : MonoBehaviour
             if (enemy == null)
                 enemy = transform.GetChild(i).GetComponentInChildren<BaseEnemyScript>();
 
-            if (enemy == null) 
+            if (enemy == null)
                 Debug.LogWarning("BaseEnemyScript not found");
-            else 
+            else
+            {
+                enemy.zoneSystem = linkedZone;
                 enemies.Add(enemy);
+            }
         }
     }
 

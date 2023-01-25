@@ -29,11 +29,11 @@ public class Frozen_HealthState : HealthState
         if(lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
         {
             BaseEnemyScript.EnemyType enemyType = lifeSystem.GetComponent<BaseEnemyScript>().enemyType;
-            if (enemyType == BaseEnemyScript.EnemyType.LITTLE_SNAKE) effectDuration = 15f;
-            else if (enemyType == BaseEnemyScript.EnemyType.SKINY_RAT) effectDuration = 8f;
-            else if (enemyType == BaseEnemyScript.EnemyType.FAT_RAT || enemyType == BaseEnemyScript.EnemyType.BIG_SNAKE) 
-                effectDuration = 5f;
-            else if (enemyType == BaseEnemyScript.EnemyType.CROCODILE) effectDuration = 3f;
+            //if (enemyType == BaseEnemyScript.EnemyType.LITTLE_SNAKE) effectDuration = 15f;
+            //else if (enemyType == BaseEnemyScript.EnemyType.SKINY_RAT) effectDuration = 8f;
+            //else if (enemyType == BaseEnemyScript.EnemyType.FAT_RAT || enemyType == BaseEnemyScript.EnemyType.BIG_SNAKE) 
+            //    effectDuration = 5f;
+            //else if (enemyType == BaseEnemyScript.EnemyType.CROCODILE) effectDuration = 3f;
         }
         base.StartEffect();
 
