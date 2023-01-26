@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     PlayerDodge playerDodge;
     PlayerAttack attackScript;
 
+    public ParticleSystem dustParticleWalking;
+
     const float minFallSpeed = 10;
     bool damage;
 
@@ -102,10 +104,12 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = moveDir * actualMoveForce * speedMultiplier;
             Vector3 finalVelocity = ClampVector(rb.velocity, -actualMaxSpeed * speedMultiplier, actualMaxSpeed * speedMultiplier) + new Vector3(0, rb.velocity.y, 0);
             rb.velocity = finalVelocity;
+            dustParticleWalking.Play();
         }
         else if (moving)
         {
             moving = false;
+            dustParticleWalking.Stop();
             if (attackScript.roomEnemyManager.HasEnemiesRemainging())
             {
                 attackScript.target = attackScript.roomEnemyManager.GetCloserEnemy(transform);
