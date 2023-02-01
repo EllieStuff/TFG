@@ -12,6 +12,7 @@ public class ProjectileData : MonoBehaviour
     protected string originTag = "";
     int pierceAmount = 0;
     int bounceAmount = 0;
+    protected bool destroying = false;
 
     public virtual void Init(Transform _origin)
     {
@@ -35,6 +36,19 @@ public class ProjectileData : MonoBehaviour
     }
 
 
+    public virtual void DestroyObject(float _timer = -1f)
+    {
+        if (destroying) return;
+
+        if (_timer > 0)
+        {
+            destroying = true;
+            Destroy(gameObject, _timer);
+        }
+        else Destroy(gameObject);
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         OnTriggerEnter_Call(other);
@@ -48,7 +62,7 @@ public class ProjectileData : MonoBehaviour
                 pierceAmount--;
                 return;
             }
-            Destroy(gameObject, 0.1f);
+            DestroyObject(0.1f);
         }
 
         //if (other.CompareTag("Player") && !other.CompareTag(originTag))
@@ -58,7 +72,7 @@ public class ProjectileData : MonoBehaviour
         //        pierceAmount--;
         //        return;
         //    }
-        //    Destroy(gameObject, 0.1f);
+        //    Destroy_Call(0.1f);
         //}
 
         if (other.CompareTag("Wall"))
@@ -69,7 +83,7 @@ public class ProjectileData : MonoBehaviour
                 //DoBound
                 return;
             }
-            Destroy(gameObject, 0.1f);
+            DestroyObject(0.1f);
         }
     }
 
