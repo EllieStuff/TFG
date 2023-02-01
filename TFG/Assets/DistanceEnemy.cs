@@ -87,6 +87,7 @@ public class DistanceEnemy : BaseEnemyScript
                 {
                     projectile = Instantiate(projectilePrefab, transform).GetComponent<ProjectileData>();
                     projectile.Init(transform);
+                    projectile.transform.SetParent(null);
                     switch (knifeDirState)
                     {
                         case 0:
@@ -142,6 +143,7 @@ public class DistanceEnemy : BaseEnemyScript
             case AttackType.NORMAL_THROW:
                 projectile = Instantiate(projectilePrefab, transform).GetComponent<ProjectileData>();
                 projectile.Init(transform);
+                projectile.transform.SetParent(null);
                 //projectile.moveDir = (player.position - transform.position).normalized;
                 break;
         }
