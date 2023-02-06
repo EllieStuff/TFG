@@ -13,7 +13,7 @@ public class ElementsManager : MonoBehaviour
         public float chargeElementDelay = 1.5f;
     }
 
-    static Dictionary<Elements, ElementClass> elementsData = new Dictionary<Elements, ElementClass>();
+    static Dictionary<Elements, ElementClass> elementsData = null;
 
     PlayerAttack attackManager;
     PlayerMovement moveManager;
@@ -35,11 +35,13 @@ public class ElementsManager : MonoBehaviour
         elementIdx = attackManager.currentAttackElement;
         nearSliderElementIcon.color = new Color(1, 1, 1, 0);
 
-        InitElementsData();
+        if(elementsData == null)
+            InitElementsData();
     }
 
     void InitElementsData()
     {
+        elementsData = new Dictionary<Elements, ElementClass>();
         ElementClass normalCompatibility = new ElementClass();
         normalCompatibility.receiveDamage.Add(Elements.NORMAL, 1.3f);
         normalCompatibility.receiveDamage.Add(Elements.FIRE, 1.3f);
