@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (attackScript.roomEnemyManager.HasEnemiesRemainging())
             {
-                Debug.Log("giranding");
+                //Debug.Log("giranding");
                 lookDir = (attackScript.target.position - transform.position).normalized;
             }
             //else

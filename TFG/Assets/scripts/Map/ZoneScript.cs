@@ -12,7 +12,6 @@ public class ZoneScript : MonoBehaviour
     [SerializeField] MeshRenderer blackTile;
     [SerializeField] Vector3 roomLimits;
     [SerializeField] Transform parentTransform;
-    [SerializeField] RoomEnemyManager assignedRoom;
     CameraFollow camSystem;
 
     PlayerMovement player;
@@ -20,6 +19,7 @@ public class ZoneScript : MonoBehaviour
     const float LERP_SPEED = 5f;
     const float DOOR_DISTANCE = 5;
 
+    internal RoomEnemyManager assignedRoom;
     int navArrivedIndex = 0;
 
     internal bool showRoom;
