@@ -16,8 +16,8 @@ public class RoomEnemyManager : MonoBehaviour
         playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
 
         linkedZone.assignedRoom = this;
-
         InitEnemies();
+        linkedZone.enemiesQuantity = enemies.Count;
     }
 
     private void Start()

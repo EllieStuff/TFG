@@ -115,36 +115,33 @@ public class BaseEnemyScript : MonoBehaviour
 
     internal virtual void UpdateStateMachine()
     {
-        if (zoneSystem != null && zoneSystem.zoneEnabled)
+        switch (state)
         {
-            switch (state)
-            {
-                case States.IDLE:
-                    //patrol
-                    IdleUpdate();
+            case States.IDLE:
+                //patrol
+                IdleUpdate();
 
-                    break;
-                case States.MOVE_TO_TARGET:
-                    //approach to player
-                    MoveToTargetUpdate();
+                break;
+            case States.MOVE_TO_TARGET:
+                //approach to player
+                MoveToTargetUpdate();
 
-                    break;
-                case States.ATTACK:
-                    //attack
-                    AttackUpdate();
+                break;
+            case States.ATTACK:
+                //attack
+                AttackUpdate();
 
-                    break;
+                break;
 
-                case States.DAMAGE:
-                    //receive damage
-                    DamageUpdate();
+            case States.DAMAGE:
+                //receive damage
+                DamageUpdate();
 
-                    break;
+                break;
 
-                default:
-                    Debug.LogWarning("State not found");
-                    break;
-            }
+            default:
+                Debug.LogWarning("State not found");
+                break;
         }
     }
 
@@ -168,10 +165,16 @@ public class BaseEnemyScript : MonoBehaviour
             enemyMat.color -= new Color(0, 0, 0, Time.deltaTime);
         }
 
-        if(damageTimer <= 0 && deadNPC)
+        if (zoneSystem != null && deadNPC)
         {
-            if(zoneSystem != null)
-                zoneSystem.enemiesQuantity -= 1;
+            zoneSystem.enemiesQuantity -= 1;
+            zoneSystem = null;
+        }
+
+        if (damageTimer <= 0 && deadNPC)
+        {
+            //if (zoneSystem != null)
+            //    zoneSystem.enemiesQuantity -= 1;
 
             Destroy(gameObject);
         }
