@@ -7,7 +7,7 @@ public class PlantProjectileData : ProjectileData
     const float DISTANCE_SPEED_RELATION = 0.1f;
 
     [SerializeField] float maxHeight = 5f;
-    [SerializeField] bool testing = false;
+    //[SerializeField] bool testing = false;
 
     Vector3 initialPos, posLerper;
     Vector3 targetPosLow, targetPosHigh;
@@ -72,7 +72,15 @@ public class PlantProjectileData : ProjectileData
         }
         else
         {
+            //transform.position += moveDir * moveSpeed * Time.deltaTime;
+            //transform.rotation = Quaternion.LookRotation(rb.velocity, transform.up);
             base.Update_Call();
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1f))
+            {
+                if (hit.transform.CompareTag("floor")) 
+                    DestroyObject(0.3f);
+            }
         }
 
     }
@@ -87,17 +95,6 @@ public class PlantProjectileData : ProjectileData
     protected override void OnTriggerEnter_Call(Collider other)
     {
         base.OnTriggerEnter_Call(other);
-        if (!projectileBehaviour && other.CompareTag("floor"))
-        {
-            DestroyObject(0.1f);
-        }
-    }
-    private void OnCollisionEnter(Collision col)
-    {
-        if (!projectileBehaviour && col.transform.CompareTag("floor"))
-        {
-            DestroyObject(0.1f);
-        }
     }
 
 }

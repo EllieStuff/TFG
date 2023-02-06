@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8320203354182994962}
   - component: {fileID: -1873489517449642779}
   - component: {fileID: 2720036712410761245}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plant Projectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   maxHeight: 1
+  testing: 0
 --- !u!114 &-1873489517449642779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,8 +162,8 @@ GameObject:
   - component: {fileID: 4575705471472904114}
   - component: {fileID: 6678249768002156030}
   - component: {fileID: 341279514481054472}
-  m_Layer: 0
-  m_Name: KnifeSound
+  m_Layer: 2
+  m_Name: ProjectileSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -327,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8068257950339932878}
   - component: {fileID: 925711132967203294}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +470,7 @@ GameObject:
   - component: {fileID: 7695683497504980824}
   - component: {fileID: 102432908442048462}
   - component: {fileID: 1064924223648191503}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

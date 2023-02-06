@@ -136,10 +136,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   baseRotSpeed: 300
-  playerDetectionDistance: 16
-  playerStopDetectionDistance: 16
-  enemyStartAttackDistance: 16
-  enemyStopAttackDistance: 16.5
+  playerDetectionDistance: 25
+  playerStopDetectionDistance: 25
+  enemyStartAttackDistance: 25
+  enemyStopAttackDistance: 26
   isAttacking: 0
   baseMoveSpeed: 10
   baseDamageTimer: 0.5
@@ -148,7 +148,7 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 1969450491812471134}
   attackDistance: 16
-  baseAttackTimer: 1.5
+  baseAttackTimer: 3
   attackAnimationTime: 0.15
   attackDamage: 10
   enemyAnimator: {fileID: 1989478611777230538}
@@ -171,8 +171,8 @@ MonoBehaviour:
   entityElement: 0
   healthStates: []
   healthStatesFeedback: {fileID: 1455472645762347635}
-  maxLife: 40
-  currLife: 40
+  maxLife: 60
+  currLife: 60
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -319,7 +319,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cf141167ca419fa4db6359f05027ef8e, type: 2}
+      objectReference: {fileID: 2100000, guid: ea36337a79f5bc04dbac44993e6da1ba, type: 2}
     - target: {fileID: 4152534012396160117, guid: 8a5acdfbf1eb48c498c041660009b02c,
         type: 3}
       propertyPath: m_Name
