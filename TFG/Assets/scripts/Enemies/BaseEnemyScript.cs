@@ -47,8 +47,8 @@ public class BaseEnemyScript : MonoBehaviour
     internal Quaternion targetRot;
 
     //PLACEHOLDER
-        Material enemyMat;
-        [SerializeField] SkinnedMeshRenderer enemyMesh;
+    [SerializeField] SkinnedMeshRenderer enemyMesh;
+    [SerializeField] Material transparentMat;
     //_________________________________________
 
     //private WeaponStats playerWeaponStats;
@@ -68,8 +68,7 @@ public class BaseEnemyScript : MonoBehaviour
         playerLife = playerGO.GetComponent<LifeSystem>();
         playerSword = playerGO.GetComponent<PlayerSword>();
         playerMovement = playerGO.GetComponent<PlayerMovement>();
-        enemyMat = new Material(enemyMesh.material);
-        enemyMesh.material = enemyMat;
+        enemyMesh.material = new Material(enemyMesh.material);
 
         ResetSpeed();
     }
@@ -160,9 +159,11 @@ public class BaseEnemyScript : MonoBehaviour
             deadNPC = true;
         }
 
-        if(deadNPC && enemyMat.color.a > 0)
+        if(deadNPC && enemyMesh.material.color.a > 0)
         {
-            enemyMat.color -= new Color(0, 0, 0, Time.deltaTime);
+            if(enemyMesh.material.color.a >= 1f)
+                enemyMesh.material = transparentMat;
+            enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
         }
 
         if (zoneSystem != null && deadNPC)
