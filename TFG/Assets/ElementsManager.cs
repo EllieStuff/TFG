@@ -103,22 +103,18 @@ public class ElementsManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeElement(Elements.FIRE, elementsData[Elements.FIRE].chargeElementDelay);
-            changeElementRed.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ChangeElement(Elements.WATER, elementsData[Elements.WATER].chargeElementDelay);
-            changeElementBlue.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChangeElement(Elements.GRASS, elementsData[Elements.GRASS].chargeElementDelay);
-            changeElementGreen.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             ChangeElement(Elements.NORMAL, elementsData[Elements.NORMAL].chargeElementDelay);
-            changeElementNeutral.Play();
         }
     }
 
@@ -126,12 +122,15 @@ public class ElementsManager : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
+            StopParticles(elementIdx);
             elementIdx--;
             if (elementIdx < 0) elementIdx = Elements.COUNT - 1;
             ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
+
         }
         else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
+            StopParticles(elementIdx);
             elementIdx++;
             if (elementIdx >= Elements.COUNT) elementIdx = 0;
             ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
@@ -141,6 +140,7 @@ public class ElementsManager : MonoBehaviour
 
     void ChangeElement(Elements _element, float _changeAttackDelay)
     {
+        PlayParticles(_element);
         elementChanging = _element;
         StartCoroutine(ChangeElementCor(_element, _changeAttackDelay));
     }
@@ -236,5 +236,26 @@ public class ElementsManager : MonoBehaviour
         
     }
 
+    void PlayParticles(Elements _element)
+    {
+        switch (_element)
+        {
+            case Elements.FIRE:
+                changeElementRed.Play();
+                break;
+            case Elements.WATER:
+                changeElementBlue.Play();
+                break;
+            case Elements.GRASS:
+                changeElementGreen.Play();
+                break;
+            case Elements.NORMAL:
+                changeElementNeutral.Play();
+                break;
+            default: break;
+
+        };
+
+    }
 
 }
