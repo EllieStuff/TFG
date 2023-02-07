@@ -24,6 +24,10 @@ public class ElementsManager : MonoBehaviour
     [SerializeField] Image nearSliderElementIcon, uiElementIcon;
     [SerializeField] Sprite[] icons;
 
+    public ParticleSystem changeElementBlue;
+    public ParticleSystem changeElementGreen;
+    public ParticleSystem changeElementRed;
+    public ParticleSystem changeElementNeutral;
 
     // Start is called before the first frame update
     void Awake()
@@ -99,18 +103,22 @@ public class ElementsManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeElement(Elements.FIRE, elementsData[Elements.FIRE].chargeElementDelay);
+            changeElementRed.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ChangeElement(Elements.WATER, elementsData[Elements.WATER].chargeElementDelay);
+            changeElementBlue.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChangeElement(Elements.GRASS, elementsData[Elements.GRASS].chargeElementDelay);
+            changeElementGreen.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             ChangeElement(Elements.NORMAL, elementsData[Elements.NORMAL].chargeElementDelay);
+            changeElementNeutral.Play();
         }
     }
 
@@ -150,13 +158,18 @@ public class ElementsManager : MonoBehaviour
         while(timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            if (elementChanging != _element) yield break;
+            if (elementChanging != _element) 
+            {
+                StopParticles(_element);
+                yield break;  
+            }
             else if (moveManager.targetMousePos != Vector3.zero /*!moveManager.Moving*/)
             {
                 StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
                 attackManager.canAttack = moveManager.canMove = true;
                 elementIdx = attackManager.currentAttackElement;
-                changeElementSlider.value = 0;
+
+                StopParticles(_element);
                 yield break;
             }
 
@@ -195,6 +208,32 @@ public class ElementsManager : MonoBehaviour
     public static float GetInflictDamageMultiplier(Elements _entityElement, Elements _damageElement)
     {
         return elementsData[_entityElement].inflictDamage[_damageElement];
+    }
+
+    void StopParticles(Elements _element)
+    {
+        switch (_element)
+        {
+            case Elements.FIRE:
+                changeElementRed.Stop();
+                changeElementRed.Clear();
+                break;
+            case Elements.WATER:
+                changeElementBlue.Stop();
+                changeElementBlue.Clear();
+                break;
+            case Elements.GRASS:
+                changeElementGreen.Stop();
+                changeElementGreen.Clear();
+                break;
+            case Elements.NORMAL:
+                changeElementNeutral.Stop();
+                changeElementNeutral.Clear();
+                break;
+            default: break;
+
+        };
+        
     }
 
 
