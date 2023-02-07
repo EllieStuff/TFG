@@ -85,7 +85,9 @@ public class ZoneScript : MonoBehaviour
         if (other.tag.Equals("Player") && zoneDefused)
         {
             showRoom = false;
+            BlockBackBoor();
             assignedRoom.ActivateRoom(false);
+
         }
     }
 
@@ -107,6 +109,13 @@ public class ZoneScript : MonoBehaviour
     {
         for (int i = 0; i < blockedPaths.Length; i++)
             blockedPaths[i].enabled = true;
+    }
+
+    void BlockBackBoor()
+    {
+        for (int i = 0; i < blockedPaths.Length; i++)
+            if(blockedPaths[i].tag.Equals("BackDoor"))
+                blockedPaths[i].enabled = true;
     }
 
     void UnlockPaths()
