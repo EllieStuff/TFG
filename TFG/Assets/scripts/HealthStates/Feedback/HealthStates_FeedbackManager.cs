@@ -10,14 +10,14 @@ public class HealthStates_FeedbackManager : MonoBehaviour
     internal Dictionary<HealthState.Effect, HealthStates_Feedback> currActiveFeedbacks = new Dictionary<HealthState.Effect, HealthStates_Feedback>();
 
 
-    private void Awake()
+    /*private void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             HealthStates_Feedback childFeedback = transform.GetChild(i).GetComponent<HealthStates_Feedback>();
             healthStatesFeedbacks.Add(childFeedback.relatedEffect, childFeedback);
         }
-    }
+    }*/
 
     public void ActivateFeedback(HealthState.Effect _effect, float _effectDuration)
     {
