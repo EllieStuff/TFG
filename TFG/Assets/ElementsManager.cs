@@ -170,7 +170,7 @@ public class ElementsManager : MonoBehaviour
         changeElementSlider.value = 0;
         attackManager.currentAttackElement = _element;
         attackManager.canAttack = moveManager.canMove = true;
-        uiElementIcon.sprite = icons[(int)_element];
+        //uiElementIcon.sprite = icons[(int)_element];
         attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
     }
 
