@@ -168,7 +168,7 @@ public class ElementsManager : MonoBehaviour
                 StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
                 attackManager.canAttack = moveManager.canMove = true;
                 elementIdx = attackManager.currentAttackElement;
-
+                changeElementSlider.value = 0;
                 StopParticles(_element);
                 yield break;
             }
