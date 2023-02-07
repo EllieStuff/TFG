@@ -92,14 +92,15 @@ public class LifeSystem : MonoBehaviour
 
     public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
-        dmgDealt = _dmg * dmgInc * ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
+        float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
+        dmgDealt = _dmg * dmgInc * dmgMultiplier;
         currLife -= dmgDealt;
         CheckPlayerLifeLimits();
 
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
         {
             playerLifeBar.Damage();
-            //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.5f, 0.00001f));
+            //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.5f, 0.0002f));
         }
 
         if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY))
@@ -112,6 +113,9 @@ public class LifeSystem : MonoBehaviour
                 damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(dmgDealt.ToString());
                 //Le he puesto rapidamente algo provisional una particula porque no se cambiar el color del pj y es provisional hasta tener el modelo final
                 hitPS.Play();
+                if (dmgMultiplier > 1.9f) StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.015f));
+                else if (dmgMultiplier > 0.7f) StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.2f, 0.008f));
+                else StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
             }
         }
 
