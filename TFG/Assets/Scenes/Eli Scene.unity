@@ -3399,6 +3399,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 183207474}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &189705170 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6166678766108391714, guid: 8f32e2288a60a5145a4248907e64c46e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1850345771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &190951548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5328354425764504947, guid: 2e85d1506bb7a5c48bf1c391515f5261,
@@ -7656,6 +7662,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CacoRato Distance
       objectReference: {fileID: 0}
+    - target: {fileID: 8272157962908863554, guid: 2c2af4859f9416c4b84bae8a888f08ad,
+        type: 3}
+      propertyPath: hitPS
+      value: 
+      objectReference: {fileID: 1617963227}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c2af4859f9416c4b84bae8a888f08ad, type: 3}
 --- !u!1001 &401810818
@@ -15514,6 +15525,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6843027303298045855, guid: de6e8ec0b4ccf7a42ba81b3b399f3256,
     type: 3}
   m_PrefabInstance: {fileID: 970689618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &547246602 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1400527335974043085, guid: d20f38024c0638d438c8afe413e75537,
+    type: 3}
+  m_PrefabInstance: {fileID: 9032184794367645424}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &550179220
 PrefabInstance:
@@ -28709,6 +28726,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245985697}
   m_CullTransparentMesh: 1
+--- !u!198 &1247765010 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5461383386582714078, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
+    type: 3}
+  m_PrefabInstance: {fileID: 6983414706442360014}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1251789180
 GameObject:
   m_ObjectHideFlags: 0
@@ -36394,6 +36417,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de6e8ec0b4ccf7a42ba81b3b399f3256, type: 3}
+--- !u!198 &1617963227 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2496627659939563810, guid: 2c2af4859f9416c4b84bae8a888f08ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 400064650}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1618336180 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3480301468181321488, guid: 34883640f89bba84885fe5885c21fa37,
@@ -40772,11 +40801,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1902649229}
     m_Modifications:
-    - target: {fileID: 2977952159249605276, guid: 8f32e2288a60a5145a4248907e64c46e,
+    - target: {fileID: 3025498072861595482, guid: 8f32e2288a60a5145a4248907e64c46e,
         type: 3}
-      propertyPath: zoneSystem
+      propertyPath: hitPS
       value: 
-      objectReference: {fileID: 491999559}
+      objectReference: {fileID: 189705170}
     - target: {fileID: 7464903168444005019, guid: 8f32e2288a60a5145a4248907e64c46e,
         type: 3}
       propertyPath: m_RootOrder
@@ -40837,11 +40866,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlantEnemy_Fire
       objectReference: {fileID: 0}
-    - target: {fileID: 8129931792176551440, guid: 8f32e2288a60a5145a4248907e64c46e,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: fcc34d41e41028049af86e4d66ca98c4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f32e2288a60a5145a4248907e64c46e, type: 3}
 --- !u!1 &1850348978 stripped
@@ -46849,24 +46873,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1902649229}
     m_Modifications:
-    - target: {fileID: 1127087079937330524, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a6502ad03adab4046843291243f27da8, type: 2}
     - target: {fileID: 1518678067557753390, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1518678067557753390, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1518678067557753390, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
-        type: 3}
-      propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1518678067557753390, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
@@ -46919,16 +46928,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3309554780868331574, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6408136012768926635, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
         type: 3}
       propertyPath: m_Name
       value: PlantEnemy_Water
       objectReference: {fileID: 0}
+    - target: {fileID: 8351470923921754958, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
+        type: 3}
+      propertyPath: hitPS
+      value: 
+      objectReference: {fileID: 1247765010}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ef5aef5bcd2cba409b7ad9c505616b5, type: 3}
 --- !u!1001 &7144693315917663230
@@ -47437,11 +47446,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1902649229}
     m_Modifications:
-    - target: {fileID: 5132654254723801385, guid: d20f38024c0638d438c8afe413e75537,
+    - target: {fileID: 3593669281732694037, guid: d20f38024c0638d438c8afe413e75537,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: hitPS
       value: 
-      objectReference: {fileID: 2100000, guid: 2d12102ec12190a448fd2fbc4c5701cb, type: 2}
+      objectReference: {fileID: 547246602}
     - target: {fileID: 9204043437839007185, guid: d20f38024c0638d438c8afe413e75537,
         type: 3}
       propertyPath: m_Name
