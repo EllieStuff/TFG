@@ -32,7 +32,8 @@ public class ProjectileData : MonoBehaviour
     {
         if (rb == null) return;
         rb.MovePosition(transform.position + moveDir * moveSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.LookRotation(rb.velocity, transform.up);
+        transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
+        Debug.Log(moveDir);
     }
 
 
