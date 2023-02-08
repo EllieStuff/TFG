@@ -113,9 +113,21 @@ public class LifeSystem : MonoBehaviour
                 damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(dmgDealt.ToString());
                 //Le he puesto rapidamente algo provisional una particula porque no se cambiar el color del pj y es provisional hasta tener el modelo final
                 hitPS.Play();
-                if (dmgMultiplier > 1.9f) StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.015f));
-                else if (dmgMultiplier > 0.7f) StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.2f, 0.008f));
-                else StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
+                if (dmgMultiplier > 1.9f)
+                {
+                    StartCoroutine(GetComponent<EnemyShake>().Shake(0.3f, 0.03f, 0.03f));
+                    StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.015f));
+                }
+                else if (dmgMultiplier > 0.7f)
+                {
+                    StartCoroutine(GetComponent<EnemyShake>().Shake(0.2f, 0.01f, 0.01f));
+                    StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.2f, 0.008f));
+                }
+                else
+                {
+                    StartCoroutine(GetComponent<EnemyShake>().Shake(0.15f, 0.005f, 0.005f));
+                    StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
+                }
             }
         }
 

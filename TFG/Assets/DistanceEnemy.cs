@@ -11,6 +11,7 @@ public class DistanceEnemy : BaseEnemyScript
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] Light pointLight;
 
     enum AttackType { NORMAL_THROW, CIRCLE_ATTACK, FOUR_PROJECTILES, THREE_PROJECTILES }
 
@@ -23,7 +24,12 @@ public class DistanceEnemy : BaseEnemyScript
 
     internal override void Start_Call() { base.Start_Call(); attackTimer = baseAttackTimer; }
 
-    internal override void Update_Call() { base.Update_Call(); }
+    internal override void Update_Call()
+    {
+        base.Update_Call();
+        if (deadNPC && pointLight != null && pointLight.intensity > 0)
+            pointLight.intensity -= Time.deltaTime;
+    }
 
     internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
 

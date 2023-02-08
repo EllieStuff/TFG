@@ -5796,6 +5796,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 537293753, guid: 11a9a7dce7b4cd9468a8856226cda1e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1679515740618261089, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
         type: 3}
       propertyPath: m_Name
@@ -5965,7 +5969,22 @@ PrefabInstance:
       propertyPath: currentAttackElement
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4537330359178066787, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5275747456687565572, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5844019968482153990, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509785557001155272, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
         type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -5985,7 +6004,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 537293751, guid: 11a9a7dce7b4cd9468a8856226cda1e0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 11a9a7dce7b4cd9468a8856226cda1e0, type: 3}
 --- !u!136 &1850695095234083666 stripped
 CapsuleCollider:
