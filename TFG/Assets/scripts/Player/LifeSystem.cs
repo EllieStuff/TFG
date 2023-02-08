@@ -116,17 +116,17 @@ public class LifeSystem : MonoBehaviour
                 if (dmgMultiplier > 1.9f)
                 {
                     StartCoroutine(GetComponent<EnemyShake>().Shake(0.3f, 0.03f, 0.03f));
-                    StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.015f));
+                    StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.01f));
                 }
                 else if (dmgMultiplier > 0.7f)
                 {
                     StartCoroutine(GetComponent<EnemyShake>().Shake(0.2f, 0.01f, 0.01f));
-                    StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.2f, 0.008f));
+                    //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.2f, 0.008f));
                 }
                 else
                 {
-                    StartCoroutine(GetComponent<EnemyShake>().Shake(0.15f, 0.005f, 0.005f));
-                    StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
+                    //StartCoroutine(GetComponent<EnemyShake>().Shake(0.15f, 0.005f, 0.005f));
+                    //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
                 }
             }
         }
