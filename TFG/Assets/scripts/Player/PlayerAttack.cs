@@ -39,6 +39,8 @@ public class PlayerAttack : MonoBehaviour
     float extraProjectilesDelay = 0.2f;
     //internal bool changingAttackType = false;
 
+    public ParticleSystem glowBurstPS;
+
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero && playerMovement.targetMousePos != Vector3.zero; } }
 
 
@@ -75,7 +77,8 @@ public class PlayerAttack : MonoBehaviour
         //    changeAttackTimer = changeAttackDelay;
         //    attackTimer = attackTimer / 2f;
         //}
-
+        if (IsMoving)
+            glowBurstPS.Stop();
     }
 
 
@@ -86,6 +89,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
+        //Spawn Particle glow
+        glowBurstPS.Play();
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
         attack.Init(transform);
