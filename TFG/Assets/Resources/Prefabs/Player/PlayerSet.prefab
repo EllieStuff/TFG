@@ -6038,6 +6038,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679515740618261119, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
         type: 3}
+      propertyPath: damageAnimationTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679515740618261119, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
       propertyPath: dustParticleWalking
       value: 
       objectReference: {fileID: 1225561217}
@@ -6423,7 +6428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeElementSlider: {fileID: 4898115511699608142}
   nearSliderElementIcon: {fileID: 4898115510920603785}
-  uiElementIcon: {fileID: 0}
   icons:
   - {fileID: 21300000, guid: 76dd11672b000d146a3a6a545dea00f3, type: 3}
   - {fileID: 21300000, guid: 1a39a083e4a51bf47a52cc261f48db69, type: 3}

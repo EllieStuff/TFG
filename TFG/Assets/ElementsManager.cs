@@ -16,12 +16,12 @@ public class ElementsManager : MonoBehaviour
     static Dictionary<Elements, ElementClass> elementsData = null;
 
     PlayerAttack attackManager;
-    PlayerMovement moveManager;
-    WalkMark walkMark;
+    //PlayerMovement moveManager;
+    //WalkMark walkMark;
     [SerializeField] Slider changeElementSlider;
-    Elements elementChanging = Elements.NORMAL;
+    Elements elementChanging = Elements.FIRE;
     Elements elementIdx;
-    [SerializeField] Image nearSliderElementIcon, uiElementIcon;
+    [SerializeField] Image nearSliderElementIcon;
     [SerializeField] Sprite[] icons;
 
     public ParticleSystem changeElementBlue;
@@ -33,8 +33,8 @@ public class ElementsManager : MonoBehaviour
     void Awake()
     {
         attackManager = GetComponent<PlayerAttack>();
-        moveManager = GetComponent<PlayerMovement>();
-        walkMark = FindObjectOfType<WalkMark>();
+        //moveManager = GetComponent<PlayerMovement>();
+        //walkMark = FindObjectOfType<WalkMark>();
 
         elementIdx = attackManager.currentAttackElement;
         nearSliderElementIcon.color = new Color(1, 1, 1, 0);
@@ -47,14 +47,14 @@ public class ElementsManager : MonoBehaviour
     {
         elementsData = new Dictionary<Elements, ElementClass>();
         ElementClass normalCompatibility = new ElementClass();
-        normalCompatibility.receiveDamage.Add(Elements.NORMAL, 1.3f);
-        normalCompatibility.receiveDamage.Add(Elements.FIRE, 1.3f);
-        normalCompatibility.receiveDamage.Add(Elements.GRASS, 1.3f);
-        normalCompatibility.receiveDamage.Add(Elements.WATER, 1.3f);
-        normalCompatibility.inflictDamage.Add(Elements.NORMAL, 1.3f);
-        normalCompatibility.inflictDamage.Add(Elements.FIRE, 1.3f);
-        normalCompatibility.inflictDamage.Add(Elements.GRASS, 1.3f);
-        normalCompatibility.inflictDamage.Add(Elements.WATER, 1.3f);
+        normalCompatibility.receiveDamage.Add(Elements.NORMAL, 1f);
+        normalCompatibility.receiveDamage.Add(Elements.FIRE, 1f);
+        normalCompatibility.receiveDamage.Add(Elements.GRASS, 1f);
+        normalCompatibility.receiveDamage.Add(Elements.WATER, 1f);
+        normalCompatibility.inflictDamage.Add(Elements.NORMAL, 1f);
+        normalCompatibility.inflictDamage.Add(Elements.FIRE, 1f);
+        normalCompatibility.inflictDamage.Add(Elements.GRASS, 1f);
+        normalCompatibility.inflictDamage.Add(Elements.WATER, 1f);
         elementsData.Add(Elements.NORMAL, normalCompatibility);
 
         ElementClass fireCompatibility = new ElementClass();
@@ -112,10 +112,10 @@ public class ElementsManager : MonoBehaviour
         {
             ChangeElement(Elements.GRASS, elementsData[Elements.GRASS].chargeElementDelay);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ChangeElement(Elements.NORMAL, elementsData[Elements.NORMAL].chargeElementDelay);
-        }
+        //else if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    ChangeElement(Elements.NORMAL, elementsData[Elements.NORMAL].chargeElementDelay);
+        //}
     }
 
     void MouseInputsManager()
@@ -124,7 +124,7 @@ public class ElementsManager : MonoBehaviour
         {
             StopParticles(elementIdx);
             elementIdx--;
-            if (elementIdx < 0) elementIdx = Elements.COUNT - 1;
+            if (elementIdx < 0) elementIdx = Elements.COUNT - 2;
             ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
 
         }
@@ -132,7 +132,7 @@ public class ElementsManager : MonoBehaviour
         {
             StopParticles(elementIdx);
             elementIdx++;
-            if (elementIdx >= Elements.COUNT) elementIdx = 0;
+            if (elementIdx >= Elements.COUNT - 1) elementIdx = 0;
             ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
         }
     }
@@ -147,10 +147,10 @@ public class ElementsManager : MonoBehaviour
 
     IEnumerator ChangeElementCor(Elements _element, float _changeAttackDelay)
     {
-        attackManager.canAttack = moveManager.canMove = false;
+        attackManager.canAttack /*= moveManager.canMove*/ = false;
         attackManager.SetAttackTimer(attackManager.attackDelay);
-        moveManager.targetMousePos = Vector3.zero;
-        walkMark.SetWalkMarkActive(false);
+        //moveManager.targetMousePos = Vector3.zero;
+        //walkMark.SetWalkMarkActive(false);
         nearSliderElementIcon.sprite = icons[(int)_element];
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 0, 1, 0.3f));
 
@@ -163,27 +163,24 @@ public class ElementsManager : MonoBehaviour
                 StopParticles(_element);
                 yield break;  
             }
-            else if (moveManager.targetMousePos != Vector3.zero /*!moveManager.Moving*/)
-            {
-                StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
-                attackManager.canAttack = moveManager.canMove = true;
-                elementIdx = attackManager.currentAttackElement;
-                changeElementSlider.value = 0;
-                StopParticles(_element);
-                yield break;
-            }
+            //else if (moveManager.targetMousePos != Vector3.zero /*!moveManager.Moving*/)
+            //{
+            //    StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
+            //    attackManager.canAttack = moveManager.canMove = true;
+            //    elementIdx = attackManager.currentAttackElement;
+            //    changeElementSlider.value = 0;
+            //    StopParticles(_element);
+            //    yield break;
+            //}
 
             timer += Time.deltaTime;
             changeElementSlider.value = Mathf.Lerp(1, 0, timer / maxTime);
         }
 
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
-        //yield return new WaitForEndOfFrame();
-        //if (elementChanging != _element) yield break;
         changeElementSlider.value = 0;
         attackManager.currentAttackElement = _element;
-        attackManager.canAttack = moveManager.canMove = true;
-        //uiElementIcon.sprite = icons[(int)_element];
+        attackManager.canAttack /*= moveManager.canMove*/ = true;
         attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
     }
 
