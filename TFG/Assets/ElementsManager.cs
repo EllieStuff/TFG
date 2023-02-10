@@ -10,6 +10,7 @@ public class ElementsManager : MonoBehaviour
     {
         public Dictionary<Elements, float> receiveDamage = new Dictionary<Elements, float>();
         public Dictionary<Elements, float> inflictDamage = new Dictionary<Elements, float>();
+        public Color colorParticles;
         public float chargeElementDelay = 1.5f;
     }
 
@@ -23,6 +24,7 @@ public class ElementsManager : MonoBehaviour
     Elements elementIdx;
     [SerializeField] Image nearSliderElementIcon;
     [SerializeField] Sprite[] icons;
+    [SerializeField] ParticleSystem effectTypeParticles;
 
     public ParticleSystem changeElementBlue;
     public ParticleSystem changeElementGreen;
@@ -47,6 +49,7 @@ public class ElementsManager : MonoBehaviour
     {
         elementsData = new Dictionary<Elements, ElementClass>();
         ElementClass normalCompatibility = new ElementClass();
+        normalCompatibility.colorParticles = Color.white;
         normalCompatibility.receiveDamage.Add(Elements.NORMAL, 1f);
         normalCompatibility.receiveDamage.Add(Elements.FIRE, 1f);
         normalCompatibility.receiveDamage.Add(Elements.GRASS, 1f);
@@ -58,6 +61,7 @@ public class ElementsManager : MonoBehaviour
         elementsData.Add(Elements.NORMAL, normalCompatibility);
 
         ElementClass fireCompatibility = new ElementClass();
+        fireCompatibility.colorParticles = Color.red;
         fireCompatibility.receiveDamage.Add(Elements.NORMAL, 0.8f);
         fireCompatibility.receiveDamage.Add(Elements.FIRE, 1.0f);
         fireCompatibility.receiveDamage.Add(Elements.GRASS, 0.5f);
@@ -69,6 +73,7 @@ public class ElementsManager : MonoBehaviour
         elementsData.Add(Elements.FIRE, fireCompatibility);
 
         ElementClass grassCompatibility = new ElementClass();
+        grassCompatibility.colorParticles = Color.green;
         grassCompatibility.receiveDamage.Add(Elements.NORMAL, 0.8f);
         grassCompatibility.receiveDamage.Add(Elements.FIRE, 2.0f);
         grassCompatibility.receiveDamage.Add(Elements.GRASS, 1.0f);
@@ -80,6 +85,7 @@ public class ElementsManager : MonoBehaviour
         elementsData.Add(Elements.GRASS, grassCompatibility);
 
         ElementClass waterCompatibility = new ElementClass();
+        waterCompatibility.colorParticles = Color.cyan;
         waterCompatibility.receiveDamage.Add(Elements.NORMAL, 0.8f);
         waterCompatibility.receiveDamage.Add(Elements.FIRE, 0.5f);
         waterCompatibility.receiveDamage.Add(Elements.GRASS, 2.0f);
@@ -89,6 +95,8 @@ public class ElementsManager : MonoBehaviour
         waterCompatibility.inflictDamage.Add(Elements.GRASS, 0.5f);
         waterCompatibility.inflictDamage.Add(Elements.WATER, 1.0f);
         elementsData.Add(Elements.WATER, waterCompatibility);
+
+        SwitchElementParticles(elementIdx);
     }
 
 
@@ -182,6 +190,14 @@ public class ElementsManager : MonoBehaviour
         attackManager.currentAttackElement = _element;
         attackManager.canAttack /*= moveManager.canMove*/ = true;
         attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
+
+        SwitchElementParticles(_element);
+    }
+
+    void SwitchElementParticles(Elements _element)
+    {
+        var main = effectTypeParticles.main;
+        main.startColor = elementsData[_element].colorParticles;
     }
 
     IEnumerator LerpImageAlpha(Image _image, float _initAlpha, float _targetAlpha, float _lerpTime = 0.5f)
