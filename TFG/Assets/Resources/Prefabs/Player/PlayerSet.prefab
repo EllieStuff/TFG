@@ -5763,6 +5763,7 @@ GameObject:
   - component: {fileID: 7873425278134974527}
   - component: {fileID: 3765998226701283200}
   - component: {fileID: 6358875497755647289}
+  - component: {fileID: 8333493303882392545}
   m_Layer: 0
   m_Name: effect_type_particles
   m_TagString: Untagged
@@ -10647,6 +10648,27 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!114 &8333493303882392545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955589927397762858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea53c8e7e59cae14092e24026f7e9924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDestroy: 0
+  randomTime: 0
+  minTime: 0
+  maxTime: 0
+  removeParent: 0
+  followPlayer: 0
+  permanent: 1
+  playerParticle: 1
+  playerRB: {fileID: 6104432145596615672}
 --- !u!1001 &967261354667285254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11194,6 +11216,12 @@ Transform:
 --- !u!4 &6104432145596615652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1679515740618261118, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4898115512442653082}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &6104432145596615672 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 1679515740618261090, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
     type: 3}
   m_PrefabInstance: {fileID: 4898115512442653082}
   m_PrefabAsset: {fileID: 0}
