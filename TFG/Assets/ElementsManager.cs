@@ -155,6 +155,7 @@ public class ElementsManager : MonoBehaviour
 
     IEnumerator ChangeElementCor(Elements _element, float _changeAttackDelay)
     {
+        effectTypeParticles.Stop();
         attackManager.canAttack /*= moveManager.canMove*/ = false;
         attackManager.SetAttackTimer(attackManager.attackDelay);
         //moveManager.targetMousePos = Vector3.zero;
@@ -198,6 +199,7 @@ public class ElementsManager : MonoBehaviour
     {
         var main = effectTypeParticles.main;
         main.startColor = elementsData[_element].colorParticles;
+        effectTypeParticles.Play();
     }
 
     IEnumerator LerpImageAlpha(Image _image, float _initAlpha, float _targetAlpha, float _lerpTime = 0.5f)
