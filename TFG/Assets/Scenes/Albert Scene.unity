@@ -32159,7 +32159,7 @@ PrefabInstance:
     - target: {fileID: 2415196174756403996, guid: cecf1bdeadee67841b1ff2e5ef6f72c4,
         type: 3}
       propertyPath: m_Intensity
-      value: 5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2415196174756403998, guid: cecf1bdeadee67841b1ff2e5ef6f72c4,
         type: 3}
@@ -32174,7 +32174,7 @@ PrefabInstance:
     - target: {fileID: 2415196174958480796, guid: cecf1bdeadee67841b1ff2e5ef6f72c4,
         type: 3}
       propertyPath: m_Intensity
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2415196174958480798, guid: cecf1bdeadee67841b1ff2e5ef6f72c4,
         type: 3}
@@ -45354,7 +45354,7 @@ GameObject:
   - component: {fileID: 2055429439}
   - component: {fileID: 2055429438}
   m_Layer: 0
-  m_Name: Luciernagas
+  m_Name: effect_type_particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46266,7 +46266,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -46372,7 +46372,7 @@ ParticleSystem:
     m_BurstCount: 0
     m_Bursts: []
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -46383,22 +46383,22 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 1
+          value: 0.50180435
+          inSlope: -1.347101
+          outSlope: -1.347101
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0.09915611
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 1
+          value: 0
+          inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -48079,11 +48079,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   NoiseModule:
-    enabled: 0
+    enabled: 1
     strength:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -48240,7 +48240,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     separateAxes: 0
-    frequency: 0.5
+    frequency: 0.7
     damping: 1
     octaves: 1
     octaveMultiplier: 0.5
