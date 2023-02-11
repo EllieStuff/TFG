@@ -48,7 +48,7 @@ public class Bleeding_HealthState : HealthState
         float finishEffectTimeStamp = Time.timeSinceLevelLoad + effectDuration;
         do
         {
-            lifeSystem.Damage(dmg, ElementsManager.Elements.NORMAL);
+            //lifeSystem.Damage(dmg, ElementsManager.Elements.NORMAL);
             yield return new WaitForSeconds(dmgFreq);
         }
         while (Time.timeSinceLevelLoad < finishEffectTimeStamp);

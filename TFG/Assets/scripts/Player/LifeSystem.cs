@@ -20,7 +20,7 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] private Transform EnemyLifeBar;
     [SerializeField] private GameObject damageTextPrefab;
 
-    public ParticleSystem hitPS;
+    //public ParticleSystem hitPS;
 
     internal float dmgInc = 1.0f;
     float dmgDealt;
@@ -90,7 +90,7 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
     }
 
-    public void Damage(float _dmg, ElementsManager.Elements _attackElement)
+    public void Damage(float _dmg, ElementsManager.Elements _attackElement, Collider collider)
     {
         dmgDealt = _dmg * dmgInc * ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
         currLife -= dmgDealt;
@@ -105,13 +105,16 @@ public class LifeSystem : MonoBehaviour
         if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY))
         {
             if (currLife > 0)
-                Instantiate(bloodPrefab, transform);
+            {
+                GameObject go = Instantiate(bloodPrefab, transform);
+                go.transform.SetParent(null);
+            }
             if (entityType.Equals(EntityType.ENEMY))
             {
                 GameObject damageTextInstance = Instantiate(damageTextPrefab, new Vector3(EnemyLifeBar.parent.gameObject.transform.position.x, EnemyLifeBar.parent.transform.position.y, EnemyLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
                 damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(dmgDealt.ToString());
                 //Le he puesto rapidamente algo provisional una particula porque no se cambiar el color del pj y es provisional hasta tener el modelo final
-                hitPS.Play();
+                //hitPS.Play();
             }
         }
 

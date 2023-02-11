@@ -60,7 +60,7 @@ public class Burned_HealthState : HealthState
         float finishEffectTimeStamp = Time.timeSinceLevelLoad + effectDuration;
         do
         {
-            lifeSystem.Damage(dmg, ElementsManager.Elements.NORMAL);
+            //lifeSystem.Damage(dmg, ElementsManager.Elements.NORMAL);
             //ToDo: stun player/enemies
             yield return new WaitForSeconds(dmgFreq);
         }
