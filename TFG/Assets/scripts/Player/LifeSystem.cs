@@ -107,16 +107,30 @@ public class LifeSystem : MonoBehaviour
         {
             if (currLife > 0)
                 Instantiate(bloodPrefab, transform);
+
+            GameObject damageTextInstance = Instantiate(damageTextPrefab, new Vector3(EnemyLifeBar.parent.gameObject.transform.position.x, EnemyLifeBar.parent.transform.position.y, EnemyLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
+            string damageText = dmgDealt.ToString();
+
+            TextMeshPro textUI = damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+
+            if (entityType.Equals(EntityType.PLAYER))
+            {
+                textUI.color = Color.red;
+                damageText = "-" + damageText;
+            }
+
+            textUI.SetText(damageText);
+
+            //Le he puesto rapidamente algo provisional una particula porque no se cambiar el color del pj y es provisional hasta tener el modelo final
+            hitPS.Play();
+
             if (entityType.Equals(EntityType.ENEMY))
             {
-                GameObject damageTextInstance = Instantiate(damageTextPrefab, new Vector3(EnemyLifeBar.parent.gameObject.transform.position.x, EnemyLifeBar.parent.transform.position.y, EnemyLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
-                damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(dmgDealt.ToString());
-                //Le he puesto rapidamente algo provisional una particula porque no se cambiar el color del pj y es provisional hasta tener el modelo final
-                hitPS.Play();
                 if (dmgMultiplier > 1.9f)
                 {
                     StartCoroutine(GetComponent<EnemyShake>().Shake(0.3f, 0.03f, 0.03f));
                     StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.01f));
+                    textUI.color = Color.green;
                 }
                 else if (dmgMultiplier > 0.7f)
                 {
@@ -125,6 +139,7 @@ public class LifeSystem : MonoBehaviour
                 }
                 else
                 {
+                    textUI.color = Color.white;
                     //StartCoroutine(GetComponent<EnemyShake>().Shake(0.15f, 0.005f, 0.005f));
                     //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
                 }
