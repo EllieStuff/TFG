@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class LifeSystem : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] private GameObject bloodPrefab;
     //[SerializeField] private GameObject deathParticlesPrefab;
     [SerializeField] private PlayerLifeBar playerLifeBar;
-    [SerializeField] private Transform EnemyLifeBar;
+    [SerializeField] private Slider EnemyLifeBar;
     [SerializeField] private GameObject damageTextPrefab;
 
     public ParticleSystem hitPS;
@@ -28,6 +29,7 @@ public class LifeSystem : MonoBehaviour
 
     PlayerMovement playerMovementScript;
     Transform camera;
+    Transform parentCanvas;
 
     // Crec que serà millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
     //[SerializeField] internal bool managesDeath = true;
@@ -38,7 +40,10 @@ public class LifeSystem : MonoBehaviour
         if (entityType.Equals(EntityType.PLAYER))
             playerMovementScript = GetComponent<PlayerMovement>();
         if (entityType.Equals(EntityType.ENEMY))
+        {
+            parentCanvas = EnemyLifeBar.transform.parent;
             camera = Camera.main.transform;
+        }
 
         if (EnemyLifeBar != null)
             EnemyLifeBar.gameObject.SetActive(true);
@@ -50,8 +55,10 @@ public class LifeSystem : MonoBehaviour
     {
         if (entityType.Equals(EntityType.ENEMY))
         {
-            EnemyLifeBar.localScale = new Vector3(currLife / maxLife, EnemyLifeBar.localScale.y, EnemyLifeBar.localScale.z);
-            EnemyLifeBar.LookAt(camera);
+            EnemyLifeBar.value = currLife / maxLife;
+            parentCanvas.LookAt(camera);
+            Vector3 canvasRot = parentCanvas.rotation.eulerAngles;
+            parentCanvas.rotation = Quaternion.Euler(-canvasRot.x, 0, 0);
         }
     }
 
@@ -108,7 +115,9 @@ public class LifeSystem : MonoBehaviour
             if (currLife > 0)
                 Instantiate(bloodPrefab, transform);
 
-            GameObject damageTextInstance = Instantiate(damageTextPrefab, new Vector3(EnemyLifeBar.parent.gameObject.transform.position.x, EnemyLifeBar.parent.transform.position.y, EnemyLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
+            Transform enemyLifeBar = EnemyLifeBar.transform;
+
+            GameObject damageTextInstance = Instantiate(damageTextPrefab, new Vector3(enemyLifeBar.parent.gameObject.transform.position.x, enemyLifeBar.parent.transform.position.y, enemyLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
             string damageText = dmgDealt.ToString();
 
             TextMeshPro textUI = damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
@@ -153,6 +162,7 @@ public class LifeSystem : MonoBehaviour
         {
             if(entityType.Equals(EntityType.ENEMY))
             {
+                parentCanvas.gameObject.SetActive(false);
                 RoomEnemyManager assignedRoom = transform.GetComponentInParent<RoomEnemyManager>();
                 if (assignedRoom == null) assignedRoom = transform.parent.GetComponentInParent<RoomEnemyManager>();
                 if (assignedRoom == null) Debug.LogWarning("Assigned Room not found.");
