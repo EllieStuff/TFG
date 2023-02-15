@@ -100,6 +100,8 @@ public class BaseEnemyScript : MonoBehaviour
             {
                 targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
+                Vector3 auxRot = transform.eulerAngles;
+                transform.rotation = Quaternion.Euler(0, auxRot.y, 0);
             }
         }
 
