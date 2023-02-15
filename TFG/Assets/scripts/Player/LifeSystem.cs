@@ -20,8 +20,9 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] private PlayerLifeBar playerLifeBar;
     [SerializeField] private Slider EnemyLifeBar;
     [SerializeField] private GameObject damageTextPrefab;
+    [SerializeField] private ParticleSystem hitPS;
 
-    public ParticleSystem hitPS;
+    //public ParticleSystem hitPS;
 
     internal float dmgInc = 1.0f;
     float dmgDealt;
@@ -31,7 +32,7 @@ public class LifeSystem : MonoBehaviour
     Transform camera;
     Transform parentCanvas;
 
-    // Crec que serà millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
+    // Crec que serï¿½ millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
     //[SerializeField] internal bool managesDeath = true;
     //[SerializeField] internal float deathDelay = 3.0f;
 
@@ -97,7 +98,7 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
     }
 
-    public void Damage(float _dmg, ElementsManager.Elements _attackElement)
+    public void Damage(float _dmg, ElementsManager.Elements _attackElement, Collider collider)
     {
         float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
         dmgDealt = _dmg * dmgInc * dmgMultiplier;
@@ -139,7 +140,7 @@ public class LifeSystem : MonoBehaviour
                 {
                     StartCoroutine(GetComponent<EnemyShake>().Shake(0.3f, 0.03f, 0.03f));
                     StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.01f));
-                    textUI.color = Color.green;
+                    textUI.color = Color.red;
                 }
                 else if (dmgMultiplier > 0.7f)
                 {
@@ -152,6 +153,8 @@ public class LifeSystem : MonoBehaviour
                     //StartCoroutine(GetComponent<EnemyShake>().Shake(0.15f, 0.005f, 0.005f));
                     //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
                 }
+                GameObject go = Instantiate(bloodPrefab, transform);
+                go.transform.SetParent(null);
             }
         }
 

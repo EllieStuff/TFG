@@ -76,7 +76,7 @@ public class PlantProjectileData : ProjectileData
             //transform.rotation = Quaternion.LookRotation(rb.velocity, transform.up);
             base.Update_Call();
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1f))
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 5f))
             {
                 if (hit.transform.CompareTag("floor")) 
                     DestroyObject(0.3f);

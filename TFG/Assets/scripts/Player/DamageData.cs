@@ -53,7 +53,7 @@ public class DamageData : MonoBehaviour
 
             LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
             //Debug.Log("Damaged by: " + this.name);
-            ApplyDamage(lifeSystem);
+            ApplyDamage(lifeSystem, other);
             other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
         }
 
@@ -65,13 +65,13 @@ public class DamageData : MonoBehaviour
             audio.PlaySound();
 
         LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-        ApplyDamage(lifeSystem);
+        ApplyDamage(lifeSystem, other);
         other.GetComponent<PlayerMovement>().DamageStartCorroutine();
     }
 
-    void ApplyDamage(LifeSystem _lifeSystem)
+    void ApplyDamage(LifeSystem _lifeSystem, Collider collider)
     {
-        _lifeSystem.Damage(weaponDamage, attackElement);
+        _lifeSystem.Damage(weaponDamage, attackElement, collider);
 
         //float tmpWeaponDmg = weaponDamage;
         //foreach(HealthState.Effect weaponEffect in weaponEffects)
