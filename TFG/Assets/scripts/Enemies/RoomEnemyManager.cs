@@ -10,6 +10,8 @@ public class RoomEnemyManager : MonoBehaviour
     PlayerAttack playerAttack;
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
 
+    const float RAYCAST_DISTANCE = 10;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -66,7 +68,7 @@ public class RoomEnemyManager : MonoBehaviour
             }
 
             float newDist = Vector3.Distance(enemies[i].transform.position, _playerTransform.position);
-            if(newDist < closerDist)
+            if(newDist < closerDist && !WallsCheck(enemies[i].transform))
             {
                 closerEnemy = enemies[i].transform;
                 closerDist = newDist;
@@ -77,6 +79,19 @@ public class RoomEnemyManager : MonoBehaviour
         return closerEnemy;
     }
 
+    private bool WallsCheck(Transform _enemyTransform)
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(_enemyTransform.position, _enemyTransform.TransformDirection(Vector3.forward * RAYCAST_DISTANCE));
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.tag.Equals("Wall"))
+                return true;
+        }
+
+        return false;
+    }
 
     public void DiscardEnemy(BaseEnemyScript _enemy)
     {
