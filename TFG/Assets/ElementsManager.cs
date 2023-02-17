@@ -162,6 +162,7 @@ public class ElementsManager : MonoBehaviour
         //walkMark.SetWalkMarkActive(false);
         nearSliderElementIcon.sprite = icons[(int)_element];
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 0, 1, 0.3f));
+        attackManager.currentAttackElement = _element;
 
         float timer = 0, maxTime = _changeAttackDelay;
         while(timer < maxTime)
@@ -188,7 +189,6 @@ public class ElementsManager : MonoBehaviour
 
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
         changeElementSlider.value = 0;
-        attackManager.currentAttackElement = _element;
         attackManager.canAttack /*= moveManager.canMove*/ = true;
         attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
 

@@ -9,7 +9,7 @@ public class RadialRotation : MonoBehaviour
     private RectTransform rect;
     private PlayerAttack playerAttack;
 
-    private const float LERP_SPEED = 2;
+    private const float LERP_SPEED = 1.5f;
 
     private void Start()
     {
