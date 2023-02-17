@@ -39,6 +39,8 @@ public class PlayerAttack : MonoBehaviour
     float extraProjectilesDelay = 0.2f;
     //internal bool changingAttackType = false;
 
+    const float RAYCAST_DISTANCE = 10;
+
     public ParticleSystem glowBurstPS;
 
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero && playerMovement.targetMousePos != Vector3.zero; } }
@@ -84,7 +86,21 @@ public class PlayerAttack : MonoBehaviour
 
     public bool CanAttack()
     {
-        return canAttack && !IsMoving && attackTimer <= 0 && target != null;
+        return !IsShootingWalls() && canAttack && !IsMoving && attackTimer <= 0 && target != null;
+    }
+
+    private bool IsShootingWalls()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.forward * RAYCAST_DISTANCE));
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.tag.Equals("Wall"))
+                return true;
+        }
+
+        return false;
     }
 
     void Attack()
