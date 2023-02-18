@@ -19,6 +19,8 @@ public class ElementsManager : MonoBehaviour
     PlayerAttack attackManager;
     //PlayerMovement moveManager;
     //WalkMark walkMark;
+    [SerializeField] bool allowElementChangeOneStarted = false;
+    bool changingElement = false;
     [SerializeField] Slider changeElementSlider;
     Elements elementChanging = Elements.FIRE;
     Elements elementIdx;
@@ -30,6 +32,8 @@ public class ElementsManager : MonoBehaviour
     public ParticleSystem changeElementGreen;
     public ParticleSystem changeElementRed;
     public ParticleSystem changeElementNeutral;
+
+    bool CanChangeElement { get { return !(!allowElementChangeOneStarted && changingElement); } }
 
     // Start is called before the first frame update
     void Awake()
@@ -108,6 +112,8 @@ public class ElementsManager : MonoBehaviour
 
     void KeyboardInputsManager()
     {
+        if (!CanChangeElement) return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeElement(Elements.FIRE, elementsData[Elements.FIRE].chargeElementDelay);
@@ -128,7 +134,9 @@ public class ElementsManager : MonoBehaviour
 
     void MouseInputsManager()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        if (!CanChangeElement) return;
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
             StopParticles(elementIdx);
             elementIdx--;
@@ -136,7 +144,7 @@ public class ElementsManager : MonoBehaviour
             ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
 
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             StopParticles(elementIdx);
             elementIdx++;
@@ -155,6 +163,7 @@ public class ElementsManager : MonoBehaviour
 
     IEnumerator ChangeElementCor(Elements _element, float _changeAttackDelay)
     {
+        changingElement = true;
         effectTypeParticles.Stop();
         attackManager.canAttack /*= moveManager.canMove*/ = false;
         attackManager.SetAttackTimer(attackManager.attackDelay);
@@ -168,7 +177,7 @@ public class ElementsManager : MonoBehaviour
         while(timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            if (elementChanging != _element) 
+            if (allowElementChangeOneStarted && elementChanging != _element) 
             {
                 StopParticles(_element);
                 yield break;  
@@ -193,6 +202,7 @@ public class ElementsManager : MonoBehaviour
         attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
 
         SwitchElementParticles(_element);
+        changingElement = false;
     }
 
     void SwitchElementParticles(Elements _element)
