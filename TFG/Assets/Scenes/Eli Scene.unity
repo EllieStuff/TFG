@@ -3176,6 +3176,11 @@ PrefabInstance:
       propertyPath: playerRB
       value: 
       objectReference: {fileID: 1587448810}
+    - target: {fileID: 1432354910627484952, guid: 618e205d292845044bda484e484dfcf5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4416662650980446314, guid: 618e205d292845044bda484e484dfcf5,
         type: 3}
       propertyPath: m_RootOrder
@@ -40392,6 +40397,16 @@ PrefabInstance:
       propertyPath: zoneSystem
       value: 
       objectReference: {fileID: 491999559}
+    - target: {fileID: 7456500971400058317, guid: 8f32e2288a60a5145a4248907e64c46e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456500971400058317, guid: 8f32e2288a60a5145a4248907e64c46e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7464903168444005019, guid: 8f32e2288a60a5145a4248907e64c46e,
         type: 3}
       propertyPath: m_RootOrder
@@ -43707,6 +43722,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 176281540}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &2032474167 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7458334955984311724, guid: 618e205d292845044bda484e484dfcf5,
+    type: 3}
+  m_PrefabInstance: {fileID: 176281540}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2033510528
 GameObject:
   m_ObjectHideFlags: 0
@@ -44120,6 +44141,11 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4898115512442653087, guid: 12ebd5e35ca9733418a085018bfc3c30,
+        type: 3}
+      propertyPath: effectTypeParticles_UI
+      value: 
+      objectReference: {fileID: 2032474167}
     - target: {fileID: 8831104709350990105, guid: 12ebd5e35ca9733418a085018bfc3c30,
         type: 3}
       propertyPath: roomEnemyManager
@@ -46723,6 +46749,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4585182677396426154, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4585182677396426154, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6408136012768926635, guid: 6ef5aef5bcd2cba409b7ad9c505616b5,
         type: 3}
       propertyPath: m_Name
@@ -47236,6 +47272,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1902649229}
     m_Modifications:
+    - target: {fileID: 706777208398634824, guid: d20f38024c0638d438c8afe413e75537,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 706777208398634824, guid: d20f38024c0638d438c8afe413e75537,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5132654254723801385, guid: d20f38024c0638d438c8afe413e75537,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

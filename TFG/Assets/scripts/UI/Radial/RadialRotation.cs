@@ -22,8 +22,8 @@ public class RadialRotation : MonoBehaviour
     {
         rotationsByElements = new Dictionary<ElementsManager.Elements, Quaternion>();
         rotationsByElements[ElementsManager.Elements.FIRE] = Quaternion.Euler(0, 0, 90);
-        rotationsByElements[ElementsManager.Elements.WATER] = Quaternion.Euler(0, 0, -27);
-        rotationsByElements[ElementsManager.Elements.GRASS] = Quaternion.Euler(0, 0, 200);
+        rotationsByElements[ElementsManager.Elements.WATER] = Quaternion.Euler(0, 0, -30);
+        rotationsByElements[ElementsManager.Elements.GRASS] = Quaternion.Euler(0, 0, -150);
         //rotationsByElements[ElementsManager.Elements.NORMAL] = Quaternion.Euler(0, 0, 90);
     }
 
