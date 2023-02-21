@@ -5,6 +5,7 @@ using UnityEngine;
 public class RadialRotation : MonoBehaviour
 {
     [SerializeField] internal ElementsManager.Elements UIRadialCurrentItem;
+    [SerializeField] private Transform insideUIRadial;
     Dictionary<ElementsManager.Elements, Quaternion> rotationsByElements;
     private RectTransform rect;
     private PlayerAttack playerAttack;
@@ -35,6 +36,7 @@ public class RadialRotation : MonoBehaviour
 
     void SetRadialRotation()
     {
-        rect.localRotation = Quaternion.Lerp(rect.localRotation, rotationsByElements[UIRadialCurrentItem], Time.deltaTime * LERP_SPEED);
+        rect.localRotation = Quaternion.RotateTowards(rect.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED/2);
+        insideUIRadial.localRotation = Quaternion.RotateTowards(insideUIRadial.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED / 2);
     }
 }
