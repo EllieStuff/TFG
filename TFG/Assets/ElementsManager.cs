@@ -27,6 +27,7 @@ public class ElementsManager : MonoBehaviour
     [SerializeField] Image nearSliderElementIcon;
     [SerializeField] Sprite[] icons;
     [SerializeField] ParticleSystem effectTypeParticles;
+    [SerializeField] ParticleSystem effectTypeParticles_UI;
 
     public ParticleSystem changeElementBlue;
     public ParticleSystem changeElementGreen;
@@ -165,6 +166,7 @@ public class ElementsManager : MonoBehaviour
     {
         changingElement = true;
         effectTypeParticles.Stop();
+        effectTypeParticles_UI.Stop();
         attackManager.canAttack /*= moveManager.canMove*/ = false;
         attackManager.SetAttackTimer(attackManager.attackDelay);
         //moveManager.targetMousePos = Vector3.zero;
@@ -210,6 +212,10 @@ public class ElementsManager : MonoBehaviour
         var main = effectTypeParticles.main;
         main.startColor = elementsData[_element].colorParticles;
         effectTypeParticles.Play();
+
+        var main2 = effectTypeParticles_UI.main;
+        main2.startColor = elementsData[_element].colorParticles;
+        effectTypeParticles_UI.Play();
     }
 
     IEnumerator LerpImageAlpha(Image _image, float _initAlpha, float _targetAlpha, float _lerpTime = 0.5f)
