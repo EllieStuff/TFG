@@ -19,12 +19,20 @@ public class AbilityButton : MonoBehaviour
     PassiveSkill_Base.SkillType cardSkill;
 
     bool isMouseOver;
+    bool sizePlaced;
 
 
     private void OnEnable()
     {
         imageTransform = GetComponent<RectTransform>();
-        originalSize = imageTransform.sizeDelta;
+
+        if(!sizePlaced)
+        {
+            originalSize = imageTransform.sizeDelta;
+            sizePlaced = true;
+        }
+
+        imageTransform.sizeDelta = Vector3.zero;
         biggerSize = originalSize * 2;
         playerSkills = GameObject.FindWithTag("Player").GetComponent<PassiveSkills_Manager>();
         uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
