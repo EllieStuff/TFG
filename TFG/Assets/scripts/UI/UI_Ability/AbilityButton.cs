@@ -129,8 +129,11 @@ public class AbilityButton : MonoBehaviour
 
     private void OnMouseExit()
     {
-        uiTextDescription.text = "";
-        isMouseOver = false;
+        if (!pushedButton)
+        {
+            uiTextDescription.text = "";
+            isMouseOver = false;
+        }
     }
 
     private void OnMouseDown()
