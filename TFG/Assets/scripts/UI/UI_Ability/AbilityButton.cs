@@ -20,11 +20,9 @@ public class AbilityButton : MonoBehaviour
 
     bool isMouseOver;
 
-    bool abilityOk;
 
     private void OnEnable()
     {
-        abilityOk = false;
         imageTransform = GetComponent<RectTransform>();
         originalSize = imageTransform.sizeDelta;
         biggerSize = originalSize * 2;
@@ -57,8 +55,6 @@ public class AbilityButton : MonoBehaviour
                 InitializeAbility();
             }
         }
-
-        abilityOk = true;
     }
 
     PassiveSkill_Base.SkillType InitializeCardSkill() 
@@ -68,8 +64,7 @@ public class AbilityButton : MonoBehaviour
 
     private void Update()
     {
-        if(!abilityOk)
-            CheckRepeatedAbility();
+        CheckRepeatedAbility();
 
         if (!isMouseOver)
             imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, originalSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
