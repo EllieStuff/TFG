@@ -1,16 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+class SkillClassList
+{
+    public PassiveSkill_Base.SkillType skill;
+    public Sprite image;
+}
+
 public class PassiveSkills_Manager : MonoBehaviour
 {
     List<PassiveSkill_Base> skills = new List<PassiveSkill_Base>();
+    [SerializeField] internal SkillClassList[] skillImages;
 
     // Start is called before the first frame update
     void Start()
     {
         //StartCoroutine(AddTrialSkillsCoroutine());
     }
+
     //IEnumerator AddTrialSkillsCoroutine()
     //{
     //    yield return new WaitForSeconds(1f);
@@ -21,7 +31,16 @@ public class PassiveSkills_Manager : MonoBehaviour
     //    AddSkill(new IncreaseProjectileAmount_PassiveSkill());
     //}
 
-    
+    public Sprite SearchSkillImage(PassiveSkill_Base.SkillType _skill)
+    {
+        foreach(SkillClassList skill in skillImages)
+        {
+            if (skill.skill.Equals(_skill))
+                return skill.image;
+        }
+
+        return null;
+    }
 
     // Update is called once per frame
     void Update()

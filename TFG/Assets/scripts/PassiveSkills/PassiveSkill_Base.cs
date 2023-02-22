@@ -17,7 +17,6 @@ public class PassiveSkill_Base
 
     internal int Level { get { return level; } }
 
-
     public virtual void Init(Transform _playerRef)
     {
         playerRef = _playerRef;

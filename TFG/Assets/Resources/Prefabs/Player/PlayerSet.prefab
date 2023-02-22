@@ -16241,6 +16241,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d700d0f3721e344a12583c51f0e102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillImages:
+  - skill: 0
+    image: {fileID: 21300000, guid: 2ef66f83c4e01a24ab3a304714d6b51d, type: 3}
+  - skill: 1
+    image: {fileID: 21300000, guid: df9702ee7e0fee242b71203d2e2aa0da, type: 3}
+  - skill: 2
+    image: {fileID: 21300000, guid: c9086f17d35853d4dba5c319314e4380, type: 3}
+  - skill: 3
+    image: {fileID: 21300000, guid: 993e7b85094c3b14a9c755f5a59950ba, type: 3}
 --- !u!114 &4898115512442653087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16253,6 +16262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b95598b66643e44a625c9edd476718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowElementChangeOneStarted: 0
   changeElementSlider: {fileID: 4898115511699608142}
   nearSliderElementIcon: {fileID: 4898115510920603785}
   icons:
