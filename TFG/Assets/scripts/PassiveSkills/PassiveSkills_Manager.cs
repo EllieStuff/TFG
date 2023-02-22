@@ -21,7 +21,7 @@ public class PassiveSkills_Manager : MonoBehaviour
     //    AddSkill(new IncreaseProjectileAmount_PassiveSkill());
     //}
 
-
+    
 
     // Update is called once per frame
     void Update()

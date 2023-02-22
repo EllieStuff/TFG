@@ -9,16 +9,27 @@ public class AbilityButton : MonoBehaviour
     Vector2 biggerSize;
     float SIZE_RECT_LERP_SPEED = 5;
     private PassiveSkills_Manager playerSkills;
-    internal PassiveSkill_Base skill;
+    PassiveSkill_Base.SkillType cardSkill;
 
     bool isMouseOver;
 
     private void Start()
     {
+        InitializeAbility();
+    }
+
+    void InitializeAbility()
+    {
         imageTransform = GetComponent<RectTransform>();
         originalSize = imageTransform.sizeDelta;
         biggerSize = originalSize * 2;
         playerSkills = GameObject.FindWithTag("Player").GetComponent<PassiveSkills_Manager>();
+        cardSkill = InitializeCardSkill();
+    }
+
+    PassiveSkill_Base.SkillType InitializeCardSkill() 
+    {
+        return (PassiveSkill_Base.SkillType) Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
     }
 
     private void Update()
@@ -45,6 +56,7 @@ public class AbilityButton : MonoBehaviour
 
     private void AddAbility()
     {
+        PassiveSkill_Base skill = PassiveSkills_Manager.GetSkillByType(cardSkill);
         playerSkills.AddSkill(skill);
     }
 
