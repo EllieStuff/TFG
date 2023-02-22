@@ -21,9 +21,23 @@ public class AbilityButton : MonoBehaviour
     bool isMouseOver;
     bool sizePlaced;
 
+    FadeInFadeOut_UI UIFade;
+
+    const float DISABLE_TIMER = 2;
+
+    bool pushedButton;
+
+    private void Start()
+    {
+        UIFade = transform.parent.parent.GetComponent<FadeInFadeOut_UI>();
+    }
 
     private void OnEnable()
     {
+        isMouseOver = false;
+        pushedButton = false;
+
+
         imageTransform = GetComponent<RectTransform>();
 
         if(!sizePlaced)
@@ -38,6 +52,8 @@ public class AbilityButton : MonoBehaviour
         uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         InitializeAbility();
+        
+        EnableOrDisableCardView(transform, true);
     }
 
     void InitializeAbility()
@@ -60,7 +76,22 @@ public class AbilityButton : MonoBehaviour
             if (!child.Equals(transform))
             {
                 if(child.GetComponent<AbilityButton>().cardSkill.Equals(cardSkill))
-                InitializeAbility();
+                    InitializeAbility();
+            }
+        }
+    }
+
+    void DisableOtherButtons()
+    {
+        Transform parent = transform.parent;
+        int childCount = parent.childCount;
+
+        for (int index = 0; index < childCount; index++)
+        {
+            Transform child = parent.GetChild(index);
+            if (!child.Equals(transform))
+            {
+                EnableOrDisableCardView(child, false);
             }
         }
     }
@@ -68,6 +99,17 @@ public class AbilityButton : MonoBehaviour
     PassiveSkill_Base.SkillType InitializeCardSkill() 
     {
         return (PassiveSkill_Base.SkillType) Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+    }
+
+    void EnableOrDisableCardView(Transform card, bool enableOrDisable)
+    {
+        if(enableOrDisable)
+            card.GetComponent<FadeInFadeOut_UI>().EnableFadeIn();
+        else
+            card.GetComponent<FadeInFadeOut_UI>().EnableFadeOut();
+
+        card.GetComponent<BoxCollider>().enabled = enableOrDisable;
+        card.GetChild(0).gameObject.SetActive(enableOrDisable);
     }
 
     private void Update()
@@ -98,7 +140,21 @@ public class AbilityButton : MonoBehaviour
 
     private void AddAbility()
     {
-        playerSkills.AddSkill(skill);
+        if(!pushedButton)
+        {
+            playerSkills.AddSkill(skill);
+            StartCoroutine(DisableUI());
+            pushedButton = true;
+        }
+    }
+
+    IEnumerator DisableUI()
+    {
+        DisableOtherButtons();
+        UIFade.EnableFadeOut();
+        yield return new WaitForSeconds(DISABLE_TIMER);
+        UIFade.gameObject.SetActive(false);
+        yield return 0;
     }
 
 }

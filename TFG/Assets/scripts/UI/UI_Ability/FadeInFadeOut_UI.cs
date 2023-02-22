@@ -6,15 +6,25 @@ using UnityEngine.UI;
 public class FadeInFadeOut_UI : MonoBehaviour
 {
     [SerializeField] private Image image;
-    [SerializeField] internal bool fadeInOrFadeOut;
+    private bool fadeInOrFadeOut;
 
     private Color fadeInColor;
     private Color fadeOutColor;
-    const float COLOR_LERP_SPEED = 0.7f;
+    [SerializeField] float COLOR_LERP_SPEED = 0.7f;
 
     private void Awake()
     {
         fadeInColor = image.color;
+    }
+
+    public void EnableFadeOut()
+    {
+        fadeInOrFadeOut = false;
+    }
+
+    public void EnableFadeIn()
+    {
+        fadeInOrFadeOut = true;
     }
 
     private void OnEnable()
