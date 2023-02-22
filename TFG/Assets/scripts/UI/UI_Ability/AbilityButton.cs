@@ -23,7 +23,7 @@ public class AbilityButton : MonoBehaviour
 
     FadeInFadeOut_UI UIFade;
 
-    const float DISABLE_TIMER = 2;
+    const float DISABLE_TIMER = 3;
 
     bool pushedButton;
 
