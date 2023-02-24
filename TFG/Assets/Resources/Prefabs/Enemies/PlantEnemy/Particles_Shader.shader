@@ -1,4 +1,4 @@
-﻿Shader "Custom/RenderInFront_LineShader"
+Shader "Custom/Particles_Shader"
 {
 	Properties
 	{
@@ -13,7 +13,6 @@
 		{
 			Tags { "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" "Queue" = "Transparent+2000"}
 			Blend SrcAlpha OneMinusSrcAlpha
-			ZTest Off
 			ZWrite Off
 
 			Pass
