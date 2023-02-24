@@ -68,7 +68,7 @@ public class RoomEnemyManager : MonoBehaviour
             }
 
             float newDist = Vector3.Distance(enemies[i].transform.position, _playerTransform.position);
-            if(newDist < closerDist && !WallsCheck(enemies[i].transform))
+            if(newDist < closerDist && PlayerCheck(enemies[i].transform))
             {
                 closerEnemy = enemies[i].transform;
                 closerDist = newDist;
@@ -79,14 +79,14 @@ public class RoomEnemyManager : MonoBehaviour
         return closerEnemy;
     }
 
-    private bool WallsCheck(Transform _enemyTransform)
+    private bool PlayerCheck(Transform _enemyTransform)
     {
         RaycastHit hit;
         Ray ray = new Ray(_enemyTransform.position, _enemyTransform.TransformDirection(Vector3.forward * RAYCAST_DISTANCE));
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.tag.Equals("Wall"))
+            if (hit.collider.tag.Equals("Player"))
                 return true;
         }
 
