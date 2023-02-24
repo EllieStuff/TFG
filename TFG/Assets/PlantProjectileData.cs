@@ -94,7 +94,17 @@ public class PlantProjectileData : ProjectileData
 
     protected override void OnTriggerEnter_Call(Collider other)
     {
-        base.OnTriggerEnter_Call(other);
+        if (!other.CompareTag(originTag) && (other.CompareTag("Enemy") || other.CompareTag("Player")))
+        {
+            if (pierceAmount > 0)
+            {
+                pierceAmount--;
+                return;
+            }
+            DestroyObject(0.1f);
+        }
+
+        //base.OnTriggerEnter_Call(other);
     }
 
 }
