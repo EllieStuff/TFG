@@ -11,7 +11,8 @@ public class DistanceEnemy : BaseEnemyScript
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Light pointLight;
+    [SerializeField] List<Light> pointLights;
+    [SerializeField] Transform shootPoint;
 
     enum AttackType { NORMAL_THROW, CIRCLE_ATTACK, FOUR_PROJECTILES, THREE_PROJECTILES }
 
@@ -27,8 +28,18 @@ public class DistanceEnemy : BaseEnemyScript
     internal override void Update_Call()
     {
         base.Update_Call();
-        if (deadNPC && pointLight != null && pointLight.intensity > 0)
-            pointLight.intensity -= Time.deltaTime;
+        if (deadNPC && pointLights.Count > 0)
+        {
+            for (int i = 0; i < pointLights.Count; i++)
+            {
+                pointLights[i].intensity -= Time.deltaTime;
+                if(pointLights[i].intensity <= 0f)
+                {
+                    pointLights.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
     }
 
     internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
@@ -80,13 +91,12 @@ public class DistanceEnemy : BaseEnemyScript
         //place shoot animation here
 
         yield return new WaitForSeconds(attackAnimationTime);
-        //RaycastHit hit;
-        //if (Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, 5f))
-        //{
-        //    if (!hit.transform.CompareTag("Wall"))
-        //        AttackStateMachine(attackStyle);
-        //}
-        AttackStateMachine(attackStyle);
+        RaycastHit hit;
+        if (Physics.Raycast(shootPoint.position, (player.position - shootPoint.position).normalized, out hit))
+        {
+            if (!hit.transform.CompareTag("Wall"))
+                AttackStateMachine(attackStyle);
+        }
     }
 
     void AttackStateMachine(AttackType type)
@@ -153,7 +163,7 @@ public class DistanceEnemy : BaseEnemyScript
                 }
                 break;
             case AttackType.NORMAL_THROW:
-                projectile = Instantiate(projectilePrefab, transform).GetComponent<ProjectileData>();
+                projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<ProjectileData>();
                 projectile.Init(transform);
                 projectile.transform.SetParent(null);
                 //projectile.moveDir = (player.position - transform.position).normalized;

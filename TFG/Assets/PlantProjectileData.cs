@@ -28,7 +28,7 @@ public class PlantProjectileData : ProjectileData
         {
             initialPos = _origin.position;
             targetPosLow = player.position;
-            if (CheckForWalls()) Destroy(gameObject);
+            //if (CheckForWalls()) Destroy(gameObject);
             highestPosLow = CalculateHighestPoint(initialPos, targetPosLow, maxHeight);
             posLerper = highestPosHigh = highestPosLow + new Vector3(0f, highestPosLow.y / 2f, 0f);
             targetPosHigh = targetPosLow + new Vector3(0f, highestPosLow.y / 2f, 0f);
@@ -68,8 +68,11 @@ public class PlantProjectileData : ProjectileData
                 float lerpValue = timer / lerpTime;
                 posLerper = Vector3.Lerp(targetPosHigh, targetPosLow, lerpValue);
                 nextPos = Vector3.Lerp(highestPosLow, posLerper, lerpValue);
-                if (timer > lerpTime) 
+                if (timer > lerpTime)
+                {
                     projectileBehaviour = false;
+                    DestroyObject(0.4f);
+                }
             }
             moveDir = (nextPos - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
@@ -81,10 +84,10 @@ public class PlantProjectileData : ProjectileData
             //transform.rotation = Quaternion.LookRotation(rb.velocity, transform.up);
             base.Update_Call();
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 5f))
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit))
             {
                 if (hit.transform.CompareTag("floor")) 
-                    DestroyObject(0.3f);
+                    DestroyObject(0.1f);
             }
         }
 
@@ -93,15 +96,15 @@ public class PlantProjectileData : ProjectileData
     }
 
 
-    bool CheckForWalls()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, (targetPosLow - transform.position).normalized, out hit, 5f))
-        {
-            return hit.transform.CompareTag("Wall");
-        }
-        return false;
-    }
+    //bool CheckForWalls()
+    //{
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(transform.position, (targetPosLow - transform.position).normalized, out hit, 5f))
+    //    {
+    //        return hit.transform.CompareTag("Wall");
+    //    }
+    //    return false;
+    //}
 
 
     public override void DestroyObject(float _timer = -1)
@@ -116,8 +119,10 @@ public class PlantProjectileData : ProjectileData
         {
             transform.GetComponent<MeshRenderer>().material = projectileObstacleMat;
             trail.material = trailObstacleMat;
+            particles.trailMaterial = particlesObstacleMat;
             particles.material = particlesObstacleMat;
         }
+
         base.OnTriggerEnter_Call(other);
     }
 
