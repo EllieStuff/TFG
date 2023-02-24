@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a96f652dead598643b543f4d3df988c1, type: 2}
+  - {fileID: 2100000, guid: 9413df7e838d4e0429a7beaacb4e46f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,7 +104,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &8320203354182994962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,8 +118,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  maxHeight: 1
-  testing: 0
+  maxHeight: 2
+  trail: {fileID: 925711132967203294}
+  particles: {fileID: 102432908442048462}
+  projectileObstacleMat: {fileID: 2100000, guid: 7e5019a1f6d358141a21cb63e29a954e,
+    type: 2}
+  trailObstacleMat: {fileID: 2100000, guid: e58db6eec541dc948b64e8f90ce058fd, type: 2}
+  particlesObstacleMat: {fileID: 2100000, guid: 65a62ea9d53dd0f4cb45d55a5d87eec5,
+    type: 2}
 --- !u!114 &-1873489517449642779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +324,9 @@ MonoBehaviour:
   maxTime: 0
   removeParent: 1
   followPlayer: 0
+  permanent: 0
+  playerParticle: 0
+  playerRB: {fileID: 0}
 --- !u!1 &4701333574560414249
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +432,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 1}
+      key0: {r: 1, g: 0, b: 0, a: 0.41568628}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -484,8 +493,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4853428272548294715}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -2.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -514,7 +523,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 0}
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 597e9841a39b04346be2dcf4e43614df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -817,8 +826,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.15
-      minScalar: 0.05
+      scalar: 0.005
+      minScalar: 0.001
       maxCurve:
         serializedVersion: 2
         m_Curve:
