@@ -14,6 +14,7 @@ public class ProjectileData : MonoBehaviour
     int bounceAmount = 0;
     protected bool affectedByObstacles = true;
     protected bool destroying = false;
+    protected float destroyTimer = -1f;
 
     public virtual void Init(Transform _origin)
     {
@@ -40,14 +41,26 @@ public class ProjectileData : MonoBehaviour
 
     public virtual void DestroyObject(float _timer = -1f)
     {
-        if (destroying) return;
+        if (destroying && _timer >= destroyTimer) return;
+        else if (destroying && _timer < destroyTimer) { destroyTimer = _timer; return; }
 
         if (_timer > 0)
         {
             destroying = true;
-            Destroy(gameObject, _timer);
+            StartCoroutine(DestroyCoroutine(gameObject, _timer));
         }
         else Destroy(gameObject);
+
+    }
+    IEnumerator DestroyCoroutine(GameObject _gameObject, float _destroyTime)
+    {
+        destroyTimer = _destroyTime;
+        while(destroyTimer > 0f)
+        {
+            yield return new WaitForEndOfFrame();
+            destroyTimer -= Time.deltaTime;
+        }
+        Destroy(gameObject);
     }
 
 
