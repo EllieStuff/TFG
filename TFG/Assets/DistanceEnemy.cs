@@ -80,6 +80,12 @@ public class DistanceEnemy : BaseEnemyScript
         //place shoot animation here
 
         yield return new WaitForSeconds(attackAnimationTime);
+        //RaycastHit hit;
+        //if (Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, 5f))
+        //{
+        //    if (!hit.transform.CompareTag("Wall"))
+        //        AttackStateMachine(attackStyle);
+        //}
         AttackStateMachine(attackStyle);
     }
 

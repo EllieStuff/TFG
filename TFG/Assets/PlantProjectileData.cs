@@ -7,6 +7,9 @@ public class PlantProjectileData : ProjectileData
     const float DISTANCE_SPEED_RELATION = 0.1f;
 
     [SerializeField] float maxHeight = 5f;
+    [SerializeField] TrailRenderer trail;
+    [SerializeField] ParticleSystemRenderer particles;
+    [SerializeField] Material projectileObstacleMat, trailObstacleMat, particlesObstacleMat;
     //[SerializeField] bool testing = false;
 
     Vector3 initialPos, posLerper;
@@ -18,12 +21,14 @@ public class PlantProjectileData : ProjectileData
     public override void Init(Transform _origin)
     {
         base.Init(_origin);
+        affectedByObstacles = false;
         dmgData.attackElement = _origin.GetComponent<LifeSystem>().entityElement;
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
         if (player != null)
         {
             initialPos = _origin.position;
             targetPosLow = player.position;
+            if (CheckForWalls()) Destroy(gameObject);
             highestPosLow = CalculateHighestPoint(initialPos, targetPosLow, maxHeight);
             posLerper = highestPosHigh = highestPosLow + new Vector3(0f, highestPosLow.y / 2f, 0f);
             targetPosHigh = targetPosLow + new Vector3(0f, highestPosLow.y / 2f, 0f);
@@ -83,6 +88,19 @@ public class PlantProjectileData : ProjectileData
             }
         }
 
+        //if (CheckForWalls()) Destroy(gameObject);
+
+    }
+
+
+    bool CheckForWalls()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (targetPosLow - transform.position).normalized, out hit, 5f))
+        {
+            return hit.transform.CompareTag("Wall");
+        }
+        return false;
     }
 
 
@@ -94,6 +112,12 @@ public class PlantProjectileData : ProjectileData
 
     protected override void OnTriggerEnter_Call(Collider other)
     {
+        if (other.CompareTag("Obstacle"))
+        {
+            transform.GetComponent<MeshRenderer>().material = projectileObstacleMat;
+            trail.material = trailObstacleMat;
+            particles.material = particlesObstacleMat;
+        }
         base.OnTriggerEnter_Call(other);
     }
 

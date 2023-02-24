@@ -12,6 +12,7 @@ public class ProjectileData : MonoBehaviour
     protected string originTag = "";
     int pierceAmount = 0;
     int bounceAmount = 0;
+    protected bool affectedByObstacles = true;
     protected bool destroying = false;
 
     public virtual void Init(Transform _origin)
@@ -78,14 +79,14 @@ public class ProjectileData : MonoBehaviour
 
         if (other.CompareTag("Wall"))
         {
-            if (bounceAmount > 0)
-            {
-                bounceAmount--;
-                //DoBound
-                return;
-            }
+            DestroyObject();
+        }
+
+        if (affectedByObstacles && other.CompareTag("Obstacle"))
+        {
             DestroyObject(0.1f);
         }
+
     }
 
 }
