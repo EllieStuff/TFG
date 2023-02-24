@@ -28,6 +28,8 @@ public class WalkMark : MonoBehaviour
 
         if(!transition && Input.GetKey(KeyCode.Mouse1))
         {
+            CheckCollidingWall(true);
+
             playerScript.targetMousePos = worldPosition;
 
             if(walkMark.activeSelf)
@@ -41,10 +43,27 @@ public class WalkMark : MonoBehaviour
         {
             walkMark.transform.position = worldPosition;
             walkMark.SetActive(true);
+
+            CheckCollidingWall(true);
         }
 
-        if(walkMark.activeSelf && Vector3.Distance(playerScript.transform.position, walkMark.transform.position) <= DISTANCE_TO_DISABLE_MARK)
+        CheckCollidingWall(false);
+
+        if (walkMark.activeSelf && Vector3.Distance(playerScript.transform.position, walkMark.transform.position) <= DISTANCE_TO_DISABLE_MARK)
             walkMark.SetActive(false);
+    }
+
+    void CheckCollidingWall(bool disableWallCheck)
+    {
+        if (playerScript.isCollidingWall)
+        {
+            worldPosition = playerScript.transform.position;
+            playerScript.targetMousePos = worldPosition;
+            walkMark.transform.position = worldPosition;
+
+            if(disableWallCheck)
+                playerScript.isCollidingWall = false;
+        }
     }
 
     void SetMarkPositionWithRaycast()

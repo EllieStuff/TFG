@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     internal Vector3 attackDir;
     internal Vector2 mouseLookVec;
     internal bool cardEffect;
+    internal bool isCollidingWall;
     LifeSystem lifeStatus;
     PlayerSword playerSword;
     PlayerDodge playerDodge;
@@ -273,5 +274,11 @@ public class PlayerMovement : MonoBehaviour
             rb.useGravity = false;
             rb.constraints = RigidbodyConstraints.FreezePositionY;
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (!collision.gameObject.tag.Equals("floor"))
+            isCollidingWall = true;
     }
 }
