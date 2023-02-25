@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Ragloton : BaseEnemyScript
+public class MeleeEnemy : BaseEnemyScript
 {
-    [Header("Ragloton")]
+    [Header("MeleeEnemy")]
     //[SerializeField] Transform shieldPivotRef; 
     //[SerializeField] Transform idleShieldPoint, attackingShieldPoint;
     //[SerializeField] internal bool hasShield = true;

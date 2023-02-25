@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseEnemyScript : MonoBehaviour
 {
-    public enum States { IDLE, MOVE_TO_TARGET, ATTACK, DAMAGE }
+    public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, DAMAGE }
     public enum EnemyType { PLANT, BAT, RAT, GHOST }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
@@ -21,9 +21,13 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
     [SerializeField] protected bool movesToTarget = true;
+    [SerializeField] float idleWait = 1f;
+    [SerializeField] int numOfRndMoves = 0;
 
     internal ZoneScript zoneSystem;
     internal float damageTimer = 0;
+    float idleWaitTimer = 0f;
+    int rndMovesDone = 0;
     PlayerSword playerSword;
     LifeSystem playerLife;
     LifeSystem enemyLife;
@@ -123,11 +127,18 @@ public class BaseEnemyScript : MonoBehaviour
                 IdleUpdate();
 
                 break;
+
+            case States.RANDOM_MOVEMENT:
+                RandomMovementUpdate();
+
+                break;
+
             case States.MOVE_TO_TARGET:
                 //approach to player
                 MoveToTargetUpdate();
 
                 break;
+
             case States.ATTACK:
                 //attack
                 AttackUpdate();
@@ -196,9 +207,35 @@ public class BaseEnemyScript : MonoBehaviour
         }
         else
         {
-            if (canAttack && Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
-                ChangeState(States.ATTACK);
+            float distToPlayer = Vector3.Distance(transform.position, player.position);
+            if (canAttack && distToPlayer <= enemyStartAttackDistance)
+            {
+                RaycastHit hit;
+                bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer);
+                if (hitCollided && hit.transform.CompareTag("Player"))
+                {
+                    rndMovesDone = 0;
+                    ChangeState(States.ATTACK);
+                }
+                else
+                {
+                    if (rndMovesDone < numOfRndMoves)
+                    {
+                        rndMovesDone++;
+                        ChangeState(States.RANDOM_MOVEMENT);
+                    }
+                    else
+                    {
+                        rndMovesDone = 0;
+                        ChangeState(States.ATTACK);
+                    }
+                }
+            }
         }
+    }
+    internal virtual void RandomMovementUpdate()
+    {
+
     }
     internal virtual void MoveToTargetUpdate()
     {
@@ -235,10 +272,12 @@ public class BaseEnemyScript : MonoBehaviour
     }
     
     internal virtual void IdleStart() { StopRB(5.0f); }
+    internal virtual void RandomMovementStart() { }
     internal virtual void MoveToTargetStart() { }
     internal virtual void AttackStart() { }
     internal virtual void DamageStart() { }
     internal virtual void IdleExit() { }
+    internal virtual void RandomMovementExit() { }
     internal virtual void MoveToTargetExit() { }
     internal virtual void AttackExit() { }
     internal virtual void DamageExit() { }
@@ -249,6 +288,9 @@ public class BaseEnemyScript : MonoBehaviour
         {
             case States.IDLE:
                 IdleExit();
+                break;
+            case States.RANDOM_MOVEMENT:
+                RandomMovementExit();
                 break;
             case States.MOVE_TO_TARGET:
                 MoveToTargetExit();
@@ -271,6 +313,9 @@ public class BaseEnemyScript : MonoBehaviour
         {
             case States.IDLE:
                 IdleStart();
+                break;
+            case States.RANDOM_MOVEMENT:
+                RandomMovementStart();
                 break;
             case States.MOVE_TO_TARGET:
                 MoveToTargetStart();

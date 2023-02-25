@@ -46519,7 +46519,7 @@ PrefabInstance:
     - target: {fileID: 4898115510644903580, guid: 12ebd5e35ca9733418a085018bfc3c30,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -38.75
+      value: -46.03
       objectReference: {fileID: 0}
     - target: {fileID: 4898115510644903580, guid: 12ebd5e35ca9733418a085018bfc3c30,
         type: 3}
@@ -54218,6 +54218,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1902649229}
     m_Modifications:
+    - target: {fileID: 2147360235676113072, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: maxLife
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147360235676113072, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: currLife
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5839540647387558282, guid: 89b69b05a33182f47bd5fd8623e6abb9,
         type: 3}
       propertyPath: m_Name
@@ -54287,6 +54297,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081063027000900506, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: attackForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081063027000900506, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: baseRotSpeed
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081063027000900506, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: baseMoveSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081063027000900506, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: attackDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081063027000900506, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: playerDetectionDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081063027000900506, guid: 89b69b05a33182f47bd5fd8623e6abb9,
+        type: 3}
+      propertyPath: playerStopDetectionDistance
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89b69b05a33182f47bd5fd8623e6abb9, type: 3}
