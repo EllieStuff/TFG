@@ -34394,9 +34394,13 @@ MonoBehaviour:
   enemyStopAttackDistance: 26
   isAttacking: 0
   baseMoveSpeed: 10
+  attacksTargetWOSeeingIt: 1
+  movesToTargetWOSeeingIt: 0
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
+  idleWait: {x: 0.6, y: 2}
+  numOfRndMoves: 0
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 6970031720182105785}
   transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}

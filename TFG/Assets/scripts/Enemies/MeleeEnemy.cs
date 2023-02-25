@@ -8,7 +8,8 @@ public class MeleeEnemy : BaseEnemyScript
     //[SerializeField] Transform shieldPivotRef; 
     //[SerializeField] Transform idleShieldPoint, attackingShieldPoint;
     //[SerializeField] internal bool hasShield = true;
-    [SerializeField] float attackForce = 10.0f, attackDuration = 1.0f;
+    [SerializeField] float attackForce = 10.0f;
+    [SerializeField] float attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
     [SerializeField] Animator enemyAnimator;
     

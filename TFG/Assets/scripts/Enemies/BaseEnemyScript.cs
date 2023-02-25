@@ -9,7 +9,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     const float PLAYER_HIT_DISTANCE_SWORD = 3;
-    const float THRESHOLD = 0.3f;
+    const float THRESHOLD = 1f;
 
 
     [Header("BaseEnemy")]
@@ -24,7 +24,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
     [SerializeField] protected bool movesToTarget = true;
-    [SerializeField] float idleWait = 1f;
+    [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
     [SerializeField] int numOfRndMoves = 0;
 
     internal ZoneScript zoneSystem;
@@ -32,7 +32,6 @@ public class BaseEnemyScript : MonoBehaviour
     float idleWaitTimer = 0f;
     int rndMovesDone = 0;
     Vector3 rndTarget;
-    bool canContinueRndMove = true;
     PlayerSword playerSword;
     LifeSystem playerLife;
     LifeSystem enemyLife;
@@ -54,6 +53,9 @@ public class BaseEnemyScript : MonoBehaviour
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true, canAttack = true;
     internal Quaternion targetRot;
+
+    bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
+    bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
 
     //PLACEHOLDER
     [SerializeField] SkinnedMeshRenderer enemyMesh;
@@ -102,7 +104,9 @@ public class BaseEnemyScript : MonoBehaviour
         {
             if (!deadNPC && moveDir != Vector3.zero)
             {
-                targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
+                Vector3 rotDir = new Vector3(rb.velocity.x, 0f, rb.velocity.z).normalized;
+                targetRot = Quaternion.LookRotation(rotDir, Vector3.up);
+                //targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
             else if (!deadNPC)
@@ -205,6 +209,10 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void IdleUpdate()
     {
+        idleWaitTimer -= Time.deltaTime;
+        if (idleWaitTimer > 0) return;
+        else idleWaitTimer = Random.Range(idleWait.x, idleWait.y);
+
         if (movesToTarget)
         {
             float distToPlayer = Vector3.Distance(transform.position, player.position);
@@ -218,10 +226,14 @@ public class BaseEnemyScript : MonoBehaviour
                     bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer);
                     if (hitCollided && hit.transform.CompareTag("Player"))
                         ChangeState(States.MOVE_TO_TARGET);
-                    else if (rndMovesDone < numOfRndMoves)
+                    else if (MakesRandomMoves && HaveRandomMovesAvailable)
                         ChangeState(States.RANDOM_MOVEMENT);
                 }
             }
+        }
+        else if (MakesRandomMoves && HaveRandomMovesAvailable)
+        {
+            ChangeState(States.RANDOM_MOVEMENT);
         }
         else
         {
@@ -241,15 +253,15 @@ public class BaseEnemyScript : MonoBehaviour
                 }
             }
         }
+
     }
     internal virtual void RandomMovementUpdate()
     {
-        Vector3 targetMoveDir = (rndTarget - transform.position).normalized;
-        MoveRB(targetMoveDir, ((actualMoveSpeed * 3f) / 4f) * speedMultiplier);
+        moveDir = (rndTarget - transform.position).normalized;
+        MoveRB(moveDir, ((actualMoveSpeed * 3f) / 4f) * speedMultiplier);
 
-        if(Vector3.Distance(transform.position, rndTarget) < THRESHOLD || !canContinueRndMove)
+        if(Vector3.Distance(transform.position, rndTarget) < THRESHOLD)
         {
-            rndMovesDone++;
             ChangeState(States.IDLE);
         }
     }
@@ -295,13 +307,27 @@ public class BaseEnemyScript : MonoBehaviour
         }
     }
     
-    internal virtual void IdleStart() { StopRB(5.0f); }
-    internal virtual void RandomMovementStart() { rndTarget = transform.position + new Vector3(Random.Range(-5, 5), 0f, Random.Range(-5, 5)); canContinueRndMove = true; }
-    internal virtual void MoveToTargetStart() { rndMovesDone = 0; }
-    internal virtual void AttackStart() { rndMovesDone = 0; }
+    internal virtual void IdleStart() { StopRB(5.0f); idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
+    internal virtual void RandomMovementStart()
+    {
+        float rndFactor = 4f;
+        bool collided = true;
+        int currTrials = 0, maxTrials = 10;
+        while (collided && currTrials <= maxTrials)
+        {
+            rndTarget = transform.position + new Vector3(Random.Range(-rndFactor, rndFactor), 0f, Random.Range(-rndFactor, rndFactor));
+            collided = Physics.BoxCast(transform.position, Vector3.one, 
+                (rndTarget - transform.position).normalized, Quaternion.identity, Vector3.Distance(transform.position, rndTarget), 7);
+            currTrials++;
+        }
+        //Debug.Log("Num of Trials: " + currTrials);
+        if (collided) ChangeState(States.IDLE);
+    }
+    internal virtual void MoveToTargetStart() { if (numOfRndMoves > 0) rndMovesDone = 0; }
+    internal virtual void AttackStart() { if (numOfRndMoves > 0) rndMovesDone = 0; }
     internal virtual void DamageStart() { }
     internal virtual void IdleExit() { }
-    internal virtual void RandomMovementExit() { }
+    internal virtual void RandomMovementExit() { if (numOfRndMoves > 0) rndMovesDone++; }
     internal virtual void MoveToTargetExit() { }
     internal virtual void AttackExit() { }
     internal virtual void DamageExit() { }
@@ -425,9 +451,6 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (col.gameObject.CompareTag("floor"))
             rb.useGravity = false;
-
-        if (col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Obstacle"))
-            canContinueRndMove = false;
 
     }
 

@@ -25251,20 +25251,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 2
-  baseRotSpeed: 300
-  playerDetectionDistance: 10
-  playerStopDetectionDistance: 16
+  baseRotSpeed: 500
+  playerDetectionDistance: 30
+  playerStopDetectionDistance: 35
   enemyStartAttackDistance: 5
   enemyStopAttackDistance: 8
   isAttacking: 0
-  baseMoveSpeed: 10
+  baseMoveSpeed: 4
+  attacksTargetWOSeeingIt: 0
+  movesToTargetWOSeeingIt: 0
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 1
+  idleWait: {x: 0.6, y: 2}
+  numOfRndMoves: -1
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 3418573781369093935}
   transparentMat: {fileID: 0}
-  attackForce: 30
+  attackForce: 20
   attackDuration: 1
   atkVelocityLimit: {x: 20, y: 10, z: 20}
   enemyAnimator: {fileID: 3439024113798908091}
