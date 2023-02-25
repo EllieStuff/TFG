@@ -9,6 +9,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     const float PLAYER_HIT_DISTANCE_SWORD = 3;
+    const float THRESHOLD = 0.3f;
 
 
     [Header("BaseEnemy")]
@@ -18,6 +19,8 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float baseMoveSpeed;
+    [SerializeField] bool attacksTargetWOSeeingIt = false;  // WO == Without
+    [SerializeField] bool movesToTargetWOSeeingIt = false;
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
     [SerializeField] protected bool movesToTarget = true;
@@ -28,6 +31,8 @@ public class BaseEnemyScript : MonoBehaviour
     internal float damageTimer = 0;
     float idleWaitTimer = 0f;
     int rndMovesDone = 0;
+    Vector3 rndTarget;
+    bool canContinueRndMove = true;
     PlayerSword playerSword;
     LifeSystem playerLife;
     LifeSystem enemyLife;
@@ -202,31 +207,35 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (movesToTarget)
         {
-            if (canMove && Vector3.Distance(transform.position, player.position) <= playerDetectionDistance)
-                ChangeState(States.MOVE_TO_TARGET);
+            float distToPlayer = Vector3.Distance(transform.position, player.position);
+            if (canMove && distToPlayer <= playerDetectionDistance)
+            {
+                if (movesToTargetWOSeeingIt)
+                    ChangeState(States.MOVE_TO_TARGET);
+                else
+                {
+                    RaycastHit hit;
+                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer);
+                    if (hitCollided && hit.transform.CompareTag("Player"))
+                        ChangeState(States.MOVE_TO_TARGET);
+                    else if (rndMovesDone < numOfRndMoves)
+                        ChangeState(States.RANDOM_MOVEMENT);
+                }
+            }
         }
         else
         {
             float distToPlayer = Vector3.Distance(transform.position, player.position);
             if (canAttack && distToPlayer <= enemyStartAttackDistance)
             {
-                RaycastHit hit;
-                bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer);
-                if (hitCollided && hit.transform.CompareTag("Player"))
-                {
-                    rndMovesDone = 0;
+                if (attacksTargetWOSeeingIt)
                     ChangeState(States.ATTACK);
-                }
                 else
                 {
-                    if (rndMovesDone < numOfRndMoves)
+                    RaycastHit hit;
+                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer);
+                    if (hitCollided && hit.transform.CompareTag("Player"))
                     {
-                        rndMovesDone++;
-                        ChangeState(States.RANDOM_MOVEMENT);
-                    }
-                    else
-                    {
-                        rndMovesDone = 0;
                         ChangeState(States.ATTACK);
                     }
                 }
@@ -235,7 +244,14 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void RandomMovementUpdate()
     {
+        Vector3 targetMoveDir = (rndTarget - transform.position).normalized;
+        MoveRB(targetMoveDir, ((actualMoveSpeed * 3f) / 4f) * speedMultiplier);
 
+        if(Vector3.Distance(transform.position, rndTarget) < THRESHOLD || !canContinueRndMove)
+        {
+            rndMovesDone++;
+            ChangeState(States.IDLE);
+        }
     }
     internal virtual void MoveToTargetUpdate()
     {
@@ -246,6 +262,14 @@ public class BaseEnemyScript : MonoBehaviour
 
         if (Vector3.Distance(transform.position, player.position) > playerStopDetectionDistance)
             ChangeState(States.IDLE);
+
+        if (!movesToTargetWOSeeingIt)
+        {
+            RaycastHit hit;
+            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, playerStopDetectionDistance, 7); // 7 is Enemy layer
+            if (!hitCollided || !hit.transform.CompareTag("Player"))
+                ChangeState(States.IDLE);
+        }
 
         if (canAttack && Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
             ChangeState(States.ATTACK);
@@ -272,9 +296,9 @@ public class BaseEnemyScript : MonoBehaviour
     }
     
     internal virtual void IdleStart() { StopRB(5.0f); }
-    internal virtual void RandomMovementStart() { }
-    internal virtual void MoveToTargetStart() { }
-    internal virtual void AttackStart() { }
+    internal virtual void RandomMovementStart() { rndTarget = transform.position + new Vector3(Random.Range(-5, 5), 0f, Random.Range(-5, 5)); canContinueRndMove = true; }
+    internal virtual void MoveToTargetStart() { rndMovesDone = 0; }
+    internal virtual void AttackStart() { rndMovesDone = 0; }
     internal virtual void DamageStart() { }
     internal virtual void IdleExit() { }
     internal virtual void RandomMovementExit() { }
@@ -401,6 +425,9 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (col.gameObject.CompareTag("floor"))
             rb.useGravity = false;
+
+        if (col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Obstacle"))
+            canContinueRndMove = false;
 
     }
 
