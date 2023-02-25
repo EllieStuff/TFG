@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemy_Ragloton : BaseEnemyScript
 {
     [Header("Ragloton")]
-    [SerializeField] Transform shieldPivotRef; 
-    [SerializeField] Transform idleShieldPoint, attackingShieldPoint;
-    [SerializeField] internal bool hasShield = true;
+    //[SerializeField] Transform shieldPivotRef; 
+    //[SerializeField] Transform idleShieldPoint, attackingShieldPoint;
+    //[SerializeField] internal bool hasShield = true;
     [SerializeField] float attackForce = 10.0f, attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
     [SerializeField] Animator enemyAnimator;
@@ -75,12 +75,11 @@ public class Enemy_Ragloton : BaseEnemyScript
         // Prepares For Attack
         canMove = false;
         StopRB(2.0f);
-        yield return new WaitForSeconds(0.1f);
-        if (hasShield)
-            yield return LerpTransformsPosition(shieldPivotRef, idleShieldPoint, attackingShieldPoint);
-        else
-            yield return new WaitForSeconds(0.3f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
+        //Feedback
+        yield return new WaitForSeconds(0.5f);
+        //Feedback
+        yield return new WaitForSeconds(0.2f);
 
         // Attacks
         canMove = isAttacking = true;
@@ -94,10 +93,8 @@ public class Enemy_Ragloton : BaseEnemyScript
         canMove = isAttacking = false;
         StopRB(4.0f);
         yield return new WaitForSeconds(1.0f);
-        if(hasShield)
-            yield return LerpTransformsPosition(shieldPivotRef, attackingShieldPoint, idleShieldPoint);
-        else
-            yield return new WaitForSeconds(0.3f);
+        //Feedback
+        yield return new WaitForSeconds(0.5f);
         canMove = canRotate = true;
 
         if(state.Equals(States.DAMAGE))
@@ -107,17 +104,19 @@ public class Enemy_Ragloton : BaseEnemyScript
 
         ChangeState(States.IDLE);
     }
-    IEnumerator LerpTransformsPosition(Transform _affectedTrans, Transform _initPointTrans, Transform _targetPointTrans, float _lerpDuration = 0.5f)
-    {
-        float timer = 0, maxTime = _lerpDuration;
-        while (timer < maxTime)
-        {
-            yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
-            _affectedTrans.position = Vector3.Lerp(_initPointTrans.position, _targetPointTrans.position, timer / maxTime);
-        }
-        yield return new WaitForEndOfFrame();
-        _affectedTrans.position = _targetPointTrans.position;
-    }
+
+
+    //IEnumerator LerpTransformsPosition(Transform _affectedTrans, Transform _initPointTrans, Transform _targetPointTrans, float _lerpDuration = 0.5f)
+    //{
+    //    float timer = 0, maxTime = _lerpDuration;
+    //    while (timer < maxTime)
+    //    {
+    //        yield return new WaitForEndOfFrame();
+    //        timer += Time.deltaTime;
+    //        _affectedTrans.position = Vector3.Lerp(_initPointTrans.position, _targetPointTrans.position, timer / maxTime);
+    //    }
+    //    yield return new WaitForEndOfFrame();
+    //    _affectedTrans.position = _targetPointTrans.position;
+    //}
 
 }
