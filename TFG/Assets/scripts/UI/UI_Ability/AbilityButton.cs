@@ -22,6 +22,7 @@ public class AbilityButton : MonoBehaviour
 
     bool isMouseOver;
     bool sizePlaced;
+    bool firstStart;
 
     FadeInFadeOut_UI UIFade;
 
@@ -33,7 +34,6 @@ public class AbilityButton : MonoBehaviour
     private void Start()
     {
         UIFade = transform.parent.parent.GetComponent<FadeInFadeOut_UI>();
-        originalPos = GetComponent<RectTransform>().localPosition;
     }
 
     private void OnEnable()
@@ -43,6 +43,12 @@ public class AbilityButton : MonoBehaviour
 
 
         imageTransform = GetComponent<RectTransform>();
+
+        if(!firstStart)
+        {
+            originalPos = GetComponent<RectTransform>().localPosition;
+            firstStart = true;
+        }
 
         imageTransform.localPosition = originalPos;
 
