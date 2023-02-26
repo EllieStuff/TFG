@@ -25207,6 +25207,7 @@ GameObject:
   - component: {fileID: 5839540647387558287}
   - component: {fileID: 9081063027000900506}
   - component: {fileID: 2147360235676113072}
+  - component: {fileID: 6595447187010483448}
   - component: {fileID: 5839540647387558280}
   - component: {fileID: 5839540647387558283}
   m_Layer: 0
@@ -25257,13 +25258,15 @@ MonoBehaviour:
   enemyStartAttackDistance: 5
   enemyStopAttackDistance: 8
   isAttacking: 0
-  baseMoveSpeed: 4
+  baseMoveSpeed: 6
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 1
+  needsToRest: 1
   idleWait: {x: 0.6, y: 2}
+  restWait: {x: 3, y: 3.5}
   numOfRndMoves: -1
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 3418573781369093935}
@@ -25297,6 +25300,18 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 4394357316648102780, guid: 651c7722bc3deb14b826ab35d2b20ae0,
     type: 3}
   hitPS: {fileID: 8376577848536309841}
+--- !u!114 &6595447187010483448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839540647387558282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f62a80df32a084da7b1766fcd606bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &5839540647387558280
 CapsuleCollider:
   m_ObjectHideFlags: 0

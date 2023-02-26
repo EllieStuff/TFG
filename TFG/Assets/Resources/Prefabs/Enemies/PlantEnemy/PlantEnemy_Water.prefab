@@ -34399,7 +34399,9 @@ MonoBehaviour:
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
-  idleWait: {x: 0.6, y: 2}
+  needsToRest: 0
+  idleWait: {x: 0, y: 0}
+  restWait: {x: 3, y: 3.5}
   numOfRndMoves: 0
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 6970031720182105785}

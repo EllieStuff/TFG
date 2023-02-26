@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BaseEnemyScript : MonoBehaviour
 {
-    public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, DAMAGE }
+    public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, REST, DAMAGE }
     public enum EnemyType { PLANT, BAT, RAT, GHOST }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     const float PLAYER_HIT_DISTANCE_SWORD = 3;
     const float THRESHOLD = 1f;
+    const int ENEMY_LAYER = 7;
 
 
     [Header("BaseEnemy")]
@@ -18,13 +19,15 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
     [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
     [SerializeField] internal bool isAttacking = false;
-    [SerializeField] internal float baseMoveSpeed;
+    [SerializeField] internal float baseMoveSpeed, playerFoundSpeed;
     [SerializeField] bool attacksTargetWOSeeingIt = false;  // WO == Without
     [SerializeField] bool movesToTargetWOSeeingIt = false;
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
     [SerializeField] protected bool movesToTarget = true;
+    [SerializeField] bool needsToRest = false;
     [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
+    [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
     [SerializeField] int numOfRndMoves = 0;
 
     internal ZoneScript zoneSystem;
@@ -32,6 +35,7 @@ public class BaseEnemyScript : MonoBehaviour
     float idleWaitTimer = 0f;
     int rndMovesDone = 0;
     Vector3 rndTarget;
+    float restTimer = 0f;
     PlayerSword playerSword;
     LifeSystem playerLife;
     LifeSystem enemyLife;
@@ -53,6 +57,8 @@ public class BaseEnemyScript : MonoBehaviour
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true, canAttack = true;
     internal Quaternion targetRot;
+    protected bool endAttackFlag = true;
+    protected bool canEnterDamageState = true;
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
@@ -117,14 +123,6 @@ public class BaseEnemyScript : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, auxRot.y, 0);
             }
         }
-
-        //if (SwordTouching && playerSword.isAttacking && state != States.DAMAGE)
-        //{
-        //    enemyLife.Damage(playerWeaponStats.weaponDamage, enemyLife.healthState);
-        //    newMatDef.color = Color.red;
-        //    damageTimer = baseDamageTimer;
-        //    ChangeState(States.DAMAGE);
-        //}
     }
 
     internal virtual void UpdateStateMachine()
@@ -134,30 +132,29 @@ public class BaseEnemyScript : MonoBehaviour
             case States.IDLE:
                 //patrol
                 IdleUpdate();
-
                 break;
 
             case States.RANDOM_MOVEMENT:
                 RandomMovementUpdate();
-
                 break;
 
             case States.MOVE_TO_TARGET:
                 //approach to player
                 MoveToTargetUpdate();
-
                 break;
 
             case States.ATTACK:
                 //attack
                 AttackUpdate();
+                break;
 
+            case States.REST:
+                RestUpdate();
                 break;
 
             case States.DAMAGE:
                 //receive damage
                 DamageUpdate();
-
                 break;
 
             default:
@@ -203,8 +200,10 @@ public class BaseEnemyScript : MonoBehaviour
         }
         else if (damageTimer <= 0)
         {
-            damageTimer = baseDamageTimer;
-            ChangeState(States.IDLE);
+            float distToPlayer = Vector3.Distance(transform.position, player.position);
+            if (distToPlayer <= enemyStartAttackDistance) ChangeState(States.ATTACK);
+            else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
+            else ChangeState(States.IDLE);
         }
     }
     internal virtual void IdleUpdate()
@@ -213,45 +212,61 @@ public class BaseEnemyScript : MonoBehaviour
         if (idleWaitTimer > 0) return;
         else idleWaitTimer = Random.Range(idleWait.x, idleWait.y);
 
+        Debug.Log("Dbg Idle");
+        float distToPlayer = Vector3.Distance(transform.position, player.position);
         if (movesToTarget)
         {
-            float distToPlayer = Vector3.Distance(transform.position, player.position);
+            Debug.Log("Debug 1.1");
             if (canMove && distToPlayer <= playerDetectionDistance)
             {
                 if (movesToTargetWOSeeingIt)
                     ChangeState(States.MOVE_TO_TARGET);
                 else
                 {
+                    Debug.Log("Debug 1.2");
                     RaycastHit hit;
-                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer);
-                    if (hitCollided && hit.transform.CompareTag("Player"))
-                        ChangeState(States.MOVE_TO_TARGET);
-                    else if (MakesRandomMoves && HaveRandomMovesAvailable)
-                        ChangeState(States.RANDOM_MOVEMENT);
-                }
-            }
-        }
-        else if (MakesRandomMoves && HaveRandomMovesAvailable)
-        {
-            ChangeState(States.RANDOM_MOVEMENT);
-        }
-        else
-        {
-            float distToPlayer = Vector3.Distance(transform.position, player.position);
-            if (canAttack && distToPlayer <= enemyStartAttackDistance)
-            {
-                if (attacksTargetWOSeeingIt)
-                    ChangeState(States.ATTACK);
-                else
-                {
-                    RaycastHit hit;
-                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer);
+                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, ENEMY_LAYER);
                     if (hitCollided && hit.transform.CompareTag("Player"))
                     {
-                        ChangeState(States.ATTACK);
+                        Debug.Log("Debug 1.3");
+                        if (distToPlayer > enemyStartAttackDistance)
+                        {
+                            Debug.Log("Debug 1.4");
+                            ChangeState(States.MOVE_TO_TARGET);
+                            return;
+                        }
                     }
+                    //else if (MakesRandomMoves && HaveRandomMovesAvailable)
+                    //    ChangeState(States.RANDOM_MOVEMENT);
                 }
             }
+        }
+        
+        if (canAttack && distToPlayer <= enemyStartAttackDistance)
+        {
+            if (attacksTargetWOSeeingIt)
+                ChangeState(States.ATTACK);
+            else
+            {
+                Debug.Log("Debug 2.1");
+                RaycastHit hit;
+                bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, ENEMY_LAYER);
+                if (hitCollided && hit.transform.CompareTag("Player"))
+                {
+                    Debug.Log("Debug 2.2");
+                    if (Vector3.Angle(transform.forward, player.position - transform.position) < 1)
+                        ChangeState(States.ATTACK);
+                    else idleWaitTimer = -1;
+                    return;
+                }
+                else if (hitCollided) Debug.Log("Debug 2.Content: " + hit.transform.name);
+            }
+        }
+        
+        if (MakesRandomMoves && HaveRandomMovesAvailable)
+        {
+            Debug.Log("Debug 3.1");
+            ChangeState(States.RANDOM_MOVEMENT);
         }
 
     }
@@ -278,7 +293,7 @@ public class BaseEnemyScript : MonoBehaviour
         if (!movesToTargetWOSeeingIt)
         {
             RaycastHit hit;
-            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, playerStopDetectionDistance, 7); // 7 is Enemy layer
+            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, playerStopDetectionDistance, ENEMY_LAYER);
             if (!hitCollided || !hit.transform.CompareTag("Player"))
                 ChangeState(States.IDLE);
         }
@@ -288,8 +303,9 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void AttackUpdate()
     {
-        if (!canAttack) ChangeState(States.IDLE);
+        if (!canAttack) { ChangeState(States.IDLE); return; }
 
+        Debug.Log("Dbg Attacking");
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if(playerDistance <= PLAYER_HIT_DISTANCE_SWORD)
         {
@@ -300,11 +316,23 @@ public class BaseEnemyScript : MonoBehaviour
                 playerSword.mustAttack = true;
         }
 
-        if (!isAttacking && playerDistance > enemyStopAttackDistance)
+        if (endAttackFlag)
         {
-            if (movesToTarget) ChangeState(States.MOVE_TO_TARGET);
+            if (needsToRest) ChangeState(States.REST);
             else ChangeState(States.IDLE);
         }
+
+        //if (!isAttacking && playerDistance > enemyStopAttackDistance)
+        //{
+        //    if (movesToTarget) ChangeState(States.MOVE_TO_TARGET);
+        //    else ChangeState(States.IDLE);
+        //}
+    }
+    internal virtual void RestUpdate()
+    {
+        restTimer -= Time.deltaTime;
+        Debug.Log("Dbg Resting");
+        if (restTimer <= 0f) ChangeState(States.IDLE);
     }
     
     internal virtual void IdleStart() { StopRB(5.0f); idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
@@ -321,19 +349,24 @@ public class BaseEnemyScript : MonoBehaviour
             currTrials++;
         }
         //Debug.Log("Num of Trials: " + currTrials);
+        actualMoveSpeed = baseMoveSpeed;
         if (collided) ChangeState(States.IDLE);
     }
-    internal virtual void MoveToTargetStart() { if (numOfRndMoves > 0) rndMovesDone = 0; }
+    internal virtual void MoveToTargetStart() { if (numOfRndMoves > 0) rndMovesDone = 0; actualMoveSpeed = playerFoundSpeed; }
     internal virtual void AttackStart() { if (numOfRndMoves > 0) rndMovesDone = 0; }
-    internal virtual void DamageStart() { }
+    internal virtual void RestStart() { restTimer = Random.Range(restWait.x, restWait.y); canMove = canRotate = false; }
+    internal virtual void DamageStart() { damageTimer = baseDamageTimer; }
     internal virtual void IdleExit() { }
     internal virtual void RandomMovementExit() { if (numOfRndMoves > 0) rndMovesDone++; }
     internal virtual void MoveToTargetExit() { }
     internal virtual void AttackExit() { }
+    internal virtual void RestExit() { canMove = canRotate = true; }
     internal virtual void DamageExit() { }
 
     public virtual void ChangeState(States _state)
     {
+        if (!canEnterDamageState && _state == States.DAMAGE) return;
+
         switch (state)
         {
             case States.IDLE:
@@ -347,6 +380,9 @@ public class BaseEnemyScript : MonoBehaviour
                 break;
             case States.ATTACK:
                 AttackExit();
+                break;
+            case States.REST:
+                RestExit();
                 break;
             case States.DAMAGE:
                 DamageExit();
@@ -372,6 +408,9 @@ public class BaseEnemyScript : MonoBehaviour
                 break;
             case States.ATTACK:
                 AttackStart();
+                break;
+            case States.REST:
+                RestStart();
                 break;
             case States.DAMAGE:
                 DamageStart();

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3293519732818745495}
   - component: {fileID: 3293519732818745490}
   - component: {fileID: 3515057003462919011}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PlayerProjectile_Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,10 +209,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2456895617335840189, guid: f524e68d088e2e043968e45936541483,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4532103951170903942, guid: f524e68d088e2e043968e45936541483,
         type: 3}
       propertyPath: m_Name
       value: Greenball_VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4532103951170903942, guid: f524e68d088e2e043968e45936541483,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9223315016041386117, guid: f524e68d088e2e043968e45936541483,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f524e68d088e2e043968e45936541483, type: 3}

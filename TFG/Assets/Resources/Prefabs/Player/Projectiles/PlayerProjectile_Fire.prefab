@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3293519732818745495}
   - component: {fileID: 3293519732818745490}
   - component: {fileID: 3515057003462919011}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PlayerProjectile_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,10 +154,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3293519732818745494}
     m_Modifications:
+    - target: {fileID: 199138367000417326, guid: 991a478a8d796d7449a5a1c55508f337,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4889207022109973293, guid: 991a478a8d796d7449a5a1c55508f337,
         type: 3}
       propertyPath: m_Name
       value: Fireball_VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889207022109973293, guid: 991a478a8d796d7449a5a1c55508f337,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855625295125154070, guid: 991a478a8d796d7449a5a1c55508f337,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8669214186070888218, guid: 991a478a8d796d7449a5a1c55508f337,
         type: 3}
