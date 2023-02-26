@@ -25,22 +25,7 @@ public class DistanceEnemy : BaseEnemyScript
 
     internal override void Start_Call() { base.Start_Call(); attackTimer = baseAttackTimer; }
 
-    internal override void Update_Call()
-    {
-        base.Update_Call();
-        if (deadNPC && pointLights.Count > 0)
-        {
-            for (int i = 0; i < pointLights.Count; i++)
-            {
-                pointLights[i].intensity -= Time.deltaTime;
-                if(pointLights[i].intensity <= 0f)
-                {
-                    pointLights.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
-    }
+    internal override void Update_Call() { base.Update_Call(); }
 
     internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
 
@@ -82,6 +67,22 @@ public class DistanceEnemy : BaseEnemyScript
             {
                 StartCoroutine(AttackCorroutine());
                 attackTimer = baseAttackTimer;
+            }
+        }
+    }
+    internal override void DeathUpdate()
+    {
+        base.DeathUpdate();
+        if (pointLights.Count > 0)
+        {
+            for (int i = 0; i < pointLights.Count; i++)
+            {
+                pointLights[i].intensity -= Time.deltaTime;
+                if (pointLights[i].intensity <= 0f)
+                {
+                    pointLights.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }

@@ -78,11 +78,11 @@ public class LifeSystem : MonoBehaviour
         {
             currLife = 0;
             isDead = true;
-            if(entityType == EntityType.ENEMY)
-            {
-                GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
-            }
             StopAllCoroutines();
+            //if(entityType == EntityType.ENEMY)
+            //{
+            //    GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DEATH);
+            //}
             //healthStates.Clear();
             //if (managesDeath)
             //{
@@ -98,7 +98,7 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
     }
 
-    public void Damage(float _dmg, ElementsManager.Elements _attackElement, Collider collider)
+    public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
         float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
         dmgDealt = _dmg * dmgInc * dmgMultiplier;
@@ -157,8 +157,6 @@ public class LifeSystem : MonoBehaviour
                 go.transform.SetParent(null);
             }
         }
-
-        
 
         
         if (isDead)

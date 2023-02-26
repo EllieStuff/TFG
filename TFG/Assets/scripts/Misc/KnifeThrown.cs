@@ -64,8 +64,8 @@ public class KnifeThrown : MonoBehaviour
         //    life.Damage(stats.weaponDamage, new HealthState(life));
         //}
 
-        if(col.tag.Equals("Player"))
-            dmgData.DamageToPlayer(collision.collider);
+        //if(col.tag.Equals("Player"))
+        //    dmgData.DamageToPlayer(collision.collider);
 
         if(timerKnife <= 0 && !col.tag.Equals("Projectile"))
             Destroy(gameObject);

@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemyScript : MonoBehaviour
 {
-    public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, REST, DAMAGE }
+    public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, REST, DAMAGE, DEATH }
     public enum EnemyType { PLANT, BAT, RAT, GHOST }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
-    const float PLAYER_HIT_DISTANCE_SWORD = 3;
+    //const float PLAYER_HIT_DISTANCE_SWORD = 3;
     const float THRESHOLD = 1f;
     const int ENEMY_LAYER = 7;
 
@@ -29,6 +27,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
     [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
     [SerializeField] int numOfRndMoves = 0;
+    [SerializeField] protected float dmgOnTouch = 5f;
 
     internal ZoneScript zoneSystem;
     internal float damageTimer = 0;
@@ -36,12 +35,8 @@ public class BaseEnemyScript : MonoBehaviour
     int rndMovesDone = 0;
     Vector3 rndTarget;
     float restTimer = 0f;
-    PlayerSword playerSword;
-    LifeSystem playerLife;
     LifeSystem enemyLife;
-    PlayerMovement playerMovement;
-    bool SwordTouching;
-    internal bool deadNPC = false;
+    protected DamageData touchBodyDamageData;
 
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
@@ -58,7 +53,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal bool canMove = true, canRotate = true, canAttack = true;
     internal Quaternion targetRot;
     protected bool endAttackFlag = true;
-    protected bool canEnterDamageState = true;
+    internal bool canEnterDamageState = true;
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
@@ -80,12 +75,11 @@ public class BaseEnemyScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         enemyLife = GetComponent<LifeSystem>();
-        GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
-        player = playerGO.transform;
-        playerLife = playerGO.GetComponent<LifeSystem>();
-        playerSword = playerGO.GetComponent<PlayerSword>();
-        playerMovement = playerGO.GetComponent<PlayerMovement>();
+        touchBodyDamageData = GetComponent<DamageData>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyMesh.material = new Material(enemyMesh.material);
+
+        touchBodyDamageData.damage = dmgOnTouch;
 
         ResetSpeed();
     }
@@ -106,16 +100,16 @@ public class BaseEnemyScript : MonoBehaviour
 
         LimitVelocity();
 
-        if (canRotate)
+        if (canRotate && !state.Equals(States.DEATH))
         {
-            if (!deadNPC && moveDir != Vector3.zero)
+            if (moveDir != Vector3.zero)
             {
                 Vector3 rotDir = new Vector3(rb.velocity.x, 0f, rb.velocity.z).normalized;
                 targetRot = Quaternion.LookRotation(rotDir, Vector3.up);
                 //targetRot = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
             }
-            else if (!deadNPC)
+            else
             {
                 targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
@@ -125,12 +119,13 @@ public class BaseEnemyScript : MonoBehaviour
         }
     }
 
+
+    #region StateMachine
     internal virtual void UpdateStateMachine()
     {
         switch (state)
         {
             case States.IDLE:
-                //patrol
                 IdleUpdate();
                 break;
 
@@ -139,12 +134,10 @@ public class BaseEnemyScript : MonoBehaviour
                 break;
 
             case States.MOVE_TO_TARGET:
-                //approach to player
                 MoveToTargetUpdate();
                 break;
 
             case States.ATTACK:
-                //attack
                 AttackUpdate();
                 break;
 
@@ -153,8 +146,11 @@ public class BaseEnemyScript : MonoBehaviour
                 break;
 
             case States.DAMAGE:
-                //receive damage
                 DamageUpdate();
+                break;
+
+            case States.DEATH:
+                DeathUpdate();
                 break;
 
             default:
@@ -162,50 +158,73 @@ public class BaseEnemyScript : MonoBehaviour
                 break;
         }
     }
-
-    internal virtual void DamageUpdate()
+    public virtual void ChangeState(States _state)
     {
-        //if (!canAttack) ChangeState(States.IDLE);
+        if (!canEnterDamageState && _state == States.DAMAGE) return;
 
-        damageTimer -= Time.deltaTime;
-
-        if(enemyLife.currLife <= 0 && !deadNPC)
+        switch (state)
         {
-            if (Vector3.Distance(transform.position, player.position) <= PLAYER_HIT_DISTANCE_SWORD)
-                playerSword.mustAttack = false;
+            case States.IDLE:
+                IdleExit();
+                break;
+            case States.RANDOM_MOVEMENT:
+                RandomMovementExit();
+                break;
+            case States.MOVE_TO_TARGET:
+                MoveToTargetExit();
+                break;
+            case States.ATTACK:
+                AttackExit();
+                break;
+            case States.REST:
+                RestExit();
+                break;
+            case States.DAMAGE:
+                DamageExit();
+                break;
+            case States.DEATH:
+                DeathExit();
+                break;
 
-            damageTimer = baseDeathTime;
-            deadNPC = true;
+            default:
+                Debug.LogWarning("State not found");
+                break;
         }
 
-        if(deadNPC && enemyMesh.material.color.a > 0)
-        {
-            if(enemyMesh.material.color.a >= 1f)
-                enemyMesh.material = transparentMat;
-            enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
-        }
+        state = _state;
 
-        if (zoneSystem != null && deadNPC)
+        switch (state)
         {
-            zoneSystem.enemiesQuantity -= 1;
-            zoneSystem = null;
-        }
+            case States.IDLE:
+                IdleStart();
+                break;
+            case States.RANDOM_MOVEMENT:
+                RandomMovementStart();
+                break;
+            case States.MOVE_TO_TARGET:
+                MoveToTargetStart();
+                break;
+            case States.ATTACK:
+                AttackStart();
+                break;
+            case States.REST:
+                RestStart();
+                break;
+            case States.DAMAGE:
+                DamageStart();
+                break;
+            case States.DEATH:
+                DeathStart();
+                break;
 
-        if (damageTimer <= 0 && deadNPC)
-        {
-            //if (zoneSystem != null)
-            //    zoneSystem.enemiesQuantity -= 1;
-
-            Destroy(gameObject);
-        }
-        else if (damageTimer <= 0)
-        {
-            float distToPlayer = Vector3.Distance(transform.position, player.position);
-            if (distToPlayer <= enemyStartAttackDistance) ChangeState(States.ATTACK);
-            else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
-            else ChangeState(States.IDLE);
+            default:
+                Debug.LogWarning("State not found");
+                break;
         }
     }
+    #endregion StateMachine
+
+    #region Updates
     internal virtual void IdleUpdate()
     {
         idleWaitTimer -= Time.deltaTime;
@@ -306,15 +325,15 @@ public class BaseEnemyScript : MonoBehaviour
         if (!canAttack) { ChangeState(States.IDLE); return; }
 
         Debug.Log("Dbg Attacking");
-        float playerDistance = Vector3.Distance(transform.position, player.position);
-        if(playerDistance <= PLAYER_HIT_DISTANCE_SWORD)
-        {
-            rb.useGravity = true;
-            playerMovement.attackDir = transform.position;
+        //float playerDistance = Vector3.Distance(transform.position, player.position);
+        //if(playerDistance <= PLAYER_HIT_DISTANCE_SWORD)
+        //{
+        //    rb.useGravity = true;
+        //    playerMovement.attackDir = transform.position;
 
-            if(playerLife.currLife > 0)
-                playerSword.mustAttack = true;
-        }
+        //    if(playerLife.currLife > 0)
+        //        playerSword.mustAttack = true;
+        //}
 
         if (endAttackFlag)
         {
@@ -334,7 +353,43 @@ public class BaseEnemyScript : MonoBehaviour
         Debug.Log("Dbg Resting");
         if (restTimer <= 0f) ChangeState(States.IDLE);
     }
-    
+    internal virtual void DamageUpdate()
+    {
+        damageTimer -= Time.deltaTime;
+
+        if (enemyLife.isDead)
+        {
+            ChangeState(States.DEATH);
+            return;
+        }
+
+        if (damageTimer <= 0)
+        {
+            float distToPlayer = Vector3.Distance(transform.position, player.position);
+            if (distToPlayer <= enemyStartAttackDistance) ChangeState(States.ATTACK);
+            else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
+            else ChangeState(States.IDLE);
+        }
+    }
+    internal virtual void DeathUpdate()
+    {
+        damageTimer -= Time.deltaTime;
+
+        if (enemyMesh.material.color.a > 0)
+        {
+            if (enemyMesh.material.color.a >= 1f)
+                enemyMesh.material = transparentMat;
+            enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
+        }
+
+        if (damageTimer <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion Updates
+
+    #region Starts
     internal virtual void IdleStart() { StopRB(5.0f); idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
     internal virtual void RandomMovementStart()
     {
@@ -356,73 +411,29 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void AttackStart() { if (numOfRndMoves > 0) rndMovesDone = 0; }
     internal virtual void RestStart() { restTimer = Random.Range(restWait.x, restWait.y); canMove = canRotate = false; }
     internal virtual void DamageStart() { damageTimer = baseDamageTimer; }
+    internal virtual void DeathStart()
+    {
+        damageTimer = baseDeathTime;
+        if (zoneSystem != null)
+        {
+            zoneSystem.enemiesQuantity -= 1;
+            zoneSystem = null;
+        }
+    }
+    #endregion Starts
+
+    #region Exits
     internal virtual void IdleExit() { }
     internal virtual void RandomMovementExit() { if (numOfRndMoves > 0) rndMovesDone++; }
     internal virtual void MoveToTargetExit() { }
     internal virtual void AttackExit() { }
     internal virtual void RestExit() { canMove = canRotate = true; }
     internal virtual void DamageExit() { }
-
-    public virtual void ChangeState(States _state)
-    {
-        if (!canEnterDamageState && _state == States.DAMAGE) return;
-
-        switch (state)
-        {
-            case States.IDLE:
-                IdleExit();
-                break;
-            case States.RANDOM_MOVEMENT:
-                RandomMovementExit();
-                break;
-            case States.MOVE_TO_TARGET:
-                MoveToTargetExit();
-                break;
-            case States.ATTACK:
-                AttackExit();
-                break;
-            case States.REST:
-                RestExit();
-                break;
-            case States.DAMAGE:
-                DamageExit();
-                break;
-
-            default:
-                Debug.LogWarning("State not found");
-                break;
-        }
-
-        state = _state;
-
-        switch (state)
-        {
-            case States.IDLE:
-                IdleStart();
-                break;
-            case States.RANDOM_MOVEMENT:
-                RandomMovementStart();
-                break;
-            case States.MOVE_TO_TARGET:
-                MoveToTargetStart();
-                break;
-            case States.ATTACK:
-                AttackStart();
-                break;
-            case States.REST:
-                RestStart();
-                break;
-            case States.DAMAGE:
-                DamageStart();
-                break;
-
-            default:
-                Debug.LogWarning("State not found");
-                break;
-        }
-    }
+    internal virtual void DeathExit() { }
+    #endregion Exits
 
 
+    #region Misc
     internal Vector3 ClampVector(Vector3 _originalVec, Vector3 _minVec, Vector3 _maxVec)
     {
         return new Vector3(
@@ -464,6 +475,7 @@ public class BaseEnemyScript : MonoBehaviour
         actualMinVelocity = baseMinVelocity;
         actualMaxVelocity = baseMaxVelocity;
     }
+    #endregion Misc
 
 
     internal Vector3 NormalizeDirection(Vector3 moveDir)
@@ -491,6 +503,8 @@ public class BaseEnemyScript : MonoBehaviour
         if (col.gameObject.CompareTag("floor"))
             rb.useGravity = false;
 
+        //if (col.gameObject.CompareTag("Player"))
+        //    col.transform.GetComponent<LifeSystem>().Damage(dmgOnTouch, ElementsManager.Elements.NORMAL);
     }
 
     void OnCollisionExit(Collision col)
@@ -504,23 +518,4 @@ public class BaseEnemyScript : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.tag.Equals("SwordRegion") || other.tag.Equals("Weapon"))
-        //{
-        //    SwordTouching = true;
-        //    WeaponStats weaponStats = other.GetComponent<WeaponStats>();
-        //    enemyLife.Damage(weaponStats.weaponDamage, HealthState.GetHealthStateByEffect(weaponStats.weaponEffect, enemyLife));
-        //    damageTimer = baseDamageTimer;
-        //    ChangeState(States.DAMAGE);
-        //}
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //if (other.tag.Equals("SwordRegion") || other.tag.Equals("Weapon"))
-        //{
-        //    SwordTouching = false;
-        //}
-    }
 }

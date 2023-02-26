@@ -10,6 +10,7 @@ public class MeleeEnemy : BaseEnemyScript
     //[SerializeField] Transform shieldPivotRef; 
     //[SerializeField] Transform idleShieldPoint, attackingShieldPoint;
     //[SerializeField] internal bool hasShield = true;
+    [SerializeField] float attackDmg = 15f;
     [SerializeField] float attackForce = 10.0f;
     [SerializeField] float attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
@@ -18,7 +19,11 @@ public class MeleeEnemy : BaseEnemyScript
     Vector3 attackMoveDir = Vector3.zero;
 
 
-    internal override void Start_Call() { base.Start_Call(); endAttackFlag = false; }
+    internal override void Start_Call()
+    {
+        base.Start_Call();
+        endAttackFlag = false;
+    }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -97,6 +102,7 @@ public class MeleeEnemy : BaseEnemyScript
         yield return new WaitForSeconds(0.2f);
 
         // Attacks
+        touchBodyDamageData.damage = attackDmg;
         canMove = isAttacking = true;
         canRotate = false;
         attackMoveDir = (player.position - transform.position).normalized;
@@ -107,9 +113,8 @@ public class MeleeEnemy : BaseEnemyScript
         enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
         canMove = isAttacking = false;
         StopRB(4.0f);
-        yield return new WaitForSeconds(1.0f);
-        //Feedback
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
+        touchBodyDamageData.damage = dmgOnTouch;
         canEnterDamageState = true;
         ChangeState(States.REST);
         

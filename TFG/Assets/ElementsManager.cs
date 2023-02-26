@@ -67,11 +67,11 @@ public class ElementsManager : MonoBehaviour
 
         ElementClass fireCompatibility = new ElementClass();
         fireCompatibility.colorParticles = Color.red;
-        fireCompatibility.receiveDamage.Add(Elements.NORMAL, 0.8f);
+        fireCompatibility.receiveDamage.Add(Elements.NORMAL, 1.0f);
         fireCompatibility.receiveDamage.Add(Elements.FIRE, 1.0f);
         fireCompatibility.receiveDamage.Add(Elements.GRASS, 0.5f);
         fireCompatibility.receiveDamage.Add(Elements.WATER, 2.0f);
-        fireCompatibility.inflictDamage.Add(Elements.NORMAL, 0.8f);
+        fireCompatibility.inflictDamage.Add(Elements.NORMAL, 1.0f);
         fireCompatibility.inflictDamage.Add(Elements.FIRE, 1.0f);
         fireCompatibility.inflictDamage.Add(Elements.GRASS, 2.0f);
         fireCompatibility.inflictDamage.Add(Elements.WATER, 0.5f);
@@ -79,11 +79,11 @@ public class ElementsManager : MonoBehaviour
 
         ElementClass grassCompatibility = new ElementClass();
         grassCompatibility.colorParticles = Color.green;
-        grassCompatibility.receiveDamage.Add(Elements.NORMAL, 0.8f);
+        grassCompatibility.receiveDamage.Add(Elements.NORMAL, 1.0f);
         grassCompatibility.receiveDamage.Add(Elements.FIRE, 2.0f);
         grassCompatibility.receiveDamage.Add(Elements.GRASS, 1.0f);
         grassCompatibility.receiveDamage.Add(Elements.WATER, 0.5f);
-        grassCompatibility.inflictDamage.Add(Elements.NORMAL, 0.8f);
+        grassCompatibility.inflictDamage.Add(Elements.NORMAL, 1.0f);
         grassCompatibility.inflictDamage.Add(Elements.FIRE, 0.5f);
         grassCompatibility.inflictDamage.Add(Elements.GRASS, 1.0f);
         grassCompatibility.inflictDamage.Add(Elements.WATER, 2.0f);
@@ -91,11 +91,11 @@ public class ElementsManager : MonoBehaviour
 
         ElementClass waterCompatibility = new ElementClass();
         waterCompatibility.colorParticles = Color.cyan;
-        waterCompatibility.receiveDamage.Add(Elements.NORMAL, 0.8f);
+        waterCompatibility.receiveDamage.Add(Elements.NORMAL, 1.0f);
         waterCompatibility.receiveDamage.Add(Elements.FIRE, 0.5f);
         waterCompatibility.receiveDamage.Add(Elements.GRASS, 2.0f);
         waterCompatibility.receiveDamage.Add(Elements.WATER, 1.0f);
-        waterCompatibility.inflictDamage.Add(Elements.NORMAL, 0.8f);
+        waterCompatibility.inflictDamage.Add(Elements.NORMAL, 1.0f);
         waterCompatibility.inflictDamage.Add(Elements.FIRE, 2.0f);
         waterCompatibility.inflictDamage.Add(Elements.GRASS, 0.5f);
         waterCompatibility.inflictDamage.Add(Elements.WATER, 1.0f);

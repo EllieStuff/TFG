@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageData : MonoBehaviour
 {
     [SerializeField] internal Transform ownerTransform;
-    [SerializeField] internal float weaponDamage = 10;
+    [SerializeField] internal float damage = 10;
     [SerializeField] internal ElementsManager.Elements attackElement;
     [SerializeField] internal bool alwaysAttacking = false;
 
@@ -37,53 +37,59 @@ public class DamageData : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!IsAttacking) return;
-        if ((ownerTransform == null || other.transform == ownerTransform)) return;
-
-
-        if (other.CompareTag("Player"))
-        {
-            DamageToPlayer(other);
-        }
-
-        if (other.CompareTag("Enemy"))
-        {
-            if (audio != null)
-                audio.PlaySound();
-
-            LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-            //Debug.Log("Damaged by: " + this.name);
-            ApplyDamage(lifeSystem, other);
-            other.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
-        }
-
+        ApplyDamage(other.transform);
     }
 
-    public void DamageToPlayer(Collider other)
+    private void OnCollisionEnter(Collision col)
+    {
+        ApplyDamage(col.transform);
+    }
+
+
+
+    void DamageToPlayer(Transform _player)
     {
         if (audio != null)
             audio.PlaySound();
 
-        LifeSystem lifeSystem = other.GetComponent<LifeSystem>();
-        ApplyDamage(lifeSystem, other);
-        other.GetComponent<PlayerMovement>().DamageStartCorroutine();
+        LifeSystem lifeSystem = _player.GetComponent<LifeSystem>();
+        lifeSystem.Damage(damage, attackElement);
+        _player.GetComponent<PlayerMovement>().DamageStartCorroutine();
     }
 
-    void ApplyDamage(LifeSystem _lifeSystem, Collider collider)
+    void DamageToEnemy(Transform _enemy)
     {
-        _lifeSystem.Damage(weaponDamage, attackElement, collider);
+        if (audio != null)
+            audio.PlaySound();
 
-        //float tmpWeaponDmg = weaponDamage;
-        //foreach(HealthState.Effect weaponEffect in weaponEffects)
-        //{
-        //    _lifeSystem.Damage(tmpWeaponDmg, HealthState.GetHealthStateByEffect(weaponEffect, _lifeSystem));
-        //    tmpWeaponDmg = 0;
-        //}
-        //foreach (HealthState customHealthState in customHealthStates)
-        //{
-        //    _lifeSystem.Damage(0, customHealthState);
-        //}
+        LifeSystem lifeSystem = _enemy.GetComponent<LifeSystem>();
+        //Debug.Log("Damaged by: " + this.name);
+        lifeSystem.Damage(damage, attackElement);
+        BaseEnemyScript enemy = _enemy.GetComponent<BaseEnemyScript>();
+        if (lifeSystem.isDead)
+        {
+            enemy.StopAllCoroutines();
+            enemy.canEnterDamageState = true;
+        }
+        _enemy.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
+    }
 
+
+    void ApplyDamage(Transform _transform)
+    {
+        if (!IsAttacking) return;
+        if ((ownerTransform == null || _transform == ownerTransform)) return;
+
+
+        if (_transform.CompareTag("Player"))
+        {
+            DamageToPlayer(_transform);
+        }
+
+        if (_transform.CompareTag("Enemy"))
+        {
+            DamageToEnemy(_transform);
+        }
     }
 
 }

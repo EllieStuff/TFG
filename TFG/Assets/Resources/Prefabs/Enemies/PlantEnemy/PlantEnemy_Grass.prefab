@@ -44638,6 +44638,7 @@ GameObject:
   - component: {fileID: 9204043437839007188}
   - component: {fileID: 3562403287435863507}
   - component: {fileID: 3593669281732694037}
+  - component: {fileID: 1658826885028949139}
   - component: {fileID: 4894056822736141015}
   - component: {fileID: 9204043437839007187}
   - component: {fileID: 9204043437839007184}
@@ -44689,6 +44690,7 @@ MonoBehaviour:
   enemyStopAttackDistance: 26
   isAttacking: 0
   baseMoveSpeed: 10
+  playerFoundSpeed: 0
   attacksTargetWOSeeingIt: 1
   movesToTargetWOSeeingIt: 0
   baseDamageTimer: 0.5
@@ -44698,6 +44700,7 @@ MonoBehaviour:
   idleWait: {x: 0, y: 0}
   restWait: {x: 3, y: 3.5}
   numOfRndMoves: 0
+  dmgOnTouch: 5
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 7001014457201336260}
   transparentMat: {fileID: 2100000, guid: 52eff7ed8ee74da4d9b8fa3fa8878cc9, type: 2}
@@ -44738,6 +44741,23 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 4394357316648102780, guid: 651c7722bc3deb14b826ab35d2b20ae0,
     type: 3}
   hitPS: {fileID: 1400527335974043085}
+--- !u!114 &1658826885028949139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9204043437839007185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTransform: {fileID: 9204043437839007188}
+  damage: 5
+  attackElement: 3
+  alwaysAttacking: 1
+  audio: {fileID: 0}
 --- !u!114 &4894056822736141015
 MonoBehaviour:
   m_ObjectHideFlags: 0

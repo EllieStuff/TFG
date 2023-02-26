@@ -71,8 +71,8 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
     {
         enemyAnimator.SetFloat("state", 2);
 
-        if(deadNPC)
-            handWeapon.gameObject.SetActive(false);
+        //if(deadNPC)
+        //    handWeapon.gameObject.SetActive(false);
 
         base.DamageUpdate();
     }

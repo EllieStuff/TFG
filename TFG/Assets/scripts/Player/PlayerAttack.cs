@@ -110,7 +110,7 @@ public class PlayerAttack : MonoBehaviour
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
         attack.Init(transform);
-        attack.dmgData.weaponDamage += dmgIncrease;
+        attack.dmgData.damage += dmgIncrease;
     }
 
 
