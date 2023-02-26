@@ -36,7 +36,7 @@ public class RadialRotation : MonoBehaviour
 
     void SetRadialRotation()
     {
-        rect.localRotation = Quaternion.RotateTowards(rect.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED/2);
-        insideUIRadial.localRotation = Quaternion.RotateTowards(insideUIRadial.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED / 2);
+        rect.localRotation = Quaternion.RotateTowards(rect.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED / 3.1f);
+        insideUIRadial.localRotation = Quaternion.RotateTowards(insideUIRadial.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED / 3.1f);
     }
 }
