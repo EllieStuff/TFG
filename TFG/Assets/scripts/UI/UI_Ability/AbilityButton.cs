@@ -24,6 +24,7 @@ public class AbilityButton : MonoBehaviour
     FadeInFadeOut_UI UIFade;
 
     const float DISABLE_TIMER = 3;
+    const float LERP_MOVE_SPEED = 2;
 
     bool pushedButton;
 
@@ -118,10 +119,17 @@ public class AbilityButton : MonoBehaviour
 
         if (!isMouseOver)
             imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, originalSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
+
+        if (pushedButton)
+        {
+            imageTransform.localPosition = Vector3.Lerp(imageTransform.localPosition, Vector3.zero, Time.deltaTime * LERP_MOVE_SPEED);
+            SetTextPositionInElement();
+        }
     }
 
     private void OnMouseOver()
     {
+        SetTextPositionInElement();
         uiTextDescription.text = skill.description;
         imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, biggerSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
         isMouseOver = true;
@@ -139,6 +147,12 @@ public class AbilityButton : MonoBehaviour
     private void OnMouseDown()
     {
         AddAbility();
+    }
+
+    void SetTextPositionInElement()
+    {
+        RectTransform textRectTransfom = uiTextDescription.rectTransform;
+        uiTextDescription.rectTransform.localPosition = new Vector3(imageTransform.localPosition.x, textRectTransfom.localPosition.y);
     }
 
     private void AddAbility()
