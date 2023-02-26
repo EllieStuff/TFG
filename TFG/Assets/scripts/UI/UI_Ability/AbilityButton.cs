@@ -12,6 +12,7 @@ public class AbilityButton : MonoBehaviour
     private RectTransform imageTransform;
     Vector2 originalSize;
     Vector2 biggerSize;
+    Vector2 originalPos;
     float SIZE_RECT_LERP_SPEED = 5;
 
     private PassiveSkills_Manager playerSkills;
@@ -32,6 +33,7 @@ public class AbilityButton : MonoBehaviour
     private void Start()
     {
         UIFade = transform.parent.parent.GetComponent<FadeInFadeOut_UI>();
+        originalPos = GetComponent<RectTransform>().localPosition;
     }
 
     private void OnEnable()
@@ -42,7 +44,9 @@ public class AbilityButton : MonoBehaviour
 
         imageTransform = GetComponent<RectTransform>();
 
-        if(!sizePlaced)
+        imageTransform.localPosition = originalPos;
+
+        if (!sizePlaced)
         {
             originalSize = imageTransform.sizeDelta;
             sizePlaced = true;
