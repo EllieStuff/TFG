@@ -42,7 +42,12 @@ public class MeleeEnemy : BaseEnemyScript
     {
         base.AttackUpdate();
 
-        if (isAttacking) MoveRB(attackMoveDir, attackForce);
+        if (canRotate && isAttacking && Vector3.Angle(transform.forward, attackMoveDir) < 1f) canRotate = false;
+        if (isAttacking)
+        {
+            //canRotate = Vector3.Angle(transform.forward, attackMoveDir) < 1f;
+            MoveRB(attackMoveDir, attackForce);
+        }
 
         //if (isAttacking)
         //{
@@ -76,6 +81,7 @@ public class MeleeEnemy : BaseEnemyScript
         base.AttackStart();
         SetVelocityLimit(-atkVelocityLimit, atkVelocityLimit);
         canEnterDamageState = false;
+        moveDir = Vector3.zero;
         StartCoroutine(AttackCoroutine());
     }
 
@@ -102,10 +108,13 @@ public class MeleeEnemy : BaseEnemyScript
         yield return new WaitForSeconds(0.2f);
 
         // Attacks
+        touchBodyDamageData.StopAllCoroutines();
         touchBodyDamageData.damage = attackDmg;
+        touchBodyDamageData.disabled = false;
         canMove = isAttacking = true;
-        canRotate = false;
+        //canRotate = false;
         attackMoveDir = (player.position - transform.position).normalized;
+        //moveDir = attackMoveDir;
         enemyAnimator.SetFloat("state", (int)AnimState.ATTACKING);
         yield return new WaitForSeconds(attackDuration);
 

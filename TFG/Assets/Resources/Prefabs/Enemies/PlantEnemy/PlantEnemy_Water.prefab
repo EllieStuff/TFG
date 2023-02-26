@@ -24422,7 +24422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5432909558806648478}
   m_Layer: 0
-  m_Name: Lights
+  m_Name: Lights Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34406,6 +34406,7 @@ MonoBehaviour:
   restWait: {x: 3, y: 3.5}
   numOfRndMoves: 0
   dmgOnTouch: 5
+  enemyLightsHolder: {fileID: 5432909558806648478}
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 6970031720182105785}
   transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}
@@ -34416,9 +34417,6 @@ MonoBehaviour:
   enemyAnimator: {fileID: 3385771566308395022}
   projectilePrefab: {fileID: 507451495234348787, guid: 1f2e3d08540022a47a495f19204de83a,
     type: 3}
-  pointLights:
-  - {fileID: 6647461901284761024}
-  - {fileID: 8529972119886895697}
   shootPoint: {fileID: 693481586664506299}
   attackStyle: 0
 --- !u!114 &8351470923921754958
@@ -34462,6 +34460,9 @@ MonoBehaviour:
   damage: 5
   attackElement: 3
   alwaysAttacking: 1
+  timeDisabledAfterColl: 1
+  tagsAffected:
+  - Player
   audio: {fileID: 0}
 --- !u!114 &2965946560810657982
 MonoBehaviour:

@@ -77,7 +77,7 @@ public class ProjectileData : MonoBehaviour
                 pierceAmount--;
                 return;
             }
-            DestroyObject(0.1f);
+            DestroyObject();
         }
 
         //if (other.CompareTag("Player") && !other.CompareTag(originTag))

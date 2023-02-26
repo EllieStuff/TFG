@@ -11,7 +11,6 @@ public class DistanceEnemy : BaseEnemyScript
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] List<Light> pointLights;
     [SerializeField] Transform shootPoint;
 
     enum AttackType { NORMAL_THROW, CIRCLE_ATTACK, FOUR_PROJECTILES, THREE_PROJECTILES }
@@ -73,18 +72,6 @@ public class DistanceEnemy : BaseEnemyScript
     internal override void DeathUpdate()
     {
         base.DeathUpdate();
-        if (pointLights.Count > 0)
-        {
-            for (int i = 0; i < pointLights.Count; i++)
-            {
-                pointLights[i].intensity -= Time.deltaTime;
-                if (pointLights[i].intensity <= 0f)
-                {
-                    pointLights.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
     }
 
     IEnumerator AttackCorroutine()

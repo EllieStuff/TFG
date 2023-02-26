@@ -127,9 +127,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerTransform: {fileID: 0}
-  weaponDamage: 10
+  damage: 10
   attackElement: 1
   alwaysAttacking: 1
+  timeDisabledAfterColl: -1
+  tagsAffected:
+  - Enemy
   audio: {fileID: 0}
 --- !u!54 &3515057003462919011
 Rigidbody:

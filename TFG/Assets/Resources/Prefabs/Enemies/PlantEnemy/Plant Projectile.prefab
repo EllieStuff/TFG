@@ -139,9 +139,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerTransform: {fileID: 0}
-  weaponDamage: 10
+  damage: 10
   attackElement: 3
   alwaysAttacking: 1
+  timeDisabledAfterColl: -1
+  tagsAffected:
+  - Player
   audio: {fileID: 4575705471472904114}
 --- !u!135 &2720036712410761245
 SphereCollider:

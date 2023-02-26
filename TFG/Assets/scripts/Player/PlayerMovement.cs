@@ -138,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Debug.Log("giranding");
                 lookDir = (attackScript.target.position - transform.position).normalized;
+                lookDir.y = 0f;
             }
             //else
             //{

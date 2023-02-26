@@ -8,8 +8,12 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal float damage = 10;
     [SerializeField] internal ElementsManager.Elements attackElement;
     [SerializeField] internal bool alwaysAttacking = false;
+    [SerializeField] internal float timeDisabledAfterColl = -1f;
+    [SerializeField] List<string> tagsAffected;
 
     [SerializeField] AudioManager audio;
+
+    internal bool disabled = false;
 
 
     public bool IsAttacking
@@ -37,12 +41,14 @@ public class DamageData : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ApplyDamage(other.transform);
+        if(tagsAffected.FindIndex(_tag => other.transform.CompareTag(_tag)) >= 0)
+            ApplyDamage(other.transform);
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        ApplyDamage(col.transform);
+        if (tagsAffected.FindIndex(_tag => col.transform.CompareTag(_tag)) >= 0)
+            ApplyDamage(col.transform);
     }
 
 
@@ -77,6 +83,7 @@ public class DamageData : MonoBehaviour
 
     void ApplyDamage(Transform _transform)
     {
+        if (disabled) return;
         if (!IsAttacking) return;
         if ((ownerTransform == null || _transform == ownerTransform)) return;
 
@@ -90,6 +97,21 @@ public class DamageData : MonoBehaviour
         {
             DamageToEnemy(_transform);
         }
+
+        if (timeDisabledAfterColl > 0f) StartCoroutine(DisableDuringTime());
+    }
+
+
+    IEnumerator DisableDuringTime()
+    {
+        disabled = true;
+        float disabledTimer = 0;
+        while(disabledTimer < timeDisabledAfterColl)
+        {
+            yield return new WaitForEndOfFrame();
+            disabledTimer += Time.deltaTime;
+        }
+        disabled = false;
     }
 
 }

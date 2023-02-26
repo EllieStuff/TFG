@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemyScript : MonoBehaviour
@@ -28,6 +29,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
     [SerializeField] int numOfRndMoves = 0;
     [SerializeField] protected float dmgOnTouch = 5f;
+    [SerializeField] Transform enemyLightsHolder;
 
     internal ZoneScript zoneSystem;
     internal float damageTimer = 0;
@@ -54,6 +56,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal Quaternion targetRot;
     protected bool endAttackFlag = true;
     internal bool canEnterDamageState = true;
+    List<Light> enemyLights = new List<Light>();
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
@@ -80,6 +83,10 @@ public class BaseEnemyScript : MonoBehaviour
         enemyMesh.material = new Material(enemyMesh.material);
 
         touchBodyDamageData.damage = dmgOnTouch;
+        for(int i = 0; i < enemyLightsHolder.childCount; i++)
+        {
+            enemyLights.Add(enemyLightsHolder.GetChild(i).GetComponent<Light>());
+        }
 
         ResetSpeed();
     }
@@ -231,32 +238,26 @@ public class BaseEnemyScript : MonoBehaviour
         if (idleWaitTimer > 0) return;
         else idleWaitTimer = Random.Range(idleWait.x, idleWait.y);
 
-        Debug.Log("Dbg Idle");
+        //Debug.Log("Dbg Idle");
         float distToPlayer = Vector3.Distance(transform.position, player.position);
         if (movesToTarget)
         {
-            Debug.Log("Debug 1.1");
             if (canMove && distToPlayer <= playerDetectionDistance)
             {
                 if (movesToTargetWOSeeingIt)
                     ChangeState(States.MOVE_TO_TARGET);
                 else
                 {
-                    Debug.Log("Debug 1.2");
                     RaycastHit hit;
                     bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, ENEMY_LAYER);
                     if (hitCollided && hit.transform.CompareTag("Player"))
                     {
-                        Debug.Log("Debug 1.3");
                         if (distToPlayer > enemyStartAttackDistance)
                         {
-                            Debug.Log("Debug 1.4");
                             ChangeState(States.MOVE_TO_TARGET);
                             return;
                         }
                     }
-                    //else if (MakesRandomMoves && HaveRandomMovesAvailable)
-                    //    ChangeState(States.RANDOM_MOVEMENT);
                 }
             }
         }
@@ -267,24 +268,20 @@ public class BaseEnemyScript : MonoBehaviour
                 ChangeState(States.ATTACK);
             else
             {
-                Debug.Log("Debug 2.1");
                 RaycastHit hit;
                 bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, ENEMY_LAYER);
                 if (hitCollided && hit.transform.CompareTag("Player"))
                 {
-                    Debug.Log("Debug 2.2");
                     if (Vector3.Angle(transform.forward, player.position - transform.position) < 1)
                         ChangeState(States.ATTACK);
                     else idleWaitTimer = -1;
                     return;
                 }
-                else if (hitCollided) Debug.Log("Debug 2.Content: " + hit.transform.name);
             }
         }
         
         if (MakesRandomMoves && HaveRandomMovesAvailable)
         {
-            Debug.Log("Debug 3.1");
             ChangeState(States.RANDOM_MOVEMENT);
         }
 
@@ -324,33 +321,17 @@ public class BaseEnemyScript : MonoBehaviour
     {
         if (!canAttack) { ChangeState(States.IDLE); return; }
 
-        Debug.Log("Dbg Attacking");
-        //float playerDistance = Vector3.Distance(transform.position, player.position);
-        //if(playerDistance <= PLAYER_HIT_DISTANCE_SWORD)
-        //{
-        //    rb.useGravity = true;
-        //    playerMovement.attackDir = transform.position;
-
-        //    if(playerLife.currLife > 0)
-        //        playerSword.mustAttack = true;
-        //}
-
+        //Debug.Log("Dbg Attacking");
         if (endAttackFlag)
         {
             if (needsToRest) ChangeState(States.REST);
             else ChangeState(States.IDLE);
         }
-
-        //if (!isAttacking && playerDistance > enemyStopAttackDistance)
-        //{
-        //    if (movesToTarget) ChangeState(States.MOVE_TO_TARGET);
-        //    else ChangeState(States.IDLE);
-        //}
     }
     internal virtual void RestUpdate()
     {
         restTimer -= Time.deltaTime;
-        Debug.Log("Dbg Resting");
+        //Debug.Log("Dbg Resting");
         if (restTimer <= 0f) ChangeState(States.IDLE);
     }
     internal virtual void DamageUpdate()
@@ -377,9 +358,19 @@ public class BaseEnemyScript : MonoBehaviour
 
         if (enemyMesh.material.color.a > 0)
         {
-            if (enemyMesh.material.color.a >= 1f)
-                enemyMesh.material = transparentMat;
             enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
+        }
+        if (enemyLights.Count > 0)
+        {
+            for (int i = 0; i < enemyLights.Count; i++)
+            {
+                enemyLights[i].intensity -= Time.deltaTime;
+                if (enemyLights[i].intensity <= 0f)
+                {
+                    enemyLights.RemoveAt(i);
+                    i--;
+                }
+            }
         }
 
         if (damageTimer <= 0)
@@ -413,7 +404,12 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void DamageStart() { damageTimer = baseDamageTimer; }
     internal virtual void DeathStart()
     {
+        GetComponent<Collider>().enabled = false;
+        rb.useGravity = false;
+
         damageTimer = baseDeathTime;
+        enemyMesh.material = transparentMat;
+
         if (zoneSystem != null)
         {
             zoneSystem.enemiesQuantity -= 1;
