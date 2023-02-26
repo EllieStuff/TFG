@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     float actualMoveForce;
     float actualRotSpeed;
-    float speedMultiplierRot = 10;
+    float speedMultiplierRot = 2;
     float timerDeath;
     internal float speedMultiplier = 0.2f;
     Vector3 actualMaxSpeed;

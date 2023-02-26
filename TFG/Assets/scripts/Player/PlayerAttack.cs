@@ -96,7 +96,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.tag.Equals("Wall"))
+            if (hit.collider.tag.Equals("Wall") || hit.collider.tag.Equals("Obstacle"))
                 return true;
         }
 
