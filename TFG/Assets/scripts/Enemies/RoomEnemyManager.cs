@@ -8,14 +8,19 @@ public class RoomEnemyManager : MonoBehaviour
     [SerializeField] bool roomActive = false;
 
     PlayerAttack playerAttack;
+    LevelInfo levelInfo;
+
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
 
-    const float RAYCAST_DISTANCE = 10;
+    GameObject elementChoose;
+
+    bool endRoomEventIsTriggered = false;
 
     // Start is called before the first frame update
     void Awake()
     {
         playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
+        levelInfo = playerAttack.GetComponent<LevelInfo>();
 
         linkedZone.assignedRoom = this;
         InitEnemies();
@@ -24,10 +29,15 @@ public class RoomEnemyManager : MonoBehaviour
 
     private void Start()
     {
+        elementChoose = GameObject.Find("Canvas").transform.GetChild(10).gameObject;
         ActivateEnemies(roomActive);
         SetPlayerData();
     }
 
+    private void Update()
+    {
+        SearchClosestTarget();
+    }
 
     void InitEnemies()
     {
@@ -54,11 +64,28 @@ public class RoomEnemyManager : MonoBehaviour
 
     public Transform GetCloserEnemy(Transform _playerTransform)
     {
-        if (!HasEnemiesRemainging()) return null;
+        if (!HasEnemiesRemainging())
+        {
+            if(!endRoomEventIsTriggered)
+            {
+                int level = levelInfo.level;
 
-        Transform closerEnemy = enemies[0].transform;
-        float closerDist = Vector3.Distance(enemies[0].transform.position, _playerTransform.position);
-        for(int i = 1; i < enemies.Count; i++)
+                if (level > 0 && level % 2 == 0)
+                    elementChoose.SetActive(true);
+
+                levelInfo.level++;
+                endRoomEventIsTriggered = true;
+            }
+
+            return null;
+        }
+
+        Transform closerEnemy = GetFirstReachableEnemyWithWallCheck();
+        if (closerEnemy == null) return enemies[0].transform;
+
+        float closerDist = Vector3.Distance(closerEnemy.position, _playerTransform.position);
+
+        for(int i = 0; i < enemies.Count; i++)
         {
             if(enemies[i] == null)
             {
@@ -75,14 +102,29 @@ public class RoomEnemyManager : MonoBehaviour
             }
         }
 
-
         return closerEnemy;
+    }
+
+    private Transform GetFirstReachableEnemyWithWallCheck()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            Transform enemy = enemies[i].transform;
+
+            if (PlayerCheck(enemy))
+            {
+                return enemy;
+            }
+        }
+
+        return null;
     }
 
     private bool PlayerCheck(Transform _enemyTransform)
     {
         RaycastHit hit;
-        Ray ray = new Ray(_enemyTransform.position, _enemyTransform.TransformDirection(Vector3.forward * RAYCAST_DISTANCE));
+        float raycastDistance = Vector3.Distance(_enemyTransform.position, playerAttack.transform.position);
+        Ray ray = new Ray(_enemyTransform.position, _enemyTransform.TransformDirection(Vector3.forward * raycastDistance));
 
         if (Physics.Raycast(ray, out hit))
         {
@@ -106,13 +148,18 @@ public class RoomEnemyManager : MonoBehaviour
         SetPlayerData();
     }
 
+    public void SearchClosestTarget()
+    {
+        if (roomActive)
+            playerAttack.target = GetCloserEnemy(playerAttack.transform);
+    }
 
     void SetPlayerData()
     {
         if (roomActive)
         {
             playerAttack.roomEnemyManager = this;
-            playerAttack.target = GetCloserEnemy(playerAttack.transform);
+            SearchClosestTarget();
         }
     }
 

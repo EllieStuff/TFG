@@ -15,6 +15,7 @@ public class AbilityButton : MonoBehaviour
     float SIZE_RECT_LERP_SPEED = 5;
 
     private PassiveSkills_Manager playerSkills;
+    private PlayerMovement playerMovement;
     private PassiveSkill_Base skill;
     PassiveSkill_Base.SkillType cardSkill;
 
@@ -24,6 +25,7 @@ public class AbilityButton : MonoBehaviour
     FadeInFadeOut_UI UIFade;
 
     const float DISABLE_TIMER = 3;
+    const float LERP_MOVE_SPEED = 2;
 
     bool pushedButton;
 
@@ -49,6 +51,8 @@ public class AbilityButton : MonoBehaviour
         imageTransform.sizeDelta = Vector3.zero;
         biggerSize = originalSize * 2;
         playerSkills = GameObject.FindWithTag("Player").GetComponent<PassiveSkills_Manager>();
+        playerMovement = playerSkills.GetComponent<PlayerMovement>();
+        playerMovement.canMove = false;
         uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         InitializeAbility();
@@ -118,10 +122,17 @@ public class AbilityButton : MonoBehaviour
 
         if (!isMouseOver)
             imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, originalSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
+
+        if (pushedButton)
+        {
+            imageTransform.localPosition = Vector3.Lerp(imageTransform.localPosition, Vector3.zero, Time.deltaTime * LERP_MOVE_SPEED);
+            SetTextPositionInElement();
+        }
     }
 
     private void OnMouseOver()
     {
+        SetTextPositionInElement();
         uiTextDescription.text = skill.description;
         imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, biggerSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
         isMouseOver = true;
@@ -141,6 +152,12 @@ public class AbilityButton : MonoBehaviour
         AddAbility();
     }
 
+    void SetTextPositionInElement()
+    {
+        RectTransform textRectTransfom = uiTextDescription.rectTransform;
+        uiTextDescription.rectTransform.localPosition = new Vector3(imageTransform.localPosition.x, textRectTransfom.localPosition.y);
+    }
+
     private void AddAbility()
     {
         if(!pushedButton)
@@ -156,6 +173,7 @@ public class AbilityButton : MonoBehaviour
         DisableOtherButtons();
         UIFade.EnableFadeOut();
         yield return new WaitForSeconds(DISABLE_TIMER);
+        playerMovement.canMove = true;
         UIFade.gameObject.SetActive(false);
         yield return 0;
     }

@@ -91,20 +91,20 @@ public class PlantProjectileData : ProjectileData
             }
         }
 
-        //if (CheckForWalls()) Destroy(gameObject);
+        if (CheckForWalls()) Destroy(gameObject);
 
     }
 
 
-    //bool CheckForWalls()
-    //{
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(transform.position, (targetPosLow - transform.position).normalized, out hit, 5f))
-    //    {
-    //        return hit.transform.CompareTag("Wall");
-    //    }
-    //    return false;
-    //}
+    bool CheckForWalls()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (targetPosLow - transform.position).normalized, out hit, 0.5f))
+        {
+            return hit.transform.CompareTag("Wall") || hit.transform.CompareTag("Obstacle");
+        }
+        return false;
+    }
 
 
     public override void DestroyObject(float _timer = -1)

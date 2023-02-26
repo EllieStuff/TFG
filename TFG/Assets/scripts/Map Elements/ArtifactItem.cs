@@ -25,7 +25,6 @@ public class ArtifactItem : MonoBehaviour
         {
             //pickup item and play sound/effects
             Instantiate(pickupItemSound);
-            PlaceItem(other.GetComponent<Inventory>());
             Destroy(gameObject);
         }
     }
@@ -34,24 +33,5 @@ public class ArtifactItem : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
             PickupLetter.SetActive(false);
-    }
-
-    void PlaceItem(Inventory itemType)
-    {
-        switch(type)
-        {
-            case ArtifactType.WATER:
-                itemType.waterGem = true;
-
-                break;
-            case ArtifactType.FIRE:
-                itemType.fireGem = true;
-
-                break;
-            case ArtifactType.MAGIC:
-                itemType.magicGem = true;
-
-                break;
-        }
     }
 }
