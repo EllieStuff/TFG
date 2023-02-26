@@ -8,12 +8,19 @@ public class RoomEnemyManager : MonoBehaviour
     [SerializeField] bool roomActive = false;
 
     PlayerAttack playerAttack;
+    LevelInfo levelInfo;
+
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
+
+    GameObject elementChoose;
+
+    bool endRoomEventIsTriggered = false;
 
     // Start is called before the first frame update
     void Awake()
     {
         playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
+        levelInfo = playerAttack.GetComponent<LevelInfo>();
 
         linkedZone.assignedRoom = this;
         InitEnemies();
@@ -22,6 +29,7 @@ public class RoomEnemyManager : MonoBehaviour
 
     private void Start()
     {
+        elementChoose = GameObject.Find("Canvas").transform.GetChild(10).gameObject;
         ActivateEnemies(roomActive);
         SetPlayerData();
     }
@@ -56,7 +64,21 @@ public class RoomEnemyManager : MonoBehaviour
 
     public Transform GetCloserEnemy(Transform _playerTransform)
     {
-        if (!HasEnemiesRemainging()) return null;
+        if (!HasEnemiesRemainging())
+        {
+            if(!endRoomEventIsTriggered)
+            {
+                int level = levelInfo.level;
+
+                if (level > 0 && level % 2 == 0)
+                    elementChoose.SetActive(true);
+
+                levelInfo.level++;
+                endRoomEventIsTriggered = true;
+            }
+
+            return null;
+        }
 
         Transform closerEnemy = GetFirstReachableEnemyWithWallCheck();
         if (closerEnemy == null) return enemies[0].transform;

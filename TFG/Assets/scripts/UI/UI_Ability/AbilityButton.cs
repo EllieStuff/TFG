@@ -15,6 +15,7 @@ public class AbilityButton : MonoBehaviour
     float SIZE_RECT_LERP_SPEED = 5;
 
     private PassiveSkills_Manager playerSkills;
+    private PlayerMovement playerMovement;
     private PassiveSkill_Base skill;
     PassiveSkill_Base.SkillType cardSkill;
 
@@ -50,6 +51,8 @@ public class AbilityButton : MonoBehaviour
         imageTransform.sizeDelta = Vector3.zero;
         biggerSize = originalSize * 2;
         playerSkills = GameObject.FindWithTag("Player").GetComponent<PassiveSkills_Manager>();
+        playerMovement = playerSkills.GetComponent<PlayerMovement>();
+        playerMovement.canMove = false;
         uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         InitializeAbility();
@@ -170,6 +173,7 @@ public class AbilityButton : MonoBehaviour
         DisableOtherButtons();
         UIFade.EnableFadeOut();
         yield return new WaitForSeconds(DISABLE_TIMER);
+        playerMovement.canMove = true;
         UIFade.gameObject.SetActive(false);
         yield return 0;
     }
