@@ -10,8 +10,6 @@ public class RoomEnemyManager : MonoBehaviour
     PlayerAttack playerAttack;
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
 
-    const float RAYCAST_DISTANCE = 10;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,6 +26,10 @@ public class RoomEnemyManager : MonoBehaviour
         SetPlayerData();
     }
 
+    private void Update()
+    {
+        SearchClosestTarget();
+    }
 
     void InitEnemies()
     {
@@ -56,9 +58,12 @@ public class RoomEnemyManager : MonoBehaviour
     {
         if (!HasEnemiesRemainging()) return null;
 
-        Transform closerEnemy = enemies[0].transform;
-        float closerDist = Vector3.Distance(enemies[0].transform.position, _playerTransform.position);
-        for(int i = 1; i < enemies.Count; i++)
+        Transform closerEnemy = GetFirstReachableEnemyWithWallCheck();
+        if (closerEnemy == null) return enemies[0].transform;
+
+        float closerDist = Vector3.Distance(closerEnemy.position, _playerTransform.position);
+
+        for(int i = 0; i < enemies.Count; i++)
         {
             if(enemies[i] == null)
             {
@@ -75,14 +80,29 @@ public class RoomEnemyManager : MonoBehaviour
             }
         }
 
-
         return closerEnemy;
+    }
+
+    private Transform GetFirstReachableEnemyWithWallCheck()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            Transform enemy = enemies[i].transform;
+
+            if (PlayerCheck(enemy))
+            {
+                return enemy;
+            }
+        }
+
+        return null;
     }
 
     private bool PlayerCheck(Transform _enemyTransform)
     {
         RaycastHit hit;
-        Ray ray = new Ray(_enemyTransform.position, _enemyTransform.TransformDirection(Vector3.forward * RAYCAST_DISTANCE));
+        float raycastDistance = Vector3.Distance(_enemyTransform.position, playerAttack.transform.position);
+        Ray ray = new Ray(_enemyTransform.position, _enemyTransform.TransformDirection(Vector3.forward * raycastDistance));
 
         if (Physics.Raycast(ray, out hit))
         {
@@ -106,13 +126,18 @@ public class RoomEnemyManager : MonoBehaviour
         SetPlayerData();
     }
 
+    public void SearchClosestTarget()
+    {
+        if (roomActive)
+            playerAttack.target = GetCloserEnemy(playerAttack.transform);
+    }
 
     void SetPlayerData()
     {
         if (roomActive)
         {
             playerAttack.roomEnemyManager = this;
-            playerAttack.target = GetCloserEnemy(playerAttack.transform);
+            SearchClosestTarget();
         }
     }
 
