@@ -91,7 +91,7 @@ public class PlantProjectileData : ProjectileData
             }
         }
 
-        if (CheckForWalls()) Destroy(gameObject);
+        //if (CheckForWalls()) Destroy(gameObject);
 
     }
 
