@@ -124,7 +124,7 @@ public class RoomEnemyManager : MonoBehaviour
     {
         RaycastHit hit;
         float raycastDistance = Vector3.Distance(_enemyTransform.position, playerAttack.transform.position);
-        Ray ray = new Ray(_enemyTransform.position, _enemyTransform.TransformDirection(Vector3.forward * raycastDistance));
+        Ray ray = new Ray(_enemyTransform.position, (playerAttack.transform.position - _enemyTransform.position).normalized * raycastDistance);
 
         if (Physics.Raycast(ray, out hit))
         {
