@@ -18,10 +18,13 @@ public class PlayerLifeBar : MonoBehaviour
         shakeLifeBarAnim = GetComponent<Animation>();
     }
 
-    
-    public void Damage()
+    private void Update()
     {
         lifeSlider.value = playerLifeStatus.currLife / playerLifeStatus.maxLife;
+    }
+
+    public void Damage()
+    {
         shakeLifeBarAnim.Play();
     }
 
