@@ -28,7 +28,7 @@ public class RadialRotation : MonoBehaviour
         //rotationsByElements[ElementsManager.Elements.NORMAL] = Quaternion.Euler(0, 0, 90);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UIRadialCurrentItem = playerAttack.currentAttackElement;
         SetRadialRotation();
@@ -36,7 +36,7 @@ public class RadialRotation : MonoBehaviour
 
     void SetRadialRotation()
     {
-        rect.localRotation = Quaternion.RotateTowards(rect.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED / 3.1f);
-        insideUIRadial.localRotation = Quaternion.RotateTowards(insideUIRadial.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED / 3.1f);
+        rect.localRotation = Quaternion.RotateTowards(rect.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED);
+        insideUIRadial.localRotation = Quaternion.RotateTowards(insideUIRadial.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED);
     }
 }
