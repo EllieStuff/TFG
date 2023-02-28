@@ -81,6 +81,8 @@ public class PassiveSkills_Manager : MonoBehaviour
             case PassiveSkill_Base.SkillType.INCREASE_PROJECTILE_AMOUNT:
                 return new IncreaseProjectileAmount_PassiveSkill();
 
+            case PassiveSkill_Base.SkillType.VAMPIRE:
+                return new Vampire_PassiveSkill();
 
             default:
                 return null;

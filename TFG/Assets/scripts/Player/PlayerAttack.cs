@@ -36,6 +36,8 @@ public class PlayerAttack : MonoBehaviour
     float attackTimer, changeAttackTimer;
     internal float dmgIncrease = 0f;
     internal int extraProjectiles = 0;
+    internal bool stealLifeEnabled = false;
+    internal float stealLifePercentage = 0;
     float extraProjectilesDelay = 0.2f;
     //internal bool changingAttackType = false;
 
@@ -110,6 +112,8 @@ public class PlayerAttack : MonoBehaviour
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
         attack.Init(transform);
+        attack.dmgData.stealLife = stealLifeEnabled;
+        attack.dmgData.stealLifePercentage = stealLifePercentage;
         attack.dmgData.damage += dmgIncrease;
     }
 

@@ -98,6 +98,29 @@ public class LifeSystem : MonoBehaviour
         CheckPlayerLifeLimits();
     }
 
+    public void DamageWithLifeSteal(float _dmg, ElementsManager.Elements _attackElement, PlayerProjectileData projectileData, LifeSystem playerLifeSystem)
+    {
+        float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
+
+        if (dmgMultiplier > 1.9f)
+        {
+            float damageMade = (_dmg * dmgInc * dmgMultiplier);
+            float lifeStolen = (projectileData.dmgData.stealLifePercentage * 100 / damageMade);
+            playerLifeSystem.AddLife(lifeStolen);
+
+            Transform playerLifeBar = playerLifeSystem.EnemyLifeBar.transform;
+
+            GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.gameObject.transform.position.x, playerLifeBar.parent.transform.position.y, playerLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
+            string lifeStolenText = "+ " + lifeStolen.ToString("0.00");
+            TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+            textUI.color = Color.green;
+            textUI.text = lifeStolenText;
+        }
+
+
+        Damage(_dmg, _attackElement);
+    }
+
     public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
         float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);

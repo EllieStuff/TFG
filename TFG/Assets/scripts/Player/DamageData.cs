@@ -9,9 +9,13 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal ElementsManager.Elements attackElement;
     [SerializeField] internal bool alwaysAttacking = false;
     [SerializeField] internal float timeDisabledAfterColl = -1f;
+    [SerializeField] internal bool stealLife = false;
+    [SerializeField] internal float stealLifePercentage = 0;
     [SerializeField] List<string> tagsAffected;
 
     [SerializeField] AudioManager audio;
+
+    private LifeSystem playerLifeSystem;
 
     internal bool disabled = false;
 
@@ -68,9 +72,20 @@ public class DamageData : MonoBehaviour
         if (audio != null)
             audio.PlaySound();
 
+        if(playerLifeSystem == null)
+            playerLifeSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeSystem>();
+
+        PlayerProjectileData dataProj = GetComponent<PlayerProjectileData>();
+
         LifeSystem lifeSystem = _enemy.GetComponent<LifeSystem>();
         //Debug.Log("Damaged by: " + this.name);
-        lifeSystem.Damage(damage, attackElement);
+
+        if (dataProj.dmgData.stealLife)
+            lifeSystem.DamageWithLifeSteal(damage, attackElement, dataProj, playerLifeSystem);
+        else
+            lifeSystem.Damage(damage, attackElement);
+
+
         BaseEnemyScript enemy = _enemy.GetComponent<BaseEnemyScript>();
         if (lifeSystem.isDead)
         {
