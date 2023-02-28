@@ -7,6 +7,7 @@ public class Cheats : MonoBehaviour
 {
     LifeSystem playerLife;
     bool infiniteLife = false;
+    [SerializeField] GameObject cardSelectCheat;
 
     private void Start()
     {
@@ -16,20 +17,19 @@ public class Cheats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
+        if (Input.GetKeyDown(KeyCode.F1))
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-        }
 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
+        if (Input.GetKeyDown(KeyCode.F2))
             infiniteLife = !infiniteLife;
-        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+            cardSelectCheat.SetActive(true);
+
         if (infiniteLife)
         {
             playerLife.currLife = playerLife.maxLife;
         }
-
     }
 
 }
