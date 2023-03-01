@@ -7,7 +7,7 @@ public class Vampire_PassiveSkill : PassiveSkill_Base
 
     public Vampire_PassiveSkill()
     {
-        skillType = SkillType.INCREASE_PROJECTILE_AMOUNT;
+        skillType = SkillType.VAMPIRE;
         maxLevel = 5;
         name = "Vampire";
         description = "Steal enemy life by damaging them with critical elements!";
