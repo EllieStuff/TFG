@@ -70,7 +70,7 @@ public class RoomEnemyManager : MonoBehaviour
             {
                 int level = levelInfo.level;
 
-                if (level > 0 && level % 2 == 0)
+                if (level > 0 && level % 3 == 0)
                     elementChoose.SetActive(true);
 
                 levelInfo.level++;

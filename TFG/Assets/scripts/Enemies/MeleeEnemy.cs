@@ -46,6 +46,7 @@ public class MeleeEnemy : BaseEnemyScript
         if (isAttacking)
         {
             //canRotate = Vector3.Angle(transform.forward, attackMoveDir) < 1f;
+            attackMoveDir = new Vector3(attackMoveDir.x, 0, attackMoveDir.z);
             MoveRB(attackMoveDir, attackForce);
         }
 
