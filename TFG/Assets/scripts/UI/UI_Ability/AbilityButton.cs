@@ -112,7 +112,12 @@ public class AbilityButton : MonoBehaviour
 
     PassiveSkill_Base.SkillType InitializeCardSkill() 
     {
-        return (PassiveSkill_Base.SkillType) Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+        PassiveSkill_Base.SkillType skill = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+
+        while (playerSkills.SearchSkillImage(skill) == null)
+            skill = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+
+        return skill;
     }
 
     void EnableOrDisableCardView(Transform card, bool enableOrDisable)
