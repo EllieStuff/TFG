@@ -81,11 +81,8 @@ public class PassiveSkills_Manager : MonoBehaviour
             case PassiveSkill_Base.SkillType.IMPROVE_ATTACK_DAMAGE:
                 return new ImproveAttackDamage_PassiveSkill();
 
-            //case PassiveSkill_Base.SkillType.INCREASE_PROJECTILE_AMOUNT:
-            //    return new IncreaseProjectileAmount_PassiveSkill();
-
-            case PassiveSkill_Base.SkillType.QUICK_CONJURING:
-                return null;
+            case PassiveSkill_Base.SkillType.INCREASE_PROJECTILE_AMOUNT:
+                return new IncreaseProjectileAmount_PassiveSkill();
 
             case PassiveSkill_Base.SkillType.VAMPIRE:
                 return new Vampire_PassiveSkill();
