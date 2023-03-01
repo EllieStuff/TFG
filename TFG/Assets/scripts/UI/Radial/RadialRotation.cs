@@ -32,7 +32,7 @@ public class RadialRotation : MonoBehaviour
 
     void Update()
     {
-        lerpTime = playerAttack.attackDelay;
+        lerpTime = playerAttack.changeAttackDelay;
         UIRadialCurrentItem = playerAttack.currentAttackElement;
         SetRadialRotation();
     }
