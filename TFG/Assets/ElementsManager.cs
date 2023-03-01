@@ -36,10 +36,13 @@ public class ElementsManager : MonoBehaviour
 
     bool CanChangeElement { get { return !(!allowElementChangeOneStarted && changingElement); } }
 
+    private RadialRotation UIRadialRot;
+
     // Start is called before the first frame update
     void Awake()
     {
         attackManager = GetComponent<PlayerAttack>();
+        UIRadialRot = GameObject.FindGameObjectWithTag("Radial").GetComponent<RadialRotation>();
         //moveManager = GetComponent<PlayerMovement>();
         //walkMark = FindObjectOfType<WalkMark>();
 
@@ -175,6 +178,7 @@ public class ElementsManager : MonoBehaviour
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 0, 1, 0.3f));
         attackManager.currentAttackElement = _element;
 
+        UIRadialRot.ResetRadialTime();
         float timer = 0, maxTime = _changeAttackDelay;
         while(timer < maxTime)
         {

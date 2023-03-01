@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PassiveSkill_Base
 {
-    public enum SkillType { IMPROVE_LIFE, IMPROVE_ATTACK_SPEED, IMPROVE_ATTACK_DAMAGE, INCREASE_PROJECTILE_AMOUNT, VAMPIRE, COUNT }
+    public enum SkillType { IMPROVE_LIFE, IMPROVE_ATTACK_SPEED, IMPROVE_ATTACK_DAMAGE, INCREASE_PROJECTILE_AMOUNT, VAMPIRE, CONJURE, COUNT }
 
     internal SkillType skillType;
     internal Transform playerRef;

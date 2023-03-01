@@ -10,7 +10,9 @@ public class RadialRotation : MonoBehaviour
     private RectTransform rect;
     private PlayerAttack playerAttack;
 
-    private const float LERP_SPEED = 1.5f;
+    float current_time = 0;
+    float lerpTime = 1.5f;
+
 
     private void Start()
     {
@@ -28,15 +30,23 @@ public class RadialRotation : MonoBehaviour
         //rotationsByElements[ElementsManager.Elements.NORMAL] = Quaternion.Euler(0, 0, 90);
     }
 
-    void FixedUpdate()
+    void Update()
     {
+        lerpTime = playerAttack.attackDelay;
         UIRadialCurrentItem = playerAttack.currentAttackElement;
         SetRadialRotation();
     }
 
     void SetRadialRotation()
     {
-        rect.localRotation = Quaternion.RotateTowards(rect.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED);
-        insideUIRadial.localRotation = Quaternion.RotateTowards(insideUIRadial.localRotation, rotationsByElements[UIRadialCurrentItem], LERP_SPEED);
+        if (current_time <= lerpTime) current_time += Time.deltaTime;
+
+        rect.localRotation = Quaternion.RotateTowards(rect.localRotation, rotationsByElements[UIRadialCurrentItem], current_time / lerpTime);
+        insideUIRadial.localRotation = Quaternion.RotateTowards(insideUIRadial.localRotation, rotationsByElements[UIRadialCurrentItem], current_time / lerpTime);
+    }
+
+    public void ResetRadialTime()
+    {
+        current_time = 0;
     }
 }
