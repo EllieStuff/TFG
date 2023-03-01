@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeEnemy : BaseEnemyScript
 {
-    enum AnimState { IDLE, MOVING, ATTACKING, RESTING, DAMAGED }
+    enum AnimState { IDLE, MOVING, ATTACKING, RESTING, DEAD }
 
     [Header("MeleeEnemy")]
     //[SerializeField] Transform shieldPivotRef; 
@@ -51,12 +51,12 @@ public class MeleeEnemy : BaseEnemyScript
 
         //if (isAttacking)
         //{
-        //    enemyAnimator.SetFloat("state", 1);
+        //    enemyAnimator.SetInteger("state", 1);
         //    MoveRB(attackMoveDir, attackForce);
         //}
         //else
         //{
-        //    enemyAnimator.SetFloat("state", 0);
+        //    enemyAnimator.SetInteger("state", 0);
         //}
     }
 
@@ -64,17 +64,17 @@ public class MeleeEnemy : BaseEnemyScript
     internal override void IdleStart()
     {
         base.IdleStart();
-        enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
+        enemyAnimator.SetInteger("state", (int)AnimState.IDLE);
     }
     internal override void RandomMovementStart()
     {
         base.RandomMovementStart();
-        enemyAnimator.SetFloat("state", (int)AnimState.MOVING);
+        enemyAnimator.SetInteger("state", (int)AnimState.MOVING);
     }
     internal override void MoveToTargetStart()
     {
         base.MoveToTargetStart();
-        enemyAnimator.SetFloat("state", (int)AnimState.MOVING);
+        enemyAnimator.SetInteger("state", (int)AnimState.MOVING);
     }
     internal override void AttackStart()
     {
@@ -83,6 +83,11 @@ public class MeleeEnemy : BaseEnemyScript
         canEnterDamageState = false;
         moveDir = Vector3.zero;
         StartCoroutine(AttackCoroutine());
+    }
+    internal override void DeathStart()
+    {
+        enemyAnimator.SetInteger("state", (int)AnimState.DEAD);
+        base.DeathStart();
     }
 
 
@@ -94,7 +99,7 @@ public class MeleeEnemy : BaseEnemyScript
         SetVelocityLimit(baseMinVelocity, baseMaxVelocity);
         isAttacking = false;
     }
-    
+
     IEnumerator AttackCoroutine()
     {
         // Prepares For Attack
@@ -102,7 +107,7 @@ public class MeleeEnemy : BaseEnemyScript
         StopRB(2.0f);
         yield return new WaitForSeconds(0.2f);
         //Feedback
-        enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
+        enemyAnimator.SetInteger("state", (int)AnimState.IDLE);
         yield return new WaitForSeconds(0.5f);
         //Feedback
         yield return new WaitForSeconds(0.2f);
@@ -114,14 +119,14 @@ public class MeleeEnemy : BaseEnemyScript
         canMove = isAttacking = true;
         //canRotate = false;
         attackMoveDir = (player.position - transform.position).normalized;
-        //moveDir = attackMoveDir;
-        enemyAnimator.SetFloat("state", (int)AnimState.ATTACKING);
+        moveDir = attackMoveDir;
+        enemyAnimator.SetInteger("state", (int)AnimState.ATTACKING);
         yield return new WaitForSeconds(attackDuration);
 
         // Ends Attack
-        enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
+        enemyAnimator.SetInteger("state", (int)AnimState.RESTING);
         canMove = isAttacking = false;
-        StopRB(4.0f);
+        StopRB(stopForce);
         yield return new WaitForSeconds(0.2f);
         touchBodyDamageData.damage = dmgOnTouch;
         canEnterDamageState = true;

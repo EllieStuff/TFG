@@ -16,6 +16,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal EnemyType enemyType;
     [SerializeField] internal float baseRotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
+    [SerializeField] protected float stopForce = 90f;
     [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float baseMoveSpeed, playerFoundSpeed;
@@ -30,6 +31,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] int numOfRndMoves = 0;
     [SerializeField] protected float dmgOnTouch = 5f;
     [SerializeField] Transform enemyLightsHolder;
+    [SerializeField] Transform lookPoint;
 
     internal ZoneScript zoneSystem;
     internal float damageTimer = 0;
@@ -37,6 +39,7 @@ public class BaseEnemyScript : MonoBehaviour
     int rndMovesDone = 0;
     Vector3 rndTarget;
     float restTimer = 0f;
+    float rndMoveTimer = 0f, rndMoveWait = 5f;
     LifeSystem enemyLife;
     protected DamageData touchBodyDamageData;
 
@@ -83,9 +86,18 @@ public class BaseEnemyScript : MonoBehaviour
         enemyMesh.material = new Material(enemyMesh.material);
 
         touchBodyDamageData.damage = dmgOnTouch;
-        for(int i = 0; i < enemyLightsHolder.childCount; i++)
+        if (enemyLightsHolder != null)
         {
-            enemyLights.Add(enemyLightsHolder.GetChild(i).GetComponent<Light>());
+            for (int i = 0; i < enemyLightsHolder.childCount; i++)
+            {
+                enemyLights.Add(enemyLightsHolder.GetChild(i).GetComponent<Light>());
+            }
+        }
+
+        if(lookPoint = null)
+        {
+            lookPoint = transform;
+            Debug.LogWarning("LookPoint was not set on " + transform.name + ", using its transform instead");
         }
 
         ResetSpeed();
@@ -288,11 +300,16 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void RandomMovementUpdate()
     {
+        rndMoveTimer += Time.deltaTime;
         moveDir = (rndTarget - transform.position).normalized;
         MoveRB(moveDir, ((actualMoveSpeed * 3f) / 4f) * speedMultiplier);
 
-        if(Vector3.Distance(transform.position, rndTarget) < THRESHOLD)
+
+        if((lookPoint != null && Physics.Raycast(lookPoint.position, lookPoint.forward, 3f))
+            || Vector3.Distance(transform.position, rndTarget) < THRESHOLD
+            || rndMoveTimer >= rndMoveWait)
         {
+            //Debug.Log("ExitRandomMovement");
             ChangeState(States.IDLE);
         }
     }
@@ -302,6 +319,7 @@ public class BaseEnemyScript : MonoBehaviour
 
         Vector3 targetMoveDir = (player.position - transform.position).normalized;
         MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
+
 
         if (Vector3.Distance(transform.position, player.position) > playerStopDetectionDistance)
             ChangeState(States.IDLE);
@@ -381,7 +399,7 @@ public class BaseEnemyScript : MonoBehaviour
     #endregion Updates
 
     #region Starts
-    internal virtual void IdleStart() { StopRB(5.0f); idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
+    internal virtual void IdleStart() { StopRB(stopForce); idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
     internal virtual void RandomMovementStart()
     {
         float rndFactor = 4f;
@@ -391,11 +409,12 @@ public class BaseEnemyScript : MonoBehaviour
         {
             rndTarget = transform.position + new Vector3(Random.Range(-rndFactor, rndFactor), 0f, Random.Range(-rndFactor, rndFactor));
             collided = Physics.BoxCast(transform.position, Vector3.one, 
-                (rndTarget - transform.position).normalized, Quaternion.identity, Vector3.Distance(transform.position, rndTarget), 7);
+                (rndTarget - transform.position).normalized, Quaternion.identity, Vector3.Distance(transform.position, rndTarget), ENEMY_LAYER);
             currTrials++;
         }
         //Debug.Log("Num of Trials: " + currTrials);
         actualMoveSpeed = baseMoveSpeed;
+        rndMoveTimer = 0f;
         if (collided) ChangeState(States.IDLE);
     }
     internal virtual void MoveToTargetStart() { if (numOfRndMoves > 0) rndMovesDone = 0; actualMoveSpeed = playerFoundSpeed; }
