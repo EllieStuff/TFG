@@ -22,6 +22,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseMoveSpeed, playerFoundSpeed;
     [SerializeField] bool attacksTargetWOSeeingIt = false;  // WO == Without
     [SerializeField] bool movesToTargetWOSeeingIt = false;
+    [SerializeField] bool stopRndMoveWhenSeeingTarget = true;
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
     [SerializeField] protected bool movesToTarget = true;
@@ -305,7 +306,19 @@ public class BaseEnemyScript : MonoBehaviour
         MoveRB(moveDir, ((actualMoveSpeed * 3f) / 4f) * speedMultiplier);
 
 
-        if((lookPoint != null && Physics.Raycast(lookPoint.position, lookPoint.forward, 3f))
+        if (stopRndMoveWhenSeeingTarget)
+        {
+            RaycastHit hit;
+            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit,
+                Vector3.Distance(transform.position, player.position), ENEMY_LAYER);
+            if (hitCollided && hit.transform.CompareTag("Player"))
+            {
+                ChangeState(States.MOVE_TO_TARGET);
+                return;
+            }
+        }
+
+        if ((lookPoint != null && Physics.Raycast(lookPoint.position, lookPoint.forward, 3f))
             || Vector3.Distance(transform.position, rndTarget) < THRESHOLD
             || rndMoveTimer >= rndMoveWait)
         {

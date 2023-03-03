@@ -87,8 +87,11 @@ public class PassiveSkills_Manager : MonoBehaviour
             case PassiveSkill_Base.SkillType.VAMPIRE:
                 return new Vampire_PassiveSkill();
 
-            case PassiveSkill_Base.SkillType.CONJURE:
-                return new Conjure_PassiveSkill();
+            case PassiveSkill_Base.SkillType.QUICK_CONJURING:
+                return new QuickConjuring_PassiveSkill();
+
+            case PassiveSkill_Base.SkillType.PIERCE:
+                return new Pierce_PassiveSkill();
 
             default:
                 return null;

@@ -44686,6 +44686,7 @@ MonoBehaviour:
   baseRotSpeed: 300
   playerDetectionDistance: 25
   playerStopDetectionDistance: 25
+  stopForce: 90
   enemyStartAttackDistance: 25
   enemyStopAttackDistance: 26
   isAttacking: 0
@@ -44693,6 +44694,7 @@ MonoBehaviour:
   playerFoundSpeed: 0
   attacksTargetWOSeeingIt: 1
   movesToTargetWOSeeingIt: 0
+  stopRndMoveWhenSeeingTarget: 1
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
@@ -44702,6 +44704,7 @@ MonoBehaviour:
   numOfRndMoves: 0
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 364602395673561452}
+  lookPoint: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 7001014457201336260}
   transparentMat: {fileID: 2100000, guid: 52eff7ed8ee74da4d9b8fa3fa8878cc9, type: 2}
@@ -44756,6 +44759,8 @@ MonoBehaviour:
   attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: 1
+  stealLife: 0
+  stealLifePercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 0}

@@ -27,7 +27,7 @@ public class ZoneScript : MonoBehaviour
     private void Start()
     {
         blackTile.enabled = true;
-        camSystem = GameObject.Find("CameraHolder").transform.GetChild(0).GetComponent<CameraFollow>();
+        camSystem = GameObject.Find("CameraHolder").GetComponent<CameraFollow>();
         blackTile.material = new Material(blackTile.material);
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
@@ -65,7 +65,7 @@ public class ZoneScript : MonoBehaviour
         if(isPlayer)
         {
             camSystem.camLimits = roomLimits;
-            camSystem.transform.parent.parent = parentTransform;
+            camSystem.transform.parent = parentTransform;
             showRoom = true;
             assignedRoom.ActivateRoom(true);
         }

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Conjure_PassiveSkill : PassiveSkill_Base
+public class Pierce_PassiveSkill : PassiveSkill_Base
 {
-    float speedIncrease = 0.2f;
+    int piercesToIncrease = 1;
 
-    public Conjure_PassiveSkill()
+    public Pierce_PassiveSkill()
     {
-        skillType = SkillType.IMPROVE_LIFE;
+        skillType = SkillType.PIERCE;
         maxLevel = -1;
-        name = "Agile Conjuration";
-        description = "Speed up your element casting time!";
+        name = "Pierce";
+        description = "Your projectiles will pierce throught your enemies!";
     }
 
     public override void Init(Transform _playerRef)
@@ -31,9 +31,6 @@ public class Conjure_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         PlayerAttack playerAttack = playerRef.GetComponent<PlayerAttack>();
-        
-        if(playerAttack.changeAttackDelay > 0.5f)
-            playerAttack.changeAttackDelay -= 0.2f;
+        playerAttack.projectilePierceAmount += piercesToIncrease;
     }
-
 }

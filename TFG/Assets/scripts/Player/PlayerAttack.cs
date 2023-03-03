@@ -38,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
     internal int extraProjectiles = 0;
     internal bool stealLifeEnabled = false;
     internal float stealLifePercentage = 0;
+    internal int projectilePierceAmount = 0;
     float extraProjectilesDelay = 0.2f;
     //internal bool changingAttackType = false;
 

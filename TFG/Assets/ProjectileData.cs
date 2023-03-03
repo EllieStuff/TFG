@@ -10,8 +10,8 @@ public class ProjectileData : MonoBehaviour
     protected Rigidbody rb;
     internal Vector3 moveDir;
     protected string originTag = "";
-    int pierceAmount = 0;
-    int bounceAmount = 0;
+    protected int pierceAmount = 0;
+    //int bounceAmount = 0;
     protected bool affectedByObstacles = true;
     protected bool destroying = false;
     protected float destroyTimer = -1f;

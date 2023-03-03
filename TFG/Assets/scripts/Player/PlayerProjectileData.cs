@@ -10,6 +10,7 @@ public class PlayerProjectileData : ProjectileData
         base.Init(_origin);
         PlayerAttack player = _origin.GetComponent<PlayerAttack>();
         dmgData.attackElement = player.currentAttackElement;
+        pierceAmount = player.projectilePierceAmount;
         if (player.target != null)
             moveDir = (player.target.position - player.transform.position).normalized;
         else

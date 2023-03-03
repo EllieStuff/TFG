@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class PassiveSkill_Base
 {
-    public enum SkillType { IMPROVE_LIFE, IMPROVE_ATTACK_SPEED, IMPROVE_ATTACK_DAMAGE, INCREASE_PROJECTILE_AMOUNT, VAMPIRE, CONJURE, HEAL, COUNT }
+    public enum SkillType { IMPROVE_LIFE, IMPROVE_ATTACK_SPEED, IMPROVE_ATTACK_DAMAGE, INCREASE_PROJECTILE_AMOUNT, VAMPIRE, QUICK_CONJURING, HEAL, PIERCE, COUNT }
 
     internal SkillType skillType;
     internal Transform playerRef;
-    [SerializeField] int level = 1;
+    [SerializeField] protected int level = 1;
     internal int maxLevel = 3;
 
     internal string name;
