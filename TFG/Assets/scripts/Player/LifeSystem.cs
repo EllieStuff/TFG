@@ -29,7 +29,8 @@ public class LifeSystem : MonoBehaviour
     internal bool isDead = false;
 
     PlayerMovement playerMovementScript;
-    Transform camera;
+    CameraShake cameraRef;
+    EnemyShake enemyShake;
     Transform parentCanvas;
 
     // Crec que ser� millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
@@ -43,7 +44,8 @@ public class LifeSystem : MonoBehaviour
         if (entityType.Equals(EntityType.ENEMY))
         {
             parentCanvas = EnemyLifeBar.transform.parent;
-            camera = Camera.main.transform;
+            cameraRef = Camera.main.transform.GetComponent<CameraShake>();
+            enemyShake = GetComponent<EnemyShake>();
         }
 
         if (EnemyLifeBar != null)
@@ -57,7 +59,7 @@ public class LifeSystem : MonoBehaviour
         if (entityType.Equals(EntityType.ENEMY))
         {
             EnemyLifeBar.value = currLife / maxLife;
-            parentCanvas.LookAt(camera);
+            parentCanvas.LookAt(cameraRef.transform);
             Vector3 canvasRot = parentCanvas.rotation.eulerAngles;
             parentCanvas.rotation = Quaternion.Euler(-canvasRot.x, 0, 0);
         }
@@ -161,13 +163,13 @@ public class LifeSystem : MonoBehaviour
             {
                 if (dmgMultiplier > 1.9f)
                 {
-                    StartCoroutine(GetComponent<EnemyShake>().Shake(0.3f, 0.03f, 0.03f));
-                    StartCoroutine(Camera.main.GetComponent<CameraShake>().ShakeCamera(0.3f, 0.07f));
+                    StartCoroutine(enemyShake.Shake(0.3f, 0.03f, 0.03f));
+                    StartCoroutine(cameraRef.ShakeCamera(0.3f, 0.07f));
                     textUI.color = Color.red;
                 }
                 else if (dmgMultiplier > 0.7f)
                 {
-                    StartCoroutine(GetComponent<EnemyShake>().Shake(0.2f, 0.01f, 0.01f));
+                    StartCoroutine(enemyShake.Shake(0.2f, 0.01f, 0.01f));
                 }
                 else
                 {

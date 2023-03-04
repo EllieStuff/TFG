@@ -9,7 +9,7 @@ public class BaseEnemyScript : MonoBehaviour
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     //const float PLAYER_HIT_DISTANCE_SWORD = 3;
     const float THRESHOLD = 1f;
-    const int ENEMY_LAYER = 7;
+    const int ENEMY_LAYER = 7, ENEMYCOLPLAYER_LAYER = 9;
 
 
     [Header("BaseEnemy")]
@@ -82,7 +82,7 @@ public class BaseEnemyScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         enemyLife = GetComponent<LifeSystem>();
-        touchBodyDamageData = GetComponent<DamageData>();
+        touchBodyDamageData = transform.Find("DamageArea").GetComponent<DamageData>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyMesh.material = new Material(enemyMesh.material);
 
@@ -100,6 +100,8 @@ public class BaseEnemyScript : MonoBehaviour
             lookPoint = transform;
             Debug.LogWarning("LookPoint was not set on " + transform.name + ", using its transform instead");
         }
+
+        Physics.IgnoreLayerCollision(ENEMY_LAYER, ENEMYCOLPLAYER_LAYER);
 
         ResetSpeed();
     }

@@ -117,6 +117,7 @@ public class MeleeEnemy : BaseEnemyScript
         touchBodyDamageData.StopAllCoroutines();
         touchBodyDamageData.damage = attackDmg;
         touchBodyDamageData.disabled = false;
+        touchBodyDamageData.dmgBehaviour = DamageData.DamageBehaviour.ON_ENTER;
         canMove = isAttacking = true;
         //canRotate = false;
         attackMoveDir = (player.position - transform.position).normalized;
@@ -130,6 +131,7 @@ public class MeleeEnemy : BaseEnemyScript
         StopRB(stopForce);
         yield return new WaitForSeconds(0.2f);
         touchBodyDamageData.damage = dmgOnTouch;
+        touchBodyDamageData.dmgBehaviour = DamageData.DamageBehaviour.ON_STAY;
         canEnterDamageState = true;
         ChangeState(States.REST);
         

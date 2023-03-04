@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5200356954995763240}
   - component: {fileID: 3463599801144255227}
   - component: {fileID: 2081131014367171197}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fire_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4832,7 +4832,7 @@ GameObject:
   - component: {fileID: 6993554593389848576}
   - component: {fileID: 6647461901284761024}
   - component: {fileID: 3845019966614336074}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4947,7 +4947,7 @@ GameObject:
   - component: {fileID: 1459377735907815438}
   - component: {fileID: 5461383386582714078}
   - component: {fileID: 3543075789508028611}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4967,7 +4967,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &5461383386582714078
 ParticleSystem:
@@ -9759,7 +9759,7 @@ GameObject:
   - component: {fileID: 4585182677396426154}
   - component: {fileID: 3915178935955110883}
   - component: {fileID: 2024423046620413052}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9835,7 +9835,7 @@ GameObject:
   - component: {fileID: 1475014208997384242}
   - component: {fileID: 2421765769649855614}
   - component: {fileID: 4281939000685139834}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ice_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14656,7 +14656,7 @@ GameObject:
   - component: {fileID: 6295955196881239418}
   - component: {fileID: 8108670363519232614}
   - component: {fileID: 4645250065459417483}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wind_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19466,6 +19466,76 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &2481900097989505184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3478866644981103742}
+  - component: {fileID: 757322100447859568}
+  - component: {fileID: 1343598421797620675}
+  m_Layer: 9
+  m_Name: DamageArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3478866644981103742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2481900097989505184}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518678067557753390}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &757322100447859568
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2481900097989505184}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.7, z: 0}
+--- !u!114 &1343598421797620675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2481900097989505184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTransform: {fileID: 1518678067557753390}
+  dmgBehaviour: 1
+  damage: 5
+  attackElement: 3
+  alwaysAttacking: 1
+  timeDisabledAfterColl: 1
+  stealLife: 0
+  stealLifePercentage: 0
+  tagsAffected:
+  - Player
+  audio: {fileID: 0}
 --- !u!1 &2531666132505649290
 GameObject:
   m_ObjectHideFlags: 0
@@ -19476,7 +19546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3810020228260933994}
   - component: {fileID: 2693124147026568373}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bleeding_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19522,7 +19592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693481586664506299}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -19554,7 +19624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3092885847567237848}
   - component: {fileID: 8750957721648064693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wind_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19602,7 +19672,7 @@ GameObject:
   - component: {fileID: 2837191747615877451}
   - component: {fileID: 3956742464665347867}
   - component: {fileID: 596497012289569965}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StrongBlow_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24421,7 +24491,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5432909558806648478}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lights Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24454,7 +24524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8374198154598772125}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LookPoint
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -24474,7 +24544,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4590892719693805230
 GameObject:
@@ -24487,7 +24557,7 @@ GameObject:
   - component: {fileID: 1102109324794835908}
   - component: {fileID: 8518275773263500545}
   - component: {fileID: 5252476796885894554}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Electrocuted_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29309,7 +29379,7 @@ GameObject:
   - component: {fileID: 898733192618945152}
   - component: {fileID: 3714992642974892411}
   - component: {fileID: 8842236502308306914}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: LifeBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29427,7 +29497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2455625988908226279}
   - component: {fileID: 9018452036135571071}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Paralized_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29474,7 +29544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5455758031888860447}
   - component: {fileID: 4085801611271025993}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Burned_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29522,7 +29592,7 @@ GameObject:
   - component: {fileID: 4213742339040749778}
   - component: {fileID: 3810921877446592354}
   - component: {fileID: 5200307168888051902}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Paralized_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34347,7 +34417,7 @@ GameObject:
   - component: {fileID: 2965946560810657982}
   - component: {fileID: 983638084174844668}
   - component: {fileID: 214899795929667411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlantEnemy_Water
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -34366,6 +34436,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3478866644981103742}
   - {fileID: 2350920236752811447}
   - {fileID: 4570640052669712375}
   - {fileID: 8374198154598772125}
@@ -34391,6 +34462,7 @@ MonoBehaviour:
   baseRotSpeed: 300
   playerDetectionDistance: 25
   playerStopDetectionDistance: 25
+  stopForce: 90
   enemyStartAttackDistance: 25
   enemyStopAttackDistance: 26
   isAttacking: 0
@@ -34398,6 +34470,7 @@ MonoBehaviour:
   playerFoundSpeed: 0
   attacksTargetWOSeeingIt: 1
   movesToTargetWOSeeingIt: 0
+  stopRndMoveWhenSeeingTarget: 1
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
@@ -34407,6 +34480,7 @@ MonoBehaviour:
   numOfRndMoves: 0
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 5432909558806648478}
+  lookPoint: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 6970031720182105785}
   transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}
@@ -34457,10 +34531,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerTransform: {fileID: 1518678067557753390}
+  dmgBehaviour: 0
   damage: 5
   attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: 1
+  stealLife: 0
+  stealLifePercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 0}
@@ -34516,7 +34593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1805317090065016764}
   - component: {fileID: 6736190364502050729}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cold_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34564,7 +34641,7 @@ GameObject:
   - component: {fileID: 5704716484808245815}
   - component: {fileID: 7691933294988944442}
   - component: {fileID: 1560045693400323059}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Blood_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39384,7 +39461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1764400882860015116}
   - component: {fileID: 3522192523537023815}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StrongBlow_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39431,7 +39508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2306425672685994960}
   - component: {fileID: 3494109350013217653}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Frozen_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39480,7 +39557,7 @@ GameObject:
   - component: {fileID: 6189871948013158751}
   - component: {fileID: 5033884022728673481}
   - component: {fileID: 8392931397430798666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LifeBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39500,7 +39577,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 190, z: 0}
 --- !u!33 &5033884022728673481
 MeshFilter:
@@ -39563,7 +39640,7 @@ GameObject:
   - component: {fileID: 3536443563569224293}
   - component: {fileID: 8529972119886895697}
   - component: {fileID: 3143596951472437862}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39678,7 +39755,7 @@ GameObject:
   - component: {fileID: 2999290040543698840}
   - component: {fileID: 2103958321863899108}
   - component: {fileID: 1825502327767758236}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39753,7 +39830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2350920236752811447}
   - component: {fileID: 936959598569564534}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HealthStates_Feedback Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39782,7 +39859,7 @@ Transform:
   - {fileID: 3092885847567237848}
   - {fileID: 1764400882860015116}
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &936959598569564534
 MonoBehaviour:
@@ -39807,7 +39884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 782667622039329091}
   - component: {fileID: 1030148779195817540}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Electrocuted_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39855,7 +39932,7 @@ GameObject:
   - component: {fileID: 4470411481143928732}
   - component: {fileID: 7062438422549551407}
   - component: {fileID: 6807787607861872406}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: EnemyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39876,7 +39953,7 @@ RectTransform:
   m_Children:
   - {fileID: 1602170635767559775}
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -39938,7 +40015,7 @@ GameObject:
   - component: {fileID: 6237048936498324063}
   - component: {fileID: 3407708527259806953}
   - component: {fileID: 7845040691237723695}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wet_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44757,7 +44834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7451233906243310246}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44795,7 +44872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6707730753207941966}
   - component: {fileID: 639440269722578301}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wet_Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44842,7 +44919,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}
@@ -44898,6 +44975,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: planta_low
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 47c857461b8401f409e8b508bbd02859,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -7511558181221131132, guid: 47c857461b8401f409e8b508bbd02859, type: 3}

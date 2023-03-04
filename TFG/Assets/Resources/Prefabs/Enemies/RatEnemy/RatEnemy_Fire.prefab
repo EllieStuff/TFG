@@ -19664,7 +19664,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8377633024247808006}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3054555240243292746
 GameObject:
@@ -29464,7 +29464,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8377633024247808006}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5517291927027732938
 GameObject:
@@ -29628,6 +29628,76 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &5702560495371983890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6237927363092124491}
+  - component: {fileID: 5782573939645866053}
+  - component: {fileID: 162547604432873191}
+  m_Layer: 9
+  m_Name: DamageArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6237927363092124491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702560495371983890}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8377633024247808006}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &5782573939645866053
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702560495371983890}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.4
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.3, z: 0}
+--- !u!114 &162547604432873191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702560495371983890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerTransform: {fileID: 8377633024247808006}
+  dmgBehaviour: 1
+  damage: 5
+  attackElement: 3
+  alwaysAttacking: 1
+  timeDisabledAfterColl: 1
+  stealLife: 0
+  stealLifePercentage: 0
+  tagsAffected:
+  - Player
+  audio: {fileID: 0}
 --- !u!1 &5870150410847712939
 GameObject:
   m_ObjectHideFlags: 0
@@ -29968,7 +30038,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8377633024247808006}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &5870150412200022488
 ParticleSystem:
@@ -34781,7 +34851,7 @@ RectTransform:
   m_Children:
   - {fileID: 5870150411721886738}
   m_Father: {fileID: 8377633024247808006}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -34871,7 +34941,7 @@ Transform:
   - {fileID: 4714862400505294466}
   - {fileID: 771321712782655035}
   m_Father: {fileID: 8377633024247808006}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4591192370204194374
 MonoBehaviour:
@@ -44586,7 +44656,6 @@ GameObject:
   - component: {fileID: 8377633024247808006}
   - component: {fileID: 6579487662601685523}
   - component: {fileID: 4072827872612723001}
-  - component: {fileID: 7010434826721878492}
   - component: {fileID: 9137486827731142001}
   - component: {fileID: 8377633024247808001}
   - component: {fileID: 8377633024247808002}
@@ -44609,6 +44678,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6237927363092124491}
   - {fileID: 6010676854396186452}
   - {fileID: 2952777849248438661}
   - {fileID: 199261792886308914}
@@ -44643,6 +44713,7 @@ MonoBehaviour:
   playerFoundSpeed: 6
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
+  stopRndMoveWhenSeeingTarget: 1
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 1
@@ -44686,28 +44757,6 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 4394357316648102780, guid: 651c7722bc3deb14b826ab35d2b20ae0,
     type: 3}
   hitPS: {fileID: 5870150412200022488}
---- !u!114 &7010434826721878492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8377633024247808003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d765e29531bf8c4c889b79b964da661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerTransform: {fileID: 8377633024247808006}
-  damage: 5
-  attackElement: 3
-  alwaysAttacking: 1
-  timeDisabledAfterColl: 1
-  stealLife: 0
-  stealLifePercentage: 0
-  tagsAffected:
-  - Player
-  audio: {fileID: 0}
 --- !u!114 &9137486827731142001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44779,7 +44828,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8377633024247808006}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1710130568057445841
 PrefabInstance:
@@ -44791,7 +44840,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
