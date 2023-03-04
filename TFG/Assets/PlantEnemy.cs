@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistanceEnemy : BaseEnemyScript
+public class PlantEnemy : BaseEnemyScript
 {
     [Header("DistanceEnemy")]
     [SerializeField] float attackDistance;

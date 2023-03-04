@@ -313,7 +313,10 @@ public class BaseEnemyScript : MonoBehaviour
                 Vector3.Distance(transform.position, player.position), layerMask);
             if (hitCollided && hit.transform.CompareTag("Player"))
             {
-                ChangeState(States.MOVE_TO_TARGET);
+                if (movesToTarget) 
+                    ChangeState(States.MOVE_TO_TARGET);
+                else 
+                    ChangeState(States.ATTACK);
                 return;
             }
         }
