@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class DamageData : MonoBehaviour
 {
+    public enum DamageBehaviour { ON_ENTER, ON_STAY, ON_EXIT }
+
     [SerializeField] internal Transform ownerTransform;
+    [SerializeField] internal DamageBehaviour dmgBehaviour = DamageBehaviour.ON_ENTER;
     [SerializeField] internal float damage = 10;
     [SerializeField] internal ElementsManager.Elements attackElement;
     [SerializeField] internal bool alwaysAttacking = false;
@@ -42,16 +45,42 @@ public class DamageData : MonoBehaviour
         }
     }
 
+    public bool CanApplyDamage(Transform _otherTransform)
+    {
+        return !disabled && IsAttacking && !(ownerTransform == null || _otherTransform == ownerTransform)
+            && tagsAffected.FindIndex(_tag => _otherTransform.CompareTag(_tag)) >= 0;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if(tagsAffected.FindIndex(_tag => other.transform.CompareTag(_tag)) >= 0)
+        if(dmgBehaviour == DamageBehaviour.ON_ENTER && CanApplyDamage(other.transform))
+            ApplyDamage(other.transform);
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (dmgBehaviour == DamageBehaviour.ON_STAY && CanApplyDamage(other.transform))
+            ApplyDamage(other.transform);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (dmgBehaviour == DamageBehaviour.ON_EXIT && CanApplyDamage(other.transform))
             ApplyDamage(other.transform);
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        if (tagsAffected.FindIndex(_tag => col.transform.CompareTag(_tag)) >= 0)
+        if (dmgBehaviour == DamageBehaviour.ON_ENTER && CanApplyDamage(col.transform))
+            ApplyDamage(col.transform);
+    }
+    private void OnCollisionStay(Collision col)
+    {
+        if (dmgBehaviour == DamageBehaviour.ON_STAY && CanApplyDamage(col.transform))
+            ApplyDamage(col.transform);
+    }
+    private void OnCollisionExit(Collision col)
+    {
+        if (dmgBehaviour == DamageBehaviour.ON_EXIT && CanApplyDamage(col.transform))
             ApplyDamage(col.transform);
     }
 
@@ -98,11 +127,6 @@ public class DamageData : MonoBehaviour
 
     void ApplyDamage(Transform _transform)
     {
-        if (disabled) return;
-        if (!IsAttacking) return;
-        if ((ownerTransform == null || _transform == ownerTransform)) return;
-
-
         if (_transform.CompareTag("Player"))
         {
             DamageToPlayer(_transform);

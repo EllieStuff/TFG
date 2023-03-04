@@ -10,9 +10,9 @@ public class PlayerMovement : MonoBehaviour
     const float MIN_SPEED_WALK = 0.8f;
     const float SPEED_REDUCTION = 1.4f;
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
-    const float STOP_SPEED = 5;
 
-
+    //[SerializeField] RoomEnemyManager roomEnemyManager;
+    //[Space]
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
     [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     float actualMoveForce;
     float actualRotSpeed;
     float speedMultiplierRot = 2;
-    //float timerDeath;
     internal float speedMultiplier = 0.2f;
     Vector3 actualMaxSpeed;
     internal bool canMove = true;
@@ -31,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     internal Vector3 targetMousePos;
     internal Vector3 attackDir;
     internal Vector2 mouseLookVec;
-    internal bool cardEffect;
     internal bool isCollidingWall;
     LifeSystem lifeStatus;
     PlayerAttack attackScript;
@@ -59,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         attackScript = GetComponent<PlayerAttack>();
 
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
+
         ResetSpeed();
     }
 
@@ -72,8 +72,8 @@ public class PlayerMovement : MonoBehaviour
         moveDir = MoveToTargetVector(targetMousePos);
 
         if (!canMove) moveDir = Vector3.zero;
-        if (canMove && targetMousePos != Vector3.zero 
-            && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero 
+        if (canMove && targetMousePos != Vector3.zero
+            && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero
             && lifeStatus.currLife > 0)
         {
             moving = true;
@@ -123,9 +123,6 @@ public class PlayerMovement : MonoBehaviour
                 lookDir.y = 0f;
             }
         }
-
-        if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
-            cardEffect = false;
 
         rb.velocity = FallSystem(rb.velocity);
 

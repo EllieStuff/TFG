@@ -14,7 +14,7 @@ public class EstocadaRelampago_Behaviour : Card_Behaviour
         base.Activate(_playerData);
         playerRB = _playerData.GetComponent<Rigidbody>();
         _playerData.targetMousePos = Vector3.zero;
-        _playerData.cardEffect = true;
+        //_playerData.cardEffect = true;
         playerRB.constraints = (RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY);
         Instantiate(lightningPartricles, _playerData.transform);
         Instantiate(damageTriggerBox, _playerData.transform);
