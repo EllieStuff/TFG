@@ -10,13 +10,9 @@ public class PlayerMovement : MonoBehaviour
     const float MIN_SPEED_WALK = 0.8f;
     const float SPEED_REDUCTION = 1.4f;
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
-    const float SCREEN_WIDTH = 1000;
-    const float SCREEN_HEIGHT = 500;
     const float STOP_SPEED = 5;
-    //const float RESET_LEVEL_TIMER_DEATH = 1f;
 
-    //[SerializeField] RoomEnemyManager roomEnemyManager;
-    //[Space]
+
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
     [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
@@ -38,13 +34,10 @@ public class PlayerMovement : MonoBehaviour
     internal bool cardEffect;
     internal bool isCollidingWall;
     LifeSystem lifeStatus;
-    PlayerSword playerSword;
-    PlayerDodge playerDodge;
     PlayerAttack attackScript;
 
     public ParticleSystem dustParticleWalking;
 
-    const float minFallSpeed = 10;
     bool damage;
 
 
@@ -57,20 +50,14 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Moving { get { return moving; } }
 
-    //JUST FOR THE PROTOYPE
-    [SerializeField] GameObject deathScreen;
-    //_____________________
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();
-        playerSword = GetComponent<PlayerSword>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        playerDodge = GetComponent<PlayerDodge>();
         attackScript = GetComponent<PlayerAttack>();
-        //timerDeath = RESET_LEVEL_TIMER_DEATH;
 
         ResetSpeed();
     }
@@ -80,14 +67,12 @@ public class PlayerMovement : MonoBehaviour
     {
         mouseLookVec = GetMouseLookVector();
         float horizontalInput = mouseLookVec.x;
-        //if (Mathf.Abs(horizontalInput) < INPUT_THRESHOLD) horizontalInput = 0;
         float verticalInput = mouseLookVec.y;
-        //if (Mathf.Abs(verticalInput) < INPUT_THRESHOLD) verticalInput = 0;
         lookDir = new Vector3(horizontalInput, 0, verticalInput);
         moveDir = MoveToTargetVector(targetMousePos);
 
         if (!canMove) moveDir = Vector3.zero;
-        if (canMove && playerDodge.dodgeRechargeTimer <= playerDodge.dodgeRechargeDelay - 0.2f && !cardEffect && targetMousePos != Vector3.zero 
+        if (canMove && targetMousePos != Vector3.zero 
             && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero 
             && lifeStatus.currLife > 0)
         {
@@ -116,9 +101,7 @@ public class PlayerMovement : MonoBehaviour
                 attackScript.target = attackScript.roomEnemyManager.GetCloserEnemy(transform);
                 attackScript.SetAttackTimer(attackScript.attackDelay / 4f);
             }
-
-            if (!cardEffect && playerDodge.dodgeRechargeTimer <= 0)
-                rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
 
             if (!damage)
                 playerAnimator.SetFloat("state", 0);
@@ -136,15 +119,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (attackScript.roomEnemyManager.HasEnemiesRemainging())
             {
-                //Debug.Log("giranding");
                 lookDir = (attackScript.target.position - transform.position).normalized;
                 lookDir.y = 0f;
             }
-            //else
-            //{
-            //    Debug.Log("giranding2");
-            //    lookDir = new Vector3(horizontalInput, 0, verticalInput);
-            //}
         }
 
         if (cardEffect && rb.velocity.magnitude <= STOP_SPEED)
@@ -164,19 +141,6 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
 
-        //if (lifeStatus.isDead)
-        //{
-        //    if (deathScreen != null && !deathScreen.activeSelf)
-        //        deathScreen.SetActive(true);
-
-        //    if (timerDeath > 0)
-        //        timerDeath -= Time.deltaTime;
-        //    else
-        //    {
-        //        FindObjectOfType<DeathScreenManager>().DeathScreenAppear(1f);
-        //        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //    }
-        //}
     }
 
     Vector2 GetMouseLookVector()
@@ -206,26 +170,26 @@ public class PlayerMovement : MonoBehaviour
         return vectorToMove;
     }
 
-    Vector3 NormalizeDirection(Vector3 moveDir)
-    {
-        Vector2 MoveDirWithScreen = new Vector2(moveDir.x / SCREEN_WIDTH, moveDir.z / SCREEN_HEIGHT);
+    //Vector3 NormalizeDirection(Vector3 moveDir)
+    //{
+    //    Vector2 MoveDirWithScreen = new Vector2(moveDir.x / SCREEN_WIDTH, moveDir.z / SCREEN_HEIGHT);
 
-        if (moveDir.x > 0 && MoveDirWithScreen.x > 0.1f)
-            moveDir = new Vector3(MIN_SPEED_WALK + (moveDir.x / SCREEN_WIDTH), moveDir.y, moveDir.z);
-        else if (moveDir.x < 0 && MoveDirWithScreen.x < -0.1f)
-            moveDir = new Vector3(-MIN_SPEED_WALK + (moveDir.x / SCREEN_WIDTH), moveDir.y, moveDir.z);
-        else
-            moveDir.x = 0;
+    //    if (moveDir.x > 0 && MoveDirWithScreen.x > 0.1f)
+    //        moveDir = new Vector3(MIN_SPEED_WALK + (moveDir.x / SCREEN_WIDTH), moveDir.y, moveDir.z);
+    //    else if (moveDir.x < 0 && MoveDirWithScreen.x < -0.1f)
+    //        moveDir = new Vector3(-MIN_SPEED_WALK + (moveDir.x / SCREEN_WIDTH), moveDir.y, moveDir.z);
+    //    else
+    //        moveDir.x = 0;
 
-        if (moveDir.z > 0 && MoveDirWithScreen.y > 0.1f)
-            moveDir = new Vector3(moveDir.x, moveDir.y, MIN_SPEED_WALK + (moveDir.z / SCREEN_HEIGHT));
-        else if (moveDir.z < 0 && MoveDirWithScreen.y < -0.1f)
-            moveDir = new Vector3(moveDir.x, moveDir.y, -MIN_SPEED_WALK + (moveDir.z / SCREEN_HEIGHT));
-        else
-            moveDir.z = 0;
+    //    if (moveDir.z > 0 && MoveDirWithScreen.y > 0.1f)
+    //        moveDir = new Vector3(moveDir.x, moveDir.y, MIN_SPEED_WALK + (moveDir.z / SCREEN_HEIGHT));
+    //    else if (moveDir.z < 0 && MoveDirWithScreen.y < -0.1f)
+    //        moveDir = new Vector3(moveDir.x, moveDir.y, -MIN_SPEED_WALK + (moveDir.z / SCREEN_HEIGHT));
+    //    else
+    //        moveDir.z = 0;
 
-        return moveDir;
-    }
+    //    return moveDir;
+    //}
 
     Vector3 ClampVector(Vector3 _originalVec, Vector3 _minVec, Vector3 _maxVec)
     {
