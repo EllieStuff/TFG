@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
     const int PLAYER_LAYER = 8, ENEMY_LAYER = 7;
 
+    //[SerializeField] RoomEnemyManager roomEnemyManager;
+    //[Space]
     [SerializeField] float baseMoveForce = 50;
     [SerializeField] float baseRotSpeed = 300;
     [SerializeField] Vector3 baseMaxSpeed = new Vector3(50, 0, 50);
@@ -47,9 +49,6 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Moving { get { return moving; } }
 
-    //JUST FOR THE PROTOYPE
-    [SerializeField] GameObject deathScreen;
-    //_____________________
 
     // Start is called before the first frame update
     void Start()
