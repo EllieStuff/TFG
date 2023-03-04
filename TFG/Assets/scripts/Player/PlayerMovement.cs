@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     const float SCREEN_WIDTH = 1000;
     const float SCREEN_HEIGHT = 500;
     const float STOP_SPEED = 5;
-    const float RESET_LEVEL_TIMER_DEATH = 5;
+    //const float RESET_LEVEL_TIMER_DEATH = 1f;
 
     //[SerializeField] RoomEnemyManager roomEnemyManager;
     //[Space]
@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     float actualMoveForce;
     float actualRotSpeed;
     float speedMultiplierRot = 2;
-    float timerDeath;
+    //float timerDeath;
     internal float speedMultiplier = 0.2f;
     Vector3 actualMaxSpeed;
     internal bool canMove = true;
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerDodge = GetComponent<PlayerDodge>();
         attackScript = GetComponent<PlayerAttack>();
-        timerDeath = RESET_LEVEL_TIMER_DEATH;
+        //timerDeath = RESET_LEVEL_TIMER_DEATH;
 
         ResetSpeed();
     }
@@ -164,16 +164,19 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
 
-        if (lifeStatus.currLife <= 0)
-        {
-            if (deathScreen != null && !deathScreen.activeSelf)
-                deathScreen.SetActive(true);
+        //if (lifeStatus.isDead)
+        //{
+        //    if (deathScreen != null && !deathScreen.activeSelf)
+        //        deathScreen.SetActive(true);
 
-            if (timerDeath > 0)
-                timerDeath -= Time.deltaTime;
-            else
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        //    if (timerDeath > 0)
+        //        timerDeath -= Time.deltaTime;
+        //    else
+        //    {
+        //        FindObjectOfType<DeathScreenManager>().DeathScreenAppear(1f);
+        //        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //    }
+        //}
     }
 
     Vector2 GetMouseLookVector()

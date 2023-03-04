@@ -56,7 +56,7 @@ public class HealthState
     internal virtual bool ApplyCompatibilityEffect(float _baseDmg, float _dmgMultiplier, HealthState _finalHealthState)
     {
         lifeSystem.currLife -= _baseDmg * _dmgMultiplier;
-        lifeSystem.CheckPlayerLifeLimits();
+        lifeSystem.CheckLifeLimits();
         if (lifeSystem.isDead) return false;
 
 

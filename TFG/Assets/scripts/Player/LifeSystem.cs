@@ -49,7 +49,7 @@ public class LifeSystem : MonoBehaviour
         if (EnemyLifeBar != null)
             EnemyLifeBar.gameObject.SetActive(true);
 
-        CheckPlayerLifeLimits();
+        CheckLifeLimits();
     }
 
     private void Update()
@@ -68,7 +68,7 @@ public class LifeSystem : MonoBehaviour
         return currLife / maxLife * _multiplier;
     }
 
-    internal void CheckPlayerLifeLimits()
+    internal void CheckLifeLimits()
     {
         if (currLife > maxLife)
         {
@@ -95,7 +95,7 @@ public class LifeSystem : MonoBehaviour
     public void AddLife(float _lifeToAdd)
     {
         currLife += _lifeToAdd;
-        CheckPlayerLifeLimits();
+        CheckLifeLimits();
     }
 
     public void DamageWithLifeSteal(float _dmg, ElementsManager.Elements _attackElement, PlayerProjectileData projectileData, LifeSystem playerLifeSystem)
@@ -126,7 +126,7 @@ public class LifeSystem : MonoBehaviour
         float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
         dmgDealt = _dmg * dmgInc * dmgMultiplier;
         currLife -= dmgDealt;
-        CheckPlayerLifeLimits();
+        CheckLifeLimits();
 
         if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
         {
@@ -162,20 +162,16 @@ public class LifeSystem : MonoBehaviour
                 if (dmgMultiplier > 1.9f)
                 {
                     StartCoroutine(GetComponent<EnemyShake>().Shake(0.3f, 0.03f, 0.03f));
-                    //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.3f, 0.01f));
                     StartCoroutine(Camera.main.GetComponent<CameraShake>().ShakeCamera(0.3f, 0.07f));
                     textUI.color = Color.red;
                 }
                 else if (dmgMultiplier > 0.7f)
                 {
                     StartCoroutine(GetComponent<EnemyShake>().Shake(0.2f, 0.01f, 0.01f));
-                    //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.2f, 0.008f));
                 }
                 else
                 {
                     textUI.color = Color.white;
-                    //StartCoroutine(GetComponent<EnemyShake>().Shake(0.15f, 0.005f, 0.005f));
-                    //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.15f, 0.004f));
                 }
                 GameObject go = Instantiate(bloodPrefab, transform);
                 go.transform.SetParent(null);
@@ -192,6 +188,10 @@ public class LifeSystem : MonoBehaviour
                 if (assignedRoom == null) assignedRoom = transform.parent.GetComponentInParent<RoomEnemyManager>();
                 if (assignedRoom == null) Debug.LogWarning("Assigned Room not found.");
                 else assignedRoom.DiscardEnemy(GetComponent<BaseEnemyScript>());
+            }
+            else if (entityType.Equals(EntityType.PLAYER))
+            {
+                FindObjectOfType<DeathScreenManager>().DeathScreenAppear(1f);
             }
 
             //Activate death anim
