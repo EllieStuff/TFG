@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     const float MIN_SPEED_WALK = 0.8f;
     const float SPEED_REDUCTION = 1.4f;
     const float DIAGONAL_SPEED_REDUCTION = 0.8f;
-    const int PLAYER_LAYER = 8, ENEMY_LAYER = 7;
 
     //[SerializeField] RoomEnemyManager roomEnemyManager;
     //[Space]
@@ -58,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         attackScript = GetComponent<PlayerAttack>();
 
-        Physics.IgnoreLayerCollision(PLAYER_LAYER, ENEMY_LAYER);
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
 
         ResetSpeed();
     }

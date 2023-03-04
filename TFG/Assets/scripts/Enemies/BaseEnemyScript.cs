@@ -9,11 +9,11 @@ public class BaseEnemyScript : MonoBehaviour
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     //const float PLAYER_HIT_DISTANCE_SWORD = 3;
     const float THRESHOLD = 1f;
-    const int ENEMY_LAYER = 7, ENEMYCOLPLAYER_LAYER = 9;
 
 
     [Header("BaseEnemy")]
     [SerializeField] internal EnemyType enemyType;
+    [SerializeField] LayerMask layerMask;
     [SerializeField] internal float baseRotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
     [SerializeField] protected float stopForce = 90f;
@@ -100,8 +100,6 @@ public class BaseEnemyScript : MonoBehaviour
             lookPoint = transform;
             Debug.LogWarning("LookPoint was not set on " + transform.name + ", using its transform instead");
         }
-
-        Physics.IgnoreLayerCollision(ENEMY_LAYER, ENEMYCOLPLAYER_LAYER);
 
         ResetSpeed();
     }
@@ -264,7 +262,7 @@ public class BaseEnemyScript : MonoBehaviour
                 else
                 {
                     RaycastHit hit;
-                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, ENEMY_LAYER);
+                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
                     if (hitCollided && hit.transform.CompareTag("Player"))
                     {
                         if (distToPlayer > enemyStartAttackDistance)
@@ -284,7 +282,7 @@ public class BaseEnemyScript : MonoBehaviour
             else
             {
                 RaycastHit hit;
-                bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, ENEMY_LAYER);
+                bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
                 if (hitCollided && hit.transform.CompareTag("Player"))
                 {
                     if (Vector3.Angle(transform.forward, player.position - transform.position) < 1)
@@ -312,7 +310,7 @@ public class BaseEnemyScript : MonoBehaviour
         {
             RaycastHit hit;
             bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit,
-                Vector3.Distance(transform.position, player.position), ENEMY_LAYER);
+                Vector3.Distance(transform.position, player.position), layerMask);
             if (hitCollided && hit.transform.CompareTag("Player"))
             {
                 ChangeState(States.MOVE_TO_TARGET);
@@ -342,7 +340,7 @@ public class BaseEnemyScript : MonoBehaviour
         if (!movesToTargetWOSeeingIt)
         {
             RaycastHit hit;
-            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, playerStopDetectionDistance, ENEMY_LAYER);
+            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, playerStopDetectionDistance, layerMask);
             if (!hitCollided || !hit.transform.CompareTag("Player"))
                 ChangeState(States.IDLE);
         }
@@ -424,7 +422,7 @@ public class BaseEnemyScript : MonoBehaviour
         {
             rndTarget = transform.position + new Vector3(Random.Range(-rndFactor, rndFactor), 0f, Random.Range(-rndFactor, rndFactor));
             collided = Physics.BoxCast(transform.position, Vector3.one, 
-                (rndTarget - transform.position).normalized, Quaternion.identity, Vector3.Distance(transform.position, rndTarget), ENEMY_LAYER);
+                (rndTarget - transform.position).normalized, Quaternion.identity, Vector3.Distance(transform.position, rndTarget), layerMask);
             currTrials++;
         }
         //Debug.Log("Num of Trials: " + currTrials);
