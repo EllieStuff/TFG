@@ -83,7 +83,9 @@ public class PlayerAttack : MonoBehaviour
         //    attackTimer = attackTimer / 2f;
         //}
         if (IsMoving)
+        {
             glowBurstPS.Stop();
+        }
     }
 
 
