@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BatEnemy : BaseEnemyScript
 {
-    [Header("DistanceEnemy")]
+    [Header("BatEnemy")]
     [SerializeField] float attackDistance;
     [SerializeField] float baseAttackTimer;
     [SerializeField] float attackAnimationTime;
@@ -13,6 +13,7 @@ public class BatEnemy : BaseEnemyScript
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform shootPoint;
     [SerializeField] int numOfAttacks = 1;
+    [SerializeField] float attackSeparationTime = 0.5f;
 
     float attackTimer;
 
@@ -84,9 +85,12 @@ public class BatEnemy : BaseEnemyScript
         for (int i = 0; i < numOfAttacks; i++)
         {
             yield return new WaitForSeconds(attackAnimationTime);
-            ProjectileData projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<ProjectileData>();
+            BatProjectile_Tornado projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Tornado>();
+            projectile.zigzagDir = i % 2 == 0 ? 1 : -1;
+            //BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
+            yield return new WaitForSeconds(attackSeparationTime);
         }
 
     }

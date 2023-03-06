@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = FallSystem(rb.velocity);
 
 
-        if (canRotate && (moveDir == Vector3.zero || Input.GetKey(KeyCode.Mouse1)) && lifeStatus.currLife > 0)
+        if (canRotate && (moveDir == Vector3.zero || moveDir != Vector3.zero) && lifeStatus.currLife > 0)
         {
             targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);

@@ -5195,11 +5195,11 @@ GameObject:
   - component: {fileID: 8584722543009573707}
   - component: {fileID: 7329674873561628654}
   - component: {fileID: 4326863036177663235}
-  - component: {fileID: 4061173135935690579}
+  - component: {fileID: 478599543190497234}
   - component: {fileID: 1692913151653156412}
   - component: {fileID: 6107420155948737220}
   m_Layer: 2
-  m_Name: Bat Projectile
+  m_Name: BatProjectile_Missile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5288,7 +5288,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 2
---- !u!114 &4061173135935690579
+--- !u!114 &478599543190497234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5297,11 +5297,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8535654783368711210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185035afa5abfa745885391bb5faf054, type: 3}
+  m_Script: {fileID: 11500000, guid: c52b8899390a0ca4dacc00baa4efab59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 25
-  maxHeight: 5
+  moveSpeed: 15
+  maxVelocity: {x: 5, y: 0, z: 5}
   trail: {fileID: 9054102091148237575}
   particles: {fileID: 8076505059512220951}
 --- !u!114 &1692913151653156412

@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatProjectile : ProjectileData
+public class BatProjectile_Tornado : ProjectileData
 {
-    const float DISTANCE_SPEED_RELATION = 0.1f;
-
-    [SerializeField] float maxHeight = 5f;
+    [SerializeField] float zigzagSpeed = 6f, zigzagFreq = 10f;
     [SerializeField] TrailRenderer trail;
     [SerializeField] ParticleSystemRenderer particles;
     //[SerializeField] bool testing = false;
 
+    internal int zigzagDir = 1;
+    float startTime;
 
     public override void Init(Transform _origin)
     {
@@ -25,14 +25,15 @@ public class BatProjectile : ProjectileData
         else
             Destroy(gameObject);
         transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
+        startTime = Time.time;
     }
 
 
     protected override void Update_Call()
     {
-        base.Update_Call();
-
-
+        //base.Update_Call();
+        Vector3 movementVec = moveDir * moveSpeed + Mathf.Sin((Time.time - startTime) * zigzagFreq) * transform.right * zigzagDir * zigzagSpeed;
+        rb.MovePosition(transform.position + movementVec * Time.deltaTime);
     }
 
 
