@@ -7,20 +7,20 @@ public class BaseEnemyScript : MonoBehaviour
     public enum EnemyType { PLANT, BAT, RAT, GHOST }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
-    //const float PLAYER_HIT_DISTANCE_SWORD = 3;
+    const float ATTACK_ANGLE_THRESHOLD = 15f;
     const float THRESHOLD = 1f;
 
 
     [Header("BaseEnemy")]
     [SerializeField] internal EnemyType enemyType;
-    [SerializeField] LayerMask layerMask;
+    [SerializeField] protected LayerMask layerMask;
     [SerializeField] internal float baseRotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
     [SerializeField] protected float stopForce = 90f;
     [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float baseMoveSpeed, playerFoundSpeed;
-    [SerializeField] bool attacksTargetWOSeeingIt = false;  // WO == Without
+    [SerializeField] protected bool attacksTargetWOSeeingIt = false;  // WO == Without
     [SerializeField] bool movesToTargetWOSeeingIt = false;
     [SerializeField] bool stopRndMoveWhenSeeingTarget = true;
     [SerializeField] internal float baseDamageTimer;
@@ -285,7 +285,7 @@ public class BaseEnemyScript : MonoBehaviour
                 bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
                 if (hitCollided && hit.transform.CompareTag("Player"))
                 {
-                    if (Vector3.Angle(transform.forward, player.position - transform.position) < 1)
+                    if (Vector3.Angle(transform.forward, player.position - transform.position) < ATTACK_ANGLE_THRESHOLD)
                         ChangeState(States.ATTACK);
                     else idleWaitTimer = -1;
                     return;
@@ -293,9 +293,11 @@ public class BaseEnemyScript : MonoBehaviour
             }
         }
         
-        if (MakesRandomMoves && HaveRandomMovesAvailable)
+        if (MakesRandomMoves)
         {
-            ChangeState(States.RANDOM_MOVEMENT);
+            if (HaveRandomMovesAvailable) ChangeState(States.RANDOM_MOVEMENT);
+            else EndRndMovesBehaviour();
+            return;
         }
 
     }
@@ -415,7 +417,7 @@ public class BaseEnemyScript : MonoBehaviour
     #endregion Updates
 
     #region Starts
-    internal virtual void IdleStart() { StopRB(stopForce); idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
+    internal virtual void IdleStart() { StopRB(stopForce); moveDir = Vector3.zero; idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
     internal virtual void RandomMovementStart()
     {
         float rndFactor = 4f;
@@ -465,6 +467,8 @@ public class BaseEnemyScript : MonoBehaviour
 
 
     #region Misc
+    protected virtual void EndRndMovesBehaviour() { rndMovesDone = 0; }
+
     internal Vector3 ClampVector(Vector3 _originalVec, Vector3 _minVec, Vector3 _maxVec)
     {
         return new Vector3(

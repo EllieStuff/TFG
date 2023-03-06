@@ -12,6 +12,7 @@ public class BatEnemy : BaseEnemyScript
     [SerializeField] Animator enemyAnimator;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform shootPoint;
+    [SerializeField] int numOfAttacks = 1;
 
     float attackTimer;
 
@@ -47,17 +48,29 @@ public class BatEnemy : BaseEnemyScript
     {
         base.AttackUpdate();
 
-        //if (!state.Equals(States.DAMAGE))
-        //    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        float distToPlayer = Vector3.Distance(transform.position, player.position);
+        if (!canAttack || distToPlayer > enemyStartAttackDistance)
+        {
+            ChangeState(States.IDLE);
+            return;
+        }
+        else
+        {
+            RaycastHit hit;
+            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
+            if (!hitCollided || !hit.transform.CompareTag("Player"))
+            {
+                ChangeState(States.IDLE);
+                return;
+            }
+        }
 
-        //enemyAnimator.SetFloat("state", 0);
-        //attackTimer -= Time.deltaTime;
-
-        //if (attackTimer <= 0)
-        //{
-        //    StartCoroutine(AttackCorroutine());
-        //    attackTimer = baseAttackTimer;
-        //}
+        attackTimer -= Time.deltaTime;
+        if (attackTimer <= 0)
+        {
+            StartCoroutine(AttackCorroutine());
+            attackTimer = baseAttackTimer;
+        }
     }
     internal override void DeathUpdate()
     {
@@ -66,16 +79,33 @@ public class BatEnemy : BaseEnemyScript
 
     IEnumerator AttackCorroutine()
     {
+        yield return new WaitForSeconds(1f);
         //place shoot animation here
+        for (int i = 0; i < numOfAttacks; i++)
+        {
+            yield return new WaitForSeconds(attackAnimationTime);
+            ProjectileData projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<ProjectileData>();
+            projectile.Init(transform);
+            projectile.transform.SetParent(null);
+        }
 
-        yield return new WaitForSeconds(attackAnimationTime);
-        ProjectileData projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<ProjectileData>();
-        projectile.Init(transform);
-        projectile.transform.SetParent(null);
+    }
+    protected override void EndRndMovesBehaviour()
+    {
+        base.EndRndMovesBehaviour();
 
-        yield return new WaitForSeconds(0.5f);
-        ChangeState(States.IDLE);
+        float distToPlayer = Vector3.Distance(transform.position, player.position);
+        if (canAttack && distToPlayer <= enemyStartAttackDistance)
+        {
+            ChangeState(States.ATTACK);
 
+            //RaycastHit hit;
+            //bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
+            //if (hitCollided && hit.transform.CompareTag("Player"))
+            //{
+            //    ChangeState(States.ATTACK);
+            //}
+        }
     }
 
     internal override void IdleStart() { base.IdleStart(); }
@@ -84,6 +114,8 @@ public class BatEnemy : BaseEnemyScript
     {
         base.AttackStart();
         enemyAnimator.SetFloat("state", 0);
+        moveDir = Vector3.zero;
+        StopRB(stopForce);
         StartCoroutine(AttackCorroutine());
     }
 
