@@ -6,9 +6,7 @@ using UnityEngine.UI;
 
 public class CardUIScript : MonoBehaviour
 {
-    [SerializeField]
-    internal PassiveSkill_Base.SkillType skillType;
-
+    [SerializeField] internal PassiveSkill_Base.SkillType skillType;
     [SerializeField] internal Sprite cardSprite;
     [SerializeField] private TextMeshProUGUI tierText;
 
