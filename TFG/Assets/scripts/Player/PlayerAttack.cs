@@ -67,6 +67,8 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool canAttack = CanAttack();
+        bool hasEnemies = roomEnemyManager.HasEnemiesRemainging();
         if (CanAttack() && roomEnemyManager.HasEnemiesRemainging())
         {
             Attack();

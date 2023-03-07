@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!moving)
         {
-            if (attackScript.roomEnemyManager.HasEnemiesRemainging())
+            if (attackScript.roomEnemyManager.HasEnemiesRemainging() && attackScript.target != null)
             {
                 lookDir = (attackScript.target.position - transform.position).normalized;
                 lookDir.y = 0f;
