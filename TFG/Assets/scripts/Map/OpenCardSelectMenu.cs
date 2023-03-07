@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class OpenCardSelectMenu : MonoBehaviour
 {
-    GameObject pasiveSkillUI;
+    [SerializeField] GameObject pasiveSkillUI;
     bool opened = false;
+    bool destroying = false;
 
-    private void Start()
-    {
-        pasiveSkillUI = GameObject.Find("Enemies").GetComponentInChildren<RoomEnemyManager>().elementChoose;
-    }
+    const float ANIMATION_SPEED = 0.5f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,5 +17,30 @@ public class OpenCardSelectMenu : MonoBehaviour
             pasiveSkillUI.SetActive(true);
             opened = true;
         }
+    }
+
+    private void Update()
+    {
+        if(pasiveSkillUI == null)
+            pasiveSkillUI = GameObject.FindGameObjectWithTag("EnemyManager").transform.GetChild(0).GetComponent<RoomEnemyManager>().elementChoose;
+        
+        if(opened && !destroying && !pasiveSkillUI.activeSelf)
+        {
+            StartCoroutine(CloseCircleCorroutine());
+            destroying = true;
+        }
+    }
+
+    IEnumerator CloseCircleCorroutine()
+    {
+        while(transform.localScale.x > 1)
+        {
+            float deltatime = Time.deltaTime;
+            transform.localScale -= new Vector3(deltatime, deltatime, deltatime) * ANIMATION_SPEED;
+        }
+
+        Destroy(gameObject);
+
+        yield return null;
     }
 }
