@@ -44651,8 +44651,8 @@ MonoBehaviour:
   baseDeathTime: 5
   movesToTarget: 1
   needsToRest: 1
-  idleWait: {x: 0.6, y: 2}
-  restWait: {x: 3, y: 3.5}
+  idleWait: {x: 0.5, y: 1.5}
+  restWait: {x: 2, y: 2.5}
   numOfRndMoves: -1
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 1216328838707944370}
@@ -44661,9 +44661,10 @@ MonoBehaviour:
   enemyMesh: {fileID: 2733730788676577848}
   transparentMat: {fileID: 2100000, guid: 62ce62e552285be48972fb34c0607d6c, type: 2}
   attackDmg: 15
-  attackForce: 20
+  attackForce: 12
+  chargeAttackDelay: 1
   attackDuration: 1
-  atkVelocityLimit: {x: 10, y: 10, z: 10}
+  atkVelocityLimit: {x: 8, y: 0, z: 8}
   enemyAnimator: {fileID: 385545376358374519}
 --- !u!114 &4072827872612723001
 MonoBehaviour:
@@ -44778,17 +44779,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8409
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8409
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8409
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
@@ -44906,6 +44907,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DamageArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777132872778164684, guid: be319cc937a18fd4383331658676cf64,
+        type: 3}
+      propertyPath: m_Height
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777132872778164684, guid: be319cc937a18fd4383331658676cf64,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777132872778164684, guid: be319cc937a18fd4383331658676cf64,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8971685948350092602, guid: be319cc937a18fd4383331658676cf64,
         type: 3}

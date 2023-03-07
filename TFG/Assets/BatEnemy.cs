@@ -5,8 +5,8 @@ using UnityEngine;
 public class BatEnemy : BaseEnemyScript
 {
     [Header("BatEnemy")]
-    [SerializeField] float attackDistance;
     [SerializeField] float baseAttackTimer;
+    [SerializeField] float attackChargingTime = 1f;
     [SerializeField] float attackAnimationTime;
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
@@ -20,8 +20,7 @@ public class BatEnemy : BaseEnemyScript
 
     internal override void Start_Call()
     {
-        base.Start_Call(); 
-        attackTimer = baseAttackTimer;
+        base.Start_Call();
         endAttackFlag = false;
     }
 
@@ -70,7 +69,7 @@ public class BatEnemy : BaseEnemyScript
         if (attackTimer <= 0)
         {
             StartCoroutine(AttackCorroutine());
-            attackTimer = baseAttackTimer;
+            attackTimer = baseAttackTimer + attackChargingTime;
         }
     }
     internal override void DeathUpdate()
@@ -80,7 +79,7 @@ public class BatEnemy : BaseEnemyScript
 
     IEnumerator AttackCorroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(attackChargingTime);
         //place shoot animation here
         for (int i = 0; i < numOfAttacks; i++)
         {
@@ -118,6 +117,7 @@ public class BatEnemy : BaseEnemyScript
     {
         base.AttackStart();
         enemyAnimator.SetFloat("state", 0);
+        attackTimer = baseAttackTimer + attackChargingTime;
         moveDir = Vector3.zero;
         StopRB(stopForce);
         StartCoroutine(AttackCorroutine());
@@ -126,6 +126,6 @@ public class BatEnemy : BaseEnemyScript
 
     internal override void IdleExit() { base.IdleExit(); }
     internal override void MoveToTargetExit() { base.MoveToTargetExit(); }
-    internal override void AttackExit() { base.AttackExit(); }
+    internal override void AttackExit() { base.AttackExit(); StopCoroutine(AttackCorroutine()); }
 
 }

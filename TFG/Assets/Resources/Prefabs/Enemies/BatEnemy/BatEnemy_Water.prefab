@@ -5181,7 +5181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2667452741900389880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.08, z: -0.212}
+  m_LocalPosition: {x: 0, y: 0.08, z: -1.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5200,7 +5200,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0, g: 0.7503343, b: 0.8584906, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.8
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -24772,9 +24772,9 @@ MonoBehaviour:
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
-  idleWait: {x: 0.6, y: 2}
-  restWait: {x: 3, y: 3.5}
-  numOfRndMoves: 2
+  idleWait: {x: 0.5, y: 1.5}
+  restWait: {x: 0, y: 0}
+  numOfRndMoves: 1
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 4532596654922123748}
   lookPoint: {fileID: 5952234403916635579}
@@ -24782,7 +24782,8 @@ MonoBehaviour:
   enemyMesh: {fileID: 8564232481624889924}
   transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}
   attackDistance: 16
-  baseAttackTimer: 3
+  baseAttackTimer: 5
+  attackChargingTime: 1
   attackAnimationTime: 0.15
   attackDamage: 15
   enemyAnimator: {fileID: 8564232481624889927}
@@ -24807,8 +24808,8 @@ MonoBehaviour:
   entityElement: 2
   healthStates: []
   healthStatesFeedback: {fileID: 1832666379212272116}
-  maxLife: 60
-  currLife: 60
+  maxLife: 50
+  currLife: 50
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -44883,6 +44884,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.05202246
       objectReference: {fileID: 0}
@@ -44904,7 +44920,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
         type: 3}
@@ -44919,7 +44935,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
         type: 3}

@@ -15,6 +15,7 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
     [SerializeField] internal float maxLife = 100;
     [SerializeField] internal float currLife = 100;
+    [SerializeField] internal float healPercentage = 0.3f;
     [SerializeField] private GameObject bloodPrefab;
     //[SerializeField] private GameObject deathParticlesPrefab;
     [SerializeField] private PlayerLifeBar playerLifeBar;
@@ -112,8 +113,8 @@ public class LifeSystem : MonoBehaviour
 
             Transform playerLifeBar = playerLifeSystem.EnemyLifeBar.transform;
 
-            GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.gameObject.transform.position.x, playerLifeBar.parent.transform.position.y, playerLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
-            string lifeStolenText = "+ " + lifeStolen.ToString("0.00");
+            GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.position.x, playerLifeBar.parent.position.y, playerLifeBar.parent.position.z + 1f), damageTextPrefab.transform.rotation);
+            string lifeStolenText = "+ " + Mathf.RoundToInt(lifeStolen).ToString();
             TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
             textUI.color = Color.green;
             textUI.text = lifeStolenText;
@@ -125,6 +126,13 @@ public class LifeSystem : MonoBehaviour
 
     public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
+        if(entityType == EntityType.ENEMY && _attackElement == entityElement)
+        {
+            HealEnemy(_dmg, _attackElement);
+            StartCoroutine(enemyShake.Shake(0.3f, 0.03f, 0.03f));
+            return;
+        }
+
         float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
         dmgDealt = _dmg * dmgInc * dmgMultiplier;
         currLife -= dmgDealt;
@@ -203,6 +211,20 @@ public class LifeSystem : MonoBehaviour
         //if (!healthState.initialized) _healthState.Init(this);
         if (entityType.Equals(EntityType.PLAYER)/* && !isDead*/) playerMovementScript.DamageStartCorroutine();
 
+    }
+
+    void HealEnemy(float _dmg, ElementsManager.Elements _attackElement)
+    {
+        float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
+        float lifeHealed = _dmg * dmgInc * dmgMultiplier * healPercentage;
+        currLife += lifeHealed;
+        CheckLifeLimits();
+
+        GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f), damageTextPrefab.transform.rotation);
+        string lifeHealedText = "+ " + Mathf.RoundToInt(lifeHealed).ToString();
+        TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+        textUI.color = Color.green;
+        textUI.text = lifeHealedText;
     }
 
     public void StartHealthState(HealthState _healthState)

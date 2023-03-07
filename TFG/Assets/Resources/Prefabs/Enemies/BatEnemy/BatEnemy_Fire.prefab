@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158371193756373985}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.34, y: 29.5, z: -22.57}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -98,8 +98,8 @@ MonoBehaviour:
   enemyStartAttackDistance: 30
   enemyStopAttackDistance: 35
   isAttacking: 0
-  baseMoveSpeed: 6
-  playerFoundSpeed: 6
+  baseMoveSpeed: 7
+  playerFoundSpeed: 7
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
@@ -107,9 +107,9 @@ MonoBehaviour:
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
-  idleWait: {x: 0.6, y: 2}
-  restWait: {x: 3, y: 3.5}
-  numOfRndMoves: 2
+  idleWait: {x: 0.8, y: 1.8}
+  restWait: {x: 0, y: 0}
+  numOfRndMoves: 1
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 7948629871496846772}
   lookPoint: {fileID: 158371192811440619}
@@ -117,14 +117,15 @@ MonoBehaviour:
   enemyMesh: {fileID: 2770404765211561492}
   transparentMat: {fileID: 2100000, guid: 949b6b23ca5d82a4d9d1036ba8733daf, type: 2}
   attackDistance: 16
-  baseAttackTimer: 3
+  baseAttackTimer: 4
+  attackChargingTime: 1
   attackAnimationTime: 0.15
   attackDamage: 15
   enemyAnimator: {fileID: 2770404765211561495}
   projectilePrefab: {fileID: 8535654783368711210, guid: 7b60fea3329039c42867962dbe12f035,
     type: 3}
   shootPoint: {fileID: 2770404765011016488}
-  numOfAttacks: 1
+  numOfAttacks: 2
   attackSeparationTime: 0.5
 --- !u!114 &5689284674677619419
 MonoBehaviour:
@@ -142,8 +143,8 @@ MonoBehaviour:
   entityElement: 0
   healthStates: []
   healthStatesFeedback: {fileID: 5316147761737803172}
-  maxLife: 60
-  currLife: 60
+  maxLife: 90
+  currLife: 90
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -10035,7 +10036,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2447931840058550616}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2812224915192963071
 GameObject:
@@ -15267,16 +15268,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3076835566738650082}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.05202246, y: 0.24271095, z: -0.13162687}
-  m_LocalScale: {x: -1, y: -1, z: -1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7948629871496846772}
   - {fileID: 2770404765011016488}
+  - {fileID: 7948629871496846772}
   m_Father: {fileID: 158371193756373988}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &1609780254149306109
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20233,15 +20234,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3907232113002136959}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05202246, y: -0.18367463, z: -0.06520163}
-  m_LocalScale: {x: 0.6529896, y: 0.5739456, z: 0.7833357}
+  m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
+  m_LocalPosition: {x: -0.043352045, y: -0.15306215, z: -0.05433472}
+  m_LocalScale: {x: -0.544158, y: -0.47828794, z: -0.65277976}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6376160171508121146}
   - {fileID: 8639495087767025145}
   m_Father: {fileID: 2447931840058550616}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4242578716066169384
 GameObject:

@@ -68,8 +68,9 @@ public class PlayerMovement : MonoBehaviour
         mouseLookVec = GetMouseLookVector();
         float horizontalInput = mouseLookVec.x;
         float verticalInput = mouseLookVec.y;
-        lookDir = new Vector3(horizontalInput, 0, verticalInput);
+        //lookDir = new Vector3(horizontalInput, 0, verticalInput);
         moveDir = MoveToTargetVector(targetMousePos);
+        lookDir = new Vector3(moveDir.x, 0f, moveDir.z);
 
         if (!canMove) moveDir = Vector3.zero;
         if (canMove && targetMousePos != Vector3.zero
