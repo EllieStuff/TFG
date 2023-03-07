@@ -12,7 +12,7 @@ public class RoomEnemyManager : MonoBehaviour
 
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
 
-    GameObject elementChoose;
+    internal GameObject elementChoose;
 
     bool endRoomEventIsTriggered = false;
 
@@ -66,7 +66,7 @@ public class RoomEnemyManager : MonoBehaviour
     {
         if (!HasEnemiesRemainging())
         {
-            if(!endRoomEventIsTriggered)
+            /*if(!endRoomEventIsTriggered)
             {
                 int level = levelInfo.level;
 
@@ -75,7 +75,7 @@ public class RoomEnemyManager : MonoBehaviour
 
                 levelInfo.level++;
                 endRoomEventIsTriggered = true;
-            }
+            }*/
 
             return null;
         }

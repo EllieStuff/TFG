@@ -14524,6 +14524,8 @@ GameObject:
   - component: {fileID: 7991475168281460453}
   - component: {fileID: 7991475168281460458}
   - component: {fileID: 7991475168281460459}
+  - component: {fileID: 6175798532147951238}
+  - component: {fileID: 8669382158111537683}
   m_Layer: 0
   m_Name: VFX_SelectPasive
   m_TagString: Untagged
@@ -19404,3 +19406,28 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &6175798532147951238
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7991475168281460456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.1, z: 5}
+  m_Center: {x: 2.3283064e-10, y: 0.000000014901161, z: -0.000000007450581}
+--- !u!114 &8669382158111537683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7991475168281460456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7053e292ebbef74d8ed417273c94ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
