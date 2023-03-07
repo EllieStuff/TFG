@@ -96,15 +96,15 @@ public class PlantProjectileData : ProjectileData
     }
 
 
-    bool CheckForWalls()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, (targetPosLow - transform.position).normalized, out hit, 0.5f))
-        {
-            return hit.transform.CompareTag("Wall") || hit.transform.CompareTag("Obstacle");
-        }
-        return false;
-    }
+    //bool CheckForWalls()
+    //{
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(transform.position, (targetPosLow - transform.position).normalized, out hit, 0.5f))
+    //    {
+    //        return hit.transform.CompareTag("Wall") || hit.transform.CompareTag("Obstacle");
+    //    }
+    //    return false;
+    //}
 
 
     public override void DestroyObject(float _timer = -1)

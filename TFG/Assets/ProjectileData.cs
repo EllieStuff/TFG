@@ -26,7 +26,7 @@ public class ProjectileData : MonoBehaviour
     }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         Update_Call();
     }
