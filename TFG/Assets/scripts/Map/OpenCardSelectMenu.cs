@@ -9,7 +9,7 @@ public class OpenCardSelectMenu : MonoBehaviour
     bool opened = false;
     bool destroying = false;
 
-    const float ANIMATION_SPEED = 2f;
+    const float ANIMATION_SPEED = 1.2f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,7 +20,7 @@ public class OpenCardSelectMenu : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(pasiveSkillUI == null)
             pasiveSkillUI = GameObject.FindGameObjectWithTag("EnemyManager").transform.GetChild(0).GetComponent<RoomEnemyManager>().elementChoose;
