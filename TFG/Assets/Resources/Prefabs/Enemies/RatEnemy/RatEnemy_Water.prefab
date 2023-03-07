@@ -44670,11 +44670,11 @@ MonoBehaviour:
   playerDetectionDistance: 30
   playerStopDetectionDistance: 35
   stopForce: 90
-  enemyStartAttackDistance: 5
-  enemyStopAttackDistance: 8
+  enemyStartAttackDistance: 7
+  enemyStopAttackDistance: 12
   isAttacking: 0
-  baseMoveSpeed: 4
-  playerFoundSpeed: 6
+  baseMoveSpeed: 5
+  playerFoundSpeed: 8
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
@@ -44682,8 +44682,8 @@ MonoBehaviour:
   baseDeathTime: 5
   movesToTarget: 1
   needsToRest: 1
-  idleWait: {x: 0.6, y: 2}
-  restWait: {x: 3, y: 3.5}
+  idleWait: {x: 1, y: 2.5}
+  restWait: {x: 3, y: 4}
   numOfRndMoves: -1
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 2139514581823148245}
@@ -44691,10 +44691,11 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 1885129838718840677}
   transparentMat: {fileID: 2100000, guid: 6a164da9b60d0eb41a041643a209b913, type: 2}
-  attackDmg: 15
-  attackForce: 20
-  attackDuration: 1
-  atkVelocityLimit: {x: 10, y: 10, z: 10}
+  attackDmg: 35
+  attackForce: 30
+  chargeAttackDelay: 1
+  attackDuration: 1.2
+  atkVelocityLimit: {x: 20, y: 0, z: 20}
   enemyAnimator: {fileID: 9098722439538433440}
 --- !u!114 &4398406775792809914
 MonoBehaviour:
@@ -44712,8 +44713,8 @@ MonoBehaviour:
   entityElement: 2
   healthStates: []
   healthStatesFeedback: {fileID: 4195351358027081925}
-  maxLife: 60
-  currLife: 60
+  maxLife: 200
+  currLife: 200
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -44779,6 +44780,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DamageArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777132872778164684, guid: be319cc937a18fd4383331658676cf64,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777132872778164684, guid: be319cc937a18fd4383331658676cf64,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8971685948350092602, guid: be319cc937a18fd4383331658676cf64,
         type: 3}
@@ -44858,17 +44869,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8409
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8409
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8409
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07018c0b95bbdde4d81a49e8a8b34d51,
         type: 3}

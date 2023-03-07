@@ -12,6 +12,7 @@ public class MeleeEnemy : BaseEnemyScript
     //[SerializeField] internal bool hasShield = true;
     [SerializeField] float attackDmg = 15f;
     [SerializeField] float attackForce = 10.0f;
+    [SerializeField] float chargeAttackDelay = 1f;
     [SerializeField] float attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
     [SerializeField] Animator enemyAnimator;
@@ -109,7 +110,7 @@ public class MeleeEnemy : BaseEnemyScript
         yield return new WaitForSeconds(0.2f);
         //Feedback
         enemyAnimator.SetInteger("state", (int)AnimState.IDLE);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(chargeAttackDelay);
         //Feedback
         yield return new WaitForSeconds(0.2f);
 
@@ -120,7 +121,8 @@ public class MeleeEnemy : BaseEnemyScript
         touchBodyDamageData.dmgBehaviour = DamageData.DamageBehaviour.ON_ENTER;
         canMove = isAttacking = true;
         //canRotate = false;
-        attackMoveDir = (player.position - transform.position).normalized;
+        //attackMoveDir = (player.position - transform.position).normalized;
+        attackMoveDir = transform.forward;
         moveDir = attackMoveDir;
         enemyAnimator.SetInteger("state", (int)AnimState.ATTACKING);
         yield return new WaitForSeconds(attackDuration);
