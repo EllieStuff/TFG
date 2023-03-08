@@ -4967,7 +4967,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &5461383386582714078
 ParticleSystem:
@@ -19607,12 +19607,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2610049404249192152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.47, z: 0.272}
+  m_LocalPosition: {x: 0, y: 0.16080001, z: 0.658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4570640052669712375}
-  m_RootOrder: 0
+  m_Father: {fileID: 1518678067557753390}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2657066709801407071
 GameObject:
@@ -24513,7 +24513,7 @@ Transform:
   - {fileID: 6993554593389848576}
   - {fileID: 3536443563569224293}
   m_Father: {fileID: 4570640052669712375}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3489966853239332725
 GameObject:
@@ -24544,7 +24544,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4590892719693805230
 GameObject:
@@ -34438,6 +34438,7 @@ Transform:
   m_Children:
   - {fileID: 3478866644981103742}
   - {fileID: 2350920236752811447}
+  - {fileID: 693481586664506299}
   - {fileID: 4570640052669712375}
   - {fileID: 8374198154598772125}
   - {fileID: 6189871948013158751}
@@ -34469,17 +34470,20 @@ MonoBehaviour:
   enemyStartAttackDistance: 25
   enemyStopAttackDistance: 26
   isAttacking: 0
-  baseMoveSpeed: 10
+  baseMoveSpeed: 0
   playerFoundSpeed: 0
   attacksTargetWOSeeingIt: 1
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
+  endsAttackWhenTargetOutOfRange: 1
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
   idleWait: {x: 0, y: 0}
-  restWait: {x: 3, y: 3.5}
+  attackWait: {x: 1.5, y: 2.5}
+  restWait: {x: 0, y: 0}
+  attackChargingTime: 1
   numOfRndMoves: 0
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 5432909558806648478}
@@ -34487,10 +34491,9 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 6970031720182105785}
   transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}
-  attackDistance: 16
-  baseAttackTimer: 3
+  baseAttackTimer: 1.5
   attackAnimationTime: 0.15
-  attackDamage: 10
+  attackDamage: 25
   enemyAnimator: {fileID: 3385771566308395022}
   projectilePrefab: {fileID: 507451495234348787, guid: 1f2e3d08540022a47a495f19204de83a,
     type: 3}
@@ -34512,8 +34515,9 @@ MonoBehaviour:
   entityElement: 2
   healthStates: []
   healthStatesFeedback: {fileID: 936959598569564534}
-  maxLife: 60
-  currLife: 60
+  maxLife: 120
+  currLife: 120
+  healPercentage: 0.3
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -39580,7 +39584,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 190, z: 0}
 --- !u!33 &5033884022728673481
 MeshFilter:
@@ -39956,7 +39960,7 @@ RectTransform:
   m_Children:
   - {fileID: 1602170635767559775}
   m_Father: {fileID: 1518678067557753390}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -44922,7 +44926,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}

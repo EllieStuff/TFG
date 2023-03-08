@@ -69,6 +69,7 @@ Transform:
   - {fileID: 6812731089489480295}
   - {fileID: 8408812663522743248}
   - {fileID: 158371192811440619}
+  - {fileID: 2770404765011016488}
   - {fileID: 2447931840058550616}
   - {fileID: 2812224916879049272}
   - {fileID: 2812224915984968616}
@@ -103,22 +104,23 @@ MonoBehaviour:
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
+  endsAttackWhenTargetOutOfRange: 1
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
   idleWait: {x: 0.8, y: 1.8}
+  attackWait: {x: 1, y: 1.5}
   restWait: {x: 0, y: 0}
-  numOfRndMoves: 1
+  attackChargingTime: 2.5
+  numOfRndMoves: 35
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 7948629871496846772}
   lookPoint: {fileID: 158371192811440619}
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 2770404765211561492}
   transparentMat: {fileID: 2100000, guid: 949b6b23ca5d82a4d9d1036ba8733daf, type: 2}
-  attackDistance: 16
-  baseAttackTimer: 4
-  attackChargingTime: 1
+  baseAttackTimer: 3
   attackAnimationTime: 0.15
   attackDamage: 15
   enemyAnimator: {fileID: 2770404765211561495}
@@ -126,7 +128,7 @@ MonoBehaviour:
     type: 3}
   shootPoint: {fileID: 2770404765011016488}
   numOfAttacks: 2
-  attackSeparationTime: 0.5
+  attackSeparationTime: 0.2
 --- !u!114 &5689284674677619419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +147,7 @@ MonoBehaviour:
   healthStatesFeedback: {fileID: 5316147761737803172}
   maxLife: 90
   currLife: 90
+  healPercentage: 0.3
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -10031,12 +10034,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2770404765011016489}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.59, z: 0}
+  m_LocalPosition: {x: 0.052022934, y: 0.24271011, z: 0.635376}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2447931840058550616}
-  m_RootOrder: 0
+  m_Father: {fileID: 158371193756373988}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2812224915192963071
 GameObject:
@@ -10303,7 +10306,7 @@ RectTransform:
   m_Children:
   - {fileID: 2812224915192963056}
   m_Father: {fileID: 158371193756373988}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10461,7 +10464,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 158371193756373988}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2812224916879049274
 ParticleSystem:
@@ -15273,10 +15276,9 @@ Transform:
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2770404765011016488}
   - {fileID: 7948629871496846772}
   m_Father: {fileID: 158371193756373988}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &1609780254149306109
 MeshFilter:
@@ -20242,7 +20244,7 @@ Transform:
   - {fileID: 6376160171508121146}
   - {fileID: 8639495087767025145}
   m_Father: {fileID: 2447931840058550616}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4242578716066169384
 GameObject:

@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class PlantEnemy : BaseEnemyScript
 {
-    [Header("DistanceEnemy")]
-    [SerializeField] float attackDistance;
-    [SerializeField] float baseAttackTimer;
+    enum AnimState { IDLE, MOVING, ATTACKING, RESTING, DEAD }
+    enum AttackType { NORMAL_THROW, CIRCLE_ATTACK, FOUR_PROJECTILES, THREE_PROJECTILES }
+
+
+    [Header("PlantEnemy")]
     [SerializeField] float attackAnimationTime;
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform shootPoint;
-
-    enum AttackType { NORMAL_THROW, CIRCLE_ATTACK, FOUR_PROJECTILES, THREE_PROJECTILES }
-
     [SerializeField] AttackType attackStyle;
+    //[SerializeField] bool testPlant = false;
 
     float attackTimer;
 
     const int CIRCLE_ITERATIONS = 24;
     const int CIRCLE_MULTIPLIER = 50;
 
-    internal override void Start_Call() { base.Start_Call(); attackTimer = baseAttackTimer; }
+    internal override void Start_Call() { base.Start_Call(); }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -31,43 +31,35 @@ public class PlantEnemy : BaseEnemyScript
 
     internal override void IdleUpdate()
     {
-        enemyAnimator.SetFloat("state", 0);
+        enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
         base.IdleUpdate();
     }
     internal override void MoveToTargetUpdate()
     {
-        enemyAnimator.SetFloat("state", 1);
+        enemyAnimator.SetFloat("state", (int)AnimState.MOVING);
         base.MoveToTargetUpdate();
     }
     internal override void DamageUpdate()
     {
-        enemyAnimator.SetFloat("state", 2);
+        //enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
         base.DamageUpdate();
     }
     internal override void AttackUpdate()
     {
         base.AttackUpdate();
 
-        if (Vector3.Distance(player.position, transform.position) > attackDistance)
-        {
-            enemyAnimator.SetFloat("state", 1);
-            Vector3 targetMoveDir = (player.position - transform.position).normalized;
-            MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
-        }
-        else
-        {
-            if (!state.Equals(States.DAMAGE))
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        if (!state.Equals(States.DAMAGE))
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
 
-            enemyAnimator.SetFloat("state", 0);
-            attackTimer -= Time.deltaTime;
+        enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
+        attackTimer -= Time.fixedDeltaTime;
 
-            if (attackTimer <= 0)
-            {
-                StartCoroutine(AttackCorroutine());
-                attackTimer = baseAttackTimer;
-            }
+        if (attackTimer <= 0)
+        {
+            StartCoroutine(AttackCorroutine());
+            attackTimer = AttackWait + attackChargingTime;
         }
+
     }
     internal override void DeathUpdate()
     {
@@ -76,8 +68,10 @@ public class PlantEnemy : BaseEnemyScript
 
     IEnumerator AttackCorroutine()
     {
-        //place shoot animation here
+        yield return new WaitForSeconds(attackChargingTime);
 
+        //place shoot animation here
+        enemyAnimator.SetFloat("state", (int)AnimState.ATTACKING);
         yield return new WaitForSeconds(attackAnimationTime);
         RaycastHit hit;
         if (Physics.Raycast(shootPoint.position, (player.position - shootPoint.position).normalized, out hit))
@@ -159,9 +153,9 @@ public class PlantEnemy : BaseEnemyScript
         }
     }
 
-    internal override void IdleStart() { base.IdleStart(); }
+    internal override void IdleStart() { base.IdleStart(); enemyAnimator.SetFloat("state", (int)AnimState.IDLE); }
     internal override void MoveToTargetStart() { base.MoveToTargetStart(); }
-    internal override void AttackStart() { base.AttackStart(); }
+    internal override void AttackStart() { base.AttackStart(); attackTimer = 0f; }
 
 
     internal override void IdleExit() { base.IdleExit(); }

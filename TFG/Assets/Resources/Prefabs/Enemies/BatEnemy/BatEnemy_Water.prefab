@@ -24734,6 +24734,7 @@ Transform:
   - {fileID: 1018832424435899959}
   - {fileID: 2601438968183867264}
   - {fileID: 5952234403916635579}
+  - {fileID: 8564232481973661560}
   - {fileID: 8165304765835640072}
   - {fileID: 8624173164180870760}
   - {fileID: 8624173164955992056}
@@ -24768,12 +24769,15 @@ MonoBehaviour:
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
+  endsAttackWhenTargetOutOfRange: 1
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
   idleWait: {x: 0.5, y: 1.5}
+  attackWait: {x: 2, y: 2.5}
   restWait: {x: 0, y: 0}
+  attackChargingTime: 1
   numOfRndMoves: 1
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 4532596654922123748}
@@ -24781,9 +24785,7 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 8564232481624889924}
   transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}
-  attackDistance: 16
-  baseAttackTimer: 5
-  attackChargingTime: 1
+  baseAttackTimer: 2
   attackAnimationTime: 0.15
   attackDamage: 15
   enemyAnimator: {fileID: 8564232481624889927}
@@ -24810,6 +24812,7 @@ MonoBehaviour:
   healthStatesFeedback: {fileID: 1832666379212272116}
   maxLife: 50
   currLife: 50
+  healPercentage: 0.3
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -39659,12 +39662,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8564232481973661561}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.59, z: 0}
+  m_LocalPosition: {x: 0.052022934, y: 0.24271011, z: 0.340374}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8165304765835640072}
-  m_RootOrder: 1
+  m_Father: {fileID: 5952234403255142324}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8624173163369890884
 GameObject:
@@ -39930,7 +39933,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952234403255142324}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &8624173164180870762
 ParticleSystem:
@@ -44819,7 +44822,7 @@ RectTransform:
   m_Children:
   - {fileID: 8624173163602070432}
   m_Father: {fileID: 5952234403255142324}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -44880,7 +44883,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b01ab7fe32d4144ca718f486465d5d1,
         type: 3}
