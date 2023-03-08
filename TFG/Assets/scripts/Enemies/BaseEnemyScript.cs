@@ -29,6 +29,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] protected bool movesToTarget = true;
     [SerializeField] bool needsToRest = false;
     [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
+    [SerializeField] Vector2 attackWait = new Vector2(1f, 1.5f);
     [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
     [SerializeField] protected float attackChargingTime = 1f;
     [SerializeField] int numOfRndMoves = 0;
@@ -65,6 +66,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
+    protected float AttackWait { get { return Random.Range(attackWait.x, attackWait.y); } }
 
     //PLACEHOLDER
     [SerializeField] SkinnedMeshRenderer enemyMesh;

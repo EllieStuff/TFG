@@ -9,7 +9,6 @@ public class PlantEnemy : BaseEnemyScript
 
 
     [Header("PlantEnemy")]
-    [SerializeField] float baseAttackTimer;
     [SerializeField] float attackAnimationTime;
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
@@ -58,7 +57,7 @@ public class PlantEnemy : BaseEnemyScript
         if (attackTimer <= 0)
         {
             StartCoroutine(AttackCorroutine());
-            attackTimer = baseAttackTimer + attackChargingTime;
+            attackTimer = AttackWait + attackChargingTime;
         }
 
     }

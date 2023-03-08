@@ -38,20 +38,10 @@ public class MeleeEnemy : BaseEnemyScript
         if (canRotate && isAttacking && Vector3.Angle(transform.forward, attackMoveDir) < 1f) canRotate = false;
         if (isAttacking)
         {
-            //canRotate = Vector3.Angle(transform.forward, attackMoveDir) < 1f;
             attackMoveDir = new Vector3(attackMoveDir.x, 0, attackMoveDir.z);
             MoveRB(attackMoveDir, attackForce);
         }
 
-        //if (isAttacking)
-        //{
-        //    enemyAnimator.SetInteger("state", 1);
-        //    MoveRB(attackMoveDir, attackForce);
-        //}
-        //else
-        //{
-        //    enemyAnimator.SetInteger("state", 0);
-        //}
     }
 
 

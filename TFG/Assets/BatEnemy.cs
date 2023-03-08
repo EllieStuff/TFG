@@ -5,7 +5,6 @@ using UnityEngine;
 public class BatEnemy : BaseEnemyScript
 {
     [Header("BatEnemy")]
-    [SerializeField] float baseAttackTimer;
     [SerializeField] float attackAnimationTime;
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
@@ -55,7 +54,7 @@ public class BatEnemy : BaseEnemyScript
         if (attackTimer <= 0)
         {
             StartCoroutine(AttackCorroutine());
-            attackTimer = baseAttackTimer + attackChargingTime;
+            attackTimer = AttackWait + attackChargingTime;
         }
 
     }

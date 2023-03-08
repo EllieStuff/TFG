@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6104432145596615652}
-  m_RootOrder: 8
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &1225561217
 ParticleSystem:
@@ -15491,7 +15491,7 @@ PrefabInstance:
     - target: {fileID: 333940453720987210, guid: 62d78f17112df6c4cbb9a3c07e977c43,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 333940453720987210, guid: 62d78f17112df6c4cbb9a3c07e977c43,
         type: 3}
@@ -15688,6 +15688,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1679515740618261119, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
         type: 3}
+      propertyPath: baseMoveForce
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679515740618261119, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
+      propertyPath: baseMaxSpeed.x
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679515740618261119, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
+      propertyPath: baseMaxSpeed.z
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679515740618261119, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
+        type: 3}
       propertyPath: roomEnemyManager
       value: 
       objectReference: {fileID: 0}
@@ -15715,7 +15730,7 @@ PrefabInstance:
         type: 3}
       propertyPath: swordCollider
       value: 
-      objectReference: {fileID: 1850695095234083666}
+      objectReference: {fileID: 0}
     - target: {fileID: 2096256547233024601, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
         type: 3}
       propertyPath: clips.Array.size
@@ -15958,12 +15973,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11a9a7dce7b4cd9468a8856226cda1e0, type: 3}
---- !u!136 &1850695095234083666 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 6509785557001155272, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
-    type: 3}
-  m_PrefabInstance: {fileID: 4898115512442653082}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2904951670982229690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7757991576192366368, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
@@ -16145,7 +16154,7 @@ PrefabInstance:
     - target: {fileID: 7991475168281460453, guid: 9ff1d592ba18a5f44afb3436c823d153,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7991475168281460453, guid: 9ff1d592ba18a5f44afb3436c823d153,
         type: 3}
@@ -16245,7 +16254,7 @@ PrefabInstance:
     - target: {fileID: 1096622138386982412, guid: 13f0192bda3898e4abfd54511180d46f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1096622138386982412, guid: 13f0192bda3898e4abfd54511180d46f,
         type: 3}
@@ -16335,7 +16344,7 @@ PrefabInstance:
     - target: {fileID: 7991475168281460453, guid: c0897d18bbf0829468a3cfa41e664f81,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7991475168281460453, guid: c0897d18bbf0829468a3cfa41e664f81,
         type: 3}
@@ -16410,7 +16419,7 @@ PrefabInstance:
     - target: {fileID: 7991475168281460453, guid: 524b263559f069941b397ec50ffa772c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7991475168281460453, guid: 524b263559f069941b397ec50ffa772c,
         type: 3}
