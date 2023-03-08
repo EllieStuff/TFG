@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ImproveAttackSpeed_PassiveSkill : PassiveSkill_Base
 {
-    float delayDecrease = 0.4f;
+    float delayDecrease = 0.2f;
 
     public ImproveAttackSpeed_PassiveSkill()
     {
         skillType = SkillType.IMPROVE_ATTACK_SPEED;
-        maxLevel = 5;
+        maxLevel = 3;
         name = "Attack Speed Improve";
         description = "Your attack speed gets quicker!";
     }
