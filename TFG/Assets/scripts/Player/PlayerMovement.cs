@@ -23,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
     float actualMoveForce;
     float actualRotSpeed;
     float speedMultiplierRot = 2;
-    internal float speedMultiplier = 0.2f;
+    internal float baseSpeed;
+    [SerializeField] internal float speedMultiplier = 0.2f;
     Vector3 actualMaxSpeed;
     internal bool canMove = true;
     internal bool canRotate = true;
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        baseSpeed = speedMultiplier;
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();

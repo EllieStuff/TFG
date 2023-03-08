@@ -93,6 +93,9 @@ public class PassiveSkills_Manager : MonoBehaviour
             case PassiveSkill_Base.SkillType.PIERCE:
                 return new Pierce_PassiveSkill();
 
+            case PassiveSkill_Base.SkillType.WALK_SPEED:
+                return new WalkFaster_PassiveSkill();
+
             default:
                 return null;
         }
