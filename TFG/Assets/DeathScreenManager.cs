@@ -26,7 +26,7 @@ public class DeathScreenManager : MonoBehaviour
     public void TryAgain()
     {
         Time.timeScale = 1;
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Exit()
