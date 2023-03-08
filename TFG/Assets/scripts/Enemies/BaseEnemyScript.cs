@@ -36,6 +36,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] protected float dmgOnTouch = 5f;
     [SerializeField] Transform enemyLightsHolder;
     [SerializeField] Transform lookPoint;
+    [SerializeField] bool disableAutoGravity;
 
     internal ZoneScript zoneSystem;
     internal float damageTimer = 0;
@@ -336,7 +337,8 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void MoveToTargetUpdate()
     {
-        rb.useGravity = false;
+        if(!disableAutoGravity)
+            rb.useGravity = false;
 
         Vector3 targetMoveDir = (player.position - transform.position).normalized;
         MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
@@ -452,7 +454,9 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void DeathStart()
     {
         GetComponent<Collider>().enabled = false;
-        rb.useGravity = false;
+
+        if(!disableAutoGravity)
+            rb.useGravity = false;
 
         damageTimer = baseDeathTime;
         enemyMesh.material = transparentMat;
@@ -490,8 +494,6 @@ public class BaseEnemyScript : MonoBehaviour
 
     internal void MoveRB(Vector3 _moveDir, float _moveForce, ForceMode _forceMode = ForceMode.Force)
     {
-        moveDir = new Vector3(moveDir.x, -1, moveDir.z);
-
         if (canMove)
             rb.velocity = _moveDir * _moveForce;
     }
@@ -547,7 +549,7 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void CollisionEnterEvent(Collision col)
     {
-        if (col.gameObject.CompareTag("floor"))
+        if (!disableAutoGravity && col.gameObject.CompareTag("floor"))
             rb.useGravity = false;
 
         //if (col.gameObject.CompareTag("Player"))
@@ -560,7 +562,7 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void CollisionExitEvent(Collision col)
     {
-        if (col.gameObject.CompareTag("floor"))
+        if (!disableAutoGravity && col.gameObject.CompareTag("floor"))
             rb.useGravity = true;
 
     }
