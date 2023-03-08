@@ -44,7 +44,8 @@ public class PlayerAttack : MonoBehaviour
 
     const float RAYCAST_DISTANCE = 10;
 
-    public ParticleSystem glowBurstPS;
+    public GameObject glowBurstPS;
+    
 
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero && playerMovement.targetMousePos != Vector3.zero; } }
 
@@ -82,8 +83,7 @@ public class PlayerAttack : MonoBehaviour
         //    changeAttackTimer = changeAttackDelay;
         //    attackTimer = attackTimer / 2f;
         //}
-        if (IsMoving)
-            glowBurstPS.Stop();
+        
     }
 
 
@@ -109,7 +109,10 @@ public class PlayerAttack : MonoBehaviour
     void Attack()
     {
         //Spawn Particle glow
-        glowBurstPS.Play();
+        ParticleSystem referenceGlowBurst = Instantiate(glowBurstPS,transform).GetComponent<ParticleSystem>();
+        referenceGlowBurst.Play();
+        referenceGlowBurst.transform.SetParent(null);
+
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
         attack.Init(transform);
