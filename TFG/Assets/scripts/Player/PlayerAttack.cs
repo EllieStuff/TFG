@@ -37,14 +37,19 @@ public class PlayerAttack : MonoBehaviour
     internal float dmgIncrease = 0f;
     internal int extraProjectiles = 0;
     internal bool stealLifeEnabled = false;
+    internal bool damageIncreaseByAbilitySwap = false;
+    internal int critSwapLevel = 0;
     internal float stealLifePercentage = 0;
     internal int projectilePierceAmount = 0;
     float extraProjectilesDelay = 0.2f;
     //internal bool changingAttackType = false;
 
     const float RAYCAST_DISTANCE = 10;
+    const float CRIT_PERCENTAGE = 3;
 
     public ParticleSystem glowBurstPS;
+
+    int critSwapQuantity = 5;
 
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero && playerMovement.targetMousePos != Vector3.zero; } }
 
@@ -106,6 +111,22 @@ public class PlayerAttack : MonoBehaviour
         return false;
     }
 
+    public void ResetCritQuantity()
+    {
+        if(damageIncreaseByAbilitySwap)
+            critSwapQuantity = 0;
+    }
+
+    void SetCritAttack(PlayerProjectileData _projectile)
+    {
+        if(damageIncreaseByAbilitySwap && critSwapQuantity < critSwapLevel)
+        {
+            _projectile.dmgData.critPercentage = CRIT_PERCENTAGE;
+            critSwapQuantity++;
+        }
+
+    }
+
     void Attack()
     {
         //Spawn Particle glow
@@ -113,6 +134,10 @@ public class PlayerAttack : MonoBehaviour
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
         attack.Init(transform);
+
+        if(damageIncreaseByAbilitySwap)
+            SetCritAttack(attack);
+
         attack.dmgData.stealLife = stealLifeEnabled;
         attack.dmgData.stealLifePercentage = stealLifePercentage;
         attack.dmgData.damage += dmgIncrease;

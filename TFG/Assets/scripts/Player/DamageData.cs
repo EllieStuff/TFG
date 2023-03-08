@@ -14,6 +14,7 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal float timeDisabledAfterColl = -1f;
     [SerializeField] internal bool stealLife = false;
     [SerializeField] internal float stealLifePercentage = 0;
+    [SerializeField] internal float critPercentage = 0;
     [SerializeField] List<string> tagsAffected;
 
     [SerializeField] AudioManager audio;
@@ -98,6 +99,9 @@ public class DamageData : MonoBehaviour
 
     void DamageToEnemy(Transform _enemy)
     {
+        if (critPercentage > 0)
+            damage = damage + (critPercentage / damage);
+
         if (audio != null)
             audio.PlaySound();
 

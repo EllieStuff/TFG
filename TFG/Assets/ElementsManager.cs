@@ -160,6 +160,7 @@ public class ElementsManager : MonoBehaviour
 
     void ChangeElement(Elements _element, float _changeAttackDelay)
     {
+        attackManager.ResetCritQuantity();
         PlayParticles(_element);
         elementChanging = _element;
         StartCoroutine(ChangeElementCor(_element, _changeAttackDelay));

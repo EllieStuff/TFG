@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WalkFaster_PassiveSkill : PassiveSkill_Base
 {
-    const float MAX_UPGRADE_NUMBER = 5;
+    const int MAX_UPGRADE_NUMBER = 5;
     const float WALK_SPEED_INCREMENT = 0.05f;
 
     public WalkFaster_PassiveSkill()
