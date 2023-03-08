@@ -44647,12 +44647,14 @@ MonoBehaviour:
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
+  endsAttackWhenTargetOutOfRange: 0
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 1
   needsToRest: 1
   idleWait: {x: 0.5, y: 1.5}
   restWait: {x: 2, y: 2.5}
+  attackChargingTime: 1
   numOfRndMoves: -1
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 1216328838707944370}
@@ -44662,7 +44664,6 @@ MonoBehaviour:
   transparentMat: {fileID: 2100000, guid: 62ce62e552285be48972fb34c0607d6c, type: 2}
   attackDmg: 15
   attackForce: 12
-  chargeAttackDelay: 1
   attackDuration: 1
   atkVelocityLimit: {x: 8, y: 0, z: 8}
   enemyAnimator: {fileID: 385545376358374519}
@@ -44684,6 +44685,7 @@ MonoBehaviour:
   healthStatesFeedback: {fileID: 4591192370204194374}
   maxLife: 60
   currLife: 60
+  healPercentage: 0.3
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}

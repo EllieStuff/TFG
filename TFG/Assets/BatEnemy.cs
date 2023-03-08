@@ -6,7 +6,6 @@ public class BatEnemy : BaseEnemyScript
 {
     [Header("BatEnemy")]
     [SerializeField] float baseAttackTimer;
-    [SerializeField] float attackChargingTime = 1f;
     [SerializeField] float attackAnimationTime;
     [SerializeField] float attackDamage;
     [SerializeField] Animator enemyAnimator;
@@ -18,11 +17,7 @@ public class BatEnemy : BaseEnemyScript
     float attackTimer;
 
 
-    internal override void Start_Call()
-    {
-        base.Start_Call();
-        endAttackFlag = false;
-    }
+    internal override void Start_Call() { base.Start_Call(); }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -48,21 +43,12 @@ public class BatEnemy : BaseEnemyScript
     {
         base.AttackUpdate();
 
-        float distToPlayer = Vector3.Distance(transform.position, player.position);
-        if (!canAttack || distToPlayer > enemyStartAttackDistance)
+        RaycastHit hit;
+        bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, Vector3.Distance(transform.position, player.position), layerMask);
+        if (!hitCollided || !hit.transform.CompareTag("Player"))
         {
             ChangeState(States.IDLE);
             return;
-        }
-        else
-        {
-            RaycastHit hit;
-            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
-            if (!hitCollided || !hit.transform.CompareTag("Player"))
-            {
-                ChangeState(States.IDLE);
-                return;
-            }
         }
 
         attackTimer -= Time.deltaTime;
@@ -71,6 +57,7 @@ public class BatEnemy : BaseEnemyScript
             StartCoroutine(AttackCorroutine());
             attackTimer = baseAttackTimer + attackChargingTime;
         }
+
     }
     internal override void DeathUpdate()
     {

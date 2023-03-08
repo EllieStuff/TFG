@@ -23,12 +23,14 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] protected bool attacksTargetWOSeeingIt = false;  // WO == Without
     [SerializeField] bool movesToTargetWOSeeingIt = false;
     [SerializeField] bool stopRndMoveWhenSeeingTarget = true;
+    [SerializeField] bool endsAttackWhenTargetOutOfRange = true;
     [SerializeField] internal float baseDamageTimer;
     [SerializeField] internal float baseDeathTime;
     [SerializeField] protected bool movesToTarget = true;
     [SerializeField] bool needsToRest = false;
     [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
     [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
+    [SerializeField] protected float attackChargingTime = 1f;
     [SerializeField] int numOfRndMoves = 0;
     [SerializeField] protected float dmgOnTouch = 5f;
     [SerializeField] Transform enemyLightsHolder;
@@ -58,7 +60,6 @@ public class BaseEnemyScript : MonoBehaviour
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
     internal bool canMove = true, canRotate = true, canAttack = true;
     internal Quaternion targetRot;
-    protected bool endAttackFlag = true;
     internal bool canEnterDamageState = true;
     List<Light> enemyLights = new List<Light>();
 
@@ -358,10 +359,17 @@ public class BaseEnemyScript : MonoBehaviour
         if (!canAttack) { ChangeState(States.IDLE); return; }
 
         //Debug.Log("Dbg Attacking");
-        if (endAttackFlag)
+        //if (endAttackFlag)
+        //{
+        //    if (needsToRest) ChangeState(States.REST);
+        //    else ChangeState(States.IDLE);
+        //}
+
+        if (endsAttackWhenTargetOutOfRange 
+            && Vector3.Distance(player.position, transform.position) > enemyStopAttackDistance)
         {
-            if (needsToRest) ChangeState(States.REST);
-            else ChangeState(States.IDLE);
+            ChangeState(States.IDLE);
+            return;
         }
     }
     internal virtual void RestUpdate()

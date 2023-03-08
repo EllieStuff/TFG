@@ -5533,7 +5533,7 @@ MonoBehaviour:
   enemyStartAttackDistance: 25
   enemyStopAttackDistance: 26
   isAttacking: 0
-  baseMoveSpeed: 10
+  baseMoveSpeed: 0
   playerFoundSpeed: 0
   attacksTargetWOSeeingIt: 1
   movesToTargetWOSeeingIt: 0
@@ -5544,6 +5544,7 @@ MonoBehaviour:
   needsToRest: 0
   idleWait: {x: 0, y: 0}
   restWait: {x: 3, y: 3.5}
+  attackChargingTime: 1
   numOfRndMoves: 0
   dmgOnTouch: 5
   enemyLightsHolder: {fileID: 2501653648402767781}
@@ -5551,15 +5552,15 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 7345601252333543702}
   transparentMat: {fileID: 2100000, guid: 949b6b23ca5d82a4d9d1036ba8733daf, type: 2}
-  attackDistance: 16
   baseAttackTimer: 3
   attackAnimationTime: 0.15
-  attackDamage: 10
+  attackDamage: 40
   enemyAnimator: {fileID: 5696837432204804202}
   projectilePrefab: {fileID: 507451495234348787, guid: 1f2e3d08540022a47a495f19204de83a,
     type: 3}
   shootPoint: {fileID: 8216650763442931939}
   attackStyle: 0
+  testPlant: 0
 --- !u!114 &3025498072861595482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5576,8 +5577,9 @@ MonoBehaviour:
   entityElement: 0
   healthStates: []
   healthStatesFeedback: {fileID: 1455472645762347635}
-  maxLife: 60
-  currLife: 60
+  maxLife: 240
+  currLife: 240
+  healPercentage: 0.3
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}

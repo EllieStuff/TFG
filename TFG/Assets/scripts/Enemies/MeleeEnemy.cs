@@ -7,12 +7,8 @@ public class MeleeEnemy : BaseEnemyScript
     enum AnimState { IDLE, MOVING, ATTACKING, RESTING, DEAD }
 
     [Header("MeleeEnemy")]
-    //[SerializeField] Transform shieldPivotRef; 
-    //[SerializeField] Transform idleShieldPoint, attackingShieldPoint;
-    //[SerializeField] internal bool hasShield = true;
     [SerializeField] float attackDmg = 15f;
     [SerializeField] float attackForce = 10.0f;
-    [SerializeField] float chargeAttackDelay = 1f;
     [SerializeField] float attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
     [SerializeField] Animator enemyAnimator;
@@ -20,11 +16,7 @@ public class MeleeEnemy : BaseEnemyScript
     Vector3 attackMoveDir = Vector3.zero;
 
 
-    internal override void Start_Call()
-    {
-        base.Start_Call();
-        endAttackFlag = false;
-    }
+    internal override void Start_Call() { base.Start_Call(); }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -110,7 +102,7 @@ public class MeleeEnemy : BaseEnemyScript
         yield return new WaitForSeconds(0.2f);
         //Feedback
         enemyAnimator.SetInteger("state", (int)AnimState.IDLE);
-        yield return new WaitForSeconds(chargeAttackDelay);
+        yield return new WaitForSeconds(attackChargingTime);
         //Feedback
         yield return new WaitForSeconds(0.2f);
 
