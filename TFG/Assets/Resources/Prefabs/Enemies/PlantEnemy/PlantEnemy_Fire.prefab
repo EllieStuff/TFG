@@ -107,7 +107,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7464903168444005019}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 190, z: 0}
 --- !u!33 &5493675247315456138
 MeshFilter:
@@ -463,7 +463,7 @@ RectTransform:
   m_Children:
   - {fileID: 908389476405129313}
   m_Father: {fileID: 7464903168444005019}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -545,7 +545,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7464903168444005019}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &6166678766108391714
 ParticleSystem:
@@ -5349,13 +5349,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4903219529589053223}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.485, z: 0.28}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.03999996, z: 0.9700001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7075136971440637875}
-  m_RootOrder: 0
+  m_Father: {fileID: 7464903168444005019}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5714211065996583960
 GameObject:
@@ -5464,7 +5464,7 @@ Transform:
   - {fileID: 1989385416126440927}
   - {fileID: 7427522103325208623}
   m_Father: {fileID: 7075136971440637875}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7464903168444005022
 GameObject:
@@ -5503,6 +5503,7 @@ Transform:
   - {fileID: 7715807146409134711}
   - {fileID: 8714438111456996193}
   - {fileID: 7464903169376805012}
+  - {fileID: 8216650763442931939}
   - {fileID: 7075136971440637875}
   - {fileID: 1169030517061821183}
   - {fileID: 1891698125445086418}
@@ -5538,6 +5539,7 @@ MonoBehaviour:
   attacksTargetWOSeeingIt: 1
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
+  endsAttackWhenTargetOutOfRange: 1
   baseDamageTimer: 0.5
   baseDeathTime: 5
   movesToTarget: 0
@@ -5552,7 +5554,7 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 7345601252333543702}
   transparentMat: {fileID: 2100000, guid: 949b6b23ca5d82a4d9d1036ba8733daf, type: 2}
-  baseAttackTimer: 3
+  baseAttackTimer: 2
   attackAnimationTime: 0.15
   attackDamage: 40
   enemyAnimator: {fileID: 5696837432204804202}
@@ -5560,7 +5562,6 @@ MonoBehaviour:
     type: 3}
   shootPoint: {fileID: 8216650763442931939}
   attackStyle: 0
-  testPlant: 0
 --- !u!114 &3025498072861595482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5908,7 +5909,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}

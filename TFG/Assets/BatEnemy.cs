@@ -68,16 +68,18 @@ public class BatEnemy : BaseEnemyScript
     {
         yield return new WaitForSeconds(attackChargingTime);
         //place shoot animation here
+        canRotate = false;
         for (int i = 0; i < numOfAttacks; i++)
         {
             yield return new WaitForSeconds(attackAnimationTime);
             BatProjectile_Tornado projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Tornado>();
-            projectile.zigzagDir = i % 2 == 0 ? 1 : -1;
+            projectile.zigzagDir = i % 2 == 0 ? -1 : 1;
             //BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
             yield return new WaitForSeconds(attackSeparationTime);
         }
+        canRotate = true;
 
     }
     protected override void EndRndMovesBehaviour()
@@ -104,15 +106,16 @@ public class BatEnemy : BaseEnemyScript
     {
         base.AttackStart();
         enemyAnimator.SetFloat("state", 0);
-        attackTimer = baseAttackTimer + attackChargingTime;
+        attackTimer = 0f;
         moveDir = Vector3.zero;
         StopRB(stopForce);
+        canEnterDamageState = false;
         StartCoroutine(AttackCorroutine());
     }
 
 
     internal override void IdleExit() { base.IdleExit(); }
     internal override void MoveToTargetExit() { base.MoveToTargetExit(); }
-    internal override void AttackExit() { base.AttackExit(); StopCoroutine(AttackCorroutine()); }
+    internal override void AttackExit() { base.AttackExit(); canEnterDamageState = true; }
 
 }
