@@ -490,6 +490,8 @@ public class BaseEnemyScript : MonoBehaviour
 
     internal void MoveRB(Vector3 _moveDir, float _moveForce, ForceMode _forceMode = ForceMode.Force)
     {
+        moveDir = new Vector3(moveDir.x, -1, moveDir.z);
+
         if (canMove)
             rb.velocity = _moveDir * _moveForce;
     }
