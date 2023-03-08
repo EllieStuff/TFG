@@ -8,6 +8,8 @@ public class AbilityButton : MonoBehaviour
 {
     TextMeshProUGUI uiTextName;
     [SerializeField] TextMeshProUGUI uiTextDescription;
+    [SerializeField] GameObject cardPrefabUI;
+    Transform cardListPivot;
 
     private RectTransform imageTransform;
     Vector2 originalSize;
@@ -33,6 +35,7 @@ public class AbilityButton : MonoBehaviour
 
     private void Start()
     {
+        cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
         UIFade = transform.parent.parent.GetComponent<FadeInFadeOut_UI>();
     }
 
@@ -173,11 +176,43 @@ public class AbilityButton : MonoBehaviour
         uiTextDescription.rectTransform.localPosition = new Vector3(imageTransform.localPosition.x, textRectTransfom.localPosition.y);
     }
 
+    CardUIScript CheckIfThisCardExistsAlready()
+    {
+        foreach(Transform child in cardListPivot)
+        {
+            if (child.GetComponent<CardUIScript>().skillType.Equals(cardSkill))
+                return child.GetComponent<CardUIScript>();
+        }
+
+        return null;
+    }
+
+    void SpawnCardInUI()
+    {
+        CardUIScript cardCheck = CheckIfThisCardExistsAlready();
+
+        if (cardCheck != null)
+        {
+            cardCheck.ModifyCardTier();
+        }
+        else
+        {
+            CardUIScript card = Instantiate(cardPrefabUI, cardListPivot).GetComponent<CardUIScript>();
+
+            card.skillType = cardSkill;
+            card.cardSprite = GetComponent<Image>().sprite;
+        }
+    }
+
     private void AddAbility()
     {
         if(!pushedButton)
         {
             playerSkills.AddSkill(skill);
+
+            if (cardListPivot != null && cardPrefabUI != null)
+                SpawnCardInUI();
+
             StartCoroutine(DisableUI());
             pushedButton = true;
         }

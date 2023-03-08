@@ -118,15 +118,15 @@ public class ElementsManager : MonoBehaviour
     {
         if (!CanChangeElement) return;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && attackManager.currentAttackElement != Elements.FIRE)
         {
             ChangeElement(Elements.FIRE, elementsData[Elements.FIRE].chargeElementDelay);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && attackManager.currentAttackElement != Elements.WATER)
         {
             ChangeElement(Elements.WATER, elementsData[Elements.WATER].chargeElementDelay);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && attackManager.currentAttackElement != Elements.GRASS)
         {
             ChangeElement(Elements.GRASS, elementsData[Elements.GRASS].chargeElementDelay);
         }
@@ -160,6 +160,7 @@ public class ElementsManager : MonoBehaviour
 
     void ChangeElement(Elements _element, float _changeAttackDelay)
     {
+        attackManager.ResetCritQuantity();
         PlayParticles(_element);
         elementChanging = _element;
         StartCoroutine(ChangeElementCor(_element, _changeAttackDelay));
