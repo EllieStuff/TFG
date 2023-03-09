@@ -72,6 +72,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     //PLACEHOLDER
     [SerializeField] SkinnedMeshRenderer enemyMesh;
+    [SerializeField] MeshRenderer enemyMeshTmp;
     [SerializeField] Material transparentMat;
     //_________________________________________
 
@@ -89,7 +90,8 @@ public class BaseEnemyScript : MonoBehaviour
         enemyLife = GetComponent<LifeSystem>();
         touchBodyDamageData = transform.Find("DamageArea").GetComponent<DamageData>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        enemyMesh.material = new Material(enemyMesh.material);
+        //if(enemyMesh != null) enemyMesh.material = new Material(enemyMesh.material);
+        //else enemyMeshTmp.material = new Material(enemyMeshTmp.material);
 
         int enemiesLayer = LayerMask.NameToLayer("Enemy");
         Physics.IgnoreLayerCollision(enemiesLayer, enemiesLayer);
@@ -412,9 +414,19 @@ public class BaseEnemyScript : MonoBehaviour
     {
         damageTimer -= Time.deltaTime;
 
-        if (enemyMesh.material.color.a > 0)
+        if (enemyMesh != null)
         {
-            enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
+            if (enemyMesh.material.color.a > 0)
+            {
+                enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (enemyMeshTmp.material.color.a > 0)
+            {
+                enemyMeshTmp.material.color -= new Color(0, 0, 0, Time.deltaTime);
+            }
         }
         if (enemyLights.Count > 0)
         {
