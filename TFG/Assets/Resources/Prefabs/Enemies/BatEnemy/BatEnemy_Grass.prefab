@@ -24810,15 +24810,15 @@ MonoBehaviour:
   restWait: {x: 0, y: 0}
   attackChargingTime: 1
   numOfRndMoves: 2
-  dmgOnTouch: 5
+  dmgOnTouch: 20
   enemyLightsHolder: {fileID: 2570573404889066780}
   lookPoint: {fileID: 5751400084352022851}
+  disableAutoGravity: 0
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 7751190090665590460}
   transparentMat: {fileID: 2100000, guid: 52eff7ed8ee74da4d9b8fa3fa8878cc9, type: 2}
-  baseAttackTimer: 4
   attackAnimationTime: 0.15
-  attackDamage: 25
+  attackDamage: 250
   enemyAnimator: {fileID: 7751190090665590463}
   projectilePrefab: {fileID: 8535654783368711210, guid: 7b60fea3329039c42867962dbe12f035,
     type: 3}
@@ -24841,9 +24841,10 @@ MonoBehaviour:
   entityElement: 1
   healthStates: []
   healthStatesFeedback: {fileID: 298774814280439052}
-  maxLife: 180
-  currLife: 180
-  healPercentage: 0.3
+  maxLife: 1800
+  currLife: 1800
+  healWithSameElement: 1
+  healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -29951,6 +29952,7 @@ MonoBehaviour:
   timeDisabledAfterColl: 1
   stealLife: 0
   stealLifePercentage: 0
+  critPercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 0}
