@@ -479,7 +479,8 @@ public class BaseEnemyScript : MonoBehaviour
             rb.useGravity = false;
 
         damageTimer = baseDeathTime;
-        enemyMesh.material = transparentMat;
+        if(enemyMesh != null) enemyMesh.material = transparentMat;
+        else enemyMeshTmp.material = transparentMat;
 
         if (zoneSystem != null)
         {
