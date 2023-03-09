@@ -5554,7 +5554,8 @@ MonoBehaviour:
   lookPoint: {fileID: 0}
   disableAutoGravity: 0
   moveDir: {x: 0, y: 0, z: 0}
-  enemyMesh: {fileID: 7345601252333543702}
+  enemyMesh: {fileID: 0}
+  enemyMeshTmp: {fileID: 8242927941997837532}
   transparentMat: {fileID: 2100000, guid: 949b6b23ca5d82a4d9d1036ba8733daf, type: 2}
   attackAnimationTime: 0.15
   attackDamage: 400
@@ -5979,6 +5980,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 47c857461b8401f409e8b508bbd02859,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fcc34d41e41028049af86e4d66ca98c4, type: 2}
     - target: {fileID: 919132149155446097, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}
       propertyPath: m_Name
@@ -5989,8 +5995,7 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -7511558181221131132, guid: 47c857461b8401f409e8b508bbd02859, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c857461b8401f409e8b508bbd02859, type: 3}
 --- !u!4 &7075136971440637875 stripped
 Transform:
@@ -6004,59 +6009,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7324355938474696792}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &7345601252333543702
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7594264391693081865}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: fcc34d41e41028049af86e4d66ca98c4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -2797018412643553375, guid: 47c857461b8401f409e8b508bbd02859, type: 3}
-  m_Bones: []
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
-  m_AABB:
-    m_Center: {x: -0.103649125, y: 0.082983896, z: 0.010835469}
-    m_Extent: {x: 0.35856903, y: 0.37074703, z: 0.7440398}
-  m_DirtyAABB: 0
 --- !u!95 &5696837432204804202
 Animator:
   serializedVersion: 4
@@ -6077,6 +6029,12 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!23 &8242927941997837532 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 47c857461b8401f409e8b508bbd02859,
+    type: 3}
+  m_PrefabInstance: {fileID: 7324355938474696792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7627764662199429193
 PrefabInstance:
   m_ObjectHideFlags: 0
