@@ -76,6 +76,7 @@ public class BatEnemy : BaseEnemyScript
             //BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
+            projectile.dmgData.damage = attackDamage;
             yield return new WaitForSeconds(attackSeparationTime);
         }
         canRotate = true;

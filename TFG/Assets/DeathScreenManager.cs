@@ -16,6 +16,13 @@ public class DeathScreenManager : MonoBehaviour
 
     private void Start()
     {
+        if(PlayerPrefs.GetString("UseDeathRoomCoordinates", "false") == "true")
+        {
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            player.position = new Vector3(0f, player.position.y, PlayerPrefs.GetFloat("DeathRoomZ", -1f));
+            PlayerPrefs.SetString("UseDeathRoomCoordinates", "false");
+        }
+
         //bttns = new Button[(int)Options.COUNT];
         //bttns[(int)Options.TRY_AGAIN] = tryAgainBttn.GetComponent<Button>();
         //bttns[(int)Options.EXIT] = exitBttn.GetComponent<Button>();
@@ -23,6 +30,13 @@ public class DeathScreenManager : MonoBehaviour
         ///DeathScreenAppear(1);
     }
 
+
+    public void Continue()
+    {
+        Time.timeScale = 1;
+        PlayerPrefs.SetString("UseDeathRoomCoordinates", "true");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     public void TryAgain()
     {

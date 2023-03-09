@@ -148,6 +148,7 @@ public class PlantEnemy : BaseEnemyScript
                 projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<ProjectileData>();
                 projectile.Init(transform);
                 projectile.transform.SetParent(null);
+                projectile.dmgData.damage = attackDamage;
                 //projectile.moveDir = (player.position - transform.position).normalized;
                 break;
         }
