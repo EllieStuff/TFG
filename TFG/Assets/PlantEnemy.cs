@@ -155,12 +155,12 @@ public class PlantEnemy : BaseEnemyScript
 
     internal override void IdleStart() { base.IdleStart(); enemyAnimator.SetFloat("state", (int)AnimState.IDLE); }
     internal override void MoveToTargetStart() { base.MoveToTargetStart(); }
-    internal override void AttackStart() { base.AttackStart(); attackTimer = 0f; }
+    internal override void AttackStart() { base.AttackStart(); attackTimer = 0f; canEnterDamageState = false; }
 
 
     internal override void IdleExit() { base.IdleExit(); }
     internal override void MoveToTargetExit() { base.MoveToTargetExit(); }
-    internal override void AttackExit() { base.AttackExit(); }
+    internal override void AttackExit() { base.AttackExit(); canEnterDamageState = true; }
 
 
 }

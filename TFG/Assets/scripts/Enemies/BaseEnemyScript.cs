@@ -64,6 +64,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal Quaternion targetRot;
     internal bool canEnterDamageState = true;
     List<Light> enemyLights = new List<Light>();
+    internal bool waiting = true;
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
@@ -89,6 +90,9 @@ public class BaseEnemyScript : MonoBehaviour
         touchBodyDamageData = transform.Find("DamageArea").GetComponent<DamageData>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyMesh.material = new Material(enemyMesh.material);
+
+        int enemiesLayer = LayerMask.NameToLayer("Enemy");
+        Physics.IgnoreLayerCollision(enemiesLayer, enemiesLayer);
 
         touchBodyDamageData.damage = dmgOnTouch;
         if (enemyLightsHolder != null)
@@ -120,9 +124,13 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void FixedUpdate_Call()
     {
-        UpdateStateMachine();
+        if (!waiting)
+        {
+            UpdateStateMachine();
 
-        LimitVelocity();
+            LimitVelocity();
+        }
+
 
         if (canRotate && !state.Equals(States.DEATH))
         {

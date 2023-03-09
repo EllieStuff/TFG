@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class DeathScreenManager : MonoBehaviour
 {
+    const float APPEAR_DELAY = 1f;
     //enum Options { TRY_AGAIN, EXIT, COUNT }
 
-    [SerializeField] CanvasGroup bg, gameOverText, tryAgainBttn, exitBttn;
+    [SerializeField] CanvasGroup bg, gameOverText, continueBttn, startOverBttn, exitBttn;
 
     //Button[] bttns;
     //int idx = 0;
@@ -37,7 +38,7 @@ public class DeathScreenManager : MonoBehaviour
     }
 
 
-    public void DeathScreenAppear(float _delay = 0f)
+    public void DeathScreenAppear(float _delay = APPEAR_DELAY)
     {
         StartCoroutine(DeathScreenAppearCor(_delay));
     }
@@ -56,8 +57,10 @@ public class DeathScreenManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.5f);
 
-        tryAgainBttn.gameObject.SetActive(true);
-        yield return ChangeGroupAlpha(tryAgainBttn, 0, 1, 0.5f);
+        continueBttn.gameObject.SetActive(true);
+        StartCoroutine(ChangeGroupAlpha(continueBttn, 0, 1, 0.5f));
+        startOverBttn.gameObject.SetActive(true);
+        yield return ChangeGroupAlpha(startOverBttn, 0, 1, 0.5f);
 
         yield return new WaitForSecondsRealtime(0.5f);
 

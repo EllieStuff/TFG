@@ -126,10 +126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerTransform: {fileID: 0}
-  damage: 10
-  attackElement: 0
+  dmgBehaviour: 0
+  damage: 100
+  attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: -1
+  stealLife: 0
+  stealLifePercentage: 0
+  critPercentage: 0
   tagsAffected:
   - Enemy
   audio: {fileID: 0}

@@ -44657,14 +44657,14 @@ MonoBehaviour:
   restWait: {x: 2, y: 2.5}
   attackChargingTime: 1
   numOfRndMoves: -1
-  dmgOnTouch: 5
+  dmgOnTouch: 20
   enemyLightsHolder: {fileID: 1216328838707944370}
   lookPoint: {fileID: 8377633024643291657}
   disableAutoGravity: 1
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 2733730788676577848}
   transparentMat: {fileID: 2100000, guid: 62ce62e552285be48972fb34c0607d6c, type: 2}
-  attackDmg: 15
+  attackDmg: 150
   attackForce: 12
   attackDuration: 1
   atkVelocityLimit: {x: 8, y: 0, z: 8}
@@ -44685,9 +44685,10 @@ MonoBehaviour:
   entityElement: 0
   healthStates: []
   healthStatesFeedback: {fileID: 4591192370204194374}
-  maxLife: 60
-  currLife: 60
-  healPercentage: 0.3
+  maxLife: 600
+  currLife: 600
+  healWithSameElement: 0
+  healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}

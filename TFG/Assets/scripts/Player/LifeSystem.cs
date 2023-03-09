@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LifeSystem : MonoBehaviour
 {
-    public enum EntityType { PLAYER, ENEMY, SHIELD }
+    public enum EntityType { PLAYER, ENEMY, OTHER }
 
     [SerializeField] internal EntityType entityType = EntityType.PLAYER;
     [SerializeField] internal ElementsManager.Elements entityElement;
@@ -15,7 +15,8 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
     [SerializeField] internal float maxLife = 100;
     [SerializeField] internal float currLife = 100;
-    [SerializeField] internal float healPercentage = 0.3f;
+    [SerializeField] bool healWithSameElement = false;
+    [SerializeField] internal float healPercentage = 0.05f;
     [SerializeField] private GameObject bloodPrefab;
     //[SerializeField] private GameObject deathParticlesPrefab;
     [SerializeField] private PlayerLifeBar playerLifeBar;
@@ -26,7 +27,6 @@ public class LifeSystem : MonoBehaviour
     //public ParticleSystem hitPS;
 
     internal float dmgInc = 1.0f;
-    float dmgDealt;
     internal bool isDead = false;
 
     PlayerMovement playerMovementScript;
@@ -107,14 +107,14 @@ public class LifeSystem : MonoBehaviour
 
         if (dmgMultiplier > 1.9f)
         {
-            float damageMade = (_dmg * dmgInc * dmgMultiplier);
-            float lifeStolen = (projectileData.dmgData.stealLifePercentage * 100 / damageMade);
+            int damageDealt = Mathf.CeilToInt(_dmg * dmgInc * dmgMultiplier);
+            int lifeStolen = Mathf.CeilToInt(projectileData.dmgData.stealLifePercentage * 100 / damageDealt);
             playerLifeSystem.AddLife(lifeStolen);
 
             Transform playerLifeBar = playerLifeSystem.EnemyLifeBar.transform;
 
             GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.position.x, playerLifeBar.parent.position.y, playerLifeBar.parent.position.z + 1f), damageTextPrefab.transform.rotation);
-            string lifeStolenText = "+ " + Mathf.RoundToInt(lifeStolen).ToString();
+            string lifeStolenText = "+ " + lifeStolen.ToString();
             TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
             textUI.color = Color.green;
             textUI.text = lifeStolenText;
@@ -126,15 +126,15 @@ public class LifeSystem : MonoBehaviour
 
     public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
-        if(entityType == EntityType.ENEMY && _attackElement == entityElement)
+        if(healWithSameElement && _attackElement == entityElement)
         {
-            HealEnemy(_dmg, _attackElement);
+            HealEnemy();
             StartCoroutine(enemyShake.Shake(0.3f, 0.03f, 0.03f));
             return;
         }
 
         float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
-        dmgDealt = _dmg * dmgInc * dmgMultiplier;
+        int dmgDealt = Mathf.CeilToInt(_dmg * dmgInc * dmgMultiplier);
         currLife -= dmgDealt;
         CheckLifeLimits();
 
@@ -201,7 +201,7 @@ public class LifeSystem : MonoBehaviour
             }
             else if (entityType.Equals(EntityType.PLAYER))
             {
-                FindObjectOfType<DeathScreenManager>().DeathScreenAppear(1f);
+                FindObjectOfType<DeathScreenManager>().DeathScreenAppear();
             }
 
             //Activate death anim
@@ -213,15 +213,14 @@ public class LifeSystem : MonoBehaviour
 
     }
 
-    void HealEnemy(float _dmg, ElementsManager.Elements _attackElement)
+    void HealEnemy()
     {
-        float dmgMultiplier = ElementsManager.GetReceiveDamageMultiplier(entityElement, _attackElement);
-        float lifeHealed = _dmg * dmgInc * dmgMultiplier * healPercentage;
+        int lifeHealed = Mathf.CeilToInt(maxLife * healPercentage);
         currLife += lifeHealed;
         CheckLifeLimits();
 
         GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f), damageTextPrefab.transform.rotation);
-        string lifeHealedText = "+ " + Mathf.RoundToInt(lifeHealed).ToString();
+        string lifeHealedText = "+ " + lifeHealed.ToString();
         TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
         textUI.color = Color.green;
         textUI.text = lifeHealedText;

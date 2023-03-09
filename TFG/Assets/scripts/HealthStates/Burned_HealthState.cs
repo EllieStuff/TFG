@@ -39,10 +39,10 @@ public class Burned_HealthState : HealthState
         base.StartEffect();
         lifeSystem.StartCoroutine(BurnedEffectCoroutine());
 
-        if (lifeSystem.entityType == LifeSystem.EntityType.SHIELD)
-            lifeSystem.dmgInc = shieldDmgInc;
-        else
-            lifeSystem.dmgInc = defaultDmgInc;
+        //if (lifeSystem.entityType == LifeSystem.EntityType.SHIELD)
+        //    lifeSystem.dmgInc = shieldDmgInc;
+        //else
+        //    lifeSystem.dmgInc = defaultDmgInc;
 
     }
 

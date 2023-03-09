@@ -60,6 +60,7 @@ public class ZoneScript : MonoBehaviour
         {
             BlockPaths();
             zoneEnabled = true;
+            StartCoroutine(assignedRoom.DisableEnemiesWait());
         }
 
         if(isPlayer)
