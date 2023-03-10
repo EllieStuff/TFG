@@ -10,6 +10,7 @@ public class RoomEnemyManager : MonoBehaviour
     [SerializeField] bool roomActive = false;
 
     PlayerAttack playerAttack;
+    Rigidbody playerRB;
     LevelInfo levelInfo;
 
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
@@ -31,6 +32,7 @@ public class RoomEnemyManager : MonoBehaviour
 
     private void Start()
     {
+        playerRB = playerAttack.GetComponent<Rigidbody>();
         elementChoose = GameObject.Find("Canvas").transform.GetChild(10).gameObject;
         ActivateEnemies(roomActive);
         SetPlayerData();
@@ -152,7 +154,7 @@ public class RoomEnemyManager : MonoBehaviour
 
     public void SearchClosestTarget()
     {
-        if (roomActive)
+        if (roomActive && (playerAttack.target == null || playerRB.velocity.magnitude > 1))
             playerAttack.target = GetCloserEnemy(playerAttack.transform);
     }
 
