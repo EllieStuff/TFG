@@ -7,8 +7,8 @@ public class ElementsManager : MonoBehaviour
 {
     const float
         EFFECTIVE_HIT_MULTIPLIER = 2.0f,
-        MEDIUM_HIT_MULTIPLIER = 0.7f,
-        SAME_ELEMENT_HIT_MULTIPLIER = 0.1f,
+        SAME_ELEMENT_HIT_MULTIPLIER = 0.7f,
+        NOT_EFFECTIVE_HIT_MULTIPLIER = 0.1f,
         NORMAL_ELEMENT_MULTIPLIER = 1.0f;
 
     public enum Elements { FIRE, GRASS, WATER, NORMAL, COUNT }
@@ -78,12 +78,12 @@ public class ElementsManager : MonoBehaviour
         fireCompatibility.colorParticles = Color.red;
         fireCompatibility.receiveDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
         fireCompatibility.receiveDamage.Add(Elements.FIRE, SAME_ELEMENT_HIT_MULTIPLIER);
-        fireCompatibility.receiveDamage.Add(Elements.GRASS, MEDIUM_HIT_MULTIPLIER);
+        fireCompatibility.receiveDamage.Add(Elements.GRASS, NOT_EFFECTIVE_HIT_MULTIPLIER);
         fireCompatibility.receiveDamage.Add(Elements.WATER, EFFECTIVE_HIT_MULTIPLIER);
         fireCompatibility.inflictDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
         fireCompatibility.inflictDamage.Add(Elements.FIRE, SAME_ELEMENT_HIT_MULTIPLIER);
         fireCompatibility.inflictDamage.Add(Elements.GRASS, EFFECTIVE_HIT_MULTIPLIER);
-        fireCompatibility.inflictDamage.Add(Elements.WATER, MEDIUM_HIT_MULTIPLIER);
+        fireCompatibility.inflictDamage.Add(Elements.WATER, NOT_EFFECTIVE_HIT_MULTIPLIER);
         elementsData.Add(Elements.FIRE, fireCompatibility);
 
         ElementClass grassCompatibility = new ElementClass();
@@ -91,9 +91,9 @@ public class ElementsManager : MonoBehaviour
         grassCompatibility.receiveDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
         grassCompatibility.receiveDamage.Add(Elements.FIRE, EFFECTIVE_HIT_MULTIPLIER);
         grassCompatibility.receiveDamage.Add(Elements.GRASS, SAME_ELEMENT_HIT_MULTIPLIER);
-        grassCompatibility.receiveDamage.Add(Elements.WATER, MEDIUM_HIT_MULTIPLIER);
+        grassCompatibility.receiveDamage.Add(Elements.WATER, NOT_EFFECTIVE_HIT_MULTIPLIER);
         grassCompatibility.inflictDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
-        grassCompatibility.inflictDamage.Add(Elements.FIRE, MEDIUM_HIT_MULTIPLIER);
+        grassCompatibility.inflictDamage.Add(Elements.FIRE, NOT_EFFECTIVE_HIT_MULTIPLIER);
         grassCompatibility.inflictDamage.Add(Elements.GRASS, SAME_ELEMENT_HIT_MULTIPLIER);
         grassCompatibility.inflictDamage.Add(Elements.WATER, EFFECTIVE_HIT_MULTIPLIER);
         elementsData.Add(Elements.GRASS, grassCompatibility);
@@ -101,12 +101,12 @@ public class ElementsManager : MonoBehaviour
         ElementClass waterCompatibility = new ElementClass();
         waterCompatibility.colorParticles = Color.cyan;
         waterCompatibility.receiveDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
-        waterCompatibility.receiveDamage.Add(Elements.FIRE, MEDIUM_HIT_MULTIPLIER);
+        waterCompatibility.receiveDamage.Add(Elements.FIRE, NOT_EFFECTIVE_HIT_MULTIPLIER);
         waterCompatibility.receiveDamage.Add(Elements.GRASS, EFFECTIVE_HIT_MULTIPLIER);
         waterCompatibility.receiveDamage.Add(Elements.WATER, SAME_ELEMENT_HIT_MULTIPLIER);
         waterCompatibility.inflictDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
         waterCompatibility.inflictDamage.Add(Elements.FIRE, EFFECTIVE_HIT_MULTIPLIER);
-        waterCompatibility.inflictDamage.Add(Elements.GRASS, MEDIUM_HIT_MULTIPLIER);
+        waterCompatibility.inflictDamage.Add(Elements.GRASS, NOT_EFFECTIVE_HIT_MULTIPLIER);
         waterCompatibility.inflictDamage.Add(Elements.WATER, SAME_ELEMENT_HIT_MULTIPLIER);
         elementsData.Add(Elements.WATER, waterCompatibility);
 

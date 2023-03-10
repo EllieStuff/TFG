@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ImproveLife_PassiveSkill : PassiveSkill_Base
 {
-    float lifeToAdd = 100f;
+    float lifeToAdd = 300f;
 
     public ImproveLife_PassiveSkill()
     {
         skillType = SkillType.IMPROVE_LIFE;
         maxLevel = -1;
-        name = "Life Improve";
+        name = "Life Improvement";
         description = "Your maximum life gets improved!";
     }
 
