@@ -8,7 +8,7 @@ public class RoomEnemyManager : MonoBehaviour
 
     [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
-    [SerializeField] bool bossRoom;
+    [SerializeField] bool roomWithTargetSystem;
 
     PlayerAttack playerAttack;
     Rigidbody playerRB;
@@ -153,14 +153,14 @@ public class RoomEnemyManager : MonoBehaviour
         SetPlayerData();
     }
 
-    bool BossTargetCheckMode()
+    bool TargetCheckMode()
     {
-        if (bossRoom)
+        if (roomWithTargetSystem)
         {
             if (playerAttack.target == null || playerRB.velocity.magnitude > 1)
                 return true;
         }
-        else if (!bossRoom)
+        else if (!roomWithTargetSystem)
             return true;
 
         return false;
@@ -170,9 +170,9 @@ public class RoomEnemyManager : MonoBehaviour
     {
         //CHEAT MODE TEST
         if (Input.GetKeyDown(KeyCode.F4))
-            bossRoom = !bossRoom;
+            roomWithTargetSystem = !roomWithTargetSystem;
 
-        if (roomActive && BossTargetCheckMode())
+        if (roomActive && TargetCheckMode())
             playerAttack.target = GetCloserEnemy(playerAttack.transform);
     }
 
