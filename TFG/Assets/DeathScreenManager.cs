@@ -10,13 +10,20 @@ public class DeathScreenManager : MonoBehaviour
 
     [SerializeField] CanvasGroup bg, gameOverText, continueBttn, startOverBttn, exitBttn;
 
+    bool useDeathRoomCoordinates = false;
     //Button[] bttns;
     //int idx = 0;
     //bool menuActive = false;
 
     private void Start()
     {
-        if(PlayerPrefs.GetString("UseDeathRoomCoordinates", "false") == "true")
+        Debug.Log("loading screen Start");
+    }
+    private void Awake()
+    {
+        Debug.Log("loading screen Awake");
+        //useDeathRoomCoordinates = PlayerPrefs.GetString("UseDeathRoomCoordinates", "false") == "true" ? true : false;
+        if (PlayerPrefs.GetString("UseDeathRoomCoordinates", "false") == "true")
         {
             Transform player = GameObject.FindGameObjectWithTag("Player").transform;
             player.position = new Vector3(0f, player.position.y, PlayerPrefs.GetFloat("DeathRoomZ", -1f));
@@ -29,6 +36,17 @@ public class DeathScreenManager : MonoBehaviour
 
         ///DeathScreenAppear(1);
     }
+
+    //private void Update()
+    //{
+    //    if (useDeathRoomCoordinates)
+    //    {
+    //        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+    //        player.position = new Vector3(0f, player.position.y, PlayerPrefs.GetFloat("DeathRoomZ", -1f));
+    //        PlayerPrefs.SetString("UseDeathRoomCoordinates", "false");
+    //        useDeathRoomCoordinates = false;
+    //    }
+    //}
 
 
     public void Continue()
