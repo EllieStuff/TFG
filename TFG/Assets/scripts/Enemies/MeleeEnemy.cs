@@ -100,8 +100,9 @@ public class MeleeEnemy : BaseEnemyScript
         touchBodyDamageData.StopAllCoroutines();
         touchBodyDamageData.damage = attackDmg;
         touchBodyDamageData.disabled = false;
-        touchBodyDamageData.dmgBehaviour = DamageData.DamageBehaviour.ON_ENTER;
         canMove = isAttacking = true;
+        yield return null;
+        touchBodyDamageData.dmgBehaviour = DamageData.DamageBehaviour.ON_ENTER;
         //canRotate = false;
         //attackMoveDir = (player.position - transform.position).normalized;
         attackMoveDir = transform.forward;

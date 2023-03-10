@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoomEnemyManager : MonoBehaviour
 {
+    const float ENEMIES_INIT_WAIT = 1.5f;
+
     [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
 
@@ -170,6 +172,15 @@ public class RoomEnemyManager : MonoBehaviour
         foreach(BaseEnemyScript enemy in enemies)
         {
             enemy.gameObject.SetActive(_active);
+        }
+    }
+
+    public IEnumerator DisableEnemiesWait()
+    {
+        yield return new WaitForSeconds(ENEMIES_INIT_WAIT);
+        foreach (BaseEnemyScript enemy in enemies)
+        {
+            enemy.waiting = false;
         }
     }
 

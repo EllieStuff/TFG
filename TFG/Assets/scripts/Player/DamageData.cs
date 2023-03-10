@@ -22,7 +22,7 @@ public class DamageData : MonoBehaviour
     private LifeSystem playerLifeSystem;
 
     internal bool disabled = false;
-
+    float dmgVariation = 0.02f;
 
     public bool IsAttacking
     {
@@ -93,14 +93,14 @@ public class DamageData : MonoBehaviour
             audio.PlaySound();
 
         LifeSystem lifeSystem = _player.GetComponent<LifeSystem>();
-        lifeSystem.Damage(damage, attackElement);
+        lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
         _player.GetComponent<PlayerMovement>().DamageStartCorroutine();
     }
 
     void DamageToEnemy(Transform _enemy)
     {
         if (critPercentage > 0)
-            damage = damage + (critPercentage / damage);
+            damage = damage + GetDamageVariation() + (critPercentage / damage);
 
         if (audio != null)
             audio.PlaySound();
@@ -114,9 +114,9 @@ public class DamageData : MonoBehaviour
         //Debug.Log("Damaged by: " + this.name);
 
         if (dataProj.dmgData.stealLife)
-            lifeSystem.DamageWithLifeSteal(damage, attackElement, dataProj, playerLifeSystem);
+            lifeSystem.DamageWithLifeSteal(damage + GetDamageVariation(), attackElement, dataProj, playerLifeSystem);
         else
-            lifeSystem.Damage(damage, attackElement);
+            lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
 
 
         BaseEnemyScript enemy = _enemy.GetComponent<BaseEnemyScript>();
@@ -142,6 +142,12 @@ public class DamageData : MonoBehaviour
         }
 
         if (timeDisabledAfterColl > 0f) StartCoroutine(DisableDuringTime());
+    }
+
+
+    float GetDamageVariation()
+    {
+        return (damage * Random.Range(-dmgVariation, dmgVariation));
     }
 
 

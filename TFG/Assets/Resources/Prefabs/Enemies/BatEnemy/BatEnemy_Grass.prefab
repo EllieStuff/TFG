@@ -24810,15 +24810,16 @@ MonoBehaviour:
   restWait: {x: 0, y: 0}
   attackChargingTime: 1
   numOfRndMoves: 2
-  dmgOnTouch: 5
+  dmgOnTouch: 20
   enemyLightsHolder: {fileID: 2570573404889066780}
   lookPoint: {fileID: 5751400084352022851}
+  disableAutoGravity: 0
   moveDir: {x: 0, y: 0, z: 0}
-  enemyMesh: {fileID: 7751190090665590460}
+  enemyMesh: {fileID: 0}
+  enemyMeshTmp: {fileID: 1564923277293117634}
   transparentMat: {fileID: 2100000, guid: 52eff7ed8ee74da4d9b8fa3fa8878cc9, type: 2}
-  baseAttackTimer: 4
   attackAnimationTime: 0.15
-  attackDamage: 25
+  attackDamage: 250
   enemyAnimator: {fileID: 7751190090665590463}
   projectilePrefab: {fileID: 8535654783368711210, guid: 7b60fea3329039c42867962dbe12f035,
     type: 3}
@@ -24841,9 +24842,10 @@ MonoBehaviour:
   entityElement: 1
   healthStates: []
   healthStatesFeedback: {fileID: 298774814280439052}
-  maxLife: 180
-  currLife: 180
-  healPercentage: 0.3
+  maxLife: 1800
+  currLife: 1800
+  healWithSameElement: 1
+  healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -24903,8 +24905,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7789955412594563568}
   - component: {fileID: 6608083273880671829}
-  - component: {fileID: 7751190090665590460}
   - component: {fileID: 7751190090665590463}
+  - component: {fileID: 1564923277293117634}
   m_Layer: 0
   m_Name: murcielago_low
   m_TagString: Untagged
@@ -24936,8 +24938,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7444638750914954058}
   m_Mesh: {fileID: -2907462421268956602, guid: 1b01ab7fe32d4144ca718f486465d5d1, type: 3}
---- !u!137 &7751190090665590460
-SkinnedMeshRenderer:
+--- !u!95 &7751190090665590463
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444638750914954058}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!23 &1564923277293117634
+MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -24951,7 +24973,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
+  m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
@@ -24977,38 +24999,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -2907462421268956602, guid: 1b01ab7fe32d4144ca718f486465d5d1, type: 3}
-  m_Bones: []
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
-  m_AABB:
-    m_Center: {x: 0, y: -0.010364115, z: 0.13419214}
-    m_Extent: {x: 1.0019326, y: 0.2796899, z: 0.40351793}
-  m_DirtyAABB: 0
---- !u!95 &7751190090665590463
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7444638750914954058}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7563920910146046112
 GameObject:
   m_ObjectHideFlags: 0
@@ -29951,6 +29942,7 @@ MonoBehaviour:
   timeDisabledAfterColl: 1
   stealLife: 0
   stealLifePercentage: 0
+  critPercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 0}

@@ -60,6 +60,8 @@ public class ZoneScript : MonoBehaviour
         {
             BlockPaths();
             zoneEnabled = true;
+            StartCoroutine(assignedRoom.DisableEnemiesWait());
+            PlayerPrefs.SetFloat("DeathRoomZ", other.ClosestPoint(transform.position).z + 2.5f);
         }
 
         if(isPlayer)

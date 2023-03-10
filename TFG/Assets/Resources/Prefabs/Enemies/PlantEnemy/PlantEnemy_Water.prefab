@@ -19533,6 +19533,7 @@ MonoBehaviour:
   timeDisabledAfterColl: 1
   stealLife: 0
   stealLifePercentage: 0
+  critPercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 0}
@@ -34485,15 +34486,16 @@ MonoBehaviour:
   restWait: {x: 0, y: 0}
   attackChargingTime: 1
   numOfRndMoves: 0
-  dmgOnTouch: 5
+  dmgOnTouch: 20
   enemyLightsHolder: {fileID: 5432909558806648478}
   lookPoint: {fileID: 0}
+  disableAutoGravity: 0
   moveDir: {x: 0, y: 0, z: 0}
-  enemyMesh: {fileID: 6970031720182105785}
+  enemyMesh: {fileID: 0}
+  enemyMeshTmp: {fileID: 3397121725640670360}
   transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}
-  baseAttackTimer: 1.5
   attackAnimationTime: 0.15
-  attackDamage: 25
+  attackDamage: 200
   enemyAnimator: {fileID: 3385771566308395022}
   projectilePrefab: {fileID: 507451495234348787, guid: 1f2e3d08540022a47a495f19204de83a,
     type: 3}
@@ -34515,9 +34517,10 @@ MonoBehaviour:
   entityElement: 2
   healthStates: []
   healthStatesFeedback: {fileID: 936959598569564534}
-  maxLife: 120
-  currLife: 120
-  healPercentage: 0.3
+  maxLife: 1200
+  currLife: 1200
+  healWithSameElement: 0
+  healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
@@ -34545,6 +34548,7 @@ MonoBehaviour:
   timeDisabledAfterColl: 1
   stealLife: 0
   stealLifePercentage: 0
+  critPercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 0}
@@ -44993,6 +44997,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 47c857461b8401f409e8b508bbd02859,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a6502ad03adab4046843291243f27da8, type: 2}
     - target: {fileID: 919132149155446097, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}
       propertyPath: m_Name
@@ -45003,68 +45012,20 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -7511558181221131132, guid: 47c857461b8401f409e8b508bbd02859, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c857461b8401f409e8b508bbd02859, type: 3}
+--- !u!23 &3397121725640670360 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 47c857461b8401f409e8b508bbd02859,
+    type: 3}
+  m_PrefabInstance: {fileID: 4099566024258510876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3757686840702623053 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 47c857461b8401f409e8b508bbd02859,
     type: 3}
   m_PrefabInstance: {fileID: 4099566024258510876}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &6970031720182105785
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3757686840702623053}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a6502ad03adab4046843291243f27da8, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -2797018412643553375, guid: 47c857461b8401f409e8b508bbd02859, type: 3}
-  m_Bones: []
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
-  m_AABB:
-    m_Center: {x: -0.103649125, y: 0.082983896, z: 0.010835469}
-    m_Extent: {x: 0.35856903, y: 0.37074703, z: 0.7440398}
-  m_DirtyAABB: 0
 --- !u!95 &3385771566308395022
 Animator:
   serializedVersion: 4

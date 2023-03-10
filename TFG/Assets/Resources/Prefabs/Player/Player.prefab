@@ -95,6 +95,7 @@ MonoBehaviour:
   fallSpeed: 50
   damageAnimationTime: 0.3
   playerAnimator: {fileID: 8126311951818066503}
+  speedMultiplier: 0.2
   dustParticleWalking: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   lookDir: {x: 0, y: 0, z: 0}
@@ -126,7 +127,8 @@ MonoBehaviour:
   waterAttack:
     type: 0
     prefab: {fileID: 0}
-  glowBurstPS: {fileID: 0}
+  glowBurstPS: {fileID: 8557739231911085623, guid: 5f988d2dbdc9f6642a6a3f3d5dc0147d,
+    type: 3}
 --- !u!114 &3995069159848829880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,12 +142,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 0
-  entityElement: 0
+  entityElement: 3
   healthStates: []
   healthStatesFeedback: {fileID: 0}
-  maxLife: 100
-  currLife: 100
-  healPercentage: 0.3
+  maxLife: 1000
+  currLife: 1000
+  healWithSameElement: 0
+  healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}

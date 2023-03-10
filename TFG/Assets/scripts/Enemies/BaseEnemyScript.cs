@@ -64,6 +64,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal Quaternion targetRot;
     internal bool canEnterDamageState = true;
     List<Light> enemyLights = new List<Light>();
+    internal bool waiting = true;
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
@@ -71,6 +72,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     //PLACEHOLDER
     [SerializeField] SkinnedMeshRenderer enemyMesh;
+    [SerializeField] MeshRenderer enemyMeshTmp;
     [SerializeField] Material transparentMat;
     //_________________________________________
 
@@ -88,7 +90,11 @@ public class BaseEnemyScript : MonoBehaviour
         enemyLife = GetComponent<LifeSystem>();
         touchBodyDamageData = transform.Find("DamageArea").GetComponent<DamageData>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        enemyMesh.material = new Material(enemyMesh.material);
+        //if(enemyMesh != null) enemyMesh.material = new Material(enemyMesh.material);
+        //else enemyMeshTmp.material = new Material(enemyMeshTmp.material);
+
+        int enemiesLayer = LayerMask.NameToLayer("Enemy");
+        Physics.IgnoreLayerCollision(enemiesLayer, enemiesLayer);
 
         touchBodyDamageData.damage = dmgOnTouch;
         if (enemyLightsHolder != null)
@@ -120,9 +126,13 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal virtual void FixedUpdate_Call()
     {
-        UpdateStateMachine();
+        if (!waiting)
+        {
+            UpdateStateMachine();
 
-        LimitVelocity();
+            LimitVelocity();
+        }
+
 
         if (canRotate && !state.Equals(States.DEATH))
         {
@@ -404,9 +414,19 @@ public class BaseEnemyScript : MonoBehaviour
     {
         damageTimer -= Time.deltaTime;
 
-        if (enemyMesh.material.color.a > 0)
+        if (enemyMesh != null)
         {
-            enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
+            if (enemyMesh.material.color.a > 0)
+            {
+                enemyMesh.material.color -= new Color(0, 0, 0, Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (enemyMeshTmp.material.color.a > 0)
+            {
+                enemyMeshTmp.material.color -= new Color(0, 0, 0, Time.deltaTime);
+            }
         }
         if (enemyLights.Count > 0)
         {
@@ -459,7 +479,8 @@ public class BaseEnemyScript : MonoBehaviour
             rb.useGravity = false;
 
         damageTimer = baseDeathTime;
-        enemyMesh.material = transparentMat;
+        if(enemyMesh != null) enemyMesh.material = transparentMat;
+        else enemyMeshTmp.material = transparentMat;
 
         if (zoneSystem != null)
         {

@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class DeathScreenManager : MonoBehaviour
 {
+    const float APPEAR_DELAY = 1f;
     //enum Options { TRY_AGAIN, EXIT, COUNT }
 
-    [SerializeField] CanvasGroup bg, gameOverText, tryAgainBttn, exitBttn;
+    [SerializeField] CanvasGroup bg, gameOverText, continueBttn, startOverBttn, exitBttn;
 
     //Button[] bttns;
     //int idx = 0;
@@ -15,6 +16,13 @@ public class DeathScreenManager : MonoBehaviour
 
     private void Start()
     {
+        if(PlayerPrefs.GetString("UseDeathRoomCoordinates", "false") == "true")
+        {
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            player.position = new Vector3(0f, player.position.y, PlayerPrefs.GetFloat("DeathRoomZ", -1f));
+            PlayerPrefs.SetString("UseDeathRoomCoordinates", "false");
+        }
+
         //bttns = new Button[(int)Options.COUNT];
         //bttns[(int)Options.TRY_AGAIN] = tryAgainBttn.GetComponent<Button>();
         //bttns[(int)Options.EXIT] = exitBttn.GetComponent<Button>();
@@ -22,6 +30,13 @@ public class DeathScreenManager : MonoBehaviour
         ///DeathScreenAppear(1);
     }
 
+
+    public void Continue()
+    {
+        Time.timeScale = 1;
+        PlayerPrefs.SetString("UseDeathRoomCoordinates", "true");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     public void TryAgain()
     {
@@ -37,7 +52,7 @@ public class DeathScreenManager : MonoBehaviour
     }
 
 
-    public void DeathScreenAppear(float _delay = 0f)
+    public void DeathScreenAppear(float _delay = APPEAR_DELAY)
     {
         StartCoroutine(DeathScreenAppearCor(_delay));
     }
@@ -56,8 +71,10 @@ public class DeathScreenManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.5f);
 
-        tryAgainBttn.gameObject.SetActive(true);
-        yield return ChangeGroupAlpha(tryAgainBttn, 0, 1, 0.5f);
+        continueBttn.gameObject.SetActive(true);
+        StartCoroutine(ChangeGroupAlpha(continueBttn, 0, 1, 0.5f));
+        startOverBttn.gameObject.SetActive(true);
+        yield return ChangeGroupAlpha(startOverBttn, 0, 1, 0.5f);
 
         yield return new WaitForSecondsRealtime(0.5f);
 
