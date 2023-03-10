@@ -10,13 +10,15 @@ public class DeathScreenManager : MonoBehaviour
 
     [SerializeField] CanvasGroup bg, gameOverText, continueBttn, startOverBttn, exitBttn;
 
+
     //Button[] bttns;
     //int idx = 0;
     //bool menuActive = false;
 
-    private void Start()
+
+    private void Awake()
     {
-        if(PlayerPrefs.GetString("UseDeathRoomCoordinates", "false") == "true")
+        if (PlayerPrefs.GetString("UseDeathRoomCoordinates", "false") == "true")
         {
             Transform player = GameObject.FindGameObjectWithTag("Player").transform;
             player.position = new Vector3(0f, player.position.y, PlayerPrefs.GetFloat("DeathRoomZ", -1f));
@@ -29,6 +31,7 @@ public class DeathScreenManager : MonoBehaviour
 
         ///DeathScreenAppear(1);
     }
+
 
 
     public void Continue()
