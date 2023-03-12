@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Heal_PassiveSkill : PassiveSkill_Base
 {
-    float lifePercentageToHeal = 60f;
+    float lifePercentageToHeal = 0.6f;
 
     public Heal_PassiveSkill()
     {
@@ -31,7 +31,7 @@ public class Heal_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         LifeSystem playerLife = playerRef.GetComponent<LifeSystem>();
-        float actualLifeToHeal = lifePercentageToHeal * 100f / playerLife.maxLife;
+        float actualLifeToHeal = playerLife.maxLife * lifePercentageToHeal;
         playerLife.AddLife(actualLifeToHeal);
     }
 

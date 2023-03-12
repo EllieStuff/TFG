@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Vampire_PassiveSkill : PassiveSkill_Base
 {
+    float stealLifePercentageToAdd = 0.05f;
 
     public Vampire_PassiveSkill()
     {
@@ -31,7 +32,7 @@ public class Vampire_PassiveSkill : PassiveSkill_Base
         base.AddLevelEvent();
         PlayerAttack playerAttack = playerRef.GetComponent<PlayerAttack>();
         playerAttack.stealLifeEnabled = true;
-        playerAttack.stealLifePercentage += 0.05f;
+        playerAttack.stealLifePercentage += stealLifePercentageToAdd;
     }
 
 }

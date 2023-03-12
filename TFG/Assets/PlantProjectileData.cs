@@ -7,6 +7,7 @@ public class PlantProjectileData : ProjectileData
     const float DISTANCE_SPEED_RELATION = 0.1f;
 
     [SerializeField] float maxHeight = 5f;
+    [SerializeField] bool goOverObstacles = true;
     [SerializeField] TrailRenderer trail;
     [SerializeField] ParticleSystemRenderer particles;
     [SerializeField] Material projectileObstacleMat, trailObstacleMat, particlesObstacleMat;
@@ -117,10 +118,17 @@ public class PlantProjectileData : ProjectileData
     {
         if (other.CompareTag("Obstacle"))
         {
-            transform.GetComponent<MeshRenderer>().material = projectileObstacleMat;
-            trail.material = trailObstacleMat;
-            particles.trailMaterial = particlesObstacleMat;
-            particles.material = particlesObstacleMat;
+            if (goOverObstacles)
+            {
+                transform.GetComponent<MeshRenderer>().material = projectileObstacleMat;
+                trail.material = trailObstacleMat;
+                particles.trailMaterial = particlesObstacleMat;
+                particles.material = particlesObstacleMat;
+            }
+            else
+            {
+                DestroyObject();
+            }
         }
 
         base.OnTriggerEnter_Call(other);

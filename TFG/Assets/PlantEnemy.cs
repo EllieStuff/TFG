@@ -11,6 +11,7 @@ public class PlantEnemy : BaseEnemyScript
     [Header("PlantEnemy")]
     [SerializeField] float attackAnimationTime;
     [SerializeField] float attackDamage;
+    [SerializeField] bool shootWithObstacles = true;
     [SerializeField] Animator enemyAnimator;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform shootPoint;
@@ -77,7 +78,10 @@ public class PlantEnemy : BaseEnemyScript
         if (Physics.Raycast(shootPoint.position, (player.position - shootPoint.position).normalized, out hit))
         {
             if (!hit.transform.CompareTag("Wall"))
-                AttackStateMachine(attackStyle);
+            {
+                if (shootWithObstacles || (!shootWithObstacles && !hit.transform.CompareTag("Obstacle")))
+                    AttackStateMachine(attackStyle);
+            }
         }
     }
 

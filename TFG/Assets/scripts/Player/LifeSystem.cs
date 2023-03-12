@@ -108,7 +108,7 @@ public class LifeSystem : MonoBehaviour
         if (dmgMultiplier > 1.9f)
         {
             int damageDealt = Mathf.CeilToInt(_dmg * dmgInc * dmgMultiplier);
-            int lifeStolen = Mathf.CeilToInt(projectileData.dmgData.stealLifePercentage * 100 / damageDealt);
+            int lifeStolen = Mathf.CeilToInt(damageDealt * projectileData.dmgData.stealLifePercentage);
             playerLifeSystem.AddLife(lifeStolen);
 
             Transform playerLifeBar = playerLifeSystem.EnemyLifeBar.transform;

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -1873489517449642779}
   - component: {fileID: 2720036712410761245}
   m_Layer: 2
-  m_Name: Plant Projectile
+  m_Name: Small Plant Projectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,8 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  maxHeight: 2.5
-  goOverObstacles: 1
+  maxHeight: 1
   trail: {fileID: 925711132967203294}
   particles: {fileID: 102432908442048462}
   projectileObstacleMat: {fileID: 2100000, guid: 7e5019a1f6d358141a21cb63e29a954e,

@@ -5,7 +5,7 @@ using UnityEngine;
 public class QuickConjuring_PassiveSkill : PassiveSkill_Base
 {
     const float MAX_SPEED_INCREASE = 0.5f;
-    float speedIncrease = 0.2f;
+    float speedIncrease = 0.3f;
 
     public QuickConjuring_PassiveSkill()
     {
