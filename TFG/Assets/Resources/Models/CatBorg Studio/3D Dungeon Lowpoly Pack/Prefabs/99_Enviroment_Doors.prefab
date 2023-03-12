@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 2309621454828716532}
   - component: {fileID: 203187807354853178}
   - component: {fileID: 1246567652098370494}
+  - component: {fileID: 7112570339350755180}
   m_Layer: 0
   m_Name: 99_Enviroment_Doors
   m_TagString: Untagged
@@ -245,6 +246,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 4f54c28031622454db133240dbcc2075, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 4f54c28031622454db133240dbcc2075, type: 2}
+  - {fileID: 7400000, guid: 75868caeb5c062841a1b09bb4fa7351d, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -357,6 +359,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e317386cafb71a41b930a28191d45a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeDoorClip: {fileID: 7400000, guid: 75868caeb5c062841a1b09bb4fa7351d, type: 2}
+--- !u!65 &7112570339350755180
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397162205553716605}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 4.8080573, z: 5}
+  m_Center: {x: 0.9, y: 1.9040272, z: 0.0000028372226}
 --- !u!1 &5913236191002725214
 GameObject:
   m_ObjectHideFlags: 0
