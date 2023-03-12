@@ -21,7 +21,6 @@ public class WalkMark : MonoBehaviour
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         SetMarkPositionWithRaycast();
@@ -41,8 +40,7 @@ public class WalkMark : MonoBehaviour
 
         if(Input.GetKeyUp(KeyCode.Mouse1))
         {
-            walkMark.transform.position = worldPosition;
-            walkMark.SetActive(true);
+            ResetMousePos();
 
             CheckCollidingWall(true);
         }
@@ -53,15 +51,20 @@ public class WalkMark : MonoBehaviour
             walkMark.SetActive(false);
     }
 
+    void ResetMousePos()
+    {
+        worldPosition = playerScript.transform.position;
+        playerScript.targetMousePos = worldPosition;
+        walkMark.transform.position = worldPosition;
+    }
+
     void CheckCollidingWall(bool disableWallCheck)
     {
         if (playerScript.isCollidingWall)
         {
-            worldPosition = playerScript.transform.position;
-            playerScript.targetMousePos = worldPosition;
-            walkMark.transform.position = worldPosition;
+            ResetMousePos();
 
-            if(disableWallCheck)
+            if (disableWallCheck)
                 playerScript.isCollidingWall = false;
         }
     }

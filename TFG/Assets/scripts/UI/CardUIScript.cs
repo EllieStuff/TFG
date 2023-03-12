@@ -23,6 +23,9 @@ public class CardUIScript : MonoBehaviour
 
     void Start()
     {
+        if (skillType.Equals(PassiveSkill_Base.SkillType.HEAL))
+            Destroy(gameObject);
+
         transform.name = skillType.ToString();
         GetComponent<Image>().sprite = cardSprite;
         tierText.enabled = false;
