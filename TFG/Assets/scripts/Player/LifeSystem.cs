@@ -124,6 +124,15 @@ public class LifeSystem : MonoBehaviour
         Damage(_dmg, _attackElement);
     }
 
+    public void CritFeedback(LifeSystem playerLifeSystem)
+    {
+        Transform playerLifeBar = playerLifeSystem.EnemyLifeBar.transform;
+        GameObject critTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.position.x, playerLifeBar.parent.position.y + 1, playerLifeBar.parent.position.z + 1f), damageTextPrefab.transform.rotation);
+        TextMeshPro textUI = critTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+        textUI.color = Color.yellow;
+        textUI.text = "CRITICAL!";
+    }
+
     public void Damage(float _dmg, ElementsManager.Elements _attackElement)
     {
         if(healWithSameElement && _attackElement == entityElement)

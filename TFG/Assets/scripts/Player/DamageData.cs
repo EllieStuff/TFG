@@ -118,6 +118,8 @@ public class DamageData : MonoBehaviour
         else
             lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
 
+        if(critPercentage > 0)
+            lifeSystem.CritFeedback(playerLifeSystem);
 
         BaseEnemyScript enemy = _enemy.GetComponent<BaseEnemyScript>();
         if (lifeSystem.isDead)
