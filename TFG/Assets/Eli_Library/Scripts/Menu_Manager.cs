@@ -30,8 +30,10 @@ public class Menu_Manager : MonoBehaviour
     internal List<UIFeedback_Base> currOptions = new List<UIFeedback_Base>();
 
 
-    private void Start()
+    private void Awake()
     {
+        if(startSelectedOption != null)
+            SetCurrentEventSystemSelection(startSelectedOption.gameObject);
         if (usesStartClickedOptions)
             SelectStartClickedOptions();
 

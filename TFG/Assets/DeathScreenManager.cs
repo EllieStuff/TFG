@@ -49,9 +49,8 @@ public class DeathScreenManager : MonoBehaviour
 
     public void Exit()
     {
-        //Hauria de tornar al menu principal, de moment farem que es tanqui el joc
-        //Time.timeScale = 1;
-        Application.Quit();
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu Scene");
     }
 
 

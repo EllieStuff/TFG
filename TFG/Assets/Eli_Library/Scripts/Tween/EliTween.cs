@@ -18,6 +18,7 @@ public class EliTween
                 {
                     _mb.StopCoroutine(activeCoroutines[_mb][_tt]);
                 }
+                activeCoroutines[_mb][_tt] = _cor;
             }
             else
             {
@@ -31,15 +32,17 @@ public class EliTween
     }
     static void EraseActiveCoroutine(MonoBehaviour _mb, TweenType _tt)
     {
+        //if (activeCoroutines.ContainsKey(_mb) && activeCoroutines[_mb].ContainsKey(_tt)) 
         activeCoroutines[_mb].Remove(_tt);
-        if (activeCoroutines[_mb].Count == 0) activeCoroutines.Remove(_mb);
+        if (activeCoroutines[_mb].Count == 0) 
+            activeCoroutines.Remove(_mb);
     }
 
     public static void Scale(Transform _transform, Vector3 _targetSize, float _duration, float _delay = 0f)
     {
         MonoBehaviour mb = _transform.GetComponent<MonoBehaviour>();
         Coroutine cor = mb.StartCoroutine(ScaleCor(_transform, _targetSize, _duration, _delay));
-        CheckActiveCoroutines(mb, TweenType.SCALE, cor);
+        //CheckActiveCoroutines(mb, TweenType.SCALE, cor);
     }
     static IEnumerator ScaleCor(Transform _transform, Vector3 _targetSize, float _duration, float _delay)
     {
@@ -52,13 +55,14 @@ public class EliTween
             timer += Time.deltaTime;
             _transform.localScale = Vector3.Lerp(initSize, _targetSize, timer / _duration);
         }
-        EraseActiveCoroutine(_transform.GetComponent<MonoBehaviour>(), TweenType.SCALE);
+        yield return null;
+        //EraseActiveCoroutine(_transform.GetComponent<MonoBehaviour>(), TweenType.SCALE);
     }
 
     public static void ChangeColor(Image _image, Color _targetColor, float _duration, float _delay = 0f)
     {
         Coroutine cor = _image.StartCoroutine(LerpImageColor(_image, _targetColor, _duration, _delay));
-        CheckActiveCoroutines(_image, TweenType.SCALE, cor);
+        //CheckActiveCoroutines(_image, TweenType.SCALE, cor);
     }
     static IEnumerator LerpImageColor(Image _image, Color _targetColor, float _duration, float _delay)
     {
@@ -71,7 +75,8 @@ public class EliTween
             timer += Time.deltaTime;
             _image.color = Color.Lerp(initColor, _targetColor, timer / _duration);
         }
-        EraseActiveCoroutine(_image, TweenType.COLOR);
+        yield return null;
+        //EraseActiveCoroutine(_image, TweenType.COLOR);
     }
 
 }
