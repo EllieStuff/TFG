@@ -22,8 +22,7 @@ public class ResolutionManager : MonoBehaviour
         {
             string resolutionOption = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + " Hz";
             options.Add(resolutionOption);
-            if(resolutions[i].width == Screen.width && resolutions[i].height == Screen.height 
-                && resolutions[i].refreshRate == Screen.currentResolution.refreshRate)
+            if(resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
             {
                resolutionIdx = i;
             }
@@ -37,8 +36,9 @@ public class ResolutionManager : MonoBehaviour
 
     public void SetResolution(int _resolutionIdx)
     {
-        Resolution resolution = resolutions[_resolutionIdx];
-        Screen.SetResolution(resolution.width, resolution.height, fullScreenToggle.isOn);
+        //Resolution resolution = resolutions[_resolutionIdx];
+        //Screen.SetResolution(resolution.width, resolution.height, fullScreenToggle.isOn);
+        Screen.SetResolution(1920, 1080, true);
     }
 
 }
