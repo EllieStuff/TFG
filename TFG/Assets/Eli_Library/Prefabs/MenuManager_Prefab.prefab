@@ -98,6 +98,11 @@ MonoBehaviour:
   cellSize: {x: 184.61665, y: 159.1674}
   spacing: {x: 10, y: 10}
   keepRowsAndColsValue: 1
+  navConnections:
+    rightNavigationGrid: {fileID: 0}
+    leftNavigationGrid: {fileID: 0}
+    upNavigationGrid: {fileID: 0}
+    downNavigationGrid: {fileID: 0}
 --- !u!1 &6245075861755422461
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,10 +239,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   optionsRef: {fileID: 6400650804780213303}
-  startOption: {fileID: 0}
+  startSelectedOption: {fileID: 0}
+  startSelectionDelay: 0.1
   moveStartOptionWithCursor: 1
+  usesStartClickedOptions: 0
+  startClickedOptions: []
   menuInUse: 1
   preserveSelectedOptions: 0
+  acceptBttn: Submit
+  cancelBttn: Cancel
   changeMenuData:
     mainMenuActiveAlpha: 1
     subMenuActiveAlpha: 1

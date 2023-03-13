@@ -34,7 +34,7 @@ public class RoomEnemyManager : MonoBehaviour
     private void Start()
     {
         playerRB = playerAttack.GetComponent<Rigidbody>();
-        elementChoose = GameObject.Find("Canvas").transform.GetChild(10).gameObject;
+        elementChoose = GameObject.Find("Misc Canvas").transform.GetChild(10).gameObject;
         ActivateEnemies(roomActive);
         SetPlayerData();
     }

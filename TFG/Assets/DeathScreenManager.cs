@@ -38,19 +38,19 @@ public class DeathScreenManager : MonoBehaviour
     {
         Time.timeScale = 1;
         PlayerPrefs.SetString("UseDeathRoomCoordinates", "true");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
 
     public void TryAgain()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
 
     public void Exit()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("MainMenu Scene");
+        CustomSceneManager.Instance.ChangeScene("MainMenu Scene");
     }
 
 

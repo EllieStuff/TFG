@@ -96,7 +96,7 @@ public class ChangeMenuSelectionScript : MonoBehaviour
         while(timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float lerpValue = timer / maxTime;
 
             for (int i = 0; i < _selection.usedMenus.Length; i++)
@@ -128,6 +128,7 @@ public class ChangeMenuSelectionScript : MonoBehaviour
     IEnumerator LerpEnableMenuSelectionAlpha(MenuSelection _selection, float _lerpTime = 0.2f)
     {
         float initAlpha = 0f, targetAlpha = 1f;
+        if (_selection.usedMenus.Length > 0) initAlpha = _selection.usedMenus[0].GetComponent<CanvasGroup>().alpha;
 
 
         CanvasGroup[] usedMenusCG = new CanvasGroup[_selection.usedMenus.Length];
@@ -154,7 +155,7 @@ public class ChangeMenuSelectionScript : MonoBehaviour
         while (timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float lerpValue = timer / maxTime;
 
             for (int i = 0; i < _selection.usedMenus.Length; i++)

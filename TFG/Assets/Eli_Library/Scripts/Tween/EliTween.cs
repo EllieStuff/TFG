@@ -46,13 +46,13 @@ public class EliTween
     }
     static IEnumerator ScaleCor(Transform _transform, Vector3 _targetSize, float _duration, float _delay)
     {
-        yield return new WaitForSeconds(_delay);
+        yield return new WaitForSecondsRealtime(_delay);
         Vector3 initSize = _transform.localScale;
         float timer = 0f;
         while (timer < _duration)
         {
             yield return null;
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             _transform.localScale = Vector3.Lerp(initSize, _targetSize, timer / _duration);
         }
         yield return null;
@@ -66,13 +66,13 @@ public class EliTween
     }
     static IEnumerator LerpImageColor(Image _image, Color _targetColor, float _duration, float _delay)
     {
-        yield return new WaitForSeconds(_delay);
+        yield return new WaitForSecondsRealtime(_delay);
         Color initColor = _image.color;
         float timer = 0f;
         while (timer < _duration)
         {
             yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             _image.color = Color.Lerp(initColor, _targetColor, timer / _duration);
         }
         yield return null;

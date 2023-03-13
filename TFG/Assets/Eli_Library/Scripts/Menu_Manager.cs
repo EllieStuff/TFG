@@ -11,6 +11,7 @@ public class Menu_Manager : MonoBehaviour
 
     [SerializeField] internal Transform optionsRef;
     [SerializeField] internal UIFeedback_Base startSelectedOption;
+    [SerializeField] internal float startSelectionDelay = 0.5f;
     [SerializeField] bool moveStartOptionWithCursor = false;
     [SerializeField] bool usesStartClickedOptions = false;
     [SerializeField] internal UIFeedback_Base[] startClickedOptions = new UIFeedback_Base[0];
@@ -33,7 +34,7 @@ public class Menu_Manager : MonoBehaviour
     private void Awake()
     {
         if(startSelectedOption != null)
-            SetCurrentEventSystemSelection(startSelectedOption.gameObject);
+            StartCoroutine(SelectStartOption_Cor(startSelectedOption.gameObject));
         if (usesStartClickedOptions)
             SelectStartClickedOptions();
 
@@ -246,6 +247,12 @@ public class Menu_Manager : MonoBehaviour
     }
 
 
+    IEnumerator SelectStartOption_Cor(GameObject _startOption)
+    {
+        yield return new WaitForSecondsRealtime(startSelectionDelay);
+        SetCurrentEventSystemSelection(_startOption);
+    }
+
     IEnumerator UnselectOverlappingMenu(Menu_Manager _menu)
     {
         CanvasGroup menuGroup = _menu.GetComponent<CanvasGroup>();
@@ -270,7 +277,7 @@ public class Menu_Manager : MonoBehaviour
         while (timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             group.alpha = Mathf.Lerp(_initAlpha, _finalAlpha, timer / maxTime);
         }
         yield return new WaitForEndOfFrame();
@@ -284,7 +291,7 @@ public class Menu_Manager : MonoBehaviour
         while (timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             _group.alpha = Mathf.Lerp(_initAlpha, _finalAlpha, timer / maxTime);
         }
         yield return new WaitForEndOfFrame();

@@ -9,7 +9,7 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [Header("Base Feedback")]
     [Space(2)]
     [SerializeField] internal Image feedbackImage;
-    [SerializeField] internal bool startClicked = false, ignoreInputs = false, keepSelected = false, unclickByDoubleClick = false;
+    [SerializeField] internal bool startClicked = false, ignoreInputs = false, keepSelected = false, unclickByDoubleClick = false, unclickAutomatically = false;
     [SerializeField] internal UIFeedback_Base[] compatibleOptions = new UIFeedback_Base[0];
 
     [SerializeField] internal bool selected = false, clicked = false;
@@ -62,7 +62,8 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             Click();
         }
-        else if (Input.GetButtonDown("Submit") && selected && keepSelected && unclickByDoubleClick)
+        else if ((Input.GetButtonDown("Submit") && selected && keepSelected && unclickByDoubleClick)
+            || (unclickAutomatically && clicked))
         {
             UnClickByDoubleClick();
         }
