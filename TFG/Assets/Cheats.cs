@@ -18,7 +18,7 @@ public class Cheats : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+            CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
 
         if (Input.GetKeyDown(KeyCode.F2))
             infiniteLife = !infiniteLife;
