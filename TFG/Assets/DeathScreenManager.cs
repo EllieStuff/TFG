@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class DeathScreenManager : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class DeathScreenManager : MonoBehaviour
 
     public void DeathScreenAppear(float _delay = APPEAR_DELAY)
     {
+        continueBttn.gameObject.SetActive(true);
+        continueBttn.alpha = 0f;
         StartCoroutine(DeathScreenAppearCor(_delay));
     }
 
@@ -82,6 +85,11 @@ public class DeathScreenManager : MonoBehaviour
 
         exitBttn.gameObject.SetActive(true);
         yield return ChangeGroupAlpha(exitBttn, 0, 1, 0.5f);
+
+        yield return new WaitForSecondsRealtime(0.5f);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(continueBttn.gameObject);
+
 
         //Time.timeScale = 1f;
     }

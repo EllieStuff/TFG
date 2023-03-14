@@ -12,33 +12,53 @@ public class ResolutionManager : MonoBehaviour
     Resolution[] resolutions;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
-        int resolutionIdx = 0;
-        for(int i = 0; i < resolutions.Length; i++)
+        int resolutionIdx = -1, notFoundResolutionException = 0;
+        bool resolutionInited = PlayerPrefs.GetInt("ResolutionValue", -1) >= 0;
+        for (int i = 0; i < resolutions.Length; i++)
         {
             string resolutionOption = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + " Hz";
             options.Add(resolutionOption);
-            if(resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            if (!resolutionInited)
             {
-               resolutionIdx = i;
+                if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                    resolutionIdx = i;
+                else if (resolutions[i].width == 1920 && resolutions[i].height == 1080)
+                    notFoundResolutionException = i;
             }
         }
 
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = resolutionIdx;
+        if (resolutionInited)
+        {
+            fullScreenToggle.isOn = PlayerPrefs.GetString("FullScreenOn", "true") == "true";
+            resolutionDropdown.value = PlayerPrefs.GetInt("ResolutionValue");
+        }
+        else
+        {
+            if (resolutionIdx < 0) resolutionIdx = notFoundResolutionException;
+            resolutionDropdown.value = resolutionIdx;
+        }
         resolutionDropdown.RefreshShownValue();
     }
 
 
-    public void SetResolution(int _resolutionIdx)
+    public void SetResolution()
     {
-        //Resolution resolution = resolutions[_resolutionIdx];
-        //Screen.SetResolution(resolution.width, resolution.height, fullScreenToggle.isOn);
-        Screen.SetResolution(1920, 1080, true);
+        Resolution resolution = resolutions[resolutionDropdown.value];
+        Screen.SetResolution(resolution.width, resolution.height, fullScreenToggle.isOn);
+        PlayerPrefs.SetInt("ResolutionValue", resolutionDropdown.value);
+    }
+
+    public void SetFullScreen()
+    {
+        Screen.fullScreen = fullScreenToggle.isOn;
+        string fullScreenOn = fullScreenToggle.isOn ? "true" : "false";
+        PlayerPrefs.SetString("FullScreenOn", fullScreenOn);
     }
 
 }

@@ -82,7 +82,7 @@ public class CustomSceneManager : MonoBehaviour
         while(timer < _lerpTime)
         {
             yield return null;
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             _image.color = Color.Lerp(_initColor, _targetColor, timer / _lerpTime);
         }
     }
