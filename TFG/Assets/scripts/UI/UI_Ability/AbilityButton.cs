@@ -19,6 +19,7 @@ public class AbilityButton : MonoBehaviour
 
     private PassiveSkills_Manager playerSkills;
     private PlayerMovement playerMovement;
+    private LifeSystem playerLife;
     private PassiveSkill_Base skill;
     PassiveSkill_Base.SkillType cardSkill;
 
@@ -64,6 +65,7 @@ public class AbilityButton : MonoBehaviour
         imageTransform.sizeDelta = Vector3.zero;
         biggerSize = originalSize * 2;
         playerSkills = GameObject.FindWithTag("Player").GetComponent<PassiveSkills_Manager>();
+        playerLife = playerSkills.GetComponent<LifeSystem>();
         playerMovement = playerSkills.GetComponent<PlayerMovement>();
         playerMovement.canMove = false;
         uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -208,6 +210,8 @@ public class AbilityButton : MonoBehaviour
     {
         if(!pushedButton)
         {
+            float lifeToImprove = (10 * 100) / playerLife.maxLife;
+            playerLife.AddLife(lifeToImprove);
             playerSkills.AddSkill(skill);
 
             if (cardListPivot != null && cardPrefabUI != null)
