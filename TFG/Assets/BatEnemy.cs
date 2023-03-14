@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BatEnemy : BaseEnemyScript
 {
-    [Header("BatEnemy")]
-    [SerializeField] float attackAnimationTime;
-    [SerializeField] float attackDamage;
+    [Header("Bat Enemy")]
+    [SerializeField] protected float attackAnimationTime;
+    [SerializeField] protected float attackDamage;
     [SerializeField] Animator enemyAnimator;
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Transform shootPoint;
-    [SerializeField] int numOfAttacks = 1;
-    [SerializeField] float attackSeparationTime = 0.5f;
+    [SerializeField] protected GameObject projectilePrefab;
+    [SerializeField] protected Transform shootPoint;
+    [SerializeField] protected int numOfAttacks = 1;
+    [SerializeField] protected float attackSeparationTime = 0.5f;
 
     float attackTimer;
 
@@ -53,7 +53,7 @@ public class BatEnemy : BaseEnemyScript
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            StartCoroutine(AttackCorroutine());
+            StartCoroutine(Attack_Cor());
             attackTimer = AttackWait + attackChargingTime;
         }
 
@@ -63,7 +63,7 @@ public class BatEnemy : BaseEnemyScript
         base.DeathUpdate();
     }
 
-    IEnumerator AttackCorroutine()
+    protected virtual IEnumerator Attack_Cor()
     {
         yield return new WaitForSeconds(attackChargingTime);
         //place shoot animation here
@@ -110,7 +110,7 @@ public class BatEnemy : BaseEnemyScript
         moveDir = Vector3.zero;
         StopRB(stopForce);
         canEnterDamageState = false;
-        StartCoroutine(AttackCorroutine());
+        StartCoroutine(Attack_Cor());
     }
 
 

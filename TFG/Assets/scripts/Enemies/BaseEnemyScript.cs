@@ -11,7 +11,7 @@ public class BaseEnemyScript : MonoBehaviour
     const float THRESHOLD = 1f;
 
 
-    [Header("BaseEnemy")]
+    [Header("Base Enemy")]
     [SerializeField] internal EnemyType enemyType;
     [SerializeField] protected LayerMask layerMask;
     [SerializeField] internal float baseRotSpeed = 4;
@@ -45,7 +45,7 @@ public class BaseEnemyScript : MonoBehaviour
     Vector3 rndTarget;
     float restTimer = 0f;
     float rndMoveTimer = 0f, rndMoveWait = 5f;
-    LifeSystem enemyLife;
+    protected LifeSystem enemyLife;
     protected DamageData touchBodyDamageData;
 
     readonly internal Vector3 
@@ -71,9 +71,9 @@ public class BaseEnemyScript : MonoBehaviour
     protected float AttackWait { get { return Random.Range(attackWait.x, attackWait.y); } }
 
     //PLACEHOLDER
-    [SerializeField] SkinnedMeshRenderer enemyMesh;
-    [SerializeField] MeshRenderer enemyMeshTmp;
-    [SerializeField] Material transparentMat;
+    [SerializeField] protected SkinnedMeshRenderer enemyMesh;
+    [SerializeField] protected MeshRenderer enemyMeshTmp;
+    [SerializeField] protected Material transparentMat;
     //_________________________________________
 
     //private WeaponStats playerWeaponStats;

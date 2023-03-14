@@ -5302,6 +5302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 15
   maxVelocity: {x: 5, y: 0, z: 5}
+  destroyTime: 7
   trail: {fileID: 9054102091148237575}
   particles: {fileID: 8076505059512220951}
 --- !u!114 &1692913151653156412
@@ -5324,6 +5325,7 @@ MonoBehaviour:
   timeDisabledAfterColl: -1
   stealLife: 0
   stealLifePercentage: 0
+  critPercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 5692061047596600683}

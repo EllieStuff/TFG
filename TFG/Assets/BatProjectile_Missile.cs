@@ -9,6 +9,7 @@ public class BatProjectile_Missile : ProjectileData
     const float CLOSE_RANGE_THRESHOLD = 3f;
 
     [SerializeField] Vector3 maxVelocity = new Vector3(10, 0, 10);
+    [SerializeField] float destroyTime = 4f;
     [SerializeField] TrailRenderer trail;
     [SerializeField] ParticleSystemRenderer particles;
     //[SerializeField] bool testing = false;
@@ -31,6 +32,7 @@ public class BatProjectile_Missile : ProjectileData
         else
             Destroy(gameObject);
         transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
+        DestroyObject(destroyTime);
     }
 
 
