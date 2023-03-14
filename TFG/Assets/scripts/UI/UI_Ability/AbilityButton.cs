@@ -31,6 +31,7 @@ public class AbilityButton : MonoBehaviour
 
     const float DISABLE_TIMER = 3;
     const float LERP_MOVE_SPEED = 2;
+    const int HEAL_CARD_PERCENTAGE = 30;
 
     bool pushedButton;
 
@@ -210,7 +211,7 @@ public class AbilityButton : MonoBehaviour
     {
         if(!pushedButton)
         {
-            float lifeToImprove = (10 * 100) / playerLife.maxLife;
+            float lifeToImprove = (HEAL_CARD_PERCENTAGE * 100) / playerLife.maxLife;
             playerLife.AddLife(lifeToImprove);
             playerSkills.AddSkill(skill);
 
