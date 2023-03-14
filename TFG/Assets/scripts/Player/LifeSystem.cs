@@ -182,7 +182,7 @@ public class LifeSystem : MonoBehaviour
                 {
                     StartCoroutine(enemyShake.Shake(0.3f, 0.03f, 0.03f));
                     StartCoroutine(cameraRef.ShakeCamera(0.3f, 0.07f));
-                    textUI.color = Color.red;
+                    textUI.color = Color.yellow;
                 }
                 else if (dmgMultiplier > 0.7f)
                 {
