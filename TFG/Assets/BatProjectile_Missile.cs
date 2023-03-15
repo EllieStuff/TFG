@@ -5,10 +5,11 @@ using UnityEngine;
 public class BatProjectile_Missile : ProjectileData
 {
     const float BASE_SPEED_INC = 1f;
-    const float CLOSE_RANGE_SPEED_INC = 3f;
+    const float CLOSE_RANGE_SPEED_INC = 3.5f;
     const float CLOSE_RANGE_THRESHOLD = 3f;
 
     [SerializeField] Vector3 maxVelocity = new Vector3(10, 0, 10);
+    [SerializeField] float destroyTime = 4f;
     [SerializeField] TrailRenderer trail;
     [SerializeField] ParticleSystemRenderer particles;
     //[SerializeField] bool testing = false;
@@ -31,23 +32,18 @@ public class BatProjectile_Missile : ProjectileData
         else
             Destroy(gameObject);
         transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
+        DestroyObject(destroyTime);
     }
 
 
     protected override void Update_Call()
     {
-        //base.Update_Call();
         if (Vector3.Distance(transform.position, playerRef.position) > CLOSE_RANGE_THRESHOLD) 
             { ancorePos = transform.position; speedInc = BASE_SPEED_INC; }
         else 
             speedInc = CLOSE_RANGE_SPEED_INC;
         moveDir = (playerRef.position - ancorePos).normalized;
         rb.velocity += moveDir * moveSpeed * speedInc * Time.deltaTime;
-        //if (Vector3.Distance(transform.position, playerRef.position) < 3f
-        //    && Vector3.Angle(transform.forward, playerRef.position - transform.position) < 10f)
-        //{
-        //    rb.velocity += moveDir * moveSpeed * Time.deltaTime;
-        //}
         rb.velocity = ClampVector(rb.velocity, -maxVelocity, maxVelocity);
     }
 

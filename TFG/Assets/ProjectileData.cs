@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileData : MonoBehaviour
 {
-    [SerializeField] protected float moveSpeed = 25f;
+    [SerializeField] internal float moveSpeed = 25f;
 
     internal DamageData dmgData;
     protected Rigidbody rb;

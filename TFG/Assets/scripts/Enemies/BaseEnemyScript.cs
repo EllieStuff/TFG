@@ -11,7 +11,7 @@ public class BaseEnemyScript : MonoBehaviour
     const float THRESHOLD = 1f;
 
 
-    [Header("BaseEnemy")]
+    [Header("Base Enemy")]
     [SerializeField] internal EnemyType enemyType;
     [SerializeField] protected LayerMask layerMask;
     [SerializeField] internal float baseRotSpeed = 4;
@@ -29,7 +29,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] protected bool movesToTarget = true;
     [SerializeField] bool needsToRest = false;
     [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
-    [SerializeField] Vector2 attackWait = new Vector2(1f, 1.5f);
+    [SerializeField] protected Vector2 attackWait = new Vector2(1f, 1.5f);
     [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
     [SerializeField] protected float attackChargingTime = 1f;
     [SerializeField] int numOfRndMoves = 0;
@@ -45,7 +45,7 @@ public class BaseEnemyScript : MonoBehaviour
     Vector3 rndTarget;
     float restTimer = 0f;
     float rndMoveTimer = 0f, rndMoveWait = 5f;
-    LifeSystem enemyLife;
+    protected LifeSystem enemyLife;
     protected DamageData touchBodyDamageData;
 
     readonly internal Vector3 
@@ -71,9 +71,9 @@ public class BaseEnemyScript : MonoBehaviour
     protected float AttackWait { get { return Random.Range(attackWait.x, attackWait.y); } }
 
     //PLACEHOLDER
-    [SerializeField] SkinnedMeshRenderer enemyMesh;
-    [SerializeField] MeshRenderer enemyMeshTmp;
-    [SerializeField] Material transparentMat;
+    [SerializeField] protected SkinnedMeshRenderer enemyMesh;
+    [SerializeField] protected MeshRenderer enemyMeshTmp;
+    [SerializeField] protected Material transparentMat;
     //_________________________________________
 
     //private WeaponStats playerWeaponStats;
@@ -474,8 +474,9 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void DeathStart()
     {
         GetComponent<Collider>().enabled = false;
+        touchBodyDamageData.GetComponent<Collider>().enabled = false;
 
-        if(!disableAutoGravity)
+        if (!disableAutoGravity)
             rb.useGravity = false;
 
         damageTimer = baseDeathTime;
