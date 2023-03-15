@@ -6,7 +6,7 @@ public class DeadScript : MonoBehaviour
 {
     private void OnEnable()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0.0000001f;
     }
 
     private void OnDisable()

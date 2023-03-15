@@ -47,7 +47,7 @@ public class AbilityChest : MonoBehaviour
 
         timer = 0; maxTime = chestLerpSpeed;
         float rotSpeed = -40;
-        Time.timeScale = 0;
+        Time.timeScale = 0.0000001f;
         while(timer < maxTime)
         {
             yield return new WaitForEndOfFrame();

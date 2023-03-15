@@ -15,7 +15,7 @@ public class InGameMenuManager : MonoBehaviour
         {
             if (!inGameMenu.activeSelf)
             {
-                Time.timeScale = 0;
+                Time.timeScale = 0.0000001f;
                 activateMenuScript.ChangeMenuSelection();
             }
             else

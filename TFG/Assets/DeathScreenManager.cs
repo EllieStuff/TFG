@@ -66,7 +66,7 @@ public class DeathScreenManager : MonoBehaviour
     IEnumerator DeathScreenAppearCor(float _delay)
     {
         yield return new WaitForSeconds(_delay);
-        Time.timeScale = 0f;
+        Time.timeScale = 0.0000001f;
         //menuActive = true;
 
         bg.gameObject.SetActive(true);
