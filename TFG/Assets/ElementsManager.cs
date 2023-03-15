@@ -43,6 +43,8 @@ public class ElementsManager : MonoBehaviour
     bool CanChangeElement { get { return !(!allowElementChangeOneStarted && changingElement); } }
 
     private RadialRotation UIRadialRot;
+    internal bool mouseClockWise = true;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -146,7 +148,7 @@ public class ElementsManager : MonoBehaviour
     {
         if (!CanChangeElement) return;
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if ((mouseClockWise && Input.GetAxis("Mouse ScrollWheel") < 0f) || (!mouseClockWise && Input.GetAxis("Mouse ScrollWheel") > 0f))
         {
             StopParticles(elementIdx);
             elementIdx--;
@@ -154,7 +156,7 @@ public class ElementsManager : MonoBehaviour
             ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
 
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        else if ((mouseClockWise && Input.GetAxis("Mouse ScrollWheel") > 0f) || (!mouseClockWise && Input.GetAxis("Mouse ScrollWheel") < 0f))
         {
             StopParticles(elementIdx);
             elementIdx++;

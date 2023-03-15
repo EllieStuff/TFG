@@ -13,7 +13,7 @@ public class BatEnemy : BaseEnemyScript
     [SerializeField] protected int numOfAttacks = 1;
     [SerializeField] protected float attackSeparationTime = 0.5f;
 
-    float attackTimer;
+    protected float attackTimer;
 
 
     internal override void Start_Call() { base.Start_Call(); }

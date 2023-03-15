@@ -29,7 +29,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] protected bool movesToTarget = true;
     [SerializeField] bool needsToRest = false;
     [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
-    [SerializeField] Vector2 attackWait = new Vector2(1f, 1.5f);
+    [SerializeField] protected Vector2 attackWait = new Vector2(1f, 1.5f);
     [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
     [SerializeField] protected float attackChargingTime = 1f;
     [SerializeField] int numOfRndMoves = 0;
@@ -474,8 +474,9 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void DeathStart()
     {
         GetComponent<Collider>().enabled = false;
+        touchBodyDamageData.GetComponent<Collider>().enabled = false;
 
-        if(!disableAutoGravity)
+        if (!disableAutoGravity)
             rb.useGravity = false;
 
         damageTimer = baseDeathTime;
