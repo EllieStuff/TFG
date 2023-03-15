@@ -39,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
     internal bool stealLifeEnabled = false;
     internal bool damageIncreaseByAbilitySwap = false;
     internal int critSwapLevel = 0;
-    internal float critChancePercentage = 0;
+    internal float critChancePercentage = 0.05f;
     internal float stealLifePercentage = 0;
     internal int projectilePierceAmount = 0;
     float extraProjectilesDelay = 0.2f;
