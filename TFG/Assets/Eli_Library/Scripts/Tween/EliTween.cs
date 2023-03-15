@@ -27,7 +27,9 @@ public class EliTween
 
     public static void ChangeColor(Image _image, Color _targetColor, float _duration, float _delay = 0f)
     {
-        _image.StartCoroutine(ChangeColor_Cor(_image, _targetColor, _duration, _delay));
+        GameObject parent = _image.transform.parent.parent.parent.gameObject;
+        if (parent.activeSelf || parent == null)
+            _image.StartCoroutine(ChangeColor_Cor(_image, _targetColor, _duration, _delay));
     }
     static IEnumerator ChangeColor_Cor(Image _image, Color _targetColor, float _duration, float _delay)
     {

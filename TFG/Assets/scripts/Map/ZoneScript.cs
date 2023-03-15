@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class ZoneScript : MonoBehaviour
 {
     internal bool zoneEnabled;
     internal bool zoneDefused;
+    [SerializeField] private int roomNumber;
     [SerializeField] internal int enemiesQuantity;
     [SerializeField] Animation[] doorOpenAnims;
     [SerializeField] BoxCollider[] blockedPaths;
@@ -26,6 +28,8 @@ public class ZoneScript : MonoBehaviour
 
     private void Start()
     {
+        GetRoomSave();
+
         blackTile.enabled = true;
         camSystem = GameObject.Find("CameraHolder").GetComponent<CameraFollow>();
         blackTile.material = new Material(blackTile.material);
@@ -52,7 +56,43 @@ public class ZoneScript : MonoBehaviour
             blackTile.material.color = Color.Lerp(blackTile.material.color, new Color(tileColor.r, tileColor.g, tileColor.b, 1), Time.deltaTime * LERP_SPEED);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void GetRoomSave()
+    {
+        string roomName = transform.parent.name;
+        string roomNameSubstring = roomName.Substring(4);
+
+        if (roomName.Contains("."))
+            roomNumber = 0;
+        else
+            roomNumber = Int32.Parse(roomNameSubstring);
+
+        int savedRoomNumber = PlayerPrefs.GetInt("RoomNumber");
+
+        if (roomNumber == savedRoomNumber)
+        {
+            Transform roomEnemiesManager = GameObject.FindGameObjectWithTag("EnemyManager").transform;
+
+            int roomIndex = 0;
+
+            foreach (Transform child in roomEnemiesManager)
+            {
+                RoomEnemyManager room = child.GetComponent<RoomEnemyManager>();
+
+                if (roomIndex == 0 && savedRoomNumber > 0)
+                    room.enabled = false;
+
+                if (roomIndex == savedRoomNumber)
+                {
+                    room.enabled = true;
+                    room.ActivateRoom(true);
+                    break;
+                }
+                roomIndex++;
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
     {
         bool isPlayer = other.tag.Equals("Player");
 
@@ -61,7 +101,10 @@ public class ZoneScript : MonoBehaviour
             BlockPaths();
             zoneEnabled = true;
             StartCoroutine(assignedRoom.DisableEnemiesWait());
-            PlayerPrefs.SetFloat("DeathRoomZ", other.ClosestPoint(transform.position).z + 2.5f);
+            PlayerPrefs.SetFloat("DeathRoomZ", other.ClosestPoint(transform.position).z);
+
+            if(roomNumber > 0)
+                PlayerPrefs.SetInt("RoomNumber", roomNumber);
         }
 
         if(isPlayer)

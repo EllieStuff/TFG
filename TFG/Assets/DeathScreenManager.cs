@@ -45,6 +45,7 @@ public class DeathScreenManager : MonoBehaviour
     public void TryAgain()
     {
         Time.timeScale = 1;
+        PlayerPrefs.SetInt("RoomNumber", 0);
         CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
 

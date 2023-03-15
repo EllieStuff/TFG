@@ -10,7 +10,7 @@ public class DoorVariables : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!closed && other.tag.Equals("Player"))
+        if (openedDoor && !closed && other.tag.Equals("Player"))
             CloseDoorAnimCall();
     }
 

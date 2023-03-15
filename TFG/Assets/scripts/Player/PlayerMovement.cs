@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         baseSpeed = speedMultiplier;
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();

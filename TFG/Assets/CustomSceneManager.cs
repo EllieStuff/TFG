@@ -40,7 +40,7 @@ public class CustomSceneManager : MonoBehaviour
         loadingIcon.gameObject.SetActive(true);
         yield return LerpImageColor_Cor(loadingIcon, Color.clear, Color.white);
         StartCoroutine(RotateLoadingIcon_Cor());
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(_sceneName);
     }
     IEnumerator ChangeScene_Cor(int _sceneId)
     {
@@ -49,7 +49,7 @@ public class CustomSceneManager : MonoBehaviour
         loadingIcon.gameObject.SetActive(true);
         yield return LerpImageColor_Cor(loadingIcon, Color.clear, Color.white);
         StartCoroutine(RotateLoadingIcon_Cor());
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_sceneId);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(_sceneId);
     }
 
 
