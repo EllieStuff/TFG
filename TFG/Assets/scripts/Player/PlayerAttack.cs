@@ -39,6 +39,7 @@ public class PlayerAttack : MonoBehaviour
     internal bool stealLifeEnabled = false;
     internal bool damageIncreaseByAbilitySwap = false;
     internal int critSwapLevel = 0;
+    internal float critChancePercentage = 0;
     internal float stealLifePercentage = 0;
     internal int projectilePierceAmount = 0;
     float extraProjectilesDelay = 0.2f;
@@ -117,14 +118,28 @@ public class PlayerAttack : MonoBehaviour
             critSwapQuantity = 0;
     }
 
-    void SetCritAttack(PlayerProjectileData _projectile)
+    void SetCritAttack(PlayerProjectileData _projectile, bool _randomCrit)
     {
         if(damageIncreaseByAbilitySwap && critSwapQuantity < critSwapLevel)
         {
             _projectile.dmgData.critPercentage = CRIT_PERCENTAGE;
             critSwapQuantity++;
         }
+        if(_randomCrit)
+            _projectile.dmgData.critPercentage = CRIT_PERCENTAGE;
+    }
 
+    bool checkRandomCrit()
+    {
+        if(critChancePercentage > 0)
+        {
+            float randomChance = Random.Range(0.01f, 1);
+
+            if (randomChance <= critChancePercentage)
+                return true;
+        }
+
+        return false;
     }
 
     void Attack()
@@ -138,8 +153,12 @@ public class PlayerAttack : MonoBehaviour
         attack.transform.SetParent(null);
         attack.Init(transform);
 
-        if(damageIncreaseByAbilitySwap)
-            SetCritAttack(attack);
+        bool randomCrit = checkRandomCrit();
+
+        if (damageIncreaseByAbilitySwap || randomCrit)
+        {
+            SetCritAttack(attack, randomCrit);
+        }
 
         attack.dmgData.stealLife = stealLifeEnabled;
         attack.dmgData.stealLifePercentage = stealLifePercentage;

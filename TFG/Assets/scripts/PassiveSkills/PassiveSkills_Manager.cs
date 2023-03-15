@@ -99,6 +99,9 @@ public class PassiveSkills_Manager : MonoBehaviour
             case PassiveSkill_Base.SkillType.FIRST_STRIKE:
                 return new FirstStrike_PassiveSkill();
 
+            case PassiveSkill_Base.SkillType.CRITICAL_CHANCE:
+                return new Criticon_PassiveSkill();
+
             default:
                 return null;
         }
