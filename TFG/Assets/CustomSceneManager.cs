@@ -58,7 +58,7 @@ public class CustomSceneManager : MonoBehaviour
         fader.gameObject.SetActive(true);
         //loadingIcon.gameObject.SetActive(true);
         //yield return LerpImageColor_Cor(loadingIcon, Color.white, Color.clear);
-        yield return new WaitForSeconds(fadeDelay);
+        yield return new WaitForSecondsRealtime(fadeDelay);
         yield return LerpImageColor_Cor(fader, Color.black, Color.clear, 2f);
         fader.gameObject.SetActive(false);
         loadingIcon.gameObject.SetActive(false);

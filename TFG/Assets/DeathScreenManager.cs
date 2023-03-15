@@ -87,8 +87,8 @@ public class DeathScreenManager : MonoBehaviour
         yield return ChangeGroupAlpha(exitBttn, 0, 1, 0.5f);
 
         yield return new WaitForSecondsRealtime(0.5f);
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(continueBttn.gameObject);
+        //EventSystem.current.SetSelectedGameObject(null);
+        //EventSystem.current.SetSelectedGameObject(continueBttn.gameObject);
 
 
         //Time.timeScale = 1f;
