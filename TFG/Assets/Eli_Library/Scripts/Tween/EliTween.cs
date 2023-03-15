@@ -5,46 +5,13 @@ using UnityEngine.UI;
 
 public class EliTween
 {
-    enum TweenType { SCALE, COLOR }
-    static Dictionary<MonoBehaviour, Dictionary<TweenType, Coroutine>> activeCoroutines = new Dictionary<MonoBehaviour, Dictionary<TweenType, Coroutine>>();
-
-    static void CheckActiveCoroutines(MonoBehaviour _mb, TweenType _tt, Coroutine _cor)
-    {
-        if (activeCoroutines.ContainsKey(_mb))
-        {
-            if (activeCoroutines[_mb].ContainsKey(_tt))
-            {
-                if (activeCoroutines[_mb][_tt] != null)
-                {
-                    _mb.StopCoroutine(activeCoroutines[_mb][_tt]);
-                }
-                activeCoroutines[_mb][_tt] = _cor;
-            }
-            else
-            {
-                activeCoroutines[_mb].Add(_tt, _cor);
-            }
-        }
-        else
-        {
-            activeCoroutines.Add(_mb, new Dictionary<TweenType, Coroutine> { { _tt, _cor } });
-        }
-    }
-    static void EraseActiveCoroutine(MonoBehaviour _mb, TweenType _tt)
-    {
-        //if (activeCoroutines.ContainsKey(_mb) && activeCoroutines[_mb].ContainsKey(_tt)) 
-        activeCoroutines[_mb].Remove(_tt);
-        if (activeCoroutines[_mb].Count == 0) 
-            activeCoroutines.Remove(_mb);
-    }
 
     public static void Scale(Transform _transform, Vector3 _targetSize, float _duration, float _delay = 0f)
     {
         MonoBehaviour mb = _transform.GetComponent<MonoBehaviour>();
-        Coroutine cor = mb.StartCoroutine(ScaleCor(_transform, _targetSize, _duration, _delay));
-        //CheckActiveCoroutines(mb, TweenType.SCALE, cor);
+        mb.StartCoroutine(Scale_Cor(_transform, _targetSize, _duration, _delay));
     }
-    static IEnumerator ScaleCor(Transform _transform, Vector3 _targetSize, float _duration, float _delay)
+    static IEnumerator Scale_Cor(Transform _transform, Vector3 _targetSize, float _duration, float _delay)
     {
         yield return new WaitForSecondsRealtime(_delay);
         Vector3 initSize = _transform.localScale;
@@ -56,15 +23,13 @@ public class EliTween
             _transform.localScale = Vector3.Lerp(initSize, _targetSize, timer / _duration);
         }
         yield return null;
-        //EraseActiveCoroutine(_transform.GetComponent<MonoBehaviour>(), TweenType.SCALE);
     }
 
     public static void ChangeColor(Image _image, Color _targetColor, float _duration, float _delay = 0f)
     {
-        Coroutine cor = _image.StartCoroutine(LerpImageColor(_image, _targetColor, _duration, _delay));
-        //CheckActiveCoroutines(_image, TweenType.SCALE, cor);
+        _image.StartCoroutine(ChangeColor_Cor(_image, _targetColor, _duration, _delay));
     }
-    static IEnumerator LerpImageColor(Image _image, Color _targetColor, float _duration, float _delay)
+    static IEnumerator ChangeColor_Cor(Image _image, Color _targetColor, float _duration, float _delay)
     {
         yield return new WaitForSecondsRealtime(_delay);
         Color initColor = _image.color;
@@ -76,7 +41,25 @@ public class EliTween
             _image.color = Color.Lerp(initColor, _targetColor, timer / _duration);
         }
         yield return null;
-        //EraseActiveCoroutine(_image, TweenType.COLOR);
+    }
+
+
+    public static void ChangeAlpha(CanvasGroup _canvasGroup, float _targetAlpha, float _duration, float _delay = 0f)
+    {
+        _canvasGroup.GetComponent<MonoBehaviour>().StartCoroutine(ChangeAlpha_Cor(_canvasGroup, _targetAlpha, _duration, _delay));
+    }
+    static IEnumerator ChangeAlpha_Cor(CanvasGroup _canvasGroup, float _targetAlpha, float _duration, float _delay)
+    {
+        yield return new WaitForSecondsRealtime(_delay);
+        float initAlpha = _canvasGroup.alpha;
+        float timer = 0f;
+        while (timer < _duration)
+        {
+            yield return new WaitForEndOfFrame();
+            timer += Time.unscaledDeltaTime;
+            _canvasGroup.alpha = Mathf.Lerp(initAlpha, _targetAlpha, timer / _duration);
+        }
+        yield return null;
     }
 
 }

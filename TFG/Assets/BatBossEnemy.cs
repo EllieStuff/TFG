@@ -14,6 +14,8 @@ public class BatBossEnemy : BatEnemy
     [SerializeField] Material fireMat, fireTransparentMat, grassMat, grassTransparentMat, waterMat, waterTransparentMat;
     [SerializeField] Image flashImage;
     [SerializeField] Color fireFlashColor = Color.red, grassFlashColor = Color.green, waterFlashColor = Color.cyan;
+    [SerializeField] float uiAppearSpeed = 1f;
+    [SerializeField] CanvasGroup nameTextRef, lifeBarRef;
 
     CameraShake camShake;
     List<BatProjectile_Missile> projectiles = new List<BatProjectile_Missile>();
@@ -24,6 +26,7 @@ public class BatBossEnemy : BatEnemy
     {
         base.Start_Call();
         camShake = Camera.main.GetComponent<CameraShake>();
+        StartCoroutine(EnableUI(true));
     }
 
     internal override void Update_Call()
@@ -43,8 +46,30 @@ public class BatBossEnemy : BatEnemy
         base.DeathStart();
         for (int i = 0; i < projectiles.Count; i++) projectiles[i].DestroyObject();
         projectiles.Clear();
+        StartCoroutine(EnableUI(false));
     }
 
+
+    IEnumerator EnableUI(bool _enable)
+    {
+        if (_enable)
+        {
+            nameTextRef.gameObject.SetActive(true);
+            lifeBarRef.gameObject.SetActive(true);
+            lifeBarRef.alpha = nameTextRef.alpha = 0f;
+            EliTween.ChangeAlpha(lifeBarRef, 1f, uiAppearSpeed);
+            EliTween.ChangeAlpha(nameTextRef, 1f, uiAppearSpeed);
+            yield return new WaitForSeconds(uiAppearSpeed);
+        }
+        else
+        {
+            EliTween.ChangeAlpha(lifeBarRef, 0f, uiAppearSpeed);
+            EliTween.ChangeAlpha(nameTextRef, 0f, uiAppearSpeed);
+            yield return new WaitForSeconds(uiAppearSpeed);
+            nameTextRef.gameObject.SetActive(false);
+            lifeBarRef.gameObject.SetActive(false);
+        }
+    }
 
     IEnumerator ChangePhase_Cor()
     {
@@ -54,10 +79,12 @@ public class BatBossEnemy : BatEnemy
         attackChargingTime *= secondPhaseWaitMultiplier;
         projectileSizeMultiplier *= secondPhaseProjSizeMultiplier;
         projectileSpeedMultiplier *= secondPhaseProjSpeedMultiplier;
-        //ToDo: Posar particules enfadament
+        ///ToDo: Posar particules enfadament
+
         StartCoroutine(GetComponent<EnemyShake>().Shake(changePhaseDelay, 0.03f, 0.03f));
         yield return camShake.ShakeCamera(changePhaseDelay, 0.3f);
-        canAttack = canRotate = true;
+        //canAttack = true;
+        canRotate = true;
         attackTimer = 0.1f;
     }
 
@@ -90,7 +117,7 @@ public class BatBossEnemy : BatEnemy
             newElement = (ElementsManager.Elements)Random.Range(0, (int)ElementsManager.Elements.COUNT - 1);
 
         PlayChangeElementParticles(newElement);
-        StartCoroutine(camShake.ShakeCamera(changeElementDelay, 0.02f));
+        //StartCoroutine(camShake.ShakeCamera(changeElementDelay, 0.02f));
         yield return new WaitForSeconds(changeElementDelay);
         flashImage.gameObject.SetActive(true);
         StartCoroutine(camShake.ShakeCamera(flashDuration * 2f, 0.1f));

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LifeSystem : MonoBehaviour
 {
-    public enum EntityType { PLAYER, ENEMY, OTHER }
+    public enum EntityType { PLAYER, ENEMY, BOSS, OTHER }
 
     [SerializeField] internal EntityType entityType = EntityType.PLAYER;
     [SerializeField] internal ElementsManager.Elements entityElement;
@@ -42,7 +42,7 @@ public class LifeSystem : MonoBehaviour
     {
         if (entityType.Equals(EntityType.PLAYER))
             playerMovementScript = GetComponent<PlayerMovement>();
-        if (entityType.Equals(EntityType.ENEMY))
+        if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
         {
             parentCanvas = EnemyLifeBar.transform.parent;
             cameraRef = Camera.main.transform.GetComponent<CameraShake>();
@@ -57,7 +57,7 @@ public class LifeSystem : MonoBehaviour
 
     private void Update()
     {
-        if (entityType.Equals(EntityType.ENEMY))
+        if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
         {
             EnemyLifeBar.value = currLife / maxLife;
             parentCanvas.LookAt(cameraRef.transform);
@@ -153,14 +153,22 @@ public class LifeSystem : MonoBehaviour
             //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.5f, 0.0002f));
         }
 
-        if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY))
+        if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
         {
             if (currLife > 0)
                 Instantiate(bloodPrefab, transform);
 
-            Transform enemyLifeBar = EnemyLifeBar.transform;
-
-            GameObject damageTextInstance = Instantiate(damageTextPrefab, new Vector3(enemyLifeBar.parent.gameObject.transform.position.x, enemyLifeBar.parent.transform.position.y, enemyLifeBar.parent.transform.position.z + 1f), damageTextPrefab.transform.rotation);
+            GameObject damageTextInstance;
+            if (entityType.Equals(EntityType.BOSS))
+            {
+                Transform appearTransform = transform.Find("EnemyCanvas");
+                damageTextInstance = Instantiate(damageTextPrefab, new Vector3(appearTransform.position.x, appearTransform.position.y, appearTransform.position.z + 1f), damageTextPrefab.transform.rotation);
+            }
+            else
+            {
+                Transform appearTransform = EnemyLifeBar.transform.parent;
+                damageTextInstance = Instantiate(damageTextPrefab, new Vector3(appearTransform.position.x, appearTransform.position.y, appearTransform.position.z + 1f), damageTextPrefab.transform.rotation);
+            }
             string damageText = dmgDealt.ToString();
 
             TextMeshPro textUI = damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
@@ -176,7 +184,7 @@ public class LifeSystem : MonoBehaviour
             //Le he puesto rapidamente algo provisional una particula porque no se cambiar el color del pj y es provisional hasta tener el modelo final
             hitPS.Play();
 
-            if (entityType.Equals(EntityType.ENEMY))
+            if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
             {
                 if (dmgMultiplier > 1.9f)
                 {
@@ -200,7 +208,7 @@ public class LifeSystem : MonoBehaviour
         
         if (isDead)
         {
-            if(entityType.Equals(EntityType.ENEMY))
+            if(entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
             {
                 parentCanvas.gameObject.SetActive(false);
                 RoomEnemyManager assignedRoom = transform.GetComponentInParent<RoomEnemyManager>();
