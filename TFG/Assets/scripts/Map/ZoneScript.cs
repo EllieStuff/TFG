@@ -85,6 +85,7 @@ public class ZoneScript : MonoBehaviour
                 {
                     room.enabled = true;
                     room.ActivateRoom(true);
+                    showRoom = true;
                     break;
                 }
                 roomIndex++;
