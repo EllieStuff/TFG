@@ -24,6 +24,8 @@ public class DamageData : MonoBehaviour
     internal bool disabled = false;
     float dmgVariation = 0.02f;
 
+    const float DAMAGE_CRIT_MULTIPLIER = 20;
+
     public bool IsAttacking
     {
         get
@@ -100,7 +102,7 @@ public class DamageData : MonoBehaviour
     void DamageToEnemy(Transform _enemy)
     {
         if (critPercentage > 0)
-            damage = damage + GetDamageVariation() + (critPercentage / damage);
+            damage = damage + GetDamageVariation() + (((critPercentage * 100) / damage) * DAMAGE_CRIT_MULTIPLIER);
 
         if (audio != null)
             audio.PlaySound();
