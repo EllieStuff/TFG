@@ -23,13 +23,17 @@ public class ResolutionManager : MonoBehaviour
         {
             string resolutionOption = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + " Hz";
             options.Add(resolutionOption);
-            if (!resolutionInited)
+            if (!resolutionInited && resolutions[i].width == 1920 && resolutions[i].height == 1080)
             {
-                if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
-                    resolutionIdx = i;
-                else if (resolutions[i].width == 1920 && resolutions[i].height == 1080)
-                    notFoundResolutionException = i;
+                resolutionIdx = i;
             }
+            //if (!resolutionInited)
+            //{
+            //    if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            //        resolutionIdx = i;
+            //    else if (resolutions[i].width == 1920 && resolutions[i].height == 1080)
+            //        resolutionIdx = i;
+            //}
         }
 
         resolutionDropdown.AddOptions(options);

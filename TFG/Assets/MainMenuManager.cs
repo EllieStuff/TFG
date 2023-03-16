@@ -38,8 +38,8 @@ public class MainMenuManager : MonoBehaviour
 
 
         bg.transform.position = new Vector3(initBgPos.x, initBgPos.y + Mathf.Sin(Time.time * sinAmplitude) * bgSpeed * Time.deltaTime, initBgPos.z);
-        if(credits.activeSelf) creditsChild.localPosition = new Vector3(initCreditsPos.x, initCreditsPos.y + Mathf.Sin(Time.time * sinAmplitude * 1.3f) * bgSpeed * Time.deltaTime, initCreditsPos.z);
-        if(options.activeSelf) optionsChild.localPosition = new Vector3(initOptionsPos.x, initOptionsPos.y + Mathf.Sin(Time.time * sinAmplitude * 1.3f) * bgSpeed * Time.deltaTime, initOptionsPos.z);
+        if(credits.activeSelf) creditsChild.localPosition = new Vector3(initCreditsPos.x, initCreditsPos.y + Mathf.Sin(Time.time * sinAmplitude) * bgSpeed * Time.deltaTime, initCreditsPos.z);
+        if(options.activeSelf) optionsChild.localPosition = new Vector3(initOptionsPos.x, initOptionsPos.y + Mathf.Sin(Time.time * sinAmplitude) * bgSpeed * Time.deltaTime, initOptionsPos.z);
     }
 
 
