@@ -20590,11 +20590,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4141052069867726979, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
         type: 3}
-      propertyPath: changeAttackDelay
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141052069867726979, guid: 11a9a7dce7b4cd9468a8856226cda1e0,
-        type: 3}
       propertyPath: fireAttack.prefab
       value: 
       objectReference: {fileID: 3293519732818745489, guid: 4572f626e374ec54f87bcf505a6abf63,
@@ -20874,7 +20869,9 @@ MonoBehaviour:
   - skill: 9
     image: {fileID: 21300000, guid: 00f5ec615e33f0c4b9c7a9cfff9b6cc9, type: 3}
   - skill: 10
-    image: {fileID: 21300000, guid: 2423e5a434cec3242950077bc77e1653, type: 3}
+    image: {fileID: 21300000, guid: ea37a7ef3587711439661cf4bc48a4bf, type: 3}
+  - skill: 0
+    image: {fileID: 21300000, guid: b06d473aa154a294eb1d1a2da4486f2d, type: 3}
 --- !u!114 &4898115512442653087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20891,10 +20888,9 @@ MonoBehaviour:
   changeElementSlider: {fileID: 4898115511699608142}
   nearSliderElementIcon: {fileID: 4898115510920603785}
   icons:
-  - {fileID: 21300000, guid: 76dd11672b000d146a3a6a545dea00f3, type: 3}
-  - {fileID: 21300000, guid: 1a39a083e4a51bf47a52cc261f48db69, type: 3}
-  - {fileID: 21300000, guid: dbcd664ed598c8445a1396669743955f, type: 3}
-  - {fileID: 21300000, guid: 939b35cf62571ad4b9cb79a5d744dd31, type: 3}
+  - {fileID: 21300000, guid: 682abb96507ac984faad41a3499fe57b, type: 3}
+  - {fileID: 21300000, guid: 5d80bf3bb0d371b45bce610dd2519c94, type: 3}
+  - {fileID: 21300000, guid: 32c2e2271df235d42a6367d18799875d, type: 3}
   effectTypeParticles: {fileID: 2308929226964440250}
   effectTypeParticles_UI: {fileID: 0}
   changeElementBlue: {fileID: 2033049098659378294}

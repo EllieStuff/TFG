@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class InGameMenuManager : MonoBehaviour
 {
     [SerializeField] GameObject inGameMenu, options;
     [SerializeField] ChangeMenuSelectionScript activateMenuScript, deactivateMenuScript, deactivateOptionsScript;
+    [SerializeField] TMP_Dropdown resolutionDropdown;
 
 
     void Update()
@@ -22,7 +24,7 @@ public class InGameMenuManager : MonoBehaviour
             {
                 if (options.activeSelf)
                 {
-                    deactivateOptionsScript.ChangeMenuSelection();
+                    if(!resolutionDropdown.IsExpanded) deactivateOptionsScript.ChangeMenuSelection();
                 }
                 else
                 {

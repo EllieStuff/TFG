@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ImproveAttackDamage_PassiveSkill : PassiveSkill_Base
 {
-    float dmgIncrease = 50f;
+    const float DMG_INCREASE = 50f;
 
     public ImproveAttackDamage_PassiveSkill()
     {
         skillType = SkillType.IMPROVE_ATTACK_DAMAGE;
         maxLevel = -1;
         name = "More Attack";
-        description = "Your attacks will deal more damage!";
+        initialDescription = "Your attacks will deal more damage!";
+        improvementDescription = initialDescription;
     }
 
     public override void Init(Transform _playerRef)
@@ -31,7 +32,7 @@ public class ImproveAttackDamage_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         PlayerAttack playeAttack = playerRef.GetComponent<PlayerAttack>();
-        playeAttack.dmgIncrease += dmgIncrease;
+        playeAttack.dmgIncrease += DMG_INCREASE;
     }
 
 }

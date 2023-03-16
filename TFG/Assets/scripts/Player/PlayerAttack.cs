@@ -22,7 +22,7 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("Attacks")]
     [SerializeField] internal ElementsManager.Elements currentAttackElement = ElementsManager.Elements.WATER;
-    [SerializeField] internal float attackDelay = 1.5f, changeAttackDelay = 2f;
+    [SerializeField] internal float attackDelay = 0.8f, changeAttackDelay = 1.6f;
     [Space]
     //[SerializeField] List<Attack> attacks = new List<Attack>();
     [SerializeField] AttackData normalAttack;
@@ -33,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
     internal Transform target;
     PlayerMovement playerMovement;
     internal bool canAttack = true;
-    float attackTimer, changeAttackTimer;
+    float attackTimer;
     internal float dmgIncrease = 0f;
     internal int extraProjectiles = 0;
     internal bool stealLifeEnabled = false;
@@ -46,7 +46,7 @@ public class PlayerAttack : MonoBehaviour
     //internal bool changingAttackType = false;
 
     const float RAYCAST_DISTANCE = 10;
-    const float CRIT_PERCENTAGE = 3;
+    //const float CRIT_PERCENTAGE = 3;
 
     public GameObject glowBurstPS;
     
@@ -64,7 +64,6 @@ public class PlayerAttack : MonoBehaviour
         //target = roomEnemyManager.GetCloserEnemy(transform);
 
         attackTimer = attackDelay;
-        changeAttackTimer = changeAttackDelay;
         attacksDictionary.Add(ElementsManager.Elements.FIRE, fireAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.GRASS, grassAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.WATER, waterAttack.prefab);
@@ -122,18 +121,18 @@ public class PlayerAttack : MonoBehaviour
     {
         if(damageIncreaseByAbilitySwap && critSwapQuantity < critSwapLevel)
         {
-            _projectile.dmgData.critPercentage = CRIT_PERCENTAGE;
+            _projectile.dmgData.critPercentage = critChancePercentage;
             critSwapQuantity++;
         }
         if(_randomCrit)
-            _projectile.dmgData.critPercentage = CRIT_PERCENTAGE;
+            _projectile.dmgData.critPercentage = critChancePercentage;
     }
 
     bool checkRandomCrit()
     {
         if(critChancePercentage > 0)
         {
-            float randomChance = Random.Range(0.01f, 1);
+            float randomChance = Random.Range(0f, 1f);
 
             if (randomChance <= critChancePercentage)
                 return true;
