@@ -25,11 +25,10 @@ public class ZoneScript : MonoBehaviour
     int navArrivedIndex = 0;
 
     internal bool showRoom;
+    bool loadedRoomSave = false;
 
     private void Start()
     {
-        GetRoomSave();
-
         blackTile.enabled = true;
         camSystem = GameObject.Find("CameraHolder").GetComponent<CameraFollow>();
         blackTile.material = new Material(blackTile.material);
@@ -104,8 +103,10 @@ public class ZoneScript : MonoBehaviour
             StartCoroutine(assignedRoom.DisableEnemiesWait());
             PlayerPrefs.SetFloat("DeathRoomZ", other.ClosestPoint(transform.position).z);
 
-            if(roomNumber > 0)
-                PlayerPrefs.SetInt("RoomNumber", roomNumber);
+            if(!loadedRoomSave)
+                GetRoomSave();
+
+            PlayerPrefs.SetInt("RoomNumber", roomNumber);
         }
 
         if(isPlayer)
