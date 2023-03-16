@@ -34493,9 +34493,10 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 0}
   enemyMeshTmp: {fileID: 3397121725640670360}
-  transparentMat: {fileID: 2100000, guid: 18b87545d7803f540b10ef49cc400c70, type: 2}
+  transparentMat: {fileID: 2100000, guid: 1842dea320bdc504399c250340f3a7af, type: 2}
   attackAnimationTime: 0.15
   attackDamage: 200
+  shootWithObstacles: 1
   enemyAnimator: {fileID: 3385771566308395022}
   projectilePrefab: {fileID: 507451495234348787, guid: 1f2e3d08540022a47a495f19204de83a,
     type: 3}
@@ -45001,7 +45002,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a6502ad03adab4046843291243f27da8, type: 2}
+      objectReference: {fileID: 2100000, guid: db11f411b04c2f14480b814f084e5886, type: 2}
     - target: {fileID: 919132149155446097, guid: 47c857461b8401f409e8b508bbd02859,
         type: 3}
       propertyPath: m_Name

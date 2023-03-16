@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class WalkFaster_PassiveSkill : PassiveSkill_Base
 {
-    const int MAX_UPGRADE_NUMBER = 5;
-    const float WALK_SPEED_INCREMENT = 0.05f;
+    const float WALK_SPEED_INCREMENT = 0.04f;
 
     public WalkFaster_PassiveSkill()
     {
         skillType = SkillType.WALK_SPEED;
-        maxLevel = -1;
+        maxLevel = 3;
         name = "Agile foot";
-        description = "Increase your walk speed!";
+        initialDescription = "Increase your movement speed!";
+        improvementDescription = initialDescription;
     }
 
     public override void Init(Transform _playerRef)
@@ -31,11 +31,7 @@ public class WalkFaster_PassiveSkill : PassiveSkill_Base
     internal override void AddLevelEvent()
     {
         base.AddLevelEvent();
-
         PlayerMovement movementScript = playerRef.GetComponent<PlayerMovement>();
-        float maxSpeed = movementScript.baseSpeed + (WALK_SPEED_INCREMENT * MAX_UPGRADE_NUMBER);
-
-        if (movementScript.speedMultiplier < maxSpeed)
-            movementScript.speedMultiplier += WALK_SPEED_INCREMENT;
+        movementScript.speedMultiplier += WALK_SPEED_INCREMENT;
     }
 }

@@ -17,7 +17,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseRotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
     [SerializeField] protected float stopForce = 90f;
-    [SerializeField] internal float enemyStartAttackDistance, enemyStopAttackDistance;
+    [SerializeField] internal float attackMargin = 0.05f;
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float baseMoveSpeed, playerFoundSpeed;
     [SerializeField] protected bool attacksTargetWOSeeingIt = false;  // WO == Without
@@ -37,6 +37,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] Transform enemyLightsHolder;
     [SerializeField] Transform lookPoint;
     [SerializeField] bool disableAutoGravity;
+    [SerializeField] bool test = false;
 
     internal ZoneScript zoneSystem;
     internal float damageTimer = 0;
@@ -65,6 +66,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal bool canEnterDamageState = true;
     List<Light> enemyLights = new List<Light>();
     internal bool waiting = true;
+    bool enemyInScreen = true;
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
@@ -279,7 +281,7 @@ public class BaseEnemyScript : MonoBehaviour
                     bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
                     if (hitCollided && hit.transform.CompareTag("Player"))
                     {
-                        if (distToPlayer > enemyStartAttackDistance)
+                        if (!InAttackRange())
                         {
                             ChangeState(States.MOVE_TO_TARGET);
                             return;
@@ -289,7 +291,7 @@ public class BaseEnemyScript : MonoBehaviour
             }
         }
         
-        if (canAttack && distToPlayer <= enemyStartAttackDistance)
+        if (canAttack && InAttackRange())
         {
             if (attacksTargetWOSeeingIt)
                 ChangeState(States.ATTACK);
@@ -365,7 +367,7 @@ public class BaseEnemyScript : MonoBehaviour
                 ChangeState(States.IDLE);
         }
 
-        if (canAttack && Vector3.Distance(transform.position, player.position) <= enemyStartAttackDistance)
+        if (canAttack && InAttackRange())
             ChangeState(States.ATTACK);
     }
     internal virtual void AttackUpdate()
@@ -380,7 +382,7 @@ public class BaseEnemyScript : MonoBehaviour
         //}
 
         if (endsAttackWhenTargetOutOfRange 
-            && Vector3.Distance(player.position, transform.position) > enemyStopAttackDistance)
+            && !InAttackRange())
         {
             ChangeState(States.IDLE);
             return;
@@ -405,7 +407,7 @@ public class BaseEnemyScript : MonoBehaviour
         if (damageTimer <= 0)
         {
             float distToPlayer = Vector3.Distance(transform.position, player.position);
-            if (distToPlayer <= enemyStartAttackDistance) ChangeState(States.ATTACK);
+            if (InAttackRange()) ChangeState(States.ATTACK);
             else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
             else ChangeState(States.IDLE);
         }
@@ -546,6 +548,11 @@ public class BaseEnemyScript : MonoBehaviour
         actualMinVelocity = baseMinVelocity;
         actualMaxVelocity = baseMaxVelocity;
     }
+    protected bool InAttackRange()
+    {
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        return screenPosition.x > -Screen.width * attackMargin && screenPosition.x < Screen.width * (1f + attackMargin) && screenPosition.y > -Screen.height * attackMargin && screenPosition.y < Screen.height * (1f + attackMargin);
+    }
     #endregion Misc
 
 
@@ -562,6 +569,15 @@ public class BaseEnemyScript : MonoBehaviour
             moveDir = new Vector3(moveDir.x, moveDir.y, -1);
 
         return moveDir;
+    }
+
+    private void OnBecameVisible()
+    {
+        enemyInScreen = true;
+    }
+    private void OnBecameInvisible()
+    {
+        enemyInScreen = false;
     }
 
 

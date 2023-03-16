@@ -64,6 +64,15 @@ public class PassiveSkills_Manager : MonoBehaviour
             skill.AddLevel(1);
     }
 
+    public PassiveSkill_Base FindSkill(PassiveSkill_Base _skill)
+    {
+        return skills.Find(_currSkill => _currSkill.skillType == _skill.skillType);
+    }
+    public PassiveSkill_Base FindSkill(PassiveSkill_Base.SkillType _skillType)
+    {
+        return skills.Find(_currSkill => _currSkill.skillType == _skillType);
+    }
+
 
     public static PassiveSkill_Base GetSkillByType(PassiveSkill_Base.SkillType _skillType)
     {

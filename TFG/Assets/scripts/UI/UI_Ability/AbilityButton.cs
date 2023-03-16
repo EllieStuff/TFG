@@ -21,7 +21,8 @@ public class AbilityButton : MonoBehaviour
     private PlayerMovement playerMovement;
     private LifeSystem playerLife;
     private PassiveSkill_Base skill;
-    PassiveSkill_Base.SkillType cardSkill;
+    PassiveSkill_Base.SkillType skillType;
+    string skillText;
 
     bool isMouseOver;
     bool sizePlaced;
@@ -78,10 +79,19 @@ public class AbilityButton : MonoBehaviour
 
     void InitializeAbility()
     {
-        cardSkill = InitializeCardSkill();
-        skill = PassiveSkills_Manager.GetSkillByType(cardSkill);
+        do
+        {
+            skillType = InitializeCardSkill();
+            PassiveSkill_Base playerSkill = playerSkills.FindSkill(skillType);
+            if (playerSkill == null) skill = PassiveSkills_Manager.GetSkillByType(skillType); 
+            else skill = playerSkill;
+            int lvl = skill.Level;
+        } while (!skill.CanBeImproved);
 
-        GetComponent<Image>().sprite = playerSkills.SearchSkillImage(cardSkill);
+        if (skill.Level == 0) skillText = skill.initialDescription;
+        else skillText = skill.improvementDescription;
+
+        GetComponent<Image>().sprite = playerSkills.SearchSkillImage(skillType);
         uiTextName.text = skill.name;
     }
 
@@ -95,7 +105,7 @@ public class AbilityButton : MonoBehaviour
             Transform child = parent.GetChild(index);
             if (!child.Equals(transform))
             {
-                if(child.GetComponent<AbilityButton>().cardSkill.Equals(cardSkill))
+                if(child.GetComponent<AbilityButton>().skillType.Equals(skillType))
                     InitializeAbility();
             }
         }
@@ -118,12 +128,12 @@ public class AbilityButton : MonoBehaviour
 
     PassiveSkill_Base.SkillType InitializeCardSkill() 
     {
-        PassiveSkill_Base.SkillType skill = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+        PassiveSkill_Base.SkillType tmpSkillType = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
 
-        while (playerSkills.SearchSkillImage(skill) == null)
-            skill = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+        while (playerSkills.SearchSkillImage(tmpSkillType) == null)
+            tmpSkillType = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
 
-        return skill;
+        return tmpSkillType;
     }
 
     void EnableOrDisableCardView(Transform card, bool enableOrDisable)
@@ -154,7 +164,7 @@ public class AbilityButton : MonoBehaviour
     private void OnMouseOver()
     {
         SetTextPositionInElement();
-        uiTextDescription.text = skill.description;
+        uiTextDescription.text = skillText;
         imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, biggerSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
         isMouseOver = true;
     }
@@ -183,7 +193,7 @@ public class AbilityButton : MonoBehaviour
     {
         foreach(Transform child in cardListPivot)
         {
-            if (child.GetComponent<CardUIScript>().skillType.Equals(cardSkill))
+            if (child.GetComponent<CardUIScript>().skillType.Equals(skillType))
                 return child.GetComponent<CardUIScript>();
         }
 
@@ -202,7 +212,7 @@ public class AbilityButton : MonoBehaviour
         {
             CardUIScript card = Instantiate(cardPrefabUI, cardListPivot).GetComponent<CardUIScript>();
 
-            card.skillType = cardSkill;
+            card.skillType = skillType;
             card.cardSprite = GetComponent<Image>().sprite;
         }
     }
@@ -229,6 +239,7 @@ public class AbilityButton : MonoBehaviour
         UIFade.EnableFadeOut();
         yield return new WaitForSeconds(DISABLE_TIMER);
         playerMovement.canMove = true;
+        uiTextDescription.text = "";
         UIFade.gameObject.SetActive(false);
         yield return 0;
     }

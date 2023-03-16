@@ -9,9 +9,10 @@ public class Pierce_PassiveSkill : PassiveSkill_Base
     public Pierce_PassiveSkill()
     {
         skillType = SkillType.PIERCE;
-        maxLevel = -1;
+        maxLevel = 3;
         name = "Pierce";
-        description = "Your projectiles will pierce throught your enemies!";
+        initialDescription = "Your projectiles will pierce through your enemies!";
+        improvementDescription = "Your projectiles will pierce through 1 more enemy!";
     }
 
     public override void Init(Transform _playerRef)

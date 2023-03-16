@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ImproveLife_PassiveSkill : PassiveSkill_Base
 {
-    float lifeToAdd = 300f;
+    const float LIFE_TO_ADD = 300f;
 
     public ImproveLife_PassiveSkill()
     {
         skillType = SkillType.IMPROVE_LIFE;
         maxLevel = -1;
         name = "Life Improvement";
-        description = "Your maximum life gets improved!";
+        initialDescription = "Your maximum life gets improved!";
+        improvementDescription = initialDescription;
     }
 
     public override void Init(Transform _playerRef)
@@ -31,8 +32,8 @@ public class ImproveLife_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         LifeSystem playerLife = playerRef.GetComponent<LifeSystem>();
-        playerLife.maxLife += lifeToAdd;
-        playerLife.AddLife(lifeToAdd);
+        playerLife.maxLife += LIFE_TO_ADD;
+        playerLife.AddLife(LIFE_TO_ADD);
     }
 
 }
