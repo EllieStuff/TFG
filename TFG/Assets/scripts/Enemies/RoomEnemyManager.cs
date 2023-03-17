@@ -10,6 +10,7 @@ public class RoomEnemyManager : MonoBehaviour
     [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
     [SerializeField] bool roomWithTargetSystem;
+    [SerializeField] internal bool notLoadableRoom;
 
     PlayerAttack playerAttack;
     Rigidbody playerRB;
@@ -73,7 +74,7 @@ public class RoomEnemyManager : MonoBehaviour
         if (!HasEnemiesRemainging()) return null;
 
         Transform closerEnemy = GetFirstReachableEnemyWithWallCheck();
-        if (closerEnemy == null) return enemies[0].transform;
+        if (closerEnemy == null) return null;
         float closerDist = Vector3.Distance(closerEnemy.position, _playerTransform.position);
 
         bool reachedAvailableEnemy = false;
@@ -97,7 +98,8 @@ public class RoomEnemyManager : MonoBehaviour
             }
         }
 
-        return closerEnemy;
+        if (!InAttackRange(closerEnemy)) return null;
+        else return closerEnemy;
     }
 
     bool InAttackRange(Transform _target)

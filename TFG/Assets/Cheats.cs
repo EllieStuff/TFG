@@ -26,6 +26,9 @@ public class Cheats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F3))
             cardSelectCheat.SetActive(true);
 
+        if (Input.GetKeyDown(KeyCode.F4))
+            playerLife.Damage(10000, new ElementsManager.Elements());
+
         if (infiniteLife)
         {
             playerLife.currLife = playerLife.maxLife;
