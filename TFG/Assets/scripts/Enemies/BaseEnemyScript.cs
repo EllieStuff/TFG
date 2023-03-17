@@ -15,7 +15,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal EnemyType enemyType;
     [SerializeField] protected LayerMask layerMask;
     [SerializeField] internal float baseRotSpeed = 4;
-    [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f;
+    [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f, attackRange = -1f;
     [SerializeField] protected float stopForce = 90f;
     [SerializeField] internal float attackMargin = 0.05f;
     [SerializeField] internal bool isAttacking = false;
@@ -551,7 +551,9 @@ public class BaseEnemyScript : MonoBehaviour
     protected bool InAttackRange()
     {
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        return screenPosition.x > -Screen.width * attackMargin && screenPosition.x < Screen.width * (1f + attackMargin) && screenPosition.y > -Screen.height * attackMargin && screenPosition.y < Screen.height * (1f + attackMargin);
+        return screenPosition.x > -Screen.width * attackMargin && screenPosition.x < Screen.width * (1f + attackMargin) 
+            && screenPosition.y > -Screen.height * attackMargin && screenPosition.y < Screen.height * (1f + attackMargin)
+            && (attackRange < 0 || Vector3.Distance(transform.position, player.position) <= attackRange);
     }
     #endregion Misc
 
