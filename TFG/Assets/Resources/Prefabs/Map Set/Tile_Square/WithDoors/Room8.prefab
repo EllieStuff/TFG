@@ -1921,8 +1921,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6265998230501580221}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: -5.07}
-  m_LocalScale: {x: 1.03, y: 1.01, z: 1}
+  m_LocalPosition: {x: 0.104, y: 0, z: -5.07}
+  m_LocalScale: {x: 1.03, y: 0.80200094, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2791966528010292570}
@@ -2069,6 +2069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25dd28605eb505d4fb7b04a1f4ba1c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomNumber: 0
   enemiesQuantity: 1
   doorOpenAnims:
   - {fileID: 3838966536817886788}
@@ -2079,6 +2080,7 @@ MonoBehaviour:
   blackTile: {fileID: 2867360222127545459}
   roomLimits: {x: 0.3, y: 0, z: 0.1}
   parentTransform: {fileID: 1534552919773384272}
+  notSaveRoom: 0
 --- !u!65 &2969897169800214889
 BoxCollider:
   m_ObjectHideFlags: 0

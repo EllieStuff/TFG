@@ -27,7 +27,7 @@ public class WalkMark : MonoBehaviour
 
         if(!transition && Input.GetKey(KeyCode.Mouse1))
         {
-            CheckCollidingWall(true);
+            //CheckCollidingWall(true);
 
             playerScript.targetMousePos = worldPosition;
 
@@ -42,10 +42,10 @@ public class WalkMark : MonoBehaviour
         {
             ResetMousePos();
 
-            CheckCollidingWall(true);
+            //CheckCollidingWall(true);
         }
 
-        CheckCollidingWall(false);
+        //CheckCollidingWall(false);
 
         if (walkMark.activeSelf && Vector3.Distance(playerScript.transform.position, walkMark.transform.position) <= DISTANCE_TO_DISABLE_MARK)
             walkMark.SetActive(false);
