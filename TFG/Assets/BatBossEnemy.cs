@@ -24,8 +24,16 @@ public class BatBossEnemy : BatEnemy
 
     internal override void Start_Call()
     {
+        StopAllCoroutines();
+        nameTextRef.gameObject.SetActive(false);
+        lifeBarRef.gameObject.SetActive(false);
+
         base.Start_Call();
         camShake = Camera.main.GetComponent<CameraShake>();
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(EnableUI(true));
     }
 
@@ -119,17 +127,22 @@ public class BatBossEnemy : BatEnemy
         PlayChangeElementParticles(newElement);
         //StartCoroutine(camShake.ShakeCamera(changeElementDelay, 0.02f));
         yield return new WaitForSeconds(changeElementDelay);
+
         flashImage.gameObject.SetActive(true);
+
         StartCoroutine(camShake.ShakeCamera(flashDuration * 2f, 0.1f));
         EliTween.ChangeColor(flashImage, GetFlashColor(newElement), flashDuration);
         yield return new WaitForSeconds(flashDuration);
-        ChangeElementMaterials(newElement);
+
+        ChangeElementMaterialsAndLights(newElement);
         enemyLife.entityElement = newElement;
         for (int i = 0; i < projectiles.Count; i++) projectiles[i].DestroyObject();
         projectiles.Clear();
         projectiles = new List<BatProjectile_Missile>();
+
         EliTween.ChangeColor(flashImage, Color.clear, flashDuration);
         yield return new WaitForSeconds(flashDuration);
+
         flashImage.gameObject.SetActive(false);
     }
 
@@ -177,7 +190,7 @@ public class BatBossEnemy : BatEnemy
         }
     }
 
-    void ChangeElementMaterials(ElementsManager.Elements _element)
+    void ChangeElementMaterialsAndLights(ElementsManager.Elements _element)
     {
         switch (_element)
         {
@@ -185,18 +198,21 @@ public class BatBossEnemy : BatEnemy
                 if (enemyMesh != null) enemyMesh.material = fireMat;
                 else enemyMeshTmp.material = fireMat;
                 transparentMat = fireTransparentMat;
+                for (int i = 0; i < enemyLights.Count; i++) enemyLights[i].color = fireFlashColor;
                 break;
 
             case ElementsManager.Elements.GRASS:
                 if (enemyMesh != null) enemyMesh.material = grassMat;
                 else enemyMeshTmp.material = grassMat;
                 transparentMat = grassTransparentMat;
+                for (int i = 0; i < enemyLights.Count; i++) enemyLights[i].color = grassFlashColor;
                 break;
 
             case ElementsManager.Elements.WATER:
                 if (enemyMesh != null) enemyMesh.material = waterMat;
                 else enemyMeshTmp.material = waterMat;
                 transparentMat = waterTransparentMat;
+                for (int i = 0; i < enemyLights.Count; i++) enemyLights[i].color = waterFlashColor;
                 break;
 
             default:
