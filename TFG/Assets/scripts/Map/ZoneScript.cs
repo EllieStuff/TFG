@@ -61,7 +61,7 @@ public class ZoneScript : MonoBehaviour
         string roomNameSubstring = roomName.Substring(4);
 
         if (roomName.Contains("."))
-            roomNumber = 0;
+            roomNumber = -1;
         else
             roomNumber = Int32.Parse(roomNameSubstring);
 
@@ -106,7 +106,8 @@ public class ZoneScript : MonoBehaviour
             if(!loadedRoomSave)
                 GetRoomSave();
 
-            PlayerPrefs.SetInt("RoomNumber", roomNumber);
+            if(roomNumber >= 0)
+                PlayerPrefs.SetInt("RoomNumber", roomNumber);
         }
 
         if(isPlayer)
