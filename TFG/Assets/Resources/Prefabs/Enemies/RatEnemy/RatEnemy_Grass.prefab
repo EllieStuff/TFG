@@ -24792,9 +24792,9 @@ MonoBehaviour:
   baseRotSpeed: 600
   playerDetectionDistance: 30
   playerStopDetectionDistance: 35
+  attackRange: 6
   stopForce: 90
-  enemyStartAttackDistance: 6
-  enemyStopAttackDistance: 10
+  attackMargin: 0.05
   isAttacking: 0
   baseMoveSpeed: 5
   playerFoundSpeed: 7
@@ -24815,6 +24815,7 @@ MonoBehaviour:
   enemyLightsHolder: {fileID: 6185228744506102117}
   lookPoint: {fileID: 5839540647779101568}
   disableAutoGravity: 1
+  test: 0
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 7222636839975906104}
   enemyMeshTmp: {fileID: 0}
