@@ -84,6 +84,18 @@ public class MeleeEnemy : BaseEnemyScript
         isAttacking = false;
     }
 
+    internal override void RestStart()
+    {
+        base.RestStart();
+        //Activar particulas sudor
+    }
+
+    internal override void RestExit()
+    {
+        base.RestExit();
+        //Desactivar particulas sudor
+    }
+
     IEnumerator AttackCoroutine()
     {
         // Prepares For Attack
@@ -97,6 +109,7 @@ public class MeleeEnemy : BaseEnemyScript
         yield return new WaitForSeconds(0.2f);
 
         // Attacks
+        //Justo aqui activar feedback viento vientoso ataque rata particulas
         touchBodyDamageData.StopAllCoroutines();
         touchBodyDamageData.damage = attackDmg;
         touchBodyDamageData.disabled = false;
