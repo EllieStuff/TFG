@@ -10,6 +10,7 @@ public class RoomEnemyManager : MonoBehaviour
     [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
     [SerializeField] bool roomWithTargetSystem;
+    [SerializeField] internal bool notLoadableRoom;
 
     PlayerAttack playerAttack;
     Rigidbody playerRB;

@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         GameObject col = collision.gameObject;
-        if (!col.tag.Equals("floor") && !col.name.Equals("BlockedPath_2"))
+        if (!col.CompareTag("floor") && !col.name.Equals("BlockedPath_2") && !col.CompareTag("BackDoor"))
             isCollidingWall = true;
     }
 }
