@@ -15,7 +15,7 @@ public class BatProjectile_Tornado : ProjectileData
     public override void Init(Transform _origin)
     {
         base.Init(_origin);
-        affectedByObstacles = true; //"false" temporal for the build, "true" in the future for the next feature
+        affectedByObstacles = true;
         dmgData.attackElement = _origin.GetComponent<LifeSystem>().entityElement;
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
         if (player != null)
