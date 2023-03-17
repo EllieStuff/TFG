@@ -17,7 +17,6 @@ public class ElementsManager : MonoBehaviour
         public Dictionary<Elements, float> receiveDamage = new Dictionary<Elements, float>();
         public Dictionary<Elements, float> inflictDamage = new Dictionary<Elements, float>();
         public Color colorParticles;
-        public float chargeElementDelay = 1.5f;
     }
 
     static Dictionary<Elements, ElementClass> elementsData = null;
@@ -128,15 +127,15 @@ public class ElementsManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && attackManager.currentAttackElement != Elements.FIRE)
         {
-            ChangeElement(Elements.FIRE, elementsData[Elements.FIRE].chargeElementDelay);
+            ChangeElement(Elements.FIRE, attackManager.changeAttackDelay);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && attackManager.currentAttackElement != Elements.WATER)
         {
-            ChangeElement(Elements.WATER, elementsData[Elements.WATER].chargeElementDelay);
+            ChangeElement(Elements.WATER, attackManager.changeAttackDelay);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && attackManager.currentAttackElement != Elements.GRASS)
         {
-            ChangeElement(Elements.GRASS, elementsData[Elements.GRASS].chargeElementDelay);
+            ChangeElement(Elements.GRASS, attackManager.changeAttackDelay);
         }
         //else if (Input.GetKeyDown(KeyCode.Alpha4))
         //{
@@ -153,7 +152,7 @@ public class ElementsManager : MonoBehaviour
             StopParticles(elementIdx);
             elementIdx--;
             if (elementIdx < 0) elementIdx = Elements.COUNT - 2;
-            ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
+            ChangeElement(elementIdx, attackManager.changeAttackDelay);
 
         }
         else if ((mouseClockWise && Input.GetAxis("Mouse ScrollWheel") > 0f) || (!mouseClockWise && Input.GetAxis("Mouse ScrollWheel") < 0f))
@@ -161,7 +160,7 @@ public class ElementsManager : MonoBehaviour
             StopParticles(elementIdx);
             elementIdx++;
             if (elementIdx >= Elements.COUNT - 1) elementIdx = 0;
-            ChangeElement(elementIdx, elementsData[elementIdx].chargeElementDelay);
+            ChangeElement(elementIdx, attackManager.changeAttackDelay);
         }
     }
 
@@ -180,7 +179,7 @@ public class ElementsManager : MonoBehaviour
         effectTypeParticles.Stop();
         effectTypeParticles_UI.Stop();
         attackManager.canAttack /*= moveManager.canMove*/ = false;
-        attackManager.SetAttackTimer(attackManager.attackDelay);
+        attackManager.SetAttackTimer(attackManager.changeAttackDelay);
         //moveManager.targetMousePos = Vector3.zero;
         //walkMark.SetWalkMarkActive(false);
         nearSliderElementIcon.sprite = icons[(int)_element];

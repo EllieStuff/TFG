@@ -86,8 +86,8 @@ public class BatEnemy : BaseEnemyScript
     {
         base.EndRndMovesBehaviour();
 
-        float distToPlayer = Vector3.Distance(transform.position, player.position);
-        if (canAttack && distToPlayer <= enemyStartAttackDistance)
+        //float distToPlayer = Vector3.Distance(transform.position, player.position);
+        if (canAttack && InAttackRange())
         {
             ChangeState(States.ATTACK);
 

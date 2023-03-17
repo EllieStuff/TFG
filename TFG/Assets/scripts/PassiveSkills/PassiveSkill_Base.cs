@@ -9,17 +9,19 @@ public class PassiveSkill_Base
 
     internal SkillType skillType;
     internal Transform playerRef;
-    [SerializeField] protected int level = 1;
-    internal int maxLevel = 3;
+    int level = 0;
+    protected int maxLevel = 3;
 
     internal string name;
-    internal string description;
+    internal string initialDescription, improvementDescription;
 
     internal int Level { get { return level; } }
+    internal bool CanBeImproved { get { return level < maxLevel || maxLevel < 0; } }
 
     public virtual void Init(Transform _playerRef)
     {
         playerRef = _playerRef;
+        level++;
     }
 
 
@@ -31,7 +33,7 @@ public class PassiveSkill_Base
 
     public virtual void AddLevel(int _lvlsToAdd)
     {
-        if (level < maxLevel || maxLevel < 0)
+        if (CanBeImproved)
         {
             for (int i = 0; i < _lvlsToAdd; i++)
             {

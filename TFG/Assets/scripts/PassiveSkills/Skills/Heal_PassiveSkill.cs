@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Heal_PassiveSkill : PassiveSkill_Base
 {
-    float lifePercentageToHeal = 0.6f;
+    const float LIFE_PERCENTAGE_TO_HEAL = 0.6f;
 
     public Heal_PassiveSkill()
     {
         skillType = SkillType.HEAL;
         maxLevel = -1;
         name = "Heal";
-        description = "Heals your wounds";
+        initialDescription = "Heals your wounds!";
+        improvementDescription = initialDescription;
     }
 
     public override void Init(Transform _playerRef)
@@ -31,7 +32,7 @@ public class Heal_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         LifeSystem playerLife = playerRef.GetComponent<LifeSystem>();
-        float actualLifeToHeal = playerLife.maxLife * lifePercentageToHeal;
+        float actualLifeToHeal = playerLife.maxLife * LIFE_PERCENTAGE_TO_HEAL;
         playerLife.AddLife(actualLifeToHeal);
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomEnemyManager : MonoBehaviour
 {
     const float ENEMIES_INIT_WAIT = 1.5f;
+    const float PLAYER_ATTACK_MARGIN = 0.06f;
 
     [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
@@ -69,27 +70,13 @@ public class RoomEnemyManager : MonoBehaviour
 
     public Transform GetCloserEnemy(Transform _playerTransform)
     {
-        if (!HasEnemiesRemainging())
-        {
-            /*if(!endRoomEventIsTriggered)
-            {
-                int level = levelInfo.level;
-
-                if (level > 0 && level % 3 == 0)
-                    elementChoose.SetActive(true);
-
-                levelInfo.level++;
-                endRoomEventIsTriggered = true;
-            }*/
-
-            return null;
-        }
+        if (!HasEnemiesRemainging()) return null;
 
         Transform closerEnemy = GetFirstReachableEnemyWithWallCheck();
         if (closerEnemy == null) return enemies[0].transform;
-
         float closerDist = Vector3.Distance(closerEnemy.position, _playerTransform.position);
 
+        bool reachedAvailableEnemy = false;
         for(int i = 0; i < enemies.Count; i++)
         {
             if(enemies[i] == null)
@@ -99,15 +86,25 @@ public class RoomEnemyManager : MonoBehaviour
                 continue;
             }
 
+            if (!InAttackRange(enemies[i].transform)) continue;
+
             float newDist = Vector3.Distance(enemies[i].transform.position, _playerTransform.position);
-            if(newDist < closerDist && PlayerCheck(enemies[i].transform))
+            if((newDist < closerDist || !reachedAvailableEnemy) && PlayerCheck(enemies[i].transform))
             {
                 closerEnemy = enemies[i].transform;
                 closerDist = newDist;
+                reachedAvailableEnemy = true;
             }
         }
 
         return closerEnemy;
+    }
+
+    bool InAttackRange(Transform _target)
+    {
+        if (_target == null) return false;
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(_target.position);
+        return screenPosition.x > -Screen.width * PLAYER_ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + PLAYER_ATTACK_MARGIN) && screenPosition.y > -Screen.height * PLAYER_ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + PLAYER_ATTACK_MARGIN);
     }
 
     private Transform GetFirstReachableEnemyWithWallCheck()

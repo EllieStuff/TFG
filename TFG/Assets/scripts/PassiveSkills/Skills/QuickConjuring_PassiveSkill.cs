@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class QuickConjuring_PassiveSkill : PassiveSkill_Base
 {
-    const float MAX_SPEED_INCREASE = 0.5f;
-    float speedIncrease = 0.3f;
+    const float SPEED_INCREASE = 0.4f;
 
     public QuickConjuring_PassiveSkill()
     {
         skillType = SkillType.QUICK_CONJURING;
-        maxLevel = -1;
+        maxLevel = 3;
         name = "Agile Conjuration";
-        description = "Speed up your element casting time!";
+        initialDescription = "Speed up your element casting time!";
+        improvementDescription = initialDescription;
     }
 
     public override void Init(Transform _playerRef)
@@ -32,16 +32,7 @@ public class QuickConjuring_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         PlayerAttack playerAttack = playerRef.GetComponent<PlayerAttack>();
-
-        if (playerAttack.changeAttackDelay > MAX_SPEED_INCREASE)
-        {
-            playerAttack.changeAttackDelay -= speedIncrease;
-            if (playerAttack.changeAttackDelay <= MAX_SPEED_INCREASE)
-            {
-                playerAttack.changeAttackDelay = MAX_SPEED_INCREASE;
-                level = maxLevel = 1;
-            }
-        }
+        playerAttack.changeAttackDelay -= SPEED_INCREASE;
     }
 
 }
