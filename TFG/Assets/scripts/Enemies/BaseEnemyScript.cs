@@ -64,7 +64,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal bool canMove = true, canRotate = true, canAttack = true;
     internal Quaternion targetRot;
     internal bool canEnterDamageState = true;
-    List<Light> enemyLights = new List<Light>();
+    protected List<Light> enemyLights = new List<Light>();
     internal bool waiting = true;
     bool enemyInScreen = true;
 
