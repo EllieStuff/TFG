@@ -14,6 +14,7 @@ public class ZoneScript : MonoBehaviour
     [SerializeField] MeshRenderer blackTile;
     [SerializeField] Vector3 roomLimits;
     [SerializeField] Transform parentTransform;
+    [SerializeField] bool notSaveRoom;
     CameraFollow camSystem;
 
     PlayerMovement player;
@@ -80,14 +81,16 @@ public class ZoneScript : MonoBehaviour
                 if (roomIndex == 0 && savedRoomNumber > 0)
                     room.enabled = false;
 
-                if (roomIndex == savedRoomNumber)
+                if (roomIndex == savedRoomNumber && !room.notLoadableRoom)
                 {
                     room.enabled = true;
                     room.ActivateRoom(true);
                     showRoom = true;
                     break;
                 }
-                roomIndex++;
+
+                if(!child.name.Contains("."))
+                    roomIndex++;
             }
         }
     }
@@ -101,9 +104,11 @@ public class ZoneScript : MonoBehaviour
             BlockPaths();
             zoneEnabled = true;
             StartCoroutine(assignedRoom.DisableEnemiesWait());
-            PlayerPrefs.SetFloat("DeathRoomZ", other.ClosestPoint(transform.position).z);
 
-            if(!loadedRoomSave)
+            if(!notSaveRoom)
+                PlayerPrefs.SetFloat("DeathRoomZ", other.ClosestPoint(transform.position).z);
+
+            if(!loadedRoomSave && !notSaveRoom)
                 GetRoomSave();
 
             if(roomNumber >= 0)
@@ -148,7 +153,9 @@ public class ZoneScript : MonoBehaviour
                 //play sound and particles
                 items[i].GetComponent<AudioSource>().Play();
                 items[i].Play();
-                items[i].GetComponent<DoorVariables>().openedDoor = true;
+                DoorVariables door = items[i].GetComponent<DoorVariables>();
+                door.openedDoor = true;
+                door.ChangeDoorTag();
             }
         }
     }

@@ -21,4 +21,12 @@ public class DoorVariables : MonoBehaviour
         anim.clip = closeDoorClip;
         anim.Play();
     }
+
+    internal void ChangeDoorTag()
+    {
+        foreach(Transform child in transform)
+        {
+            child.tag = "BackDoor";
+        }
+    }
 }

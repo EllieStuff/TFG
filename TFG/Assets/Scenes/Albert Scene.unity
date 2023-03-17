@@ -613,6 +613,7 @@ MonoBehaviour:
   linkedZone: {fileID: 640012242239222881}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &35657543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4122,6 +4123,7 @@ MonoBehaviour:
   linkedZone: {fileID: 6675267886716430350}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!4 &206427130
 Transform:
   m_ObjectHideFlags: 0
@@ -7397,6 +7399,7 @@ MonoBehaviour:
   linkedZone: {fileID: 894468719}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &337540252
 GameObject:
   m_ObjectHideFlags: 0
@@ -8918,8 +8921,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386130367}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.32, y: 29, z: 10.26}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.32, y: 29, z: 10.260002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8943,6 +8946,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1897006678}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 1
 --- !u!4 &386875963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6843027303298045855, guid: de6e8ec0b4ccf7a42ba81b3b399f3256,
@@ -9761,6 +9765,7 @@ MonoBehaviour:
   linkedZone: {fileID: 12908310}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &427925450 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 816969783768130297, guid: f58268a6683cb49408153b9982f987ec,
@@ -18473,8 +18478,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582322679}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.32, y: 29, z: -9.36}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.32, y: 29, z: -9.360001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18497,6 +18502,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1511644929}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 1
 --- !u!1 &588814165 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 816969783768130297, guid: f58268a6683cb49408153b9982f987ec,
@@ -18612,6 +18618,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2106398132}
     m_Modifications:
+    - target: {fileID: 4280810315014046213, guid: 3e21c8a1040dadf4bb3e84dce01ee57d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.033415552
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280810315014046213, guid: 3e21c8a1040dadf4bb3e84dce01ee57d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.073455
+      objectReference: {fileID: 0}
     - target: {fileID: 5097945180506962377, guid: 3e21c8a1040dadf4bb3e84dce01ee57d,
         type: 3}
       propertyPath: m_RootOrder
@@ -19069,6 +19085,7 @@ MonoBehaviour:
   linkedZone: {fileID: 590832390}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &616110811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21787,6 +21804,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1884383073134357162}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &738825403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21925,6 +21943,7 @@ MonoBehaviour:
   linkedZone: {fileID: 2002062254}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &754748075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22062,6 +22081,7 @@ MonoBehaviour:
   linkedZone: {fileID: 978085472}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &760567629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23461,6 +23481,7 @@ MonoBehaviour:
   linkedZone: {fileID: 545818852}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &823624270
 GameObject:
   m_ObjectHideFlags: 0
@@ -26818,6 +26839,7 @@ MonoBehaviour:
   linkedZone: {fileID: 2091517290}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &957381369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29025,6 +29047,7 @@ MonoBehaviour:
   linkedZone: {fileID: 935356832}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &1068456691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31363,6 +31386,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1586247377}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &1183643924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31584,6 +31608,7 @@ MonoBehaviour:
   linkedZone: {fileID: 4793555600529857702}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!4 &1193928358 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6843027303298045855, guid: de6e8ec0b4ccf7a42ba81b3b399f3256,
@@ -32370,6 +32395,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1888981469}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &1221352008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39115,6 +39141,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1890268274}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &1510715763
 GameObject:
   m_ObjectHideFlags: 0
@@ -39448,6 +39475,7 @@ MonoBehaviour:
   linkedZone: {fileID: 962990061}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &1515308960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40187,6 +40215,7 @@ MonoBehaviour:
   linkedZone: {fileID: 409759989}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1001 &1550821494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40317,6 +40346,7 @@ MonoBehaviour:
   blackTile: {fileID: 0}
   roomLimits: {x: 0, y: 0, z: 0}
   parentTransform: {fileID: 0}
+  notSaveRoom: 0
 --- !u!65 &1551177179
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40954,6 +40984,7 @@ MonoBehaviour:
   linkedZone: {fileID: 6675267888308257541}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &1572851760
 GameObject:
   m_ObjectHideFlags: 0
@@ -41096,6 +41127,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1021735212}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &1581821994
 GameObject:
   m_ObjectHideFlags: 0
@@ -42022,6 +42054,7 @@ MonoBehaviour:
   blackTile: {fileID: 0}
   roomLimits: {x: 0, y: 0, z: 0}
   parentTransform: {fileID: 0}
+  notSaveRoom: 0
 --- !u!1 &1611477791
 GameObject:
   m_ObjectHideFlags: 0
@@ -47836,6 +47869,7 @@ MonoBehaviour:
   linkedZone: {fileID: 2066228726}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &1872756720
 GameObject:
   m_ObjectHideFlags: 0
@@ -48708,8 +48742,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkedZone: {fileID: 6675267886741157348}
-  roomActive: 1
+  roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!4 &1907366682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6621173160983818908, guid: 6efb1860217d72445b1b6d7cfb4f8979,
@@ -49131,8 +49166,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924371782}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.32, y: 29, z: 29.47}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.32, y: 29, z: 29.470001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49154,6 +49189,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1384802027}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 1
 --- !u!1001 &1924805373
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51228,6 +51264,7 @@ MonoBehaviour:
   linkedZone: {fileID: 6675267888234683186}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!4 &2014635926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6843027303298045855, guid: de6e8ec0b4ccf7a42ba81b3b399f3256,
@@ -51281,6 +51318,7 @@ MonoBehaviour:
   linkedZone: {fileID: 1686068832}
   roomActive: 0
   roomWithTargetSystem: 0
+  notLoadableRoom: 0
 --- !u!1 &2025517081
 GameObject:
   m_ObjectHideFlags: 0
@@ -58922,6 +58960,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 249630697136551468, guid: ff7c229be63751a45b2d7b547f4b8ba4,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1864396240916926630, guid: ff7c229be63751a45b2d7b547f4b8ba4,
         type: 3}
       propertyPath: m_RootOrder
@@ -58977,11 +59020,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1998086110940417051, guid: ff7c229be63751a45b2d7b547f4b8ba4,
+        type: 3}
+      propertyPath: m_Name
+      value: ChooseAbility
+      objectReference: {fileID: 0}
     - target: {fileID: 2069013489625910315, guid: ff7c229be63751a45b2d7b547f4b8ba4,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1602143302}
+    - target: {fileID: 2069013491332508890, guid: ff7c229be63751a45b2d7b547f4b8ba4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -54.19336
+      objectReference: {fileID: 0}
     - target: {fileID: 7825479283717588138, guid: ff7c229be63751a45b2d7b547f4b8ba4,
         type: 3}
       propertyPath: m_Name
