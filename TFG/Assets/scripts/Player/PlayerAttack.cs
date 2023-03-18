@@ -91,6 +91,10 @@ public class PlayerAttack : MonoBehaviour
         
     }
 
+    public bool ShouldPlayAttackAnim()
+    {
+        return canAttack && target != null;
+    }
 
     public bool CanAttack()
     {
