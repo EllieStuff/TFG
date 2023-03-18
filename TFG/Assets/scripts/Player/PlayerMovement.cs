@@ -65,6 +65,14 @@ public class PlayerMovement : MonoBehaviour
         ResetSpeed();
     }
 
+    void StopAnimationSet()
+    {
+        if (attackScript.ShouldPlayAttackAnim())
+            playerAnimator.SetFloat("state", 4);
+        else
+            playerAnimator.SetFloat("state", 0);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -87,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
             if (rb.velocity.magnitude > MIN_SPEED_WALK)
                 playerAnimator.SetFloat("state", 1);
             else
-                playerAnimator.SetFloat("state", 0);
+                StopAnimationSet();
 
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
                 moveDir *= DIAGONAL_SPEED_REDUCTION;
@@ -107,8 +115,7 @@ public class PlayerMovement : MonoBehaviour
             }
             rb.constraints = RigidbodyConstraints.FreezeAll;
 
-            if (!damage)
-                playerAnimator.SetFloat("state", 0);
+            StopAnimationSet();
 
             Vector3 reducedVel = rb.velocity;
 
@@ -224,12 +231,12 @@ public class PlayerMovement : MonoBehaviour
         damage = true;
 
         //Play animation here and sound
-        playerAnimator.SetFloat("state", 2);
+        //playerAnimator.SetFloat("state", 2);
         //_____________________________
 
         yield return new WaitForSeconds(damageAnimationTime);
 
-        playerAnimator.SetFloat("state", 0);
+        //StopAnimationSet();
 
         damage = false;
         canMove = true;

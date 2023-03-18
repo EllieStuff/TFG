@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomEnemyManager : MonoBehaviour
 {
     const float ENEMIES_INIT_WAIT = 1.5f;
-    const float PLAYER_ATTACK_MARGIN = 0.06f;
+    const float PLAYER_ATTACK_MARGIN = 0.03f;
 
     [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
@@ -106,7 +106,8 @@ public class RoomEnemyManager : MonoBehaviour
     {
         if (_target == null) return false;
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(_target.position);
-        return screenPosition.x > -Screen.width * PLAYER_ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + PLAYER_ATTACK_MARGIN) && screenPosition.y > -Screen.height * PLAYER_ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + PLAYER_ATTACK_MARGIN);
+        return screenPosition.x > -Screen.width * PLAYER_ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + PLAYER_ATTACK_MARGIN) 
+            && screenPosition.y > -Screen.height * PLAYER_ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + PLAYER_ATTACK_MARGIN);
     }
 
     private Transform GetFirstReachableEnemyWithWallCheck()
@@ -128,7 +129,13 @@ public class RoomEnemyManager : MonoBehaviour
     {
         RaycastHit hit;
         float raycastDistance = Vector3.Distance(_enemyTransform.position, playerAttack.transform.position);
-        Ray ray = new Ray(_enemyTransform.position, (playerAttack.transform.position - _enemyTransform.position).normalized * raycastDistance);
+
+        Vector3 enemyPos = _enemyTransform.position;
+
+        if (_enemyTransform.name.Contains("Rat"))
+            enemyPos.y += 0.3f;
+
+        Ray ray = new Ray(enemyPos, (playerAttack.transform.position - enemyPos).normalized * raycastDistance);
 
         if (Physics.Raycast(ray, out hit))
         {

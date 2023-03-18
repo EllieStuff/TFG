@@ -11,7 +11,7 @@ public class WalkFaster_PassiveSkill : PassiveSkill_Base
         skillType = SkillType.WALK_SPEED;
         maxLevel = 3;
         name = "Agile foot";
-        initialDescription = "Increase your movement speed!";
+        initialDescription = "Increase your movement speed by 5%!";
         improvementDescription = initialDescription;
     }
 

@@ -8,6 +8,7 @@ public class BaseEnemyScript : MonoBehaviour
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     const float ATTACK_ANGLE_THRESHOLD = 15f;
+    const float ATTACK_MARGIN = 0.03f;
     const float THRESHOLD = 1f;
 
 
@@ -17,7 +18,6 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] internal float baseRotSpeed = 4;
     [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f, attackRange = -1f;
     [SerializeField] protected float stopForce = 90f;
-    [SerializeField] internal float attackMargin = 0.05f;
     [SerializeField] internal bool isAttacking = false;
     [SerializeField] internal float baseMoveSpeed, playerFoundSpeed;
     [SerializeField] protected bool attacksTargetWOSeeingIt = false;  // WO == Without
@@ -66,7 +66,6 @@ public class BaseEnemyScript : MonoBehaviour
     internal bool canEnterDamageState = true;
     protected List<Light> enemyLights = new List<Light>();
     internal bool waiting = true;
-    bool enemyInScreen = true;
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
@@ -551,8 +550,8 @@ public class BaseEnemyScript : MonoBehaviour
     protected bool InAttackRange()
     {
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        return screenPosition.x > -Screen.width * attackMargin && screenPosition.x < Screen.width * (1f + attackMargin) 
-            && screenPosition.y > -Screen.height * attackMargin && screenPosition.y < Screen.height * (1f + attackMargin)
+        return screenPosition.x > -Screen.width * ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + ATTACK_MARGIN) 
+            && screenPosition.y > -Screen.height * ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + ATTACK_MARGIN)
             && (attackRange < 0 || Vector3.Distance(transform.position, player.position) <= attackRange);
     }
     #endregion Misc
@@ -571,15 +570,6 @@ public class BaseEnemyScript : MonoBehaviour
             moveDir = new Vector3(moveDir.x, moveDir.y, -1);
 
         return moveDir;
-    }
-
-    private void OnBecameVisible()
-    {
-        enemyInScreen = true;
-    }
-    private void OnBecameInvisible()
-    {
-        enemyInScreen = false;
     }
 
 
