@@ -11,7 +11,11 @@ public class DoorVariables : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (openedDoor && !closed && other.tag.Equals("Player"))
-            CloseDoorAnimCall();
+        {
+            float outDir = transform.position.z - other.transform.position.z;
+            if(outDir < 0)
+                CloseDoorAnimCall();
+        }
     }
 
     void CloseDoorAnimCall()
