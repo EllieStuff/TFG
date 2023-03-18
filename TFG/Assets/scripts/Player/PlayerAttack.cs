@@ -36,7 +36,6 @@ public class PlayerAttack : MonoBehaviour
     float attackTimer;
     internal float dmgIncrease = 0f;
     internal int extraProjectiles = 0;
-    internal bool stealLifeEnabled = false;
     internal bool damageIncreaseByAbilitySwap = false;
     internal int critSwapLevel = 0;
     internal float critChancePercentage = 0.05f;
@@ -164,7 +163,6 @@ public class PlayerAttack : MonoBehaviour
             SetCritAttack(attack, randomCrit);
         }
 
-        attack.dmgData.stealLife = stealLifeEnabled;
         attack.dmgData.stealLifePercentage = stealLifePercentage;
         attack.dmgData.damage += dmgIncrease;
     }

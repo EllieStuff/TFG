@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Heal_PassiveSkill : PassiveSkill_Base
 {
-    const float LIFE_PERCENTAGE_TO_HEAL = 0.6f;
+    const float LIFE_PERCENTAGE_TO_HEAL = 0.65f;
 
     public Heal_PassiveSkill()
     {

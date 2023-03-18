@@ -24,10 +24,6 @@ public class BatBossEnemy : BatEnemy
 
     internal override void Start_Call()
     {
-        StopAllCoroutines();
-        nameTextRef.gameObject.SetActive(false);
-        lifeBarRef.gameObject.SetActive(false);
-
         base.Start_Call();
         camShake = Camera.main.GetComponent<CameraShake>();
     }
@@ -35,6 +31,12 @@ public class BatBossEnemy : BatEnemy
     private void OnEnable()
     {
         StartCoroutine(EnableUI(true));
+    }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        nameTextRef.gameObject.SetActive(false);
+        lifeBarRef.gameObject.SetActive(false);
     }
 
     internal override void Update_Call()
@@ -64,16 +66,29 @@ public class BatBossEnemy : BatEnemy
         {
             nameTextRef.gameObject.SetActive(true);
             lifeBarRef.gameObject.SetActive(true);
+            yield return null;
             lifeBarRef.alpha = nameTextRef.alpha = 0f;
-            EliTween.ChangeAlpha(lifeBarRef, 1f, uiAppearSpeed);
-            EliTween.ChangeAlpha(nameTextRef, 1f, uiAppearSpeed);
-            yield return new WaitForSeconds(uiAppearSpeed);
+            float timer = 0f;
+            while (timer < uiAppearSpeed)
+            {
+                yield return new WaitForEndOfFrame();
+                timer += Time.deltaTime;
+                lifeBarRef.alpha = Mathf.Lerp(0f, 1f, timer / uiAppearSpeed);
+                nameTextRef.alpha = Mathf.Lerp(0f, 1f, timer / uiAppearSpeed);
+            }
         }
         else
         {
-            EliTween.ChangeAlpha(lifeBarRef, 0f, uiAppearSpeed);
-            EliTween.ChangeAlpha(nameTextRef, 0f, uiAppearSpeed);
-            yield return new WaitForSeconds(uiAppearSpeed);
+            float initAlphaLife = lifeBarRef.alpha, initAlphaName = nameTextRef.alpha;
+            float timer = 0f;
+            while (timer < uiAppearSpeed)
+            {
+                yield return new WaitForEndOfFrame();
+                timer += Time.deltaTime;
+                lifeBarRef.alpha = Mathf.Lerp(initAlphaLife, 0f, timer / uiAppearSpeed);
+                nameTextRef.alpha = Mathf.Lerp(initAlphaName, 0f, timer / uiAppearSpeed);
+            }
+            yield return null;
             nameTextRef.gameObject.SetActive(false);
             lifeBarRef.gameObject.SetActive(false);
         }

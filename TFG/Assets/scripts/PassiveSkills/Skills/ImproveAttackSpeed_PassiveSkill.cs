@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ImproveAttackSpeed_PassiveSkill : PassiveSkill_Base
 {
-    const float DELAY_DECREASE = 0.2f;
+    const float DELAY_DECREASE = 0.15f;
 
     public ImproveAttackSpeed_PassiveSkill()
     {
         skillType = SkillType.IMPROVE_ATTACK_SPEED;
         maxLevel = 3;
         name = "Quicker Attack";
-        initialDescription = "Your attack rate gets quicker!";
+        //initialDescription = "Your attack rate gets quicker!";
+        initialDescription = "Your attack rate gets 20% quicker!";
         improvementDescription = initialDescription;
     }
 

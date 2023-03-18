@@ -9,8 +9,10 @@ public class FirstStrike_PassiveSkill : PassiveSkill_Base
         skillType = SkillType.FIRST_STRIKE;
         maxLevel = 3;
         name = "First Strike";
-        initialDescription = "Increases your damage with every element switch!";
-        improvementDescription = "Increases the number of projectiles with damage increase for every element switch!";
+        //initialDescription = "Increases your damage with every element switch!";
+        //improvementDescription = "Increases the number of projectiles with damage increase for every element switch!";
+        initialDescription = "Increases your damage by 20% with every element switch!";
+        improvementDescription = "Increases the number of projectiles with a 20% damage increase for every element switch!";
     }
 
     public override void Init(Transform _playerRef)
