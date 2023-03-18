@@ -174,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25dd28605eb505d4fb7b04a1f4ba1c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomNumber: 0
   enemiesQuantity: 1
   doorOpenAnims:
   - {fileID: 7400230403405902301}
@@ -184,6 +185,7 @@ MonoBehaviour:
   blackTile: {fileID: 8376327037661932522}
   roomLimits: {x: 0.3, y: 0, z: 0.1}
   parentTransform: {fileID: 5097945180506962377}
+  notSaveRoom: 0
 --- !u!65 &8846028837864640240
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3254,7 +3256,7 @@ PrefabInstance:
     - target: {fileID: 4397162205553716605, guid: a88728279c9ff77439e3768970fce445,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5913236191002725214, guid: a88728279c9ff77439e3768970fce445,
         type: 3}
