@@ -73,11 +73,9 @@ public class ProjectileData : MonoBehaviour
         if (!other.CompareTag(originTag) && (other.CompareTag("Enemy") || other.CompareTag("Player")))
         {
             if (pierceAmount > 0)
-            {
                 pierceAmount--;
-                return;
-            }
-            DestroyObject();
+            else
+                DestroyObject();
         }
 
         //if (other.CompareTag("Player") && !other.CompareTag(originTag))

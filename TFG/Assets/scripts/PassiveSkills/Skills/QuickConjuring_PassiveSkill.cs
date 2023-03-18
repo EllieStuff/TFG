@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class QuickConjuring_PassiveSkill : PassiveSkill_Base
 {
-    const float SPEED_INCREASE = 0.4f;
+    const float SPEED_INCREASE = 0.35f;
 
     public QuickConjuring_PassiveSkill()
     {
         skillType = SkillType.QUICK_CONJURING;
         maxLevel = 3;
         name = "Agile Conjuration";
-        initialDescription = "Speed up your element casting time!";
+        //initialDescription = "Speed up your element casting time!";
+        initialDescription = "Speed up your element casting time by 20%!";
         improvementDescription = initialDescription;
     }
 

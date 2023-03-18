@@ -12,7 +12,6 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal ElementsManager.Elements attackElement;
     [SerializeField] internal bool alwaysAttacking = false;
     [SerializeField] internal float timeDisabledAfterColl = -1f;
-    [SerializeField] internal bool stealLife = false;
     [SerializeField] internal float stealLifePercentage = 0;
     [SerializeField] internal float critPercentage = 0;
     [SerializeField] List<string> tagsAffected;
@@ -107,20 +106,23 @@ public class DamageData : MonoBehaviour
         if (audio != null)
             audio.PlaySound();
 
-        if(playerLifeSystem == null)
+        if (playerLifeSystem == null)
             playerLifeSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeSystem>();
 
         PlayerProjectileData dataProj = GetComponent<PlayerProjectileData>();
-
         LifeSystem lifeSystem = _enemy.GetComponent<LifeSystem>();
         //Debug.Log("Damaged by: " + this.name);
 
-        if (dataProj.dmgData.stealLife)
-            lifeSystem.DamageWithLifeSteal(damage + GetDamageVariation(), attackElement, dataProj, playerLifeSystem);
-        else
-            lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
+        //if (dataProj.dmgData.stealLifePercentage > 0)
+        //    lifeSystem.DamageWithLifeSteal(damage + GetDamageVariation(), attackElement, dataProj, playerLifeSystem);
+        //else
+        //    lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
 
-        if(critPercentage > 0)
+        lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
+        if (dataProj.dmgData.stealLifePercentage > 0 && lifeSystem.isDead)
+            lifeSystem.LifeSteal(attackElement, dataProj, playerLifeSystem);
+
+        if (critPercentage > 0)
             lifeSystem.CritFeedback();
 
         BaseEnemyScript enemy = _enemy.GetComponent<BaseEnemyScript>();

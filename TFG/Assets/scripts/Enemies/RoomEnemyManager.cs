@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomEnemyManager : MonoBehaviour
 {
     const float ENEMIES_INIT_WAIT = 1.5f;
-    const float PLAYER_ATTACK_MARGIN = 0.06f;
+    const float PLAYER_ATTACK_MARGIN = 0.03f;
 
     [SerializeField] ZoneScript linkedZone;
     [SerializeField] bool roomActive = false;
@@ -106,7 +106,8 @@ public class RoomEnemyManager : MonoBehaviour
     {
         if (_target == null) return false;
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(_target.position);
-        return screenPosition.x > -Screen.width * PLAYER_ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + PLAYER_ATTACK_MARGIN) && screenPosition.y > -Screen.height * PLAYER_ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + PLAYER_ATTACK_MARGIN);
+        return screenPosition.x > -Screen.width * PLAYER_ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + PLAYER_ATTACK_MARGIN) 
+            && screenPosition.y > -Screen.height * PLAYER_ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + PLAYER_ATTACK_MARGIN);
     }
 
     private Transform GetFirstReachableEnemyWithWallCheck()

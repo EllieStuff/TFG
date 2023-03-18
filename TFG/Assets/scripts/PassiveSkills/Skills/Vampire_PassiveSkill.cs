@@ -11,8 +11,10 @@ public class Vampire_PassiveSkill : PassiveSkill_Base
         skillType = SkillType.VAMPIRE;
         maxLevel = 5;
         name = "Vampire";
-        initialDescription = "Steals your enemies life by damaging them with effective elements!";
-        improvementDescription = "Increases the life stolen from your enemies by damaging them with effective elements!";
+        //initialDescription = "Steals your enemies life by damaging them with effective elements!";
+        //improvementDescription = "Increases the life stolen from your enemies by damaging them with effective elements!";
+        initialDescription = "Steals 5% of your enemies life by killing them with effective elements!";
+        improvementDescription = "Increases by 5% the life stolen from your enemies when killing them with effective elements!";
     }
 
     public override void Init(Transform _playerRef)
@@ -32,7 +34,6 @@ public class Vampire_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         PlayerAttack playerAttack = playerRef.GetComponent<PlayerAttack>();
-        playerAttack.stealLifeEnabled = true;
         playerAttack.stealLifePercentage += stealLifePercentageToAdd;
     }
 
