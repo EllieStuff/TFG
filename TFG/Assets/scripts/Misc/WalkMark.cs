@@ -51,7 +51,7 @@ public class WalkMark : MonoBehaviour
             walkMark.SetActive(false);
     }
 
-    void ResetMousePos()
+    public void ResetMousePos()
     {
         worldPosition = playerScript.transform.position;
         playerScript.targetMousePos = worldPosition;

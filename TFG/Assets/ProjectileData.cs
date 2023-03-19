@@ -16,6 +16,8 @@ public class ProjectileData : MonoBehaviour
     protected bool destroying = false;
     protected float destroyTimer = -1f;
 
+    [SerializeField] protected GameObject destroyProjectileVFX;
+
     public virtual void Init(Transform _origin)
     {
         dmgData = GetComponent<DamageData>();
@@ -49,7 +51,16 @@ public class ProjectileData : MonoBehaviour
             destroying = true;
             StartCoroutine(DestroyCoroutine(gameObject, _timer));
         }
-        else Destroy(gameObject);
+        else
+        {
+            //Poner particulas destruir proyectil
+            GameObject temporalProyectil = GameObject.Instantiate(destroyProjectileVFX, transform.position, Quaternion.identity);
+            temporalProyectil.GetComponent<ParticleSystem>().Play();
+            Destroy(temporalProyectil, 2f);
+
+            StopAllCoroutines();
+            Destroy(gameObject);
+        }
 
     }
     IEnumerator DestroyCoroutine(GameObject _gameObject, float _destroyTime)
@@ -60,6 +71,11 @@ public class ProjectileData : MonoBehaviour
             yield return new WaitForEndOfFrame();
             destroyTimer -= Time.deltaTime;
         }
+        //Poner particulas destruir proyectil
+        GameObject temporalProyectil = GameObject.Instantiate(destroyProjectileVFX, transform.position, Quaternion.identity);
+        temporalProyectil.GetComponent<ParticleSystem>().Play();
+        Destroy(temporalProyectil, 2f);
+
         Destroy(gameObject);
     }
 
@@ -75,7 +91,7 @@ public class ProjectileData : MonoBehaviour
             if (pierceAmount > 0)
                 pierceAmount--;
             else
-                DestroyObject();
+                Destroy(this.gameObject);
         }
 
         //if (other.CompareTag("Player") && !other.CompareTag(originTag))

@@ -12,6 +12,10 @@ public class MeleeEnemy : BaseEnemyScript
     [SerializeField] float attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
     [SerializeField] Animator enemyAnimator;
+
+    [SerializeField] ParticleSystem restTears;
+    [SerializeField] ParticleSystem fastRatVFX;
+    [SerializeField] ParticleSystem objectionVFX;
     
     Vector3 attackMoveDir = Vector3.zero;
 
@@ -88,12 +92,14 @@ public class MeleeEnemy : BaseEnemyScript
     {
         base.RestStart();
         //Activar particulas sudor
+        restTears.Play();
     }
 
     internal override void RestExit()
     {
         base.RestExit();
         //Desactivar particulas sudor
+        restTears.Stop();
     }
 
     IEnumerator AttackCoroutine()
@@ -104,12 +110,14 @@ public class MeleeEnemy : BaseEnemyScript
         yield return new WaitForSeconds(0.2f);
         //Feedback
         enemyAnimator.SetInteger("state", (int)AnimState.IDLE);
+        objectionVFX.Play();
         yield return new WaitForSeconds(attackChargingTime);
         //Feedback
         yield return new WaitForSeconds(0.2f);
 
         // Attacks
         //Justo aqui activar feedback viento vientoso ataque rata particulas
+        fastRatVFX.Play();
         touchBodyDamageData.StopAllCoroutines();
         touchBodyDamageData.damage = attackDmg;
         touchBodyDamageData.disabled = false;
@@ -124,6 +132,7 @@ public class MeleeEnemy : BaseEnemyScript
         yield return new WaitForSeconds(attackDuration);
 
         // Ends Attack
+        fastRatVFX.Stop();
         enemyAnimator.SetInteger("state", (int)AnimState.RESTING);
         canMove = isAttacking = false;
         StopRB(stopForce);

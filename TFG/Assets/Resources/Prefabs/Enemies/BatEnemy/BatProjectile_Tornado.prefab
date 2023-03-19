@@ -5301,8 +5301,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8
-  maxHeight: 5
+  destroyProjectileVFX: {fileID: 1194257522606370083, guid: e3914380dd16ee9458730aaade1581d7,
+    type: 3}
   zigzagSpeed: 7
+  zigzagFreq: 10
   trail: {fileID: 9054102091148237575}
   particles: {fileID: 8076505059512220951}
 --- !u!114 &1692913151653156412
@@ -5323,8 +5325,8 @@ MonoBehaviour:
   attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: -1
-  stealLife: 0
   stealLifePercentage: 0
+  critPercentage: 0
   tagsAffected:
   - Player
   audio: {fileID: 5692061047596600683}
