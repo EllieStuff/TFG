@@ -15,6 +15,10 @@ public class AbilityButton : MonoBehaviour
     Vector2 originalSize;
     Vector2 biggerSize;
     Vector2 originalPos;
+    float originalTextNameSize;
+    float biggerTextNameSize;
+    float originalTextDescriptionSize;
+    float biggerTextDescriptionSize;
     float SIZE_RECT_LERP_SPEED = 5;
 
     private PassiveSkills_Manager playerSkills;
@@ -27,12 +31,16 @@ public class AbilityButton : MonoBehaviour
     bool isMouseOver;
     bool sizePlaced;
     bool firstStart;
+    bool firstOverIteration;
 
     FadeInFadeOut_UI UIFade;
 
     const float DISABLE_TIMER = 3;
     const float LERP_MOVE_SPEED = 2;
+    const float TEXT_SIZE_SPEED = 1.2f;
     const int HEAL_CARD_PERCENTAGE = 100;
+    const float TEXT_SIZE_MULTIPLIER_DESCRIPTION = 1.2f;
+    const float TEXT_SIZE_MULTIPLIER_NAME = 1.1f;
 
     bool pushedButton;
 
@@ -40,10 +48,13 @@ public class AbilityButton : MonoBehaviour
     {
         cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
         UIFade = transform.parent.parent.GetComponent<FadeInFadeOut_UI>();
+        originalTextDescriptionSize = uiTextDescription.GetComponent<TextData>().originalFontSize;
+        biggerTextDescriptionSize = originalTextDescriptionSize * TEXT_SIZE_MULTIPLIER_DESCRIPTION;
     }
 
     private void OnEnable()
     {
+        firstOverIteration = true;
         isMouseOver = false;
         pushedButton = false;
 
@@ -71,6 +82,8 @@ public class AbilityButton : MonoBehaviour
         playerMovement = playerSkills.GetComponent<PlayerMovement>();
         playerMovement.canMove = false;
         uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        originalTextNameSize = uiTextName.fontSize;
+        biggerTextNameSize = originalTextNameSize * TEXT_SIZE_MULTIPLIER_NAME;
 
         InitializeAbility();
         
@@ -151,7 +164,10 @@ public class AbilityButton : MonoBehaviour
         CheckRepeatedAbility();
 
         if (!isMouseOver)
+        {
             imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, originalSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
+            uiTextName.fontSize = Mathf.Lerp(uiTextName.fontSize, originalTextNameSize, Time.deltaTime * TEXT_SIZE_SPEED);
+        }
 
         if (pushedButton)
         {
@@ -175,6 +191,8 @@ public class AbilityButton : MonoBehaviour
             uiTextDescription.text = "";
             isMouseOver = false;
         }
+
+        firstOverIteration = true;
     }
 
     private void OnMouseDown()
@@ -185,7 +203,19 @@ public class AbilityButton : MonoBehaviour
     void SetTextPositionInElement()
     {
         RectTransform textRectTransfom = uiTextDescription.rectTransform;
-        uiTextDescription.rectTransform.localPosition = new Vector3(imageTransform.localPosition.x, textRectTransfom.localPosition.y);
+
+        if (firstOverIteration)
+        {
+            uiTextDescription.fontSize = originalTextDescriptionSize;
+            firstOverIteration = false;
+        }
+        else
+        {
+            textRectTransfom.localPosition = new Vector3(imageTransform.localPosition.x, textRectTransfom.localPosition.y);
+            uiTextName.fontSize = Mathf.Lerp(uiTextName.fontSize, biggerTextNameSize, Time.deltaTime * TEXT_SIZE_SPEED);
+            uiTextDescription.fontSize = Mathf.Lerp(uiTextDescription.fontSize, biggerTextDescriptionSize, Time.deltaTime * LERP_MOVE_SPEED);
+        }
+
     }
 
     CardUIScript CheckIfThisCardExistsAlready()
