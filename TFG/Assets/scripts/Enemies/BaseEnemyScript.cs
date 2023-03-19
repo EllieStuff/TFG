@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemyScript : MonoBehaviour
 {
-    public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, REST, DAMAGE, DEATH }
+    public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, REST, /*DAMAGE,*/ DEATH }
     public enum EnemyType { PLANT, BAT, RAT, GHOST }
 
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
@@ -48,6 +49,7 @@ public class BaseEnemyScript : MonoBehaviour
     float rndMoveTimer = 0f, rndMoveWait = 5f;
     protected LifeSystem enemyLife;
     protected DamageData touchBodyDamageData;
+    protected bool dmgActivated = false;
 
     readonly internal Vector3 
         baseMinVelocity = new Vector3(-10, -10, -10), 
@@ -158,6 +160,10 @@ public class BaseEnemyScript : MonoBehaviour
     #region StateMachine
     internal virtual void UpdateStateMachine()
     {
+        if (test)
+        {
+            int a = 0;
+        }
         switch (state)
         {
             case States.IDLE:
@@ -180,9 +186,9 @@ public class BaseEnemyScript : MonoBehaviour
                 RestUpdate();
                 break;
 
-            case States.DAMAGE:
-                DamageUpdate();
-                break;
+            //case States.DAMAGE:
+            //    DamageUpdate();
+            //    break;
 
             case States.DEATH:
                 DeathUpdate();
@@ -195,7 +201,7 @@ public class BaseEnemyScript : MonoBehaviour
     }
     public virtual void ChangeState(States _state)
     {
-        if (!canEnterDamageState && _state == States.DAMAGE) return;
+        //if (!canEnterDamageState && _state == States.DAMAGE) return;
 
         switch (state)
         {
@@ -214,9 +220,9 @@ public class BaseEnemyScript : MonoBehaviour
             case States.REST:
                 RestExit();
                 break;
-            case States.DAMAGE:
-                DamageExit();
-                break;
+            //case States.DAMAGE:
+            //    DamageExit();
+            //    break;
             case States.DEATH:
                 DeathExit();
                 break;
@@ -245,9 +251,9 @@ public class BaseEnemyScript : MonoBehaviour
             case States.REST:
                 RestStart();
                 break;
-            case States.DAMAGE:
-                DamageStart();
-                break;
+            //case States.DAMAGE:
+            //    DamageStart();
+            //    break;
             case States.DEATH:
                 DeathStart();
                 break;
@@ -265,6 +271,11 @@ public class BaseEnemyScript : MonoBehaviour
         idleWaitTimer -= Time.deltaTime;
         if (idleWaitTimer > 0) return;
         else idleWaitTimer = Random.Range(idleWait.x, idleWait.y);
+
+        if (test)
+        {
+            int a = 0;
+        }
 
         //Debug.Log("Dbg Idle");
         float distToPlayer = Vector3.Distance(transform.position, player.position);
@@ -322,6 +333,10 @@ public class BaseEnemyScript : MonoBehaviour
         moveDir = (rndTarget - transform.position).normalized;
         MoveRB(moveDir, ((actualMoveSpeed * 3f) / 4f) * speedMultiplier);
 
+        if (test)
+        {
+            int a = 0;
+        }
 
         if (stopRndMoveWhenSeeingTarget)
         {
@@ -330,11 +345,16 @@ public class BaseEnemyScript : MonoBehaviour
                 Vector3.Distance(transform.position, player.position), layerMask);
             if (hitCollided && hit.transform.CompareTag("Player"))
             {
-                if (movesToTarget) 
+                if (movesToTarget)
+                {
                     ChangeState(States.MOVE_TO_TARGET);
-                else 
+                    return;
+                }
+                else if (InAttackRange())
+                {
                     ChangeState(States.ATTACK);
-                return;
+                    return;
+                }
             }
         }
 
@@ -383,6 +403,10 @@ public class BaseEnemyScript : MonoBehaviour
         if (endsAttackWhenTargetOutOfRange 
             && !InAttackRange())
         {
+            if (test)
+            {
+                int a = 0;
+            }
             ChangeState(States.IDLE);
             return;
         }
@@ -393,24 +417,24 @@ public class BaseEnemyScript : MonoBehaviour
         //Debug.Log("Dbg Resting");
         if (restTimer <= 0f) ChangeState(States.IDLE);
     }
-    internal virtual void DamageUpdate()
-    {
-        damageTimer -= Time.deltaTime;
+    //internal virtual void DamageUpdate()
+    //{
+    //    damageTimer -= Time.deltaTime;
 
-        if (enemyLife.isDead)
-        {
-            ChangeState(States.DEATH);
-            return;
-        }
+    //    if (enemyLife.isDead)
+    //    {
+    //        ChangeState(States.DEATH);
+    //        return;
+    //    }
 
-        if (damageTimer <= 0)
-        {
-            float distToPlayer = Vector3.Distance(transform.position, player.position);
-            if (InAttackRange()) ChangeState(States.ATTACK);
-            else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
-            else ChangeState(States.IDLE);
-        }
-    }
+    //    if (damageTimer <= 0)
+    //    {
+    //        float distToPlayer = Vector3.Distance(transform.position, player.position);
+    //        if (InAttackRange()) ChangeState(States.ATTACK);
+    //        else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
+    //        else ChangeState(States.IDLE);
+    //    }
+    //}
     internal virtual void DeathUpdate()
     {
         damageTimer -= Time.deltaTime;
@@ -504,6 +528,38 @@ public class BaseEnemyScript : MonoBehaviour
 
 
     #region Misc
+    internal void ActivateDamage()
+    {
+        if (enemyLife.isDead)
+        {
+            ChangeState(States.DEATH);
+        }
+        else if (canEnterDamageState && baseDamageTimer > 0f)
+        {
+            if (isAttacking)
+            {
+                int a = 0;
+            }
+            StartCoroutine(ActivateDamage_Cor(baseDamageTimer));
+        }
+
+        //if (damageTimer <= 0)
+        //{
+        //    float distToPlayer = Vector3.Distance(transform.position, player.position);
+        //    if (InAttackRange()) ChangeState(States.ATTACK);
+        //    else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
+        //    else ChangeState(States.IDLE);
+        //}
+    }
+    protected virtual IEnumerator ActivateDamage_Cor(float _dmgTimer)
+    {
+        dmgActivated = true;
+        canMove = false;
+        StopRB(stopForce);
+        yield return new WaitForSeconds(_dmgTimer);
+        canMove = true;
+        dmgActivated = false;
+    }
     protected virtual void EndRndMovesBehaviour() { rndMovesDone = 0; }
 
     internal Vector3 ClampVector(Vector3 _originalVec, Vector3 _minVec, Vector3 _maxVec)
@@ -522,6 +578,10 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal void StopRB(float _speedReduction = DEFAULT_SPEED_REDUCTION)
     {
+        if (isAttacking)
+        {
+            int a = 0;
+        }
         rb.velocity = new Vector3(rb.velocity.x / _speedReduction, rb.velocity.y, rb.velocity.z / _speedReduction);
     }
     internal void SetVelocityLimit(Vector3 _minSpeed, Vector3 _maxSpeed)

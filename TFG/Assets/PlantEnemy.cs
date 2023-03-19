@@ -40,16 +40,16 @@ public class PlantEnemy : BaseEnemyScript
         enemyAnimator.SetFloat("state", (int)AnimState.MOVING);
         base.MoveToTargetUpdate();
     }
-    internal override void DamageUpdate()
-    {
-        //enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
-        base.DamageUpdate();
-    }
+    //internal override void DamageUpdate()
+    //{
+    //    //enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
+    //    base.DamageUpdate();
+    //}
     internal override void AttackUpdate()
     {
         base.AttackUpdate();
 
-        if (!state.Equals(States.DAMAGE))
+        if (!dmgActivated)
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
 
         enemyAnimator.SetFloat("state", (int)AnimState.IDLE);

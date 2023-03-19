@@ -86,9 +86,9 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         selected = true;
         if (gameObject.activeInHierarchy)
-            Select_Visuals();
+            Select_Feedback();
     }
-    internal virtual void Select_Visuals() { }
+    internal virtual void Select_Feedback() { }
 
     public virtual void UnSelect()
     {
@@ -98,10 +98,10 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (!clicked && !keepSelected)
         {
             if (gameObject.activeInHierarchy)
-                UnSelect_Visuals();
+                UnSelect_Feedback();
         }
     }
-    internal virtual void UnSelect_Visuals() { }
+    internal virtual void UnSelect_Feedback() { }
 
     public virtual void Click()
     {
@@ -114,18 +114,18 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
         clicked = true;
         if(menuManager != null) menuManager.SelectOption(this);
         if (gameObject.activeInHierarchy)
-            Click_Visuals();
+            Click_Feedback();
 
     }
-    internal virtual void Click_Visuals() { }
+    internal virtual void Click_Feedback() { }
 
     public virtual void UnClick()
     {
         clicked = false;
         if (gameObject.activeInHierarchy)
-            UnClick_Visuals();
+            UnClick_Feedback();
     }
-    internal virtual void UnClick_Visuals() { }
+    internal virtual void UnClick_Feedback() { }
     internal virtual void UnClickByDoubleClick()
     {
         keepSelected = false;

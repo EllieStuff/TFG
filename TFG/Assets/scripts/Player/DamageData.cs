@@ -131,7 +131,7 @@ public class DamageData : MonoBehaviour
             enemy.StopAllCoroutines();
             enemy.canEnterDamageState = true;
         }
-        _enemy.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
+        _enemy.GetComponent<BaseEnemyScript>().ActivateDamage();
     }
 
 

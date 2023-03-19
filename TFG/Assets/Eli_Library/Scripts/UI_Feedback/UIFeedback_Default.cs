@@ -55,31 +55,31 @@ public class UIFeedback_Default : UIFeedback_Base
 
 
 
-    internal override void Select_Visuals()
+    internal override void Select_Feedback()
     {
-        base.Select_Visuals();
+        base.Select_Feedback();
         EliTween.Scale(transform, targetSize, selectIncreaseSizeSpeed);
         EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed, clickIncreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, selectedColor, colorSpeed);
     }
 
-    internal override void UnSelect_Visuals()
+    internal override void UnSelect_Feedback()
     {
-        base.UnSelect_Visuals();
+        base.UnSelect_Feedback();
         EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, baseColor, colorSpeed);
     }
 
-    internal override void Click_Visuals()
+    internal override void Click_Feedback()
     {
-        base.Click_Visuals();
+        base.Click_Feedback();
         EliTween.Scale(transform, targetSize, clickIncreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, clickedColor, colorSpeed);
     }
 
-    internal override void UnClick_Visuals()
+    internal override void UnClick_Feedback()
     {
-        base.UnClick_Visuals();
+        base.UnClick_Feedback();
         EliTween.Scale(transform, originalSize, clickDecreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, baseColor, colorSpeed);
     }

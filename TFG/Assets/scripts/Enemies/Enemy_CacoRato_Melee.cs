@@ -67,15 +67,15 @@ public class Enemy_CacoRato_Melee : BaseEnemyScript
         }
     }
 
-    internal override void DamageUpdate()
-    {
-        enemyAnimator.SetFloat("state", 2);
+    //internal override void DamageUpdate()
+    //{
+    //    enemyAnimator.SetFloat("state", 2);
 
-        //if(deadNPC)
-        //    handWeapon.gameObject.SetActive(false);
+    //    //if(deadNPC)
+    //    //    handWeapon.gameObject.SetActive(false);
 
-        base.DamageUpdate();
-    }
+    //    base.DamageUpdate();
+    //}
 
     IEnumerator AttackCorroutine()
     {
