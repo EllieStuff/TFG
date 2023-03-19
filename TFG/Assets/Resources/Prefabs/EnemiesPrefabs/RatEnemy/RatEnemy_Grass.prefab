@@ -24794,7 +24794,6 @@ MonoBehaviour:
   playerStopDetectionDistance: 35
   attackRange: 6
   stopForce: 90
-  attackMargin: 0.05
   isAttacking: 0
   baseMoveSpeed: 5
   playerFoundSpeed: 7
@@ -24808,7 +24807,7 @@ MonoBehaviour:
   needsToRest: 1
   idleWait: {x: 0.7, y: 2}
   attackWait: {x: 3, y: 3.5}
-  restWait: {x: 2.5, y: 3}
+  restWait: {x: 1.5, y: 2}
   attackChargingTime: 1
   numOfRndMoves: -1
   dmgOnTouch: 20
@@ -24841,8 +24840,8 @@ MonoBehaviour:
   entityElement: 1
   healthStates: []
   healthStatesFeedback: {fileID: 1945083058485135311}
-  maxLife: 1000
-  currLife: 1000
+  maxLife: 1100
+  currLife: 1100
   healWithSameElement: 0
   healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,

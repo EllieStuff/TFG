@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PassiveSkill_Base
 {
-    public enum SkillType { IMPROVE_LIFE, IMPROVE_ATTACK_SPEED, IMPROVE_ATTACK_DAMAGE, INCREASE_PROJECTILE_AMOUNT, VAMPIRE, QUICK_CONJURING, HEAL, PIERCE, WALK_SPEED, FIRST_STRIKE, CRITICAL_CHANCE, COUNT }
+    public enum SkillType { IMPROVE_LIFE, IMPROVE_ATTACK_SPEED, IMPROVE_ATTACK_DAMAGE, /*INCREASE_PROJECTILE_AMOUNT,*/ VAMPIRE, QUICK_CONJURING, HEAL, PIERCE, WALK_SPEED, FIRST_STRIKE, CRITICAL_CHANCE, COUNT, NONE }
 
     internal SkillType skillType;
     internal Transform playerRef;
@@ -14,8 +14,10 @@ public class PassiveSkill_Base
 
     internal string name;
     internal string initialDescription, improvementDescription;
+    protected float appearRatio = 1f;
 
     internal int Level { get { return level; } }
+    internal float AppearRatio { get { return appearRatio; } }
     internal bool CanBeImproved { get { return level < maxLevel || maxLevel < 0; } }
 
     public virtual void Init(Transform _playerRef)

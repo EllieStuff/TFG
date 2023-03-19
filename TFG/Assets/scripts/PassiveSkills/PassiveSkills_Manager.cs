@@ -10,31 +10,55 @@ class SkillClassList
     public Sprite image;
 }
 
+struct SkillAppearRatio
+{
+    public PassiveSkill_Base.SkillType skillType;
+    public Vector2 appearRange;
+    public SkillAppearRatio(PassiveSkill_Base.SkillType _skillType, Vector2 _appearRange)
+    {
+        skillType = _skillType;
+        appearRange = _appearRange;
+    }
+}
+
 public class PassiveSkills_Manager : MonoBehaviour
 {
+    const float MAX_APPEAR_VALUE = 100f;
+    const float APPEAR_SKILL_THRESHOLD = 0.001f;
+
     internal LoadPassiveSkills passiveSkillsSave;
     List<PassiveSkill_Base> skills = new List<PassiveSkill_Base>();
     [SerializeField] internal SkillClassList[] skillImages;
     [SerializeField] bool LoadPassiveSkills;
     GameObject passiveSkillUI;
 
+    static SkillAppearRatio[] skillsAppearRatio;
+
     // Start is called before the first frame update
     void Start()
     {
         passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
 
-        //StartCoroutine(AddTrialSkillsCoroutine());
+        float[] tmpSkillsAppearRatio = new float[(int)PassiveSkill_Base.SkillType.COUNT];
+        float proportionalAppearPercentage = 0f;
+        for (int i = 0; i < tmpSkillsAppearRatio.Length; i++)
+        {
+            tmpSkillsAppearRatio[i] = GetSkillByType((PassiveSkill_Base.SkillType)i).AppearRatio;
+            proportionalAppearPercentage += tmpSkillsAppearRatio[i];
+        }
+        
+        skillsAppearRatio = new SkillAppearRatio[(int)PassiveSkill_Base.SkillType.COUNT];
+        float prevAppearRangeMargin = APPEAR_SKILL_THRESHOLD;
+        for(int i = 0; i < skillsAppearRatio.Length; i++)
+        {
+            Vector2 appearRange = new Vector2(prevAppearRangeMargin, prevAppearRangeMargin + tmpSkillsAppearRatio[i] * MAX_APPEAR_VALUE / proportionalAppearPercentage);
+            //Debug.Log(((PassiveSkill_Base.SkillType)i).ToString() + " ratio: " + (appearRange.y - appearRange.x));
+            prevAppearRangeMargin = appearRange.y;
+
+            skillsAppearRatio[i] = new SkillAppearRatio((PassiveSkill_Base.SkillType)i, appearRange);
+        }
     }
 
-    //IEnumerator AddTrialSkillsCoroutine()
-    //{
-    //    yield return new WaitForSeconds(1f);
-    //    AddSkill(new IncreaseProjectileAmount_PassiveSkill());
-    //    yield return new WaitForSeconds(5f);
-    //    AddSkill(new IncreaseProjectileAmount_PassiveSkill());
-    //    yield return new WaitForSeconds(2f);
-    //    AddSkill(new IncreaseProjectileAmount_PassiveSkill());
-    //}
 
     private void LoadAllSkills(SavedPassiveSkills _save)
     {
@@ -117,6 +141,18 @@ public class PassiveSkills_Manager : MonoBehaviour
     }
 
 
+    public static PassiveSkill_Base.SkillType GetRndSkillType()
+    {
+        float rndSkillRatio = UnityEngine.Random.Range(0f, MAX_APPEAR_VALUE - APPEAR_SKILL_THRESHOLD);
+        for (int i = 0; i < skillsAppearRatio.Length; i++)
+        {
+            if (rndSkillRatio <= skillsAppearRatio[i].appearRange.y)
+                return skillsAppearRatio[i].skillType;
+        }
+
+        return PassiveSkill_Base.SkillType.NONE;
+    }
+
     public static PassiveSkill_Base GetSkillByType(PassiveSkill_Base.SkillType _skillType)
     {
         switch (_skillType)
@@ -133,8 +169,8 @@ public class PassiveSkills_Manager : MonoBehaviour
             case PassiveSkill_Base.SkillType.IMPROVE_ATTACK_DAMAGE:
                 return new ImproveAttackDamage_PassiveSkill();
 
-            case PassiveSkill_Base.SkillType.INCREASE_PROJECTILE_AMOUNT:
-                return new IncreaseProjectileAmount_PassiveSkill();
+            //case PassiveSkill_Base.SkillType.INCREASE_PROJECTILE_AMOUNT:
+            //    return new IncreaseProjectileAmount_PassiveSkill();
 
             case PassiveSkill_Base.SkillType.VAMPIRE:
                 return new Vampire_PassiveSkill();

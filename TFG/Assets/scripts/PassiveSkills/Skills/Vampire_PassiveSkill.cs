@@ -10,6 +10,7 @@ public class Vampire_PassiveSkill : PassiveSkill_Base
     {
         skillType = SkillType.VAMPIRE;
         maxLevel = 5;
+        appearRatio = 0.6f;
         name = "Vampire";
         //initialDescription = "Steals your enemies life by damaging them with effective elements!";
         //improvementDescription = "Increases the life stolen from your enemies by damaging them with effective elements!";

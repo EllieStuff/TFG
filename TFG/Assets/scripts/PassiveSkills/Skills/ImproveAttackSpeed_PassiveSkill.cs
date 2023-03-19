@@ -10,6 +10,7 @@ public class ImproveAttackSpeed_PassiveSkill : PassiveSkill_Base
     {
         skillType = SkillType.IMPROVE_ATTACK_SPEED;
         maxLevel = 3;
+        appearRatio = 0.6f;
         name = "Quicker Attack";
         //initialDescription = "Your attack rate gets quicker!";
         initialDescription = "Your attack rate gets 20% quicker!";

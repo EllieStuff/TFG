@@ -35,7 +35,7 @@ public class AbilityButton : MonoBehaviour
 
     FadeInFadeOut_UI UIFade;
 
-    const float DISABLE_TIMER = 3;
+    const float DISABLE_TIMER = 2.5f;
     const float LERP_MOVE_SPEED = 2;
     const float TEXT_SIZE_SPEED = 1.2f;
     const int HEAL_CARD_PERCENTAGE = 100;
@@ -99,6 +99,7 @@ public class AbilityButton : MonoBehaviour
             if (playerSkill == null) skill = PassiveSkills_Manager.GetSkillByType(skillType); 
             else skill = playerSkill;
         } while (!skill.CanBeImproved);
+        //Debug.Log("Skill Spammed: " + skill.skillType.ToString());
 
         if (skill.Level == 0) skillText = skill.initialDescription;
         else skillText = skill.improvementDescription;
@@ -138,12 +139,15 @@ public class AbilityButton : MonoBehaviour
         }
     }
 
-    PassiveSkill_Base.SkillType InitializeCardSkill() 
+    PassiveSkill_Base.SkillType InitializeCardSkill()
     {
-        PassiveSkill_Base.SkillType tmpSkillType = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+        PassiveSkill_Base.SkillType tmpSkillType = PassiveSkills_Manager.GetRndSkillType();
+        while (playerSkills.SearchSkillImage(tmpSkillType) == null || tmpSkillType == PassiveSkill_Base.SkillType.NONE)
+            tmpSkillType = PassiveSkills_Manager.GetRndSkillType();
 
-        while (playerSkills.SearchSkillImage(tmpSkillType) == null)
-            tmpSkillType = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+        //PassiveSkill_Base.SkillType tmpSkillType = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
+        //while (playerSkills.SearchSkillImage(tmpSkillType) == null)
+        //    tmpSkillType = (PassiveSkill_Base.SkillType)Random.Range(0, (int)PassiveSkill_Base.SkillType.COUNT);
 
         return tmpSkillType;
     }
@@ -281,8 +285,8 @@ public class AbilityButton : MonoBehaviour
     {
         if(!pushedButton)
         {
-            float lifeToImprove = (HEAL_CARD_PERCENTAGE * playerLife.maxLife) / playerLife.maxLife;
-            playerLife.AddLife(lifeToImprove);
+            float lifeToAdd = ACHIEVE_SKILL_HEAL_PERCENTAGE * playerLife.maxLife;
+            playerLife.AddLife(lifeToAdd);
             playerSkills.AddSkill(skill, true);
 
             if (cardListPivot != null && cardPrefabUI != null)

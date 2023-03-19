@@ -10,6 +10,7 @@ public class Heal_PassiveSkill : PassiveSkill_Base
     {
         skillType = SkillType.HEAL;
         maxLevel = -1;
+        appearRatio = 3f;
         name = "Heal";
         initialDescription = "Heals your wounds!";
         improvementDescription = initialDescription;

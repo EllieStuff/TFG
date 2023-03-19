@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomEnemyManager : MonoBehaviour
 {
-    const float ENEMIES_INIT_WAIT = 1.5f;
+    const float ENEMIES_INIT_WAIT = 2f;
     const float PLAYER_ATTACK_MARGIN = 0.03f;
 
     [SerializeField] ZoneScript linkedZone;
@@ -16,17 +16,20 @@ public class RoomEnemyManager : MonoBehaviour
     Rigidbody playerRB;
     LevelInfo levelInfo;
 
+    EnemyPointerScript enemyPointer;
     List<BaseEnemyScript> enemies = new List<BaseEnemyScript>();
 
     internal GameObject elementChoose;
 
     bool endRoomEventIsTriggered = false;
+    bool changingPointerTarget = false;
 
     // Start is called before the first frame update
     void Awake()
     {
         playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAttack>();
         levelInfo = playerAttack.GetComponent<LevelInfo>();
+        enemyPointer = FindObjectOfType<EnemyPointerScript>();
 
         linkedZone.assignedRoom = this;
         InitEnemies();
@@ -71,10 +74,28 @@ public class RoomEnemyManager : MonoBehaviour
 
     public Transform GetCloserEnemy(Transform _playerTransform)
     {
-        if (!HasEnemiesRemainging()) return null;
+        if (!HasEnemiesRemainging())
+        {
+            if (enemyPointer.IsDifferentTarget(null))
+            {
+                enemyPointer.SetTarget(null);
+                enemyPointer.StopAllCoroutines();
+                enemyPointer.StartCoroutine(enemyPointer.Disappear_Cor());
+            }
+            return null;
+        }
 
         Transform closerEnemy = GetFirstReachableEnemyWithWallCheck();
-        if (closerEnemy == null) return null;
+        if (closerEnemy == null)
+        {
+            if (enemyPointer.IsDifferentTarget(null))
+            {
+                enemyPointer.SetTarget(null);
+                enemyPointer.StopAllCoroutines();
+                enemyPointer.StartCoroutine(enemyPointer.Disappear_Cor());
+            }
+            return null;
+        }
         float closerDist = Vector3.Distance(closerEnemy.position, _playerTransform.position);
 
         bool reachedAvailableEnemy = false;
@@ -98,8 +119,25 @@ public class RoomEnemyManager : MonoBehaviour
             }
         }
 
-        if (!InAttackRange(closerEnemy)) return null;
-        else return closerEnemy;
+        if (closerEnemy == null || !InAttackRange(closerEnemy))
+        {
+            if (enemyPointer.IsDifferentTarget(null))
+            {
+                enemyPointer.SetTarget(null);
+                enemyPointer.StopAllCoroutines();
+                enemyPointer.StartCoroutine(enemyPointer.Disappear_Cor());
+            }
+            return null;
+        }
+        else
+        {
+            if (enemyPointer.IsDifferentTarget(closerEnemy.transform) && !changingPointerTarget)
+            {
+                enemyPointer.StopAllCoroutines();
+                enemyPointer.StartCoroutine(ChangePointerTarget_Cor(closerEnemy));
+            }
+            return closerEnemy;
+        }
     }
 
     bool InAttackRange(Transform _target)
@@ -206,6 +244,18 @@ public class RoomEnemyManager : MonoBehaviour
         {
             enemy.waiting = false;
         }
+    }
+
+
+    IEnumerator ChangePointerTarget_Cor(Transform _enemy)
+    {
+        changingPointerTarget = true;
+        if(enemyPointer.Target != null)
+            yield return enemyPointer.Disappear_Cor();
+        enemyPointer.SetTarget(_enemy);
+        if (_enemy != null) enemyPointer.transform.position = _enemy.position;
+        changingPointerTarget = false;
+        yield return enemyPointer.Appear_Cor();
     }
 
 }
