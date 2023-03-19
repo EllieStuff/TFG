@@ -44690,10 +44690,8 @@ MonoBehaviour:
   baseRotSpeed: 300
   playerDetectionDistance: 25
   playerStopDetectionDistance: 25
+  attackRange: -1
   stopForce: 90
-  xAttackDistance: 20
-  zUpAttackDistance: 8.2
-  zDownAttackDistance: 11.5
   isAttacking: 0
   baseMoveSpeed: 0
   playerFoundSpeed: 0
@@ -44701,7 +44699,7 @@ MonoBehaviour:
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
   endsAttackWhenTargetOutOfRange: 1
-  baseDamageTimer: 0.5
+  baseDamageTimer: -1
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
@@ -44714,6 +44712,7 @@ MonoBehaviour:
   enemyLightsHolder: {fileID: 364602395673561452}
   lookPoint: {fileID: 0}
   disableAutoGravity: 0
+  test: 0
   moveDir: {x: 0, y: 0, z: 0}
   enemyMesh: {fileID: 0}
   enemyMeshTmp: {fileID: 4201822734791760459}

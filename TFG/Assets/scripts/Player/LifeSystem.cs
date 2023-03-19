@@ -155,7 +155,7 @@ public class LifeSystem : MonoBehaviour
     {
         if(healWithSameElement && _attackElement == entityElement)
         {
-            HealEnemy();
+            HealEntity();
             StartCoroutine(enemyShake.Shake(0.3f, 0.03f, 0.03f));
             return;
         }
@@ -211,7 +211,7 @@ public class LifeSystem : MonoBehaviour
                     StartCoroutine(cameraRef.ShakeCamera(0.3f, 0.07f));
                     textUI.color = Color.yellow;
                 }
-                else if (dmgMultiplier > 0.7f)
+                else if (dmgMultiplier > 0.6f)
                 {
                     if (GetComponent<BaseEnemyScript>().canEnterDamageState)
                         StartCoroutine(enemyShake.Shake(0.2f, 0.01f, 0.01f));
@@ -250,13 +250,23 @@ public class LifeSystem : MonoBehaviour
 
     }
 
-    void HealEnemy()
+    void HealEntity()
     {
         int lifeHealed = Mathf.CeilToInt(maxLife * healPercentage);
         currLife += lifeHealed;
         CheckLifeLimits();
 
-        GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f), damageTextPrefab.transform.rotation);
+        GameObject addLifeTextInstance; // = Instantiate(damageTextPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f), damageTextPrefab.transform.rotation);
+        if (entityType.Equals(EntityType.BOSS))
+        {
+            Transform appearTransform = transform.Find("EnemyCanvas");
+            addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(appearTransform.position.x, appearTransform.position.y, appearTransform.position.z + 1f), damageTextPrefab.transform.rotation);
+        }
+        else
+        {
+            Transform appearTransform = EnemyLifeBar.transform.parent;
+            addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(appearTransform.position.x, appearTransform.position.y, appearTransform.position.z + 1f), damageTextPrefab.transform.rotation);
+        }
         string lifeHealedText = "+ " + lifeHealed.ToString();
         TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
         textUI.color = Color.green;

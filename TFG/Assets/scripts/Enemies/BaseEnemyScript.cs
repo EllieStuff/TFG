@@ -578,10 +578,6 @@ public class BaseEnemyScript : MonoBehaviour
     }
     internal void StopRB(float _speedReduction = DEFAULT_SPEED_REDUCTION)
     {
-        if (isAttacking)
-        {
-            int a = 0;
-        }
         rb.velocity = new Vector3(rb.velocity.x / _speedReduction, rb.velocity.y, rb.velocity.z / _speedReduction);
     }
     internal void SetVelocityLimit(Vector3 _minSpeed, Vector3 _maxSpeed)

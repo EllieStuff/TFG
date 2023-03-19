@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class BatBossEnemy : BatEnemy
 {
+    const float CHANGE_PHASE_BASE_DELAY = 0.5f;
+
     [Header("BatBoss Enemy")]
     [SerializeField] float changeElementDelay = 1.5f;
     [SerializeField] float flashDuration = 0.2f, changePhaseDelay = 3f;
     [SerializeField] int secondPhaseStartLife = 3000;
-    [SerializeField] float secondPhaseAttackMultiplier = 1.3f, secondPhaseWaitMultiplier = 0.7f, secondPhaseProjSizeMultiplier = 1.3f, secondPhaseProjSpeedMultiplier = 1.2f;
+    [SerializeField] float secondPhaseAttackMultiplier = 1.3f, secondPhaseWaitMultiplier = 0.7f, secondPhaseSpeedMultiplier = 1.5f, repeatAttackProbability = 3f, secondPhaseProjSizeMultiplier = 1.3f, secondPhaseProjSpeedMultiplier = 1.2f;
     [SerializeField] ParticleSystem changeToFireParticles, changeToGrassParticles, changeToWaterParticles;
     [SerializeField] Material fireMat, fireTransparentMat, grassMat, grassTransparentMat, waterMat, waterTransparentMat;
     [SerializeField] Image flashImage;
@@ -19,7 +21,8 @@ public class BatBossEnemy : BatEnemy
 
     CameraShake camShake;
     List<BatProjectile_Missile> projectiles = new List<BatProjectile_Missile>();
-    bool secondPhaseEntered = false;
+    bool changingElement = false;
+    bool secondPhaseEntered = false, changingPhase = false;
     float projectileSizeMultiplier = 1f, projectileSpeedMultiplier = 1f;
 
     internal override void Start_Call()
@@ -41,14 +44,34 @@ public class BatBossEnemy : BatEnemy
 
     internal override void Update_Call()
     {
-        base.Update_Call();
-        if(enemyLife.currLife <= secondPhaseStartLife && !secondPhaseEntered && !isAttacking)
+        //if(enemyLife.currLife <= secondPhaseStartLife && !secondPhaseEntered && !isAttacking && !changingElement)
+        //{
+        //    secondPhaseEntered = true;
+        //    //canAttack = false;
+        //    attackTimer = 9999f;
+        //    StopRB(stopForce);
+        //    StopCoroutine(Attack_Cor());
+        //    StartCoroutine(ChangePhase_Cor());
+        //}
+        if (changingPhase) return;
+
+        attackTimer -= Time.deltaTime;
+        if (attackTimer <= 0)
         {
-            secondPhaseEntered = true;
-            //canAttack = false;
-            attackTimer = 99999;
-            StartCoroutine(ChangePhase_Cor());
+            StopRB(stopForce);
+            StartCoroutine(Attack_Cor());
+            attackTimer = AttackWait + attackChargingTime;
         }
+        else if(!isAttacking)
+        {
+            Vector3 targetMoveDir = (player.position - transform.position).normalized;
+            MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
+        }
+    }
+
+    internal override void AttackStart()
+    {
+        attackTimer = AttackWait + attackChargingTime; ;
     }
 
     internal override void DeathStart()
@@ -94,29 +117,56 @@ public class BatBossEnemy : BatEnemy
         }
     }
 
-    IEnumerator ChangePhase_Cor()
+    void ChangePhase(float _initDelay)
     {
+        secondPhaseEntered = true;
+        //canAttack = false;
+        attackTimer = 9999f;
+        StopRB(stopForce);
+        StartCoroutine(ChangePhase_Cor(_initDelay));
+        StopCoroutine(Attack_Cor());
+    }
+    IEnumerator ChangePhase_Cor(float _initDelay)
+    {
+        yield return new WaitForSeconds(_initDelay + CHANGE_PHASE_BASE_DELAY);
+
+        changingPhase = true;
         canRotate = false;
         attackDamage *= secondPhaseAttackMultiplier;
         attackWait *= secondPhaseWaitMultiplier;
         attackChargingTime *= secondPhaseWaitMultiplier;
         projectileSizeMultiplier *= secondPhaseProjSizeMultiplier;
         projectileSpeedMultiplier *= secondPhaseProjSpeedMultiplier;
+        speedMultiplier = secondPhaseSpeedMultiplier;
         ///ToDo: Posar particules enfadament
 
         StartCoroutine(GetComponent<EnemyShake>().Shake(changePhaseDelay, 0.03f, 0.03f));
         yield return camShake.ShakeCamera(changePhaseDelay, 0.3f);
         //canAttack = true;
         canRotate = true;
+        changingPhase = false;
         attackTimer = 0.1f;
     }
 
     protected override IEnumerator Attack_Cor()
     {
-        isAttacking = true;
-        yield return ChangeElement_Cor();
-        yield return new WaitForSeconds(attackChargingTime);
+        if (enemyLife.currLife <= secondPhaseStartLife && !secondPhaseEntered)
+            ChangePhase(changeElementDelay + flashDuration * 2f);
+
+        float rnd = Random.Range(0f, repeatAttackProbability);
+        if (!secondPhaseEntered || rnd < 1f)
+        {
+            changingElement = true;
+            yield return ChangeElement_Cor();
+            changingElement = false;
+        }
+
+        if (enemyLife.currLife <= secondPhaseStartLife && !secondPhaseEntered)
+            ChangePhase(0f);
+
         //place shoot animation here
+        isAttacking = true;
+        yield return new WaitForSeconds(attackChargingTime);
         for (int i = 0; i < numOfAttacks; i++)
         {
             yield return new WaitForSeconds(attackAnimationTime);

@@ -24896,8 +24896,8 @@ MonoBehaviour:
   baseRotSpeed: 600
   playerDetectionDistance: 30
   playerStopDetectionDistance: 35
+  attackRange: -1
   stopForce: 90
-  attackMargin: 0.05
   isAttacking: 0
   baseMoveSpeed: 8
   playerFoundSpeed: 8
@@ -24905,7 +24905,7 @@ MonoBehaviour:
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
   endsAttackWhenTargetOutOfRange: 1
-  baseDamageTimer: 0.5
+  baseDamageTimer: -1
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
@@ -29940,7 +29940,6 @@ MonoBehaviour:
   attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: 1
-  stealLife: 0
   stealLifePercentage: 0
   critPercentage: 0
   tagsAffected:

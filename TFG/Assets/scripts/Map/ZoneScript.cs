@@ -45,8 +45,11 @@ public class ZoneScript : MonoBehaviour
             zoneDefused = true;
         }
 
-        if(zoneDefused)
-            PlayAnimation(doorOpenAnims);
+        if (zoneDefused)
+        {
+            if (doorOpenAnims == null) Debug.LogWarning("DoorOpenAnim not set");
+            else PlayAnimation(doorOpenAnims);
+        }
 
         Color tileColor = blackTile.material.color;
 

@@ -109,13 +109,12 @@ public class BatEnemy : BaseEnemyScript
         attackTimer = 0f;
         moveDir = Vector3.zero;
         StopRB(stopForce);
-        canEnterDamageState = false;
-        StartCoroutine(Attack_Cor());
+        //StartCoroutine(Attack_Cor());
     }
 
 
     internal override void IdleExit() { base.IdleExit(); }
     internal override void MoveToTargetExit() { base.MoveToTargetExit(); }
-    internal override void AttackExit() { base.AttackExit(); canEnterDamageState = true; }
+    internal override void AttackExit() { base.AttackExit(); }
 
 }

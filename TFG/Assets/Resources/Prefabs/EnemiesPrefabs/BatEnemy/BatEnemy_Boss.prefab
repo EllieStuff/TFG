@@ -39591,7 +39591,6 @@ MonoBehaviour:
   attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: 1
-  stealLife: 0
   stealLifePercentage: 0
   critPercentage: 0
   tagsAffected:
@@ -44539,21 +44538,21 @@ MonoBehaviour:
   baseRotSpeed: 600
   playerDetectionDistance: 30
   playerStopDetectionDistance: 35
+  attackRange: -1
   stopForce: 90
-  attackMargin: 0.05
   isAttacking: 0
-  baseMoveSpeed: 7
-  playerFoundSpeed: 7
+  baseMoveSpeed: 3
+  playerFoundSpeed: 3
   attacksTargetWOSeeingIt: 0
   movesToTargetWOSeeingIt: 0
   stopRndMoveWhenSeeingTarget: 1
-  endsAttackWhenTargetOutOfRange: 1
-  baseDamageTimer: 0.5
+  endsAttackWhenTargetOutOfRange: 0
+  baseDamageTimer: -1
   baseDeathTime: 5
   movesToTarget: 0
   needsToRest: 0
   idleWait: {x: 1, y: 2.5}
-  attackWait: {x: 8, y: 10}
+  attackWait: {x: 10, y: 12}
   restWait: {x: 0, y: 0}
   attackChargingTime: 2.5
   numOfRndMoves: 35
@@ -44579,8 +44578,10 @@ MonoBehaviour:
   changePhaseDelay: 2
   secondPhaseStartLife: 5000
   secondPhaseAttackMultiplier: 1.3
-  secondPhaseWaitMultiplier: 0.7
-  secondPhaseProjSizeMultiplier: 1.3
+  secondPhaseWaitMultiplier: 0.8
+  secondPhaseSpeedMultiplier: 1.04
+  repeatAttackProbability: 1.5
+  secondPhaseProjSizeMultiplier: 1.2
   secondPhaseProjSpeedMultiplier: 1.2
   changeToFireParticles: {fileID: 5018494620112084128}
   changeToGrassParticles: {fileID: 5018494619862155375}
@@ -44614,10 +44615,10 @@ MonoBehaviour:
   entityElement: 0
   healthStates: []
   healthStatesFeedback: {fileID: 3740692207483121738}
-  maxLife: 8500
-  currLife: 8500
-  healWithSameElement: 0
-  healPercentage: 0.05
+  maxLife: 10000
+  currLife: 10000
+  healWithSameElement: 1
+  healPercentage: 0.03
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
     type: 3}
   playerLifeBar: {fileID: 0}
