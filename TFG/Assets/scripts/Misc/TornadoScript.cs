@@ -64,7 +64,7 @@ public class TornadoScript : MonoBehaviour
         windState.Init(life);
         windState.effectDuration = tornadoDuration - 0.1f;
         //life.Damage(tornadoDamage, windState);
-        _enemy.gameObject.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
+        _enemy.gameObject.GetComponent<BaseEnemyScript>().ActivateDamage();
 
         while (Time.realtimeSinceStartup < endTornadoTimeStamp) 
         {
@@ -87,7 +87,7 @@ public class TornadoScript : MonoBehaviour
                     //life.Damage(tornadoDamage, ElementsManager.Elements.NORMAL);
 
                 if (_enemy != null)
-                    _enemy.gameObject.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DAMAGE);
+                    _enemy.gameObject.GetComponent<BaseEnemyScript>().ActivateDamage();
 
                 if (_enemy == null)
                     break;

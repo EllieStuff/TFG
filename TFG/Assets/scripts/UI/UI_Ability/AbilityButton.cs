@@ -85,7 +85,6 @@ public class AbilityButton : MonoBehaviour
             PassiveSkill_Base playerSkill = playerSkills.FindSkill(skillType);
             if (playerSkill == null) skill = PassiveSkills_Manager.GetSkillByType(skillType); 
             else skill = playerSkill;
-            int lvl = skill.Level;
         } while (!skill.CanBeImproved);
 
         if (skill.Level == 0) skillText = skill.initialDescription;

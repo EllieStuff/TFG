@@ -206,13 +206,15 @@ public class LifeSystem : MonoBehaviour
             {
                 if (dmgMultiplier > 1.9f)
                 {
-                    StartCoroutine(enemyShake.Shake(0.3f, 0.03f, 0.03f));
+                    if(GetComponent<BaseEnemyScript>().canEnterDamageState)
+                        StartCoroutine(enemyShake.Shake(0.3f, 0.03f, 0.03f));
                     StartCoroutine(cameraRef.ShakeCamera(0.3f, 0.07f));
                     textUI.color = Color.yellow;
                 }
                 else if (dmgMultiplier > 0.7f)
                 {
-                    StartCoroutine(enemyShake.Shake(0.2f, 0.01f, 0.01f));
+                    if (GetComponent<BaseEnemyScript>().canEnterDamageState)
+                        StartCoroutine(enemyShake.Shake(0.2f, 0.01f, 0.01f));
                 }
                 else
                 {

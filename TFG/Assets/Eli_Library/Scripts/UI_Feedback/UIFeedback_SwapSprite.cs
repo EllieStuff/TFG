@@ -61,9 +61,9 @@ public class UIFeedback_SwapSprite : UIFeedback_Base
 
 
 
-    internal override void Select_Visuals()
+    internal override void Select_Feedback()
     {
-        base.Select_Visuals();
+        base.Select_Feedback();
         feedbackImage.sprite = selectedImage;
         EliTween.Scale(transform, targetSize, selectIncreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, selectedColor, colorSpeed);
@@ -74,23 +74,23 @@ public class UIFeedback_SwapSprite : UIFeedback_Base
         base.UnSelect();
         EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed);
     }
-    internal override void UnSelect_Visuals()
+    internal override void UnSelect_Feedback()
     {
-        base.UnSelect_Visuals();
+        base.UnSelect_Feedback();
         feedbackImage.sprite = baseImage;
         EliTween.ChangeColor(feedbackImage, baseColor, colorSpeed);
     }
 
-    internal override void Click_Visuals()
+    internal override void Click_Feedback()
     {
-        base.Click_Visuals();
+        base.Click_Feedback();
         feedbackImage.sprite = clickedImage;
         EliTween.ChangeColor(feedbackImage, clickedColor, colorSpeed);
     }
 
-    internal override void UnClick_Visuals()
+    internal override void UnClick_Feedback()
     {
-        base.UnClick_Visuals();
+        base.UnClick_Feedback();
         if (!keepSelected)
         {
             EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed);

@@ -41,11 +41,11 @@ public class Enemy_CacoRato : BaseEnemyScript
         enemyAnimator.SetFloat("state", 1);
         base.MoveToTargetUpdate();
     }
-    internal override void DamageUpdate()
-    {
-        enemyAnimator.SetFloat("state", 2);
-        base.DamageUpdate();
-    }
+    //internal override void DamageUpdate()
+    //{
+    //    enemyAnimator.SetFloat("state", 2);
+    //    base.DamageUpdate();
+    //}
     internal override void AttackUpdate()
     {
         base.AttackUpdate();
@@ -58,7 +58,7 @@ public class Enemy_CacoRato : BaseEnemyScript
         }
         else
         {
-            if(!state.Equals(States.DAMAGE))
+            if(!dmgActivated)
                 rb.velocity = new Vector3(0, rb.velocity.y, 0);
 
             enemyAnimator.SetFloat("state", 0);
