@@ -38,7 +38,7 @@ public class AbilityButton : MonoBehaviour
     const float DISABLE_TIMER = 2.5f;
     const float LERP_MOVE_SPEED = 2;
     const float TEXT_SIZE_SPEED = 1.2f;
-    const int HEAL_CARD_PERCENTAGE = 100;
+    const float ACHIEVE_SKILL_HEAL_PERCENTAGE = 0.06f;
     const float TEXT_SIZE_MULTIPLIER_DESCRIPTION = 1.2f;
     const float TEXT_SIZE_MULTIPLIER_NAME = 1.1f;
 
