@@ -133,7 +133,7 @@ public class RoomEnemyManager : MonoBehaviour
         Vector3 enemyPos = _enemyTransform.position;
 
         if (_enemyTransform.name.Contains("Rat"))
-            enemyPos.y += 0.3f;
+            enemyPos.y += 0.5f;
 
         Ray ray = new Ray(enemyPos, (playerAttack.transform.position - enemyPos).normalized * raycastDistance);
 

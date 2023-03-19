@@ -52,8 +52,8 @@ public class BaseEnemyScript : MonoBehaviour
     protected bool dmgActivated = false;
 
     readonly internal Vector3 
-        baseMinVelocity = new Vector3(-10, -10, -10), 
-        baseMaxVelocity = new Vector3(10, 10, 10);
+        baseMinVelocity = new Vector3(-10, 0, -10), 
+        baseMaxVelocity = new Vector3(10, 0, 10);
 
     internal States state = States.IDLE;
     internal Rigidbody rb;
