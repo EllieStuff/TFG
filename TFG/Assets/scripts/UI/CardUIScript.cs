@@ -16,9 +16,6 @@ public class CardUIScript : MonoBehaviour
     {
         cardTier++;
         tierText.text = cardTier.ToString();
-
-        if (cardTier > 0 && !tierText.enabled)
-            tierText.enabled = true;
     }
 
     void Start()
@@ -28,6 +25,5 @@ public class CardUIScript : MonoBehaviour
 
         transform.name = skillType.ToString();
         GetComponent<Image>().sprite = cardSprite;
-        tierText.enabled = false;
     }
 }

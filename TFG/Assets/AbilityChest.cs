@@ -65,7 +65,7 @@ public class AbilityChest : MonoBehaviour
         }
 
         PassiveSkills_Manager skillsManager = _playerRef.GetComponent<PassiveSkills_Manager>();
-        skillsManager.AddSkill(PassiveSkills_Manager.GetSkillByType(chestAbility));
+        skillsManager.AddSkill(PassiveSkills_Manager.GetSkillByType(chestAbility), false);
     }
 
 }

@@ -200,6 +200,18 @@ public class AbilityButton : MonoBehaviour
         return null;
     }
 
+    CardUIScript CheckIfThisCardExistsAlreadyBySave(PassiveSkill_Base.SkillType _skillType)
+    {
+        cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
+        foreach (Transform child in cardListPivot)
+        {
+            if (child.GetComponent<CardUIScript>().skillType.Equals(_skillType))
+                return child.GetComponent<CardUIScript>();
+        }
+
+        return null;
+    }
+
     void SpawnCardInUI()
     {
         CardUIScript cardCheck = CheckIfThisCardExistsAlready();
@@ -217,13 +229,32 @@ public class AbilityButton : MonoBehaviour
         }
     }
 
+    public void SpawnCardInUIBySave(PassiveSkill_Base.SkillType _cardType)
+    {
+        CardUIScript cardCheck = CheckIfThisCardExistsAlreadyBySave(_cardType);
+
+        if (cardCheck != null)
+        {
+            cardCheck.ModifyCardTier();
+        }
+        else
+        {
+            CardUIScript card = Instantiate(cardPrefabUI, cardListPivot).GetComponent<CardUIScript>();
+
+            card.skillType = _cardType;
+            card.cardSprite = playerSkills.SearchSkillImage(_cardType);
+        }
+
+        playerMovement.canMove = true;
+    }
+
     private void AddAbility()
     {
         if(!pushedButton)
         {
             float lifeToImprove = (HEAL_CARD_PERCENTAGE * playerLife.maxLife) / playerLife.maxLife;
             playerLife.AddLife(lifeToImprove);
-            playerSkills.AddSkill(skill);
+            playerSkills.AddSkill(skill, true);
 
             if (cardListPivot != null && cardPrefabUI != null)
                 SpawnCardInUI();

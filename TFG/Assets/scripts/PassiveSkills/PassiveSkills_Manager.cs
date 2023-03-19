@@ -12,12 +12,17 @@ class SkillClassList
 
 public class PassiveSkills_Manager : MonoBehaviour
 {
+    internal LoadPassiveSkills passiveSkillsSave;
     List<PassiveSkill_Base> skills = new List<PassiveSkill_Base>();
     [SerializeField] internal SkillClassList[] skillImages;
+    [SerializeField] bool LoadPassiveSkills;
+    GameObject passiveSkillUI;
 
     // Start is called before the first frame update
     void Start()
     {
+        passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
+
         //StartCoroutine(AddTrialSkillsCoroutine());
     }
 
@@ -30,6 +35,28 @@ public class PassiveSkills_Manager : MonoBehaviour
     //    yield return new WaitForSeconds(2f);
     //    AddSkill(new IncreaseProjectileAmount_PassiveSkill());
     //}
+
+    private void LoadAllSkills(SavedPassiveSkills _save)
+    {
+        foreach (Tuple<PassiveSkill_Base.SkillType, int> element in _save.savedElements)
+        {
+            PassiveSkill_Base.SkillType skill = element.Item1;
+            int tier = element.Item2;
+
+            PassiveSkill_Base skillCreated = GetSkillByType(skill);
+            passiveSkillUI.SetActive(true);
+
+            AbilityButton abilityButtonUI = passiveSkillUI.transform.GetChild(1).GetChild(0).GetComponent<AbilityButton>();
+
+            for (int i = 0; i < tier; i++)
+            {
+                AddSkill(skillCreated, false);
+                abilityButtonUI.SpawnCardInUIBySave(element.Item1);
+            }
+        }
+
+        passiveSkillUI.SetActive(false);
+    }
 
     public Sprite SearchSkillImage(PassiveSkill_Base.SkillType _skill)
     {
@@ -49,12 +76,28 @@ public class PassiveSkills_Manager : MonoBehaviour
         {
             skill.UpdateCall();
         }
+
+        if (LoadPassiveSkills)
+        {
+            if(passiveSkillUI == null)
+                passiveSkillUI = GameObject.Find("Misc Canvas").transform.GetChild(10).gameObject;
+            else
+            {
+                SavedPassiveSkills save = passiveSkillsSave.LoadSave();
+                LoadAllSkills(save);
+                LoadPassiveSkills = false;
+            }
+        }
     }
 
 
-    public void AddSkill(PassiveSkill_Base _skill)
+    public void AddSkill(PassiveSkill_Base _skill, bool save)
     {
         PassiveSkill_Base skill = skills.Find(currSkill => currSkill.skillType == _skill.skillType);
+
+        if(save)
+            passiveSkillsSave.AddElementToSave(_skill.skillType);
+
         if (skill == null)
         {
             _skill.Init(transform);
