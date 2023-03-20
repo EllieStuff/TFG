@@ -127,20 +127,19 @@ public class ElementsManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && attackManager.currentAttackElement != Elements.FIRE)
         {
+            elementIdx = Elements.FIRE;
             ChangeElement(Elements.FIRE, attackManager.changeAttackDelay);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && attackManager.currentAttackElement != Elements.WATER)
         {
+            elementIdx = Elements.WATER;
             ChangeElement(Elements.WATER, attackManager.changeAttackDelay);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && attackManager.currentAttackElement != Elements.GRASS)
         {
+            elementIdx = Elements.GRASS;
             ChangeElement(Elements.GRASS, attackManager.changeAttackDelay);
         }
-        //else if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-        //    ChangeElement(Elements.NORMAL, elementsData[Elements.NORMAL].chargeElementDelay);
-        //}
     }
 
     void MouseInputsManager()
@@ -178,10 +177,8 @@ public class ElementsManager : MonoBehaviour
         changingElement = true;
         effectTypeParticles.Stop();
         effectTypeParticles_UI.Stop();
-        attackManager.canAttack /*= moveManager.canMove*/ = false;
+        attackManager.canAttack = false;
         attackManager.SetAttackTimer(attackManager.changeAttackDelay);
-        //moveManager.targetMousePos = Vector3.zero;
-        //walkMark.SetWalkMarkActive(false);
         nearSliderElementIcon.sprite = icons[(int)_element];
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 0, 1, 0.3f));
         attackManager.currentAttackElement = _element;
@@ -196,15 +193,6 @@ public class ElementsManager : MonoBehaviour
                 StopParticles(_element);
                 yield break;  
             }
-            //else if (moveManager.targetMousePos != Vector3.zero /*!moveManager.Moving*/)
-            //{
-            //    StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
-            //    attackManager.canAttack = moveManager.canMove = true;
-            //    elementIdx = attackManager.currentAttackElement;
-            //    changeElementSlider.value = 0;
-            //    StopParticles(_element);
-            //    yield break;
-            //}
 
             timer += Time.deltaTime;
             changeElementSlider.value = Mathf.Lerp(1, 0, timer / maxTime);
@@ -212,7 +200,7 @@ public class ElementsManager : MonoBehaviour
 
         StartCoroutine(LerpImageAlpha(nearSliderElementIcon, 1, 0, 0.3f));
         changeElementSlider.value = 0;
-        attackManager.canAttack /*= moveManager.canMove*/ = true;
+        attackManager.canAttack = true;
         attackManager.SetAttackTimer(attackManager.attackDelay / 4f);
 
         SwitchElementParticles(_element);
