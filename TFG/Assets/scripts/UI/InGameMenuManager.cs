@@ -54,12 +54,14 @@ public class InGameMenuManager : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
+        Destroy(GameObject.FindGameObjectWithTag("save"));
         CustomSceneManager.Instance.ChangeScene("Main Menu");
     }
 
     public void PlayAgain()
     {
         Time.timeScale = 1f;
+        Destroy(GameObject.FindGameObjectWithTag("save"));
         CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
 

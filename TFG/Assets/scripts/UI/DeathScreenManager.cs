@@ -46,12 +46,14 @@ public class DeathScreenManager : MonoBehaviour
     {
         Time.timeScale = 1;
         PlayerPrefs.SetInt("RoomNumber", 0);
+        Destroy(GameObject.FindGameObjectWithTag("save"));
         CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
 
     public void Exit()
     {
         Time.timeScale = 1;
+        Destroy(GameObject.FindGameObjectWithTag("save"));
         CustomSceneManager.Instance.ChangeScene("MainMenu Scene");
     }
 
