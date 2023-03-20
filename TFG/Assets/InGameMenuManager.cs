@@ -6,10 +6,12 @@ using TMPro;
 
 public class InGameMenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject inGameMenu, options;
-    [SerializeField] ChangeMenuSelectionScript activateMenuScript, deactivateMenuScript, deactivateOptionsScript;
+    [SerializeField] GameObject inGameMenu, options, levelCompleted;
+    [SerializeField] ChangeMenuSelectionScript activateMenuScript, deactivateMenuScript, deactivateOptionsScript, activateLevelCompleted;
     [SerializeField] TMP_Dropdown resolutionDropdown;
+    [SerializeField] BaseEnemyScript finalBossRef;
 
+    bool levelCompletedFlag = false;
 
     void Update()
     {
@@ -33,6 +35,13 @@ public class InGameMenuManager : MonoBehaviour
                 }
             }
         }
+
+        if(!levelCompletedFlag && finalBossRef.state.Equals(BaseEnemyScript.States.DEATH))
+        {
+            levelCompletedFlag = true;
+            StartCoroutine(ActivateLevelCompletedScreen());
+        }
+
     }
 
 
@@ -42,11 +51,24 @@ public class InGameMenuManager : MonoBehaviour
         deactivateMenuScript.ChangeMenuSelection();
     }
 
-    public void Exit()
+    public void GoToMainMenu()
     {
         Time.timeScale = 1f;
         CustomSceneManager.Instance.ChangeScene("MainMenu Scene");
     }
 
+    public void PlayAgain()
+    {
+        Time.timeScale = 1f;
+        CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
+    }
+
+
+    IEnumerator ActivateLevelCompletedScreen()
+    {
+        yield return new WaitForSeconds(2f);
+        activateLevelCompleted.ChangeMenuSelection();
+        Time.timeScale = 0.0000001f;
+    }
 
 }
