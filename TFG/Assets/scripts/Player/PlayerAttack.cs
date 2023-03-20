@@ -32,6 +32,7 @@ public class PlayerAttack : MonoBehaviour
 
     internal Transform target;
     PlayerMovement playerMovement;
+    LifeSystem playerLife;
     internal bool canAttack = true;
     float attackTimer;
     internal float dmgIncrease = 0f;
@@ -59,6 +60,7 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        playerLife = GetComponent<LifeSystem>();
 
         //target = roomEnemyManager.GetCloserEnemy(transform);
 
@@ -72,6 +74,8 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerLife.isDead) return;
+
         if (CanAttack() && roomEnemyManager.HasEnemiesRemainging())
         {
             Attack();

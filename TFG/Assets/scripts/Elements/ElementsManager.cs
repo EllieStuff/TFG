@@ -22,8 +22,7 @@ public class ElementsManager : MonoBehaviour
     static Dictionary<Elements, ElementClass> elementsData = null;
 
     PlayerAttack attackManager;
-    //PlayerMovement moveManager;
-    //WalkMark walkMark;
+    LifeSystem playerLife;
     [SerializeField] bool allowElementChangeOneStarted = false;
     bool changingElement = false;
     [SerializeField] Slider changeElementSlider;
@@ -40,6 +39,7 @@ public class ElementsManager : MonoBehaviour
     public ParticleSystem changeElementNeutral;
 
     bool CanChangeElement { get { return !(!allowElementChangeOneStarted && changingElement); } }
+    public bool ChangingElement { get { return changingElement; } }
 
     private RadialRotation UIRadialRot;
     internal bool mouseClockWise = true;
@@ -49,6 +49,7 @@ public class ElementsManager : MonoBehaviour
     void Awake()
     {
         attackManager = GetComponent<PlayerAttack>();
+        playerLife = GetComponent<LifeSystem>();
         UIRadialRot = GameObject.FindGameObjectWithTag("Radial").GetComponent<RadialRotation>();
         //moveManager = GetComponent<PlayerMovement>();
         //walkMark = FindObjectOfType<WalkMark>();
@@ -117,6 +118,7 @@ public class ElementsManager : MonoBehaviour
 
     private void Update()
     {
+        if (playerLife.isDead) return;
         KeyboardInputsManager();
         MouseInputsManager();
     }

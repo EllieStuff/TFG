@@ -68,17 +68,11 @@ public class PlayerMovement : MonoBehaviour
         ResetSpeed();
     }
 
-    void StopAnimationSet()
-    {
-        if (attackScript.ShouldPlayAttackAnim())
-            playerAnimator.SetFloat("state", 4);
-        else
-            playerAnimator.SetFloat("state", 0);
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (lifeStatus.isDead) return;
+
         mouseLookVec = GetMouseLookVector();
         float horizontalInput = mouseLookVec.x;
         float verticalInput = mouseLookVec.y;
@@ -98,10 +92,15 @@ public class PlayerMovement : MonoBehaviour
             if (!audio.IsPlayingSound() || audio.GetClipCurrentState() >= MAX_WALK_PLAYTIME)
                 audio.PlaySound();
 
-            if (rb.velocity.magnitude > MIN_SPEED_WALK)
-                playerAnimator.SetFloat("state", 1);
-            else
-                StopAnimationSet();
+            //if (rb.velocity.magnitude > MIN_SPEED_WALK)
+            //{
+            //    playerAnimator.speed = 1f;
+            //    playerAnimator.SetFloat("state", (int)AnimState.MOVING);
+            //}
+            //else
+            //{
+            //    StopAnimationSet();
+            //}
 
             if (Mathf.Abs(verticalInput) > INPUT_THRESHOLD && Mathf.Abs(horizontalInput) > INPUT_THRESHOLD)
                 moveDir *= DIAGONAL_SPEED_REDUCTION;
@@ -121,8 +120,6 @@ public class PlayerMovement : MonoBehaviour
             }
             rb.constraints = RigidbodyConstraints.FreezeAll;
 
-            StopAnimationSet();
-
             Vector3 reducedVel = rb.velocity;
 
             if (Mathf.Abs(reducedVel.x) > 0)
@@ -134,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!moving)
         {
+            //StopAnimationSet();
             if (attackScript.roomEnemyManager.HasEnemiesRemainging() && attackScript.target != null)
             {
                 lookDir = (attackScript.target.position - transform.position).normalized;
