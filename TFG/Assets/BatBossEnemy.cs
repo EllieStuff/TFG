@@ -38,8 +38,8 @@ public class BatBossEnemy : BatEnemy
     private void OnDisable()
     {
         StopAllCoroutines();
-        nameTextRef.gameObject.SetActive(false);
-        lifeBarRef.gameObject.SetActive(false);
+        if (nameTextRef != null) nameTextRef.gameObject.SetActive(false);
+        if (lifeBarRef != null) lifeBarRef.gameObject.SetActive(false);
     }
 
     internal override void Update_Call()
