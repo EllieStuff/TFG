@@ -16,7 +16,8 @@ public class PlantEnemy : BaseEnemyScript
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform shootPoint;
     [SerializeField] AttackType attackStyle;
-    //[SerializeField] bool testPlant = false;
+    [SerializeField] protected int numOfAttacks = 1;
+    [SerializeField] protected float attackSeparationTime = 0.2f;
 
     float attackTimer;
 
@@ -80,7 +81,14 @@ public class PlantEnemy : BaseEnemyScript
             if (!hit.transform.CompareTag("Wall"))
             {
                 if (shootWithObstacles || (!shootWithObstacles && !hit.transform.CompareTag("Obstacle")))
-                    AttackStateMachine(attackStyle);
+                {
+                    for (int i = 0; i < numOfAttacks; i++)
+                    {
+                        yield return new WaitForSeconds(attackAnimationTime);
+                        AttackStateMachine(attackStyle);
+                        yield return new WaitForSeconds(attackSeparationTime);
+                    }
+                }
             }
         }
     }

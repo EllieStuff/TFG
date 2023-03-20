@@ -52,7 +52,7 @@ public class DeathScreenManager : MonoBehaviour
     public void Exit()
     {
         Time.timeScale = 1;
-        CustomSceneManager.Instance.ChangeScene("MainMenu Scene");
+        CustomSceneManager.Instance.ChangeScene("Main Menu");
     }
 
 

@@ -160,10 +160,6 @@ public class BaseEnemyScript : MonoBehaviour
     #region StateMachine
     internal virtual void UpdateStateMachine()
     {
-        if (test)
-        {
-            int a = 0;
-        }
         switch (state)
         {
             case States.IDLE:
@@ -272,11 +268,6 @@ public class BaseEnemyScript : MonoBehaviour
         if (idleWaitTimer > 0) return;
         else idleWaitTimer = Random.Range(idleWait.x, idleWait.y);
 
-        if (test)
-        {
-            int a = 0;
-        }
-
         //Debug.Log("Dbg Idle");
         float distToPlayer = Vector3.Distance(transform.position, player.position);
         if (movesToTarget)
@@ -332,11 +323,6 @@ public class BaseEnemyScript : MonoBehaviour
         rndMoveTimer += Time.deltaTime;
         moveDir = (rndTarget - transform.position).normalized;
         MoveRB(moveDir, ((actualMoveSpeed * 3f) / 4f) * speedMultiplier);
-
-        if (test)
-        {
-            int a = 0;
-        }
 
         if (stopRndMoveWhenSeeingTarget)
         {
@@ -403,10 +389,6 @@ public class BaseEnemyScript : MonoBehaviour
         if (endsAttackWhenTargetOutOfRange 
             && !InAttackRange())
         {
-            if (test)
-            {
-                int a = 0;
-            }
             ChangeState(States.IDLE);
             return;
         }
@@ -536,20 +518,9 @@ public class BaseEnemyScript : MonoBehaviour
         }
         else if (canEnterDamageState && baseDamageTimer > 0f)
         {
-            if (isAttacking)
-            {
-                int a = 0;
-            }
             StartCoroutine(ActivateDamage_Cor(baseDamageTimer));
         }
 
-        //if (damageTimer <= 0)
-        //{
-        //    float distToPlayer = Vector3.Distance(transform.position, player.position);
-        //    if (InAttackRange()) ChangeState(States.ATTACK);
-        //    else if (distToPlayer <= playerDetectionDistance) ChangeState(States.MOVE_TO_TARGET);
-        //    else ChangeState(States.IDLE);
-        //}
     }
     protected virtual IEnumerator ActivateDamage_Cor(float _dmgTimer)
     {
