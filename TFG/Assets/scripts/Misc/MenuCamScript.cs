@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MenuCamScript : MonoBehaviour
 {
+    [SerializeField] Animation doorAnim;
     internal bool moveCamForward;
     const float CAM_FORWARD_SPEED = 5;
     Rigidbody camRB;
@@ -11,6 +12,8 @@ public class MenuCamScript : MonoBehaviour
     public void EnableCamForward()
     {
         moveCamForward = true;
+        doorAnim.Play();
+        doorAnim.gameObject.GetComponent<AudioSource>().Play();
     }
 
     private void Start()
