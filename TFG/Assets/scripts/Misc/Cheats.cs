@@ -21,24 +21,26 @@ public class Cheats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-            CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
-
-        if (Input.GetKeyDown(KeyCode.F2))
-            infiniteLife = !infiniteLife;
 
         if (Input.GetKeyDown(KeyCode.F3))
-            cardSelectCheat.SetActive(true);
+            infiniteLife = !infiniteLife;
 
         if (Input.GetKeyDown(KeyCode.F4))
+            cardSelectCheat.SetActive(true);
+
+
+        if (Input.GetKeyDown(KeyCode.F5))
             playerLife.Damage(10000, new ElementsManager.Elements());
+
+        if (Input.GetKeyDown(KeyCode.F6))
+            CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
 
         if (infiniteLife)
         {
             playerLife.currLife = playerLife.maxLife;
         }
 
-        if (Input.GetKeyDown(KeyCode.F5))
+        if (Input.GetKeyDown(KeyCode.F7))
         {
             playerLife.transform.position = new Vector3(preBossLocation.transform.position.x, playerLife.transform.position.y, preBossLocation.transform.position.z);
             walkmark.ResetMousePos();
