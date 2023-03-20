@@ -12,6 +12,7 @@ public class PlayerAnimationManager : MonoBehaviour
     PlayerAttack playerAttack;
     ElementsManager elementsManager;
     LifeSystem playerLife;
+    AnimState prevAnimState = AnimState.NONE;
 
     // Start is called before the first frame update
     void Start()
@@ -58,8 +59,9 @@ public class PlayerAnimationManager : MonoBehaviour
 
     void SetAnimation(AnimState _animState, float _animSpeed)
     {
+        if (prevAnimState == _animState) return;
+        prevAnimState = _animState;
         playerAnimator.speed = _animSpeed;
-        playerAnimator.SetInteger("prevState", playerAnimator.GetInteger("state"));
         playerAnimator.SetInteger("state", (int)_animState);
     }
 

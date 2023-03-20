@@ -75,6 +75,7 @@ public class MeleeEnemy : BaseEnemyScript
     internal override void DeathStart()
     {
         enemyAnimator.SetInteger("state", (int)AnimState.DEAD);
+        fastRatVFX.Stop();
         base.DeathStart();
     }
 

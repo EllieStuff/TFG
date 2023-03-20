@@ -80,6 +80,7 @@ public class BatBossEnemy : BatEnemy
 
     internal override void DeathStart()
     {
+        StopAllCoroutines();
         base.DeathStart();
         for (int i = 0; i < projectiles.Count; i++) projectiles[i].DestroyObject();
         projectiles.Clear();
