@@ -152,6 +152,8 @@ public class PlayerAttack : MonoBehaviour
         referenceGlowBurst.Play();
         referenceGlowBurst.transform.SetParent(null);
 
+        Destroy(referenceGlowBurst.gameObject, 3f);
+
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
         attack.Init(transform);

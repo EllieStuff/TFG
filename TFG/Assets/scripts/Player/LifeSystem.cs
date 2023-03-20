@@ -22,7 +22,6 @@ public class LifeSystem : MonoBehaviour
     [SerializeField] private PlayerLifeBar playerLifeBar;
     [SerializeField] private Slider EnemyLifeBar;
     [SerializeField] private GameObject damageTextPrefab;
-    [SerializeField] private ParticleSystem hitPS;
 
     //public ParticleSystem hitPS;
 
@@ -199,8 +198,7 @@ public class LifeSystem : MonoBehaviour
 
             textUI.SetText(damageText);
 
-            //Le he puesto rapidamente algo provisional una particula porque no se cambiar el color del pj y es provisional hasta tener el modelo final
-            hitPS.Play();
+           
 
             if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
             {

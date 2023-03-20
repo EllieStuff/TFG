@@ -8,10 +8,14 @@ public class Cheats : MonoBehaviour
     LifeSystem playerLife;
     bool infiniteLife = false;
     [SerializeField] GameObject cardSelectCheat;
+    [SerializeField] Transform preBossLocation;
+
+    private WalkMark walkmark;
 
     private void Start()
     {
         playerLife = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeSystem>();
+        walkmark = GameObject.Find("UI_Walk").GetComponent<WalkMark>();
     }
 
     // Update is called once per frame
@@ -32,6 +36,12 @@ public class Cheats : MonoBehaviour
         if (infiniteLife)
         {
             playerLife.currLife = playerLife.maxLife;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            playerLife.transform.position = new Vector3(preBossLocation.transform.position.x, playerLife.transform.position.y, preBossLocation.transform.position.z);
+            walkmark.ResetMousePos();
         }
     }
 

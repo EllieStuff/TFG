@@ -72,7 +72,7 @@ public class PlantProjectileData : ProjectileData
                 if (timer > lerpTime)
                 {
                     projectileBehaviour = false;
-                    DestroyObject(0.4f);
+                    DestroyObject(0.1f);
                 }
             }
             moveDir = (nextPos - transform.position).normalized;
@@ -88,7 +88,7 @@ public class PlantProjectileData : ProjectileData
             if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit))
             {
                 if (hit.transform.CompareTag("floor")) 
-                    DestroyObject(0.1f);
+                    DestroyObject();
             }
         }
 

@@ -6665,6 +6665,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 265838565}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &280357194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 280357195}
+  m_Layer: 0
+  m_Name: PreBossLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &280357195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280357194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.13, y: 37.333, z: 420.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1323714378}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &280809090
 GameObject:
   m_ObjectHideFlags: 0
@@ -36633,6 +36664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSelectCheat: {fileID: 2113104777}
+  preBossLocation: {fileID: 280357195}
 --- !u!4 &1323714378
 Transform:
   m_ObjectHideFlags: 0
@@ -36644,7 +36676,8 @@ Transform:
   m_LocalPosition: {x: 5.006242, y: -35.97853, z: 37.5129}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 280357195}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52692,6 +52725,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.000000035646
       objectReference: {fileID: 0}
+    - target: {fileID: 6675267887190779042, guid: 38fd0e58a88a93d498025a0a62d0b92f,
+        type: 3}
+      propertyPath: doorOpenAnims.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9175693272906605509, guid: 38fd0e58a88a93d498025a0a62d0b92f,
         type: 3}
       propertyPath: m_RootOrder
@@ -52750,7 +52788,7 @@ PrefabInstance:
     - target: {fileID: 9175693272906605529, guid: 38fd0e58a88a93d498025a0a62d0b92f,
         type: 3}
       propertyPath: m_Name
-      value: Room22
+      value: Boss.Room
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38fd0e58a88a93d498025a0a62d0b92f, type: 3}
@@ -53841,7 +53879,7 @@ PrefabInstance:
     - target: {fileID: 4898115510644903580, guid: 12ebd5e35ca9733418a085018bfc3c30,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -48
+      value: -47.04
       objectReference: {fileID: 0}
     - target: {fileID: 4898115510644903580, guid: 12ebd5e35ca9733418a085018bfc3c30,
         type: 3}
@@ -59821,7 +59859,7 @@ PrefabInstance:
     - target: {fileID: 8377633024247808006, guid: 35f2a73035004e943aaafe3bea709898,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.85
+      value: -0.40703773
       objectReference: {fileID: 0}
     - target: {fileID: 8377633024247808006, guid: 35f2a73035004e943aaafe3bea709898,
         type: 3}
@@ -61091,6 +61129,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -28
+      propertyPath: m_SizeDelta.y
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 2069013491332508890, guid: ff7c229be63751a45b2d7b547f4b8ba4,
         type: 3}

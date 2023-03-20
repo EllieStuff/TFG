@@ -19,6 +19,10 @@ public class BatBossEnemy : BatEnemy
     [SerializeField] float uiAppearSpeed = 1f;
     [SerializeField] CanvasGroup nameTextRef, lifeBarRef;
 
+
+    [SerializeField] ParticleSystem enrageVFX;
+    [SerializeField] ParticleSystem enrageBGVFX;
+
     CameraShake camShake;
     List<BatProjectile_Missile> projectiles = new List<BatProjectile_Missile>();
     bool changingElement = false;
@@ -79,6 +83,8 @@ public class BatBossEnemy : BatEnemy
         base.DeathStart();
         for (int i = 0; i < projectiles.Count; i++) projectiles[i].DestroyObject();
         projectiles.Clear();
+        enrageBGVFX.Stop();
+        enrageBGVFX.Clear();
         StartCoroutine(EnableUI(false));
     }
 
@@ -139,6 +145,8 @@ public class BatBossEnemy : BatEnemy
         projectileSpeedMultiplier *= secondPhaseProjSpeedMultiplier;
         speedMultiplier = secondPhaseSpeedMultiplier;
         ///ToDo: Posar particules enfadament
+        enrageVFX.Play();
+        enrageBGVFX.Play();
 
         StartCoroutine(GetComponent<EnemyShake>().Shake(changePhaseDelay, 0.03f, 0.03f));
         yield return camShake.ShakeCamera(changePhaseDelay, 0.3f);
