@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class DeathScreenManager : MonoBehaviour
 {
-    const float APPEAR_DELAY = 1f;
+    const float APPEAR_DELAY = 2f;
     //enum Options { TRY_AGAIN, EXIT, COUNT }
 
     [SerializeField] CanvasGroup bg, gameOverText, continueBttn, startOverBttn, exitBttn;
