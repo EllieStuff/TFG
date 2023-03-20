@@ -10,6 +10,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] float maxPitch = 1.2f;
     [SerializeField] bool playOnStart;
     [SerializeField] bool playOnEnable;
+    [SerializeField] bool pitch;
+    [SerializeField] bool RemoveParent;
+    [SerializeField] bool destroy;
+    [SerializeField] float destroyTime;
 
     private void Start()
     {
@@ -28,11 +32,25 @@ public class AudioManager : MonoBehaviour
         return audioSource.isPlaying;
     }
 
+    public float GetClipCurrentState()
+    {
+        return audioSource.time;
+    }
+
     public void PlaySound()
     {
         audioSource.clip = ChooseClip(clips);
-        audioSource.pitch = Random.Range(minPitch, maxPitch);
+
+        if(pitch)
+            audioSource.pitch = Random.Range(minPitch, maxPitch);
+
         audioSource.Play();
+
+        if (RemoveParent)
+            transform.parent = null;
+
+        if (destroy)
+            Destroy(gameObject, destroyTime);
     }
 
     public static AudioClip ChooseClip(AudioClip[] clips)

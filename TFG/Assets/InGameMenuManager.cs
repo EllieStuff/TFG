@@ -54,7 +54,7 @@ public class InGameMenuManager : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        CustomSceneManager.Instance.ChangeScene("MainMenu Scene");
+        CustomSceneManager.Instance.ChangeScene("Main Menu");
     }
 
     public void PlayAgain()

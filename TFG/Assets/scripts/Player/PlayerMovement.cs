@@ -36,9 +36,11 @@ public class PlayerMovement : MonoBehaviour
     PlayerAttack attackScript;
 
     public ParticleSystem dustParticleWalking;
+    private AudioManager audio;
 
     bool damage;
 
+    const float MAX_WALK_PLAYTIME = 0.4f;
 
     Rigidbody rb;
     [HideInInspector] public Vector3 moveDir = Vector3.zero;
@@ -54,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
+        audio = GetComponent<AudioManager>();
         baseSpeed = speedMultiplier;
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();
@@ -91,6 +94,9 @@ public class PlayerMovement : MonoBehaviour
             moving = true;
 
             rb.constraints = (RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation);
+
+            if (!audio.IsPlayingSound() || audio.GetClipCurrentState() >= MAX_WALK_PLAYTIME)
+                audio.PlaySound();
 
             if (rb.velocity.magnitude > MIN_SPEED_WALK)
                 playerAnimator.SetFloat("state", 1);

@@ -5060,12 +5060,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 3302124207046598439}
   clips:
-  - {fileID: 8300000, guid: 4011b02765f3bb9419dee56bc355b22a, type: 3}
-  - {fileID: 8300000, guid: a44f347a6715e4349b1d679036f10f3a, type: 3}
+  - {fileID: 8300000, guid: 5501cb3e33c5025439632e7a18db0ff5, type: 3}
   minPitch: 1
   maxPitch: 1.25
   playOnStart: 0
   playOnEnable: 0
+  pitch: 0
+  RemoveParent: 0
+  destroy: 0
+  destroyTime: 0
 --- !u!82 &3302124207046598439
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5078,7 +5081,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5323,7 +5326,6 @@ MonoBehaviour:
   attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: -1
-  stealLife: 0
   stealLifePercentage: 0
   critPercentage: 0
   tagsAffected:
