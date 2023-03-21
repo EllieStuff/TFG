@@ -4847,7 +4847,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334959564600366165}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.014, z: -0.594}
+  m_LocalPosition: {x: 0, y: -0.014, z: -0.683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34501,6 +34501,8 @@ MonoBehaviour:
     type: 3}
   shootPoint: {fileID: 693481586664506299}
   attackStyle: 0
+  numOfAttacks: 1
+  attackSeparationTime: 0.2
 --- !u!114 &8351470923921754958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34527,7 +34529,6 @@ MonoBehaviour:
   EnemyLifeBar: {fileID: 898733192618945152}
   damageTextPrefab: {fileID: 4394357316648102780, guid: 651c7722bc3deb14b826ab35d2b20ae0,
     type: 3}
-  hitPS: {fileID: 5461383386582714078}
 --- !u!114 &8427279190370931055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39665,7 +39666,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7563532440414890797}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.024999626, y: -0.019999504, z: 1.2319998}
+  m_LocalPosition: {x: 0.024999626, y: -0.02, z: 1.022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -39684,7 +39685,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.101960786, g: 0.6431373, b: 0.7372549, a: 1}
-  m_Intensity: 0.6
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
