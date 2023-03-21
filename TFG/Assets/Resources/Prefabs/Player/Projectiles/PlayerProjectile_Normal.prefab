@@ -113,6 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 25
+  destroyProjectileVFX: {fileID: 1194257522606370083, guid: e3914380dd16ee9458730aaade1581d7,
+    type: 3}
 --- !u!114 &3293519732818745490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +133,6 @@ MonoBehaviour:
   attackElement: 3
   alwaysAttacking: 1
   timeDisabledAfterColl: -1
-  stealLife: 0
   stealLifePercentage: 0
   critPercentage: 0
   tagsAffected:
