@@ -6,7 +6,7 @@ public class DestroyOnAnimationEnd: MonoBehaviour
 {
     public void DestroyParent()
     {
-        GameObject parent = gameObject.transform.parent.gameObject;
+        GameObject parent = gameObject.transform.parent.parent.gameObject;
         Destroy(parent);
     }
 }

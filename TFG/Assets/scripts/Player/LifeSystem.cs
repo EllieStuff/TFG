@@ -114,7 +114,7 @@ public class LifeSystem : MonoBehaviour
 
     //        GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.position.x, playerLifeBar.parent.position.y, playerLifeBar.parent.position.z + 1f), damageTextPrefab.transform.rotation);
     //        string lifeStolenText = "+ " + lifeStolen.ToString();
-    //        TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+    //        TextMeshProUGUI textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     //        textUI.color = Color.green;
     //        textUI.text = lifeStolenText;
     //    }
@@ -135,7 +135,7 @@ public class LifeSystem : MonoBehaviour
 
             GameObject addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.position.x, playerLifeBar.parent.position.y, playerLifeBar.parent.position.z + 1f), damageTextPrefab.transform.rotation);
             string lifeStolenText = "+ " + lifeStolen.ToString();
-            TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+            TextMeshProUGUI textUI = addLifeTextInstance.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
             textUI.color = Color.green;
             textUI.text = lifeStolenText;
         }
@@ -145,7 +145,7 @@ public class LifeSystem : MonoBehaviour
     {
         Transform playerLifeBar = EnemyLifeBar.transform;
         GameObject critTextInstance = Instantiate(damageTextPrefab, new Vector3(playerLifeBar.parent.position.x, playerLifeBar.parent.position.y + 1, playerLifeBar.parent.position.z + 1f), damageTextPrefab.transform.rotation);
-        TextMeshPro textUI = critTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+        TextMeshProUGUI textUI = critTextInstance.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         textUI.color = Color.yellow;
         textUI.text = "CRITICAL!";
     }
@@ -188,7 +188,7 @@ public class LifeSystem : MonoBehaviour
             }
             string damageText = dmgDealt.ToString();
 
-            TextMeshPro textUI = damageTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+            TextMeshProUGUI textUI = damageTextInstance.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
 
             if (entityType.Equals(EntityType.PLAYER))
             {
@@ -266,7 +266,7 @@ public class LifeSystem : MonoBehaviour
             addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(appearTransform.position.x, appearTransform.position.y, appearTransform.position.z + 1f), damageTextPrefab.transform.rotation);
         }
         string lifeHealedText = "+ " + lifeHealed.ToString();
-        TextMeshPro textUI = addLifeTextInstance.transform.GetChild(0).GetComponent<TextMeshPro>();
+        TextMeshProUGUI textUI = addLifeTextInstance.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         textUI.color = Color.green;
         textUI.text = lifeHealedText;
     }
