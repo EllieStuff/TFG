@@ -9725,7 +9725,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -39734,7 +39734,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &4464184184873545342
 MonoBehaviour:
@@ -44725,6 +44725,8 @@ MonoBehaviour:
     type: 3}
   shootPoint: {fileID: 1522693617700436321}
   attackStyle: 0
+  numOfAttacks: 1
+  attackSeparationTime: 0.2
 --- !u!114 &3593669281732694037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44751,7 +44753,6 @@ MonoBehaviour:
   EnemyLifeBar: {fileID: 8502652133586177092}
   damageTextPrefab: {fileID: 4394357316648102780, guid: 651c7722bc3deb14b826ab35d2b20ae0,
     type: 3}
-  hitPS: {fileID: 1400527335974043085}
 --- !u!114 &4894056822736141015
 MonoBehaviour:
   m_ObjectHideFlags: 0
