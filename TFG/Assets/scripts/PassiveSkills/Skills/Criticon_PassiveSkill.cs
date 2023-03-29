@@ -5,7 +5,7 @@ using UnityEngine;
 public class Criticon_PassiveSkill : PassiveSkill_Base
 {
 
-    const float CRITICAL_CHANGE_IMPROVE = 0.05f;
+    const float CRITICAL_CHANGE_IMPROVE = 0.1f;
 
     public Criticon_PassiveSkill()
     {
@@ -13,7 +13,7 @@ public class Criticon_PassiveSkill : PassiveSkill_Base
         maxLevel = 3;
         name = "Critical improve";
         //initialDescription = "Improves your critical hit chance!";
-        initialDescription = "Improves your critical hit chance by 5%!";
+        initialDescription = "Improves your critical hit chance by 10%!";
         improvementDescription = initialDescription;
     }
 
