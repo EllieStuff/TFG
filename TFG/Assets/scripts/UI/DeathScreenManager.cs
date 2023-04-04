@@ -10,6 +10,7 @@ public class DeathScreenManager : MonoBehaviour
     //enum Options { TRY_AGAIN, EXIT, COUNT }
 
     [SerializeField] CanvasGroup bg, gameOverText, continueBttn, startOverBttn, exitBttn;
+    [SerializeField] GameObject UIBG;
 
 
     //Button[] bttns;
@@ -60,6 +61,9 @@ public class DeathScreenManager : MonoBehaviour
 
     public void DeathScreenAppear(float _delay = APPEAR_DELAY)
     {
+        if(UIBG != null)
+            UIBG.SetActive(false);
+
         continueBttn.gameObject.SetActive(true);
         continueBttn.alpha = 0f;
         StartCoroutine(DeathScreenAppearCor(_delay));
