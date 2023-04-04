@@ -72,6 +72,8 @@ public class AbilityButton : MonoBehaviour
         if (!sizePlaced)
         {
             originalSize = imageTransform.sizeDelta;
+            uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            originalTextNameSize = uiTextName.fontSize;
             sizePlaced = true;
         }
 
@@ -81,8 +83,6 @@ public class AbilityButton : MonoBehaviour
         playerLife = playerSkills.GetComponent<LifeSystem>();
         playerMovement = playerSkills.GetComponent<PlayerMovement>();
         playerMovement.canMove = false;
-        uiTextName = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        originalTextNameSize = uiTextName.fontSize;
         biggerTextNameSize = originalTextNameSize * TEXT_SIZE_MULTIPLIER_NAME;
 
         InitializeAbility();

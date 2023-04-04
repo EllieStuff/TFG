@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerProjectileData : ProjectileData
 {
+    const float DESTROY_TIME = 5;
 
     public override void Init(Transform _origin)
     {
@@ -16,6 +17,7 @@ public class PlayerProjectileData : ProjectileData
         else
             moveDir = player.transform.forward;
         transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
+        Destroy(gameObject, DESTROY_TIME);
     }
 
 
