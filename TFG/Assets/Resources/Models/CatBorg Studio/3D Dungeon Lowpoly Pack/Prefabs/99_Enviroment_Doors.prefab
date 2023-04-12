@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 2309621454828716532}
   - component: {fileID: 1246567652098370494}
   - component: {fileID: 7112570339350755180}
+  - component: {fileID: 5160105154283880176}
   m_Layer: 0
   m_Name: 99_Enviroment_Doors
   m_TagString: Untagged
@@ -276,6 +277,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 4.8080573, z: 5}
   m_Center: {x: 0.9, y: 1.9040272, z: 0.0000028372226}
+--- !u!114 &5160105154283880176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4397162205553716605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1458696290
+      Data2: 1330835256
+      Data3: -1354074732
+      Data4: -575268771
+    Path: event:/lvl1/props/door
+  Event: 
+  PlayEvent: 3
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &5913236191002725214
 GameObject:
   m_ObjectHideFlags: 0
