@@ -16,7 +16,7 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal float critPercentage = 0;
     [SerializeField] List<string> tagsAffected;
 
-    [SerializeField] AudioManager audio;
+    //[SerializeField] AudioManager audio;
 
     private LifeSystem playerLifeSystem;
 
@@ -90,8 +90,8 @@ public class DamageData : MonoBehaviour
 
     void DamageToPlayer(Transform _player)
     {
-        if (audio != null)
-            audio.PlaySound();
+        //if (audio != null)
+        //    audio.PlaySound();
 
         LifeSystem lifeSystem = _player.GetComponent<LifeSystem>();
         lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
@@ -103,8 +103,8 @@ public class DamageData : MonoBehaviour
         if (critPercentage > 0)
             damage = damage + GetDamageVariation() + (damage * DAMAGE_CRIT_MULTIPLIER);
 
-        if (audio != null)
-            audio.PlaySound();
+        //if (audio != null)
+        //    audio.PlaySound();
 
         if (playerLifeSystem == null)
             playerLifeSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeSystem>();
