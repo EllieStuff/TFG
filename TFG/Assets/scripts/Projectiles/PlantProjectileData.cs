@@ -58,7 +58,7 @@ public class PlantProjectileData : ProjectileData
         if (playerLife.isDead)
         {
             destroying = true;
-            Destroy(gameObject);
+            Destroy(gameObject, 0.5f);
         }
 
         if (projectileBehaviour)
