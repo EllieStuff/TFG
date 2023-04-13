@@ -53,13 +53,12 @@ public class PlantProjectileData : ProjectileData
         return heighestPoint;
     }
 
-
     protected override void Update_Call()
     {
-        if (playerLife.isDead && !destroying)
+        if (playerLife.isDead)
         {
             destroying = true;
-            DestroyObject();
+            Destroy(gameObject);
         }
 
         if (projectileBehaviour)
