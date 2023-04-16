@@ -18,6 +18,7 @@ public class PlantProjectileData : ProjectileData
     Vector3 highestPosLow, highestPosHigh;
     bool goingUp = true, projectileBehaviour = true;
     float timer = 0, lerpTime = 0;
+    LifeSystem playerLife;
 
     public override void Init(Transform _origin)
     {
@@ -27,6 +28,8 @@ public class PlantProjectileData : ProjectileData
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
         if (player != null)
         {
+            playerLife = player.GetComponent<LifeSystem>();
+            if (playerLife.isDead) { Destroy(gameObject); return; }
             initialPos = _origin.position;
             targetPosLow = player.position;
             //if (CheckForWalls()) Destroy(gameObject);
@@ -50,9 +53,14 @@ public class PlantProjectileData : ProjectileData
         return heighestPoint;
     }
 
-
     protected override void Update_Call()
     {
+        if (playerLife.isDead)
+        {
+            destroying = true;
+            Destroy(gameObject, 0.5f);
+        }
+
         if (projectileBehaviour)
         {
             timer += Time.deltaTime * moveSpeed;
