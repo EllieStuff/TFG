@@ -20,7 +20,7 @@ public class PlantEnemy : BaseEnemyScript
     [SerializeField] protected float attackSeparationTime = 0.2f;
 
     float attackTimer;
-
+    public bool plantAttacking = false;
     const int CIRCLE_ITERATIONS = 24;
     const int CIRCLE_MULTIPLIER = 50;
 
@@ -74,6 +74,7 @@ public class PlantEnemy : BaseEnemyScript
 
         //place shoot animation here
         enemyAnimator.SetFloat("state", (int)AnimState.ATTACKING);
+        plantAttacking = true;
         yield return new WaitForSeconds(attackAnimationTime);
         RaycastHit hit;
         if (Physics.Raycast(shootPoint.position, (player.position - shootPoint.position).normalized, out hit))
@@ -91,6 +92,7 @@ public class PlantEnemy : BaseEnemyScript
                 }
             }
         }
+        plantAttacking = false;
     }
 
     void AttackStateMachine(AttackType type)
