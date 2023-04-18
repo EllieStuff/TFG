@@ -14,6 +14,7 @@ public class OnboardingController : MonoBehaviour
     [SerializeField] GameObject canvasFocus;
 
     [SerializeField] GameObject player;
+    [SerializeField] GameObject ratEnemy;   //Solo necesito freeze para que no se mueva hasta x momento
     [SerializeField] PlantEnemy enemyFirst;
 
     private bool isAttacking;
@@ -38,7 +39,8 @@ public class OnboardingController : MonoBehaviour
     {
         CheckIfAttacking();
         CheckIfSecondCheckpointReached();
-        Debug.Log("player pos" + player.gameObject.transform.position.z);
+        if (ratEnemy != null && ratEnemy.gameObject.activeInHierarchy)
+            CheckIfFirstEnemyDead();
     }
 
     IEnumerator Manager()
@@ -74,24 +76,34 @@ public class OnboardingController : MonoBehaviour
         Time.timeScale = 0;
         fourthTextAUTO.enabled = true;
         demostrationElementsAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(3.5f);
+        yield return new WaitForSecondsRealtime(0.5f);  //Tarda en aparecer el panel
         canvasFocus.SetActive(true);
         yield return WaitUntilTrue(IsMousePressed);
         canvasFocus.SetActive(false);
         fourthTextAUTO.enabled = false;
         fourthTextAUTO.gameObject.SetActive(false);
         tablaDebilidadesAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(3f);//Poner un panel para mostrar bien la UI
+        yield return new WaitForSecondsRealtime(3f);
         yield return WaitUntilTrue(IsMousePressed);
         Time.timeScale = 1;
         demostrationElementsAUTO.enabled = false;
+        demostrationElementsAUTO.gameObject.SetActive(false);
 
 
     }
 
+    void CheckIfFirstEnemyDead()
+    {
+        //Esta funcion desactivara el freeze del raton 
+        if (enemyFirst == null)//si es null significa que ha muerto o que no esta asignado en el inspector
+        {
+            ratEnemy.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePosition;
+        }
+    }
+
     bool CheckIfAttacking()
     {
-        if (enemyFirst.plantAttacking)
+        if (enemyFirst != null && enemyFirst.plantAttacking)
         {
             isAttacking = true;
         }
