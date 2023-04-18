@@ -36,10 +36,13 @@ public class InGameMenuManager : MonoBehaviour
             }
         }
 
-        if(!levelCompletedFlag && finalBossRef.state.Equals(BaseEnemyScript.States.DEATH))
+        if(!levelCompletedFlag)
         {
-            levelCompletedFlag = true;
-            StartCoroutine(ActivateLevelCompletedScreen());
+            if (finalBossRef != null && finalBossRef.state.Equals(BaseEnemyScript.States.DEATH))
+            {
+                levelCompletedFlag = true;
+                StartCoroutine(ActivateLevelCompletedScreen());
+            }
         }
 
     }

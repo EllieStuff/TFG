@@ -10,7 +10,8 @@ public class OnboardingController : MonoBehaviour
     [SerializeField] Animator fourthTextAUTO;
 
     [SerializeField] Animator demostrationElementsAUTO;
-
+    [SerializeField] Animator tablaDebilidadesAUTO;
+    [SerializeField] GameObject canvasFocus;
 
     [SerializeField] GameObject player;
     [SerializeField] PlantEnemy enemyFirst;
@@ -29,6 +30,7 @@ public class OnboardingController : MonoBehaviour
         fourthTextAUTO.enabled = false;
 
         demostrationElementsAUTO.enabled = false;
+        tablaDebilidadesAUTO.enabled = false;
     }
 
     // Update is called once per frame
@@ -72,7 +74,14 @@ public class OnboardingController : MonoBehaviour
         Time.timeScale = 0;
         fourthTextAUTO.enabled = true;
         demostrationElementsAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(4f);//Poner un panel para mostrar bien la UI
+        yield return new WaitForSecondsRealtime(3.5f);
+        canvasFocus.SetActive(true);
+        yield return WaitUntilTrue(IsMousePressed);
+        canvasFocus.SetActive(false);
+        fourthTextAUTO.enabled = false;
+        fourthTextAUTO.gameObject.SetActive(false);
+        tablaDebilidadesAUTO.enabled = true;
+        yield return new WaitForSecondsRealtime(3f);//Poner un panel para mostrar bien la UI
         yield return WaitUntilTrue(IsMousePressed);
         Time.timeScale = 1;
         demostrationElementsAUTO.enabled = false;
