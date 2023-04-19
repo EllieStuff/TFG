@@ -155,7 +155,7 @@ public class ZoneScript : MonoBehaviour
             if(Vector3.Distance(items[i].transform.position, player.transform.position) <= DOOR_DISTANCE && !items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor)
             {
                 //play sound and particles
-                items[i].GetComponent<AudioSource>().Play();
+                //items[i].GetComponent<AudioSource>().Play();
                 items[i].Play();
                 DoorVariables door = items[i].GetComponent<DoorVariables>();
                 door.openedDoor = true;

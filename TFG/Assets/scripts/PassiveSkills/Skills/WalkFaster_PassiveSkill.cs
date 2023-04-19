@@ -10,8 +10,10 @@ public class WalkFaster_PassiveSkill : PassiveSkill_Base
     {
         skillType = SkillType.WALK_SPEED;
         maxLevel = 3;
+        basePrice = 3500;
+        priceInc = 500;
         name = "Agile foot";
-        initialDescription = "Increase your movement speed by 5%!";
+        initialDescription = "Increase your movement speed by 10%!";
         improvementDescription = initialDescription;
     }
 

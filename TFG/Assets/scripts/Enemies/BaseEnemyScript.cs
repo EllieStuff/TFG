@@ -35,6 +35,8 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] protected float attackChargingTime = 1f;
     [SerializeField] int numOfRndMoves = 0;
     [SerializeField] protected float dmgOnTouch = 5f;
+    [SerializeField] Vector2Int moneyDropped;
+    [SerializeField] GameObject coinPrefab;
     [SerializeField] Transform enemyLightsHolder;
     [SerializeField] Transform lookPoint;
     [SerializeField] bool disableAutoGravity;
@@ -450,7 +452,7 @@ public class BaseEnemyScript : MonoBehaviour
 
         if (damageTimer <= 0)
         {
-            Destroy(gameObject);
+            DeathExit();
         }
     }
     #endregion Updates
@@ -495,6 +497,8 @@ public class BaseEnemyScript : MonoBehaviour
             zoneSystem.enemiesQuantity -= 1;
             zoneSystem = null;
         }
+
+        DropMoney();
     }
     #endregion Starts
 
@@ -505,7 +509,7 @@ public class BaseEnemyScript : MonoBehaviour
     internal virtual void AttackExit() { }
     internal virtual void RestExit() { canMove = canRotate = true; }
     internal virtual void DamageExit() { }
-    internal virtual void DeathExit() { }
+    internal virtual void DeathExit() { Destroy(gameObject); }
     #endregion Exits
 
 
@@ -530,6 +534,19 @@ public class BaseEnemyScript : MonoBehaviour
         yield return new WaitForSeconds(_dmgTimer);
         canMove = true;
         dmgActivated = false;
+    }
+    void DropMoney()
+    {
+        int dropAmount = Random.Range(moneyDropped.x, moneyDropped.y) / 10;
+        float distRange = 0.5f;
+        RoomEnemyManager roomManager = GetComponentInParent<RoomEnemyManager>();
+        for(int i = 0; i < dropAmount; i++)
+        {
+            Vector3 rndPos = transform.position + new Vector3(Random.Range(distRange, -distRange), Random.Range(distRange, -distRange), Random.Range(distRange, -distRange));
+            Rigidbody dropRb = Instantiate(coinPrefab, rndPos, Random.rotation).GetComponent<Rigidbody>();
+            dropRb.AddExplosionForce(Random.Range(50f, 600f), transform.position, distRange);
+            dropRb.GetComponent<CoinScript>().roomManager = roomManager;
+        }
     }
     protected virtual void EndRndMovesBehaviour() { rndMovesDone = 0; }
 

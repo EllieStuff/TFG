@@ -39595,7 +39595,6 @@ MonoBehaviour:
   critPercentage: 0
   tagsAffected:
   - Player
-  audio: {fileID: 0}
 --- !u!1 &6860280051836463455
 GameObject:
   m_ObjectHideFlags: 0
@@ -44554,11 +44553,14 @@ MonoBehaviour:
   movesToTarget: 0
   needsToRest: 0
   idleWait: {x: 1, y: 2.5}
-  attackWait: {x: 10, y: 12}
+  attackWait: {x: 12, y: 14}
   restWait: {x: 0, y: 0}
   attackChargingTime: 2.5
   numOfRndMoves: 35
   dmgOnTouch: 20
+  moneyDropped: {x: 10000, y: 12000}
+  coinPrefab: {fileID: 1195922223204480883, guid: fc1876224772770458364dc8d5a62e39,
+    type: 3}
   enemyLightsHolder: {fileID: 1468295826494457946}
   lookPoint: {fileID: 8655353634351651845}
   disableAutoGravity: 0
@@ -44575,12 +44577,12 @@ MonoBehaviour:
   shootPoint: {fileID: 6655528548809518790}
   numOfAttacks: 7
   attackSeparationTime: 0.2
-  changeElementDelay: 3
+  changeElementDelay: 4
   flashDuration: 0.2
   changePhaseDelay: 2
-  secondPhaseStartLife: 5000
+  secondPhaseStartLife: 5200
   secondPhaseAttackMultiplier: 1.3
-  secondPhaseWaitMultiplier: 0.8
+  secondPhaseWaitMultiplier: 0.85
   secondPhaseSpeedMultiplier: 1.04
   repeatAttackProbability: 1.5
   secondPhaseProjSizeMultiplier: 1.2
