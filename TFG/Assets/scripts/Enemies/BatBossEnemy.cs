@@ -26,7 +26,8 @@ public class BatBossEnemy : BatEnemy
     CameraShake camShake;
     List<BatProjectile_Missile> projectiles = new List<BatProjectile_Missile>();
     bool changingElement = false;
-    bool secondPhaseEntered = false, changingPhase = false;
+    internal bool secondPhaseEntered = false;
+    bool changingPhase = false;
     float projectileSizeMultiplier = 1f, projectileSpeedMultiplier = 1f;
 
     internal override void Start_Call()
