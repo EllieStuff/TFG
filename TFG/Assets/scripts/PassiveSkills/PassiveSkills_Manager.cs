@@ -30,9 +30,14 @@ public class PassiveSkills_Manager : MonoBehaviour
     List<PassiveSkill_Base> skills = new List<PassiveSkill_Base>();
     [SerializeField] internal SkillClassList[] skillImages;
     [SerializeField] bool LoadPassiveSkills;
-    GameObject passiveSkillUI;
+    internal GameObject passiveSkillUI;
 
     static SkillAppearRatio[] skillsAppearRatio;
+
+    private void Awake()
+    {
+        
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -103,8 +108,11 @@ public class PassiveSkills_Manager : MonoBehaviour
 
         if (LoadPassiveSkills)
         {
-            if(passiveSkillUI == null)
-                passiveSkillUI = GameObject.Find("Misc Canvas").transform.GetChild(10).gameObject;
+            if (passiveSkillUI == null)
+            {
+                passiveSkillUI = GameObject.Find("Misc Canvas").transform.Find("ChooseAbility").gameObject;
+                passiveSkillUI.SetActive(false);
+            }
             else
             {
                 SavedPassiveSkills save = passiveSkillsSave.LoadSave();
