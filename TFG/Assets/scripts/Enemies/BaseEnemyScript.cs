@@ -539,11 +539,13 @@ public class BaseEnemyScript : MonoBehaviour
     {
         int dropAmount = Random.Range(moneyDropped.x, moneyDropped.y) / 10;
         float distRange = 0.5f;
+        RoomEnemyManager roomManager = GetComponentInParent<RoomEnemyManager>();
         for(int i = 0; i < dropAmount; i++)
         {
             Vector3 rndPos = transform.position + new Vector3(Random.Range(distRange, -distRange), Random.Range(distRange, -distRange), Random.Range(distRange, -distRange));
             Rigidbody dropRb = Instantiate(coinPrefab, rndPos, Random.rotation).GetComponent<Rigidbody>();
             dropRb.AddExplosionForce(Random.Range(50f, 600f), transform.position, distRange);
+            dropRb.GetComponent<CoinScript>().roomManager = roomManager;
         }
     }
     protected virtual void EndRndMovesBehaviour() { rndMovesDone = 0; }

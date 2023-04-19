@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoneyManager : MonoBehaviour
 {
+    const int MAX_MONEY_AMOUNT = 999999;
     const float SAVE_MONEY_TIMER = 2f;
     const string MONEY_KEY = "MoneyAmount";
 
@@ -37,6 +38,7 @@ public class MoneyManager : MonoBehaviour
     public static void AddMoney(int _moneyToAdd)
     {
         moneyAmount += _moneyToAdd;
+        if (moneyAmount > MAX_MONEY_AMOUNT) moneyAmount = MAX_MONEY_AMOUNT;
         nextSaveMoneyTimeStamp = Time.time + SAVE_MONEY_TIMER;
         //Debug.Log("CurrentMoney: " + moneyAmount);
 
@@ -48,6 +50,7 @@ public class MoneyManager : MonoBehaviour
     public static void SetMoney(int _moneyAmount)
     {
         moneyAmount = _moneyAmount;
+        if (moneyAmount > MAX_MONEY_AMOUNT) moneyAmount = MAX_MONEY_AMOUNT;
     }
 
     public static void SaveCurrentMoney()

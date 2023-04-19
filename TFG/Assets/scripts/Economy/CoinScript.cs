@@ -6,12 +6,14 @@ public class CoinScript : MonoBehaviour
 {
     const int COIN_VALUE = 10;
     const float PLAYER_ABSORB_DISTANCE = 2f;
+    const float END_MOVEMENT_TIMER = 0.5f, GO_TO_PLAYER_TIMER = 2f, ROOM_EMPTY_TIMER = 0.1f;
 
-    float timer = 0, endMovementTime = 0.5f, goToPlayerTimer = 2f;
-    float moveSpeed = 10f;
+    float timer = 0;
+    float moveSpeed = 15f;
     Vector3 lastPos = Vector3.zero;
     bool rbActive = true;
     Transform playerRef;
+    internal RoomEnemyManager roomManager;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +34,7 @@ public class CoinScript : MonoBehaviour
             else
             {
                 timer += Time.deltaTime;
-                if (timer >= endMovementTime)
+                if (timer >= END_MOVEMENT_TIMER)
                 {
                     DeactivateRb();
                 }
@@ -41,7 +43,8 @@ public class CoinScript : MonoBehaviour
 
 
         timer += Time.deltaTime;
-        if (timer >= goToPlayerTimer || Vector3.Distance(transform.position, playerRef.position) < PLAYER_ABSORB_DISTANCE)
+        if (timer > GO_TO_PLAYER_TIMER || (!roomManager.HasEnemiesRemainging() && timer > ROOM_EMPTY_TIMER) 
+            || Vector3.Distance(transform.position, playerRef.position) < PLAYER_ABSORB_DISTANCE)
         {
             if (rbActive) DeactivateRb();
             Vector3 moveDir = (playerRef.position - transform.position).normalized;
