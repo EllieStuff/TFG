@@ -11,6 +11,8 @@ public class Criticon_PassiveSkill : PassiveSkill_Base
     {
         skillType = SkillType.CRITICAL_CHANCE;
         maxLevel = 3;
+        basePrice = 3500;
+        priceInc = 1000;
         name = "Critical improve";
         //initialDescription = "Improves your critical hit chance!";
         initialDescription = "Improves your critical hit chance by 10%!";

@@ -15,7 +15,8 @@ public class MoneyManager : MonoBehaviour
 
     private void Start()
     {
-        moneyAmount = PlayerPrefs.GetInt(MONEY_KEY, 0);
+        //moneyAmount = PlayerPrefs.GetInt(MONEY_KEY, 0);
+        moneyAmount = 19200;
         uiManager = GetComponent<MoneyInGameUiReference>();
         uiManager.moneyText.text = moneyAmount.ToString();
         uiManager.DeactivateMoneyFeedback(1f, 2f);
@@ -42,6 +43,11 @@ public class MoneyManager : MonoBehaviour
         if(!uiManager.feedbackActive) 
             uiManager.ActivateMoneyFeedback();
         uiManager.moneyText.text = moneyAmount.ToString();
+    }
+
+    public static void SetMoney(int _moneyAmount)
+    {
+        moneyAmount = _moneyAmount;
     }
 
     public static void SaveCurrentMoney()

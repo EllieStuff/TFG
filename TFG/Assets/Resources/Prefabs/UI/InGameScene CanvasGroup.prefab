@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 368183040848383366}
   - component: {fileID: 368183040848383367}
   - component: {fileID: 368183040848383364}
+  - component: {fileID: 7928527594626640533}
   m_Layer: 0
   m_Name: Shop Canvas
   m_TagString: Untagged
@@ -534,10 +535,27 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368183040848383482}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7928527594626640533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368183040848383482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77d44eaf2237b743b1acf2597093318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsHolder: {fileID: 6759799105324782709}
+  playerMoneyText: {fileID: 9094736288197667441}
+  extraInfoBox: {fileID: 6282815627120585991}
+  cardPrefabUI: {fileID: 5198473260618419207, guid: e915644d892380445b3c1296aefeaf8f,
+    type: 3}
 --- !u!1 &368183040863184804
 GameObject:
   m_ObjectHideFlags: 0
@@ -3375,6 +3393,7 @@ GameObject:
   - component: {fileID: 2069013490311953413}
   - component: {fileID: 2069013490311953412}
   - component: {fileID: 2069013490311953435}
+  - component: {fileID: 8478741879969407737}
   m_Layer: 0
   m_Name: InGameMenu Canvas
   m_TagString: Untagged
@@ -3476,6 +3495,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &8478741879969407737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069013490311953434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77d44eaf2237b743b1acf2597093318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsHolder: {fileID: 0}
+  playerMoneyText: {fileID: 0}
+  extraInfoBox: {fileID: 0}
+  cardPrefabUI: {fileID: 0}
 --- !u!1 &2069013490348839029
 GameObject:
   m_ObjectHideFlags: 0
@@ -7525,7 +7560,7 @@ GameObject:
   - component: {fileID: 5521812013511070184}
   - component: {fileID: 9094736288197667441}
   m_Layer: 5
-  m_Name: SkillPrice Text
+  m_Name: PlayerMoney Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8168,6 +8203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1363412781145691387}
+  - component: {fileID: 6282815627120585991}
   m_Layer: 5
   m_Name: Skills Info
   m_TagString: Untagged
@@ -8201,6 +8237,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6282815627120585991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4706090772980362240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b35cde0b558729449be27a7534ad95d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: {fileID: 6290794777415761885}
+  skillDescription: {fileID: 494072669376655357}
+  skillLevels: {fileID: 1344462021617265344}
+  skillPrice: {fileID: 8226323067919243969}
 --- !u!1 &5147028529640043680
 GameObject:
   m_ObjectHideFlags: 0
@@ -11972,9 +12024,24 @@ PrefabInstance:
       objectReference: {fileID: 6422483951107311509}
     - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3098043202142236374}
+      objectReference: {fileID: 7928527594626640533}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ItemChosen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12202,9 +12269,29 @@ PrefabInstance:
       objectReference: {fileID: 5523237268308151436}
     - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3098043202142236374}
+      objectReference: {fileID: 7928527594626640533}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ItemChosen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12435,9 +12522,29 @@ PrefabInstance:
       objectReference: {fileID: 6735700270497646094}
     - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3098043202142236374}
+      objectReference: {fileID: 7928527594626640533}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ItemChosen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12663,9 +12770,29 @@ PrefabInstance:
       objectReference: {fileID: 6150934959930061034}
     - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3098043202142236374}
+      objectReference: {fileID: 7928527594626640533}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ItemChosen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12880,9 +13007,29 @@ PrefabInstance:
       objectReference: {fileID: 368183040863184800}
     - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3098043202142236374}
+      objectReference: {fileID: 7928527594626640533}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ItemChosen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Pivot.x
@@ -13113,9 +13260,29 @@ PrefabInstance:
       objectReference: {fileID: 368183040863184800}
     - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3098043202142236374}
+      objectReference: {fileID: 7928527594626640533}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ItemChosen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998270304509609267, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Pivot.x
