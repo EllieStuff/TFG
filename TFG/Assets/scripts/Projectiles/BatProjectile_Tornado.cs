@@ -7,6 +7,7 @@ public class BatProjectile_Tornado : ProjectileData
     [SerializeField] float zigzagSpeed = 6f, zigzagFreq = 10f;
     [SerializeField] TrailRenderer trail;
     [SerializeField] ParticleSystemRenderer particles;
+    [SerializeField] LifeSystem playerLife;
     //[SerializeField] bool testing = false;
 
     internal int zigzagDir = 1;
@@ -18,6 +19,7 @@ public class BatProjectile_Tornado : ProjectileData
         affectedByObstacles = true;
         dmgData.attackElement = _origin.GetComponent<LifeSystem>().entityElement;
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerLife = player.GetComponent<LifeSystem>();
         if (player != null)
         {
             moveDir = (player.position - _origin.position).normalized;
@@ -31,6 +33,9 @@ public class BatProjectile_Tornado : ProjectileData
 
     protected override void Update_Call()
     {
+        if (playerLife != null && playerLife.isDead)
+            Destroy(gameObject);
+
         //base.Update_Call();
         Vector3 movementVec = moveDir * moveSpeed + Mathf.Sin((Time.time - startTime) * zigzagFreq) * transform.right * zigzagDir * zigzagSpeed;
         rb.MovePosition(transform.position + movementVec * Time.deltaTime);
