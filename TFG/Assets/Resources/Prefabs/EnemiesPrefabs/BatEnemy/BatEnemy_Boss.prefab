@@ -39595,7 +39595,6 @@ MonoBehaviour:
   critPercentage: 0
   tagsAffected:
   - Player
-  audio: {fileID: 0}
 --- !u!1 &6860280051836463455
 GameObject:
   m_ObjectHideFlags: 0
@@ -44559,6 +44558,9 @@ MonoBehaviour:
   attackChargingTime: 2.5
   numOfRndMoves: 35
   dmgOnTouch: 20
+  moneyDropped: {x: 10000, y: 12000}
+  coinPrefab: {fileID: 1195922223204480883, guid: fc1876224772770458364dc8d5a62e39,
+    type: 3}
   enemyLightsHolder: {fileID: 1468295826494457946}
   lookPoint: {fileID: 8655353634351651845}
   disableAutoGravity: 0

@@ -11,6 +11,8 @@ public class ImproveAttackDamage_PassiveSkill : PassiveSkill_Base
         skillType = SkillType.IMPROVE_ATTACK_DAMAGE;
         maxLevel = -1;
         appearRatio = 0.8f;
+        basePrice = 4000;
+        priceInc = 1500;
         name = "More Attack";
         //initialDescription = "Your attacks will deal more damage!";
         initialDescription = "Your attacks will deal 25% more damage!";
