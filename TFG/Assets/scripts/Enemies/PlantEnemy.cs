@@ -20,7 +20,7 @@ public class PlantEnemy : BaseEnemyScript
     [SerializeField] protected float attackSeparationTime = 0.2f;
 
     float attackTimer;
-
+    public bool plantAttacking = false;
     const int CIRCLE_ITERATIONS = 24;
     const int CIRCLE_MULTIPLIER = 50;
     const float RESET_ANIM_TIMER = 1.5f;
@@ -97,6 +97,7 @@ public class PlantEnemy : BaseEnemyScript
         yield return new WaitForSeconds(attackChargingTime);
 
         //place shoot animation here
+        plantAttacking = true;
         ChangeAnim(AnimState.ATTACKING);
         blockAnim = true;
         yield return new WaitForSeconds(attackAnimationTime);
@@ -116,6 +117,7 @@ public class PlantEnemy : BaseEnemyScript
                 }
             }
         }
+        plantAttacking = false;
         blockAnim = false;
     }
 

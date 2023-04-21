@@ -39,7 +39,7 @@ public class RoomEnemyManager : MonoBehaviour
     private void Start()
     {
         playerRB = playerAttack.GetComponent<Rigidbody>();
-        elementChoose = GameObject.Find("Misc Canvas").transform.GetChild(10).gameObject;
+        
         ActivateEnemies(roomActive);
         SetPlayerData();
     }
@@ -47,6 +47,8 @@ public class RoomEnemyManager : MonoBehaviour
     private void Update()
     {
         SearchClosestTarget();
+        if (elementChoose == null)
+            elementChoose = GameObject.FindGameObjectWithTag("Player").GetComponent<PassiveSkills_Manager>().passiveSkillUI;
     }
 
     void InitEnemies()
