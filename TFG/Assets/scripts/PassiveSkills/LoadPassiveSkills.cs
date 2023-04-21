@@ -18,7 +18,7 @@ public class LoadPassiveSkills : MonoBehaviour
 
     SavedPassiveSkills inGameSkillsSave, shopSkillsSave;
 
-    private void Start()
+    private void Awake()
     {
         if (GameObject.FindGameObjectsWithTag("save").Length > 1)
             Destroy(gameObject);

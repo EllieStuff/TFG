@@ -17,6 +17,7 @@ public class ShopManager : MonoBehaviour
     List<PassiveSkill_Base> ownedSkills = new List<PassiveSkill_Base>();
     ShopItemData[] itemsInfo;
     //Transform cardListPivot;
+    bool inited = false;
 
 
     // Start is called before the first frame update
@@ -30,11 +31,12 @@ public class ShopManager : MonoBehaviour
 
         GetComponent<CanvasGroup>().alpha = 1f;
         gameObject.SetActive(false);
+        inited = true;
     }
 
     private void OnEnable()
     {
-        RefreshAllItemsInfo();
+        if (inited) RefreshAllItemsInfo();
     }
 
     void InitOwnedSkills()
@@ -96,7 +98,7 @@ public class ShopManager : MonoBehaviour
         if(_playerItemData != null)
         {
             itemsInfo[_itemIdx].data.SetShopLevel(_playerItemData.Level);
-            if (!_playerItemData.CanBeImproved)
+            if (!itemsInfo[_itemIdx].data.CanBeImproved)
             {
                 itemsInfo[_itemIdx].iconImage.color = Color.gray;
                 itemsInfo[_itemIdx].GetComponent<Button>().interactable = false;

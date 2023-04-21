@@ -29,7 +29,7 @@ public class PassiveSkills_Manager : MonoBehaviour
     internal LoadPassiveSkills passiveSkillsSave;
     List<PassiveSkill_Base> skills = new List<PassiveSkill_Base>();
     [SerializeField] internal SkillClassList[] skillImages;
-    [SerializeField] bool mustLoadPassiveSkills;
+    [SerializeField] bool haveToLoadPassiveSkills = true;
     internal GameObject passiveSkillUI;
 
     static SkillAppearRatio[] skillsAppearRatio;
@@ -65,9 +65,10 @@ public class PassiveSkills_Manager : MonoBehaviour
     }
 
 
-    private void LoadAllSkills(SavedPassiveSkills _save)
+    private void LoadSkillsFromFile(string _path)
     {
-        foreach (Tuple<PassiveSkill_Base.SkillType, int> element in _save.savedElements)
+        SavedPassiveSkills save = passiveSkillsSave.LoadSave(_path);
+        foreach (Tuple<PassiveSkill_Base.SkillType, int> element in save.savedElements)
         {
             PassiveSkill_Base.SkillType skill = element.Item1;
             int tier = element.Item2;
@@ -106,7 +107,7 @@ public class PassiveSkills_Manager : MonoBehaviour
             skill.UpdateCall();
         }
 
-        if (mustLoadPassiveSkills)
+        if (haveToLoadPassiveSkills)
         {
             if (passiveSkillUI == null)
             {
@@ -115,9 +116,9 @@ public class PassiveSkills_Manager : MonoBehaviour
             }
             else
             {
-                SavedPassiveSkills save = passiveSkillsSave.LoadSave(LoadPassiveSkills.InGamePath);
-                LoadAllSkills(save);
-                mustLoadPassiveSkills = false;
+                LoadSkillsFromFile(LoadPassiveSkills.ShopPath);
+                LoadSkillsFromFile(LoadPassiveSkills.InGamePath);
+                haveToLoadPassiveSkills = false;
             }
         }
     }
