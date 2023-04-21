@@ -19,13 +19,16 @@ public class MoneyManager : MonoBehaviour
         moneyAmount = PlayerPrefs.GetInt(MONEY_KEY, 0);
         //moneyAmount = 0;
         uiManager = GetComponent<MoneyInGameUiReference>();
-        uiManager.moneyText.text = moneyAmount.ToString();
-        uiManager.DeactivateMoneyFeedback(1f, 2f);
+        if (uiManager != null)
+        {
+            uiManager.moneyText.text = moneyAmount.ToString();
+            uiManager.DeactivateMoneyFeedback(1f, 2f);
+        }
     }
 
     private void Update()
     {
-        if (nextSaveMoneyTimeStamp > 0f && nextSaveMoneyTimeStamp < Time.time)
+        if (uiManager != null && nextSaveMoneyTimeStamp > 0f && nextSaveMoneyTimeStamp < Time.time)
         {
             nextSaveMoneyTimeStamp = -1f;
             uiManager.StopAllCoroutines();
@@ -42,9 +45,12 @@ public class MoneyManager : MonoBehaviour
         nextSaveMoneyTimeStamp = Time.time + SAVE_MONEY_TIMER;
         //Debug.Log("CurrentMoney: " + moneyAmount);
 
-        if(!uiManager.feedbackActive) 
-            uiManager.ActivateMoneyFeedback();
-        uiManager.moneyText.text = moneyAmount.ToString();
+        if (uiManager != null)
+        {
+            if (!uiManager.feedbackActive)
+                uiManager.ActivateMoneyFeedback();
+            uiManager.moneyText.text = moneyAmount.ToString();
+        }
     }
 
     public static void SetMoney(int _moneyAmount)

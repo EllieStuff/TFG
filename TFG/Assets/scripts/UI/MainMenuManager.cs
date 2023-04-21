@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject options, credits;
+    [SerializeField] GameObject shop, options, credits;
     [SerializeField] TMP_Dropdown resolutionDropdown;
-    [SerializeField] ChangeMenuSelectionScript deactivateOptions, deactivateCredits;
+    [SerializeField] ChangeMenuSelectionScript deactivateShop, deactivateOptions, deactivateCredits;
     [SerializeField] Image bg;
 
     Vector3 initBgPos, initCreditsPos, initOptionsPos;
@@ -31,9 +31,10 @@ public class MainMenuManager : MonoBehaviour
             if (credits.activeSelf) deactivateCredits.ChangeMenuSelection();
             else if (options.activeSelf)
             {
-                if(!resolutionDropdown.IsExpanded)
+                if (!resolutionDropdown.IsExpanded)
                     deactivateOptions.ChangeMenuSelection();
             }
+            else if (shop.activeSelf) deactivateShop.ChangeMenuSelection();
         }
 
 
