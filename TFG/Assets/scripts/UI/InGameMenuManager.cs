@@ -6,9 +6,8 @@ using TMPro;
 
 public class InGameMenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject inGameMenu, shop, options, levelCompleted;
-    [SerializeField] ChangeMenuSelectionScript activateMenuScript, deactivateMenuScript,
-        deactivateShopScript, deactivateOptionsScript, activateLevelCompleted;
+    [SerializeField] GameObject inGameMenu, options, levelCompleted;
+    [SerializeField] ChangeMenuSelectionScript activateMenuScript, deactivateMenuScript, deactivateOptionsScript, activateLevelCompleted;
     [SerializeField] TMP_Dropdown resolutionDropdown;
     [SerializeField] BaseEnemyScript finalBossRef;
 
@@ -25,11 +24,7 @@ public class InGameMenuManager : MonoBehaviour
             }
             else
             {
-                if (shop.activeSelf)
-                {
-                    deactivateShopScript.ChangeMenuSelection();
-                }
-                else if (options.activeSelf)
+                if (options.activeSelf)
                 {
                     if(!resolutionDropdown.IsExpanded) deactivateOptionsScript.ChangeMenuSelection();
                 }
