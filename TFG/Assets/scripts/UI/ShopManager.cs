@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class ShopManager : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class ShopManager : MonoBehaviour
     [SerializeField] GameObject cardPrefabUI;
 
     //PassiveSkills_Manager skillsManager;
+    LoadPassiveSkills passiveSkillsSave;
     List<PassiveSkill_Base> ownedSkills = new List<PassiveSkill_Base>();
     ShopItemData[] itemsInfo;
     //Transform cardListPivot;
+    bool inited = false;
 
 
     // Start is called before the first frame update
@@ -22,17 +25,34 @@ public class ShopManager : MonoBehaviour
     {
         //skillsManager = FindObjectOfType<PassiveSkills_Manager>();
         //cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
+        passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
+        InitOwnedSkills();
         InitItemsInfo();
 
         GetComponent<CanvasGroup>().alpha = 1f;
         gameObject.SetActive(false);
+        inited = true;
     }
 
     private void OnEnable()
     {
-        RefreshAllItemsInfo();
+        if (inited) RefreshAllItemsInfo();
     }
 
+    void InitOwnedSkills()
+    {
+        //passiveSkillsSave.ResetSave(LoadPassiveSkills.ShopPath);
+        SavedPassiveSkills save = passiveSkillsSave.LoadSave(LoadPassiveSkills.ShopPath);
+        foreach (Tuple<PassiveSkill_Base.SkillType, int> element in save.savedElements)
+        {
+            PassiveSkill_Base skillToAdd = new PassiveSkill_Base();
+            skillToAdd.skillType = element.Item1;
+            skillToAdd.SetShopLevel(element.Item2);
+
+            ownedSkills.Add(skillToAdd);
+        }
+
+    }
 
     void InitItemsInfo()
     {
@@ -78,7 +98,7 @@ public class ShopManager : MonoBehaviour
         if(_playerItemData != null)
         {
             itemsInfo[_itemIdx].data.SetShopLevel(_playerItemData.Level);
-            if (!_playerItemData.CanBeImproved)
+            if (!itemsInfo[_itemIdx].data.CanBeImproved)
             {
                 itemsInfo[_itemIdx].iconImage.color = Color.gray;
                 itemsInfo[_itemIdx].GetComponent<Button>().interactable = false;
@@ -104,7 +124,7 @@ public class ShopManager : MonoBehaviour
             PassiveSkill_Base playerSkill = ownedSkills.Find(_skill => _skill.skillType == tmpItemData.skillType);
             if (playerSkill == null)
             {
-                //skillsManager.AddSkill(tmpItemData, true);
+                tmpItemData.SetShopLevel(1);
                 ownedSkills.Add(tmpItemData);
                 RefreshItemInfo(_itemIdx);
             }
@@ -116,6 +136,7 @@ public class ShopManager : MonoBehaviour
 
             extraInfoBox.SetExtraInfo(itemsInfo[_itemIdx].data);
             playerMoneyText.text = MoneyManager.MoneyAmount.ToString();
+            passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
             //SpawnCardInUI(itemsInfo[_itemIdx].data.skillType, itemsInfo[_itemIdx].iconImage);
         }
     }

@@ -29,7 +29,7 @@ public class PassiveSkills_Manager : MonoBehaviour
     internal LoadPassiveSkills passiveSkillsSave;
     List<PassiveSkill_Base> skills = new List<PassiveSkill_Base>();
     [SerializeField] internal SkillClassList[] skillImages;
-    [SerializeField] bool LoadPassiveSkills;
+    [SerializeField] bool haveToLoadPassiveSkills = true;
     internal GameObject passiveSkillUI;
 
     static SkillAppearRatio[] skillsAppearRatio;
@@ -65,9 +65,10 @@ public class PassiveSkills_Manager : MonoBehaviour
     }
 
 
-    private void LoadAllSkills(SavedPassiveSkills _save)
+    private void LoadSkillsFromFile(string _path)
     {
-        foreach (Tuple<PassiveSkill_Base.SkillType, int> element in _save.savedElements)
+        SavedPassiveSkills save = passiveSkillsSave.LoadSave(_path);
+        foreach (Tuple<PassiveSkill_Base.SkillType, int> element in save.savedElements)
         {
             PassiveSkill_Base.SkillType skill = element.Item1;
             int tier = element.Item2;
@@ -106,7 +107,7 @@ public class PassiveSkills_Manager : MonoBehaviour
             skill.UpdateCall();
         }
 
-        if (LoadPassiveSkills)
+        if (haveToLoadPassiveSkills)
         {
             if (passiveSkillUI == null)
             {
@@ -115,9 +116,9 @@ public class PassiveSkills_Manager : MonoBehaviour
             }
             else
             {
-                SavedPassiveSkills save = passiveSkillsSave.LoadSave();
-                LoadAllSkills(save);
-                LoadPassiveSkills = false;
+                LoadSkillsFromFile(LoadPassiveSkills.ShopPath);
+                LoadSkillsFromFile(LoadPassiveSkills.InGamePath);
+                haveToLoadPassiveSkills = false;
             }
         }
     }
@@ -128,7 +129,7 @@ public class PassiveSkills_Manager : MonoBehaviour
         PassiveSkill_Base skill = skills.Find(currSkill => currSkill.skillType == _skill.skillType);
 
         if(save)
-            passiveSkillsSave.AddElementToSave(_skill.skillType);
+            passiveSkillsSave.AddElementToSave_InGame(_skill.skillType);
 
         if (skill == null)
         {
