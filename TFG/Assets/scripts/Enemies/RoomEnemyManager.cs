@@ -51,6 +51,12 @@ public class RoomEnemyManager : MonoBehaviour
             elementChoose = GameObject.FindGameObjectWithTag("Player").GetComponent<PassiveSkills_Manager>().passiveSkillUI;
     }
 
+    public void UpdateRoomEnemies()
+    {
+        InitEnemies();
+        linkedZone.enemiesQuantity = enemies.Count;
+    }
+
     void InitEnemies()
     {
         for (int i = 0; i < transform.childCount; i++)
