@@ -10,6 +10,8 @@ public class QuickConjuring_PassiveSkill : PassiveSkill_Base
     {
         skillType = SkillType.QUICK_CONJURING;
         maxLevel = 3;
+        basePrice = 24000;
+        priceInc = 10500;
         name = "Agile Conjuration";
         //initialDescription = "Speed up your element casting time!";
         initialDescription = "Speed up your element casting time by 20%!";

@@ -12,6 +12,7 @@ public class ShopItemData : MonoBehaviour
 
     internal PassiveSkill_Base data;
     internal ShopManager manager;
+    internal bool busy = false;
 
     UIFeedback_Base uiFeedback;
     bool selectedFlag = false;

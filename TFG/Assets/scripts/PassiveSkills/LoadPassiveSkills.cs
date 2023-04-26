@@ -78,6 +78,15 @@ public class LoadPassiveSkills : MonoBehaviour
         stream.Close();
     }
 
+    [ContextMenu("ResetBoughtSkills")]
+    void ResetBoughtSkills()
+    {
+        File.Delete(Application.dataPath + ShopPath);
+        Stream stream = new FileStream(Application.dataPath + ShopPath, FileMode.Create, FileAccess.Write);
+        stream.Close();
+    }
+    
+
     public void AddElementToSave_InGame(PassiveSkill_Base.SkillType _skill)
     {
         bool createNewSkill = true;
