@@ -139,6 +139,34 @@ public class ShopManager : MonoBehaviour
             passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
             //SpawnCardInUI(itemsInfo[_itemIdx].data.skillType, itemsInfo[_itemIdx].iconImage);
         }
+        else
+        {
+            if (!itemsInfo[_itemIdx].busy)
+                StartCoroutine(NotEnoughMoneyFeedback(itemsInfo[_itemIdx]));
+        }
+    }
+
+
+    IEnumerator NotEnoughMoneyFeedback(ShopItemData _shopItem, float _lerpTime = 0.2f)
+    {
+        _shopItem.busy = true;
+        Image shopItemImage = _shopItem.GetComponent<Image>();
+        Color originColor = shopItemImage.color;
+        float timer = 0f;
+        while(timer < _lerpTime)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+            shopItemImage.color = Color.Lerp(originColor, Color.red, timer / _lerpTime);
+        }
+        timer = 0f;
+        while (timer < _lerpTime)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+            shopItemImage.color = Color.Lerp(Color.red, originColor, timer / _lerpTime);
+        }
+        _shopItem.busy = false;
     }
 
 
