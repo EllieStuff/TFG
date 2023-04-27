@@ -13,7 +13,7 @@ public class MenuCamScript : MonoBehaviour
     {
         moveCamForward = true;
         doorAnim.Play();
-        doorAnim.gameObject.GetComponent<AudioSource>().Play();
+        //doorAnim.gameObject.GetComponent<AudioSource>().Play();
     }
 
     private void Start()

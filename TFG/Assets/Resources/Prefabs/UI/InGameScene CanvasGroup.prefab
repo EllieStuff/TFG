@@ -401,7 +401,7 @@ Canvas:
   m_GameObject: {fileID: 2069013489625910312}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -411,7 +411,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &2069013489625910314
 MonoBehaviour:
@@ -2485,7 +2485,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2069013490311953413
 MonoBehaviour:
@@ -8283,7 +8283,7 @@ PrefabInstance:
     - target: {fileID: 3124570844114879015, guid: bb05679f21f140e49a4a208d42f341ec,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6009655347090098945, guid: bb05679f21f140e49a4a208d42f341ec,
         type: 3}
@@ -9124,6 +9124,11 @@ PrefabInstance:
         type: 3}
       propertyPath: COLOR_LERP_SPEED
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988575037192658389, guid: 352f4f56464c3e140866d0e1bd49d868,
+        type: 3}
+      propertyPath: switchUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4760391057499352588, guid: 352f4f56464c3e140866d0e1bd49d868,
         type: 3}
