@@ -27,10 +27,14 @@ public class ShopManager : MonoBehaviour
         //cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
         passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
         InitOwnedSkills();
-        InitItemsInfo();
 
         GetComponent<CanvasGroup>().alpha = 1f;
         gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        InitItemsInfo();
         inited = true;
     }
 
