@@ -79,7 +79,7 @@ public class LoadPassiveSkills : MonoBehaviour
     }
 
     [ContextMenu("ResetBoughtSkills")]
-    void ResetBoughtSkills()
+    public void ResetBoughtSkills()
     {
         File.Delete(Application.dataPath + ShopPath);
         Stream stream = new FileStream(Application.dataPath + ShopPath, FileMode.Create, FileAccess.Write);
