@@ -23,10 +23,7 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //skillsManager = FindObjectOfType<PassiveSkills_Manager>();
-        //cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
         passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
-        InitOwnedSkills();
 
         GetComponent<CanvasGroup>().alpha = 1f;
         gameObject.SetActive(false);
@@ -35,12 +32,20 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         InitItemsInfo();
-        inited = true;
     }
+
 
     private void OnEnable()
     {
-        if (inited) RefreshAllItemsInfo();
+        if (inited)
+        {
+            RefreshAllItemsInfo();
+        }
+        else
+        {
+            inited = true;
+            InitOwnedSkills();
+        }
     }
 
     void InitOwnedSkills()
@@ -128,7 +133,6 @@ public class ShopManager : MonoBehaviour
             MoneyManager.SetMoney(MoneyManager.MoneyAmount - tmpItemData.Price);
             MoneyManager.SaveCurrentMoney();
 
-            //PassiveSkill_Base playerSkill = skillsManager.FindSkill(tmpItemData.data);
             PassiveSkill_Base playerSkill = ownedSkills.Find(_skill => _skill.skillType == tmpItemData.skillType);
             if (playerSkill == null)
             {
@@ -145,7 +149,6 @@ public class ShopManager : MonoBehaviour
             extraInfoBox.SetExtraInfo(itemsInfo[_itemIdx].data);
             playerMoneyText.text = MoneyManager.MoneyAmount.ToString();
             passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
-            //SpawnCardInUI(itemsInfo[_itemIdx].data.skillType, itemsInfo[_itemIdx].iconImage);
         }
         else
         {
@@ -177,33 +180,5 @@ public class ShopManager : MonoBehaviour
         _shopItem.busy = false;
     }
 
-
-    //CardUIScript CheckIfThisCardExistsAlready(PassiveSkill_Base.SkillType _skillType)
-    //{
-    //    foreach (Transform child in cardListPivot)
-    //    {
-    //        if (child.GetComponent<CardUIScript>().skillType.Equals(_skillType))
-    //            return child.GetComponent<CardUIScript>();
-    //    }
-
-    //    return null;
-    //}
-
-    //void SpawnCardInUI(PassiveSkill_Base.SkillType _skillType, Image _iconImage)
-    //{
-    //    CardUIScript cardCheck = CheckIfThisCardExistsAlready(_skillType);
-
-    //    if (cardCheck != null)
-    //    {
-    //        cardCheck.ModifyCardTier();
-    //    }
-    //    else
-    //    {
-    //        CardUIScript card = Instantiate(cardPrefabUI, cardListPivot).GetComponent<CardUIScript>();
-
-    //        card.skillType = _skillType;
-    //        card.cardSprite = _iconImage.sprite;
-    //    }
-    //}
 
 }
