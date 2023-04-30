@@ -18,25 +18,40 @@ public class ShopManager : MonoBehaviour
     ShopItemData[] itemsInfo;
     //Transform cardListPivot;
     bool inited = false;
-
+    float timer = 1;
 
     // Start is called before the first frame update
-    void Awake()
+    void Update()
     {
-        //skillsManager = FindObjectOfType<PassiveSkills_Manager>();
-        //cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
-        passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
-        InitOwnedSkills();
-        InitItemsInfo();
+        if(!inited)
+        {
+            timer -= Time.deltaTime;
 
-        GetComponent<CanvasGroup>().alpha = 1f;
-        gameObject.SetActive(false);
-        inited = true;
+            if(timer <= 0)
+            {
+                //skillsManager = FindObjectOfType<PassiveSkills_Manager>();
+                //cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
+                passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
+                InitOwnedSkills();
+                InitItemsInfo();
+
+                GetComponent<CanvasGroup>().alpha = 1f;
+                gameObject.SetActive(false);
+                inited = true; 
+            }
+        }
     }
 
     private void OnEnable()
     {
+        GetComponent<Canvas>().sortingOrder = 2;
+
         if (inited) RefreshAllItemsInfo();
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<Canvas>().sortingOrder = 1;
     }
 
     void InitOwnedSkills()
