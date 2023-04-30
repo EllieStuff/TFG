@@ -50,20 +50,14 @@ public class ShopManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (inited)
-        {
-            RefreshAllItemsInfo();
-        }
-        else
-        {
-            inited = true;
-            InitOwnedSkills();
-        }
+        GetComponent<Canvas>().sortingOrder = 3;
+
+        if (inited) RefreshAllItemsInfo();
     }
 
     private void OnDisable()
     {
-        GetComponent<Canvas>().sortingOrder = 1;
+        GetComponent<Canvas>().sortingOrder = 2;
     }
 
     void InitOwnedSkills()
