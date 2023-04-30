@@ -25,7 +25,7 @@ RectTransform:
   m_GameObject: {fileID: 382468018710381904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99332035, y: 0.99332035, z: 0.99332035}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 100368866454898596}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -20, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1174995697886013006
@@ -79,7 +79,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -639, y: 105}
+  m_AnchoredPosition: {x: -668, y: 168}
   m_SizeDelta: {x: 335.5, y: 133.4694}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7672091253154022192
@@ -729,7 +729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29, y: 176}
+  m_AnchoredPosition: {x: -29, y: 244}
   m_SizeDelta: {x: 675.9, y: 297.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4115775394276363603
@@ -2063,7 +2063,7 @@ RectTransform:
   m_GameObject: {fileID: 9028947543174960243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9644055, y: 0.9644055, z: 0.9644055}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7137527718914603160}
@@ -2077,7 +2077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -6, y: -51}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7724567170769950068
@@ -2592,7 +2592,8 @@ PrefabInstance:
       propertyPath: skillType
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3407474757834295712, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
 --- !u!114 &7023404134555156093 stripped
 MonoBehaviour:
