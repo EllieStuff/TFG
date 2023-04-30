@@ -11,7 +11,9 @@ public class ImproveLife_PassiveSkill : PassiveSkill_Base
         skillType = SkillType.IMPROVE_LIFE;
         maxLevel = -1;
         appearRatio = 1.5f;
-        name = "Life Improvement";
+        basePrice = 18000;
+        priceInc = 8000;
+        name = "More Life";
         initialDescription = "Your maximum life gets improved by 350 points!";
         improvementDescription = initialDescription;
     }
