@@ -17,11 +17,14 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("TutorialHasPlayed", 0);
+
         initBgPos = bg.transform.position;
         creditsChild = credits.transform.GetChild(0);
         initCreditsPos = creditsChild.localPosition;
         optionsChild = options.transform.GetChild(0);
         initOptionsPos = optionsChild.localPosition;
+        
     }
 
     void Update()
@@ -46,7 +49,10 @@ public class MainMenuManager : MonoBehaviour
 
     public void Play()
     {
-        CustomSceneManager.Instance.ChangeScene(1);
+        if (PlayerPrefs.GetInt("TutorialHasPlayed") <= 0)
+            CustomSceneManager.Instance.ChangeScene(1);
+        else
+            CustomSceneManager.Instance.ChangeScene(2);
     }
 
     public void Exit()
