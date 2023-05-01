@@ -25,7 +25,7 @@ RectTransform:
   m_GameObject: {fileID: 382468018710381904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99332035, y: 0.99332035, z: 0.99332035}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 100368866454898596}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -20, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1174995697886013006
@@ -79,7 +79,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -639, y: 105}
+  m_AnchoredPosition: {x: -668, y: 168}
   m_SizeDelta: {x: 335.5, y: 133.4694}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7672091253154022192
@@ -729,7 +729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29, y: 176}
+  m_AnchoredPosition: {x: -29, y: 244}
   m_SizeDelta: {x: 675.9, y: 297.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4115775394276363603
@@ -1181,7 +1181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4115775394974529014
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2063,7 +2063,7 @@ RectTransform:
   m_GameObject: {fileID: 9028947543174960243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9644055, y: 0.9644055, z: 0.9644055}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7137527718914603160}
@@ -2077,7 +2077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -6, y: -51}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7724567170769950068
@@ -2176,7 +2176,7 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2186,17 +2186,17 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2236,12 +2236,12 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 800
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2271,18 +2271,18 @@ PrefabInstance:
     - target: {fileID: 4744915289642704656, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_text
-      value: Vampire
+      value: Quicker Attack
       objectReference: {fileID: 0}
     - target: {fileID: 5283267333821560452, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Name
-      value: Vampire BuySkill Button
+      value: MoreAtkSpeed BuySkill Button
       objectReference: {fileID: 0}
     - target: {fileID: 5379627649576012475, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d7781c4d6ae51c9419bfb8d11e9467af,
+      objectReference: {fileID: 21300000, guid: 6be365a8e15cd27459f37f18dc759ed4,
         type: 3}
     - target: {fileID: 5664799777774353510, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2332,7 +2332,7 @@ PrefabInstance:
     - target: {fileID: 7884283866330464005, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: skillType
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
@@ -2434,7 +2434,7 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2444,17 +2444,17 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2494,12 +2494,12 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 800
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2529,18 +2529,18 @@ PrefabInstance:
     - target: {fileID: 4744915289642704656, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_text
-      value: Agile Foot
+      value: Agile Conjuration
       objectReference: {fileID: 0}
     - target: {fileID: 5283267333821560452, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Name
-      value: AgileFoot BuySkill Button
+      value: QuickConjuring BuySkill Button
       objectReference: {fileID: 0}
     - target: {fileID: 5379627649576012475, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: bf85c64a224ba9b4696cc615e904b3f7,
+      objectReference: {fileID: 21300000, guid: c01ea4b2509a508479e6c002524d96f1,
         type: 3}
     - target: {fileID: 5664799777774353510, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2590,9 +2590,10 @@ PrefabInstance:
     - target: {fileID: 7884283866330464005, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: skillType
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3407474757834295712, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
 --- !u!114 &7023404134555156093 stripped
 MonoBehaviour:
@@ -2692,7 +2693,7 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2702,17 +2703,17 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2752,12 +2753,12 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 460
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2784,11 +2785,22 @@ PrefabInstance:
       propertyPath: menusToDisable.usedMenus.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4744915289642704656, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_text
+      value: More Attack
+      objectReference: {fileID: 0}
     - target: {fileID: 5283267333821560452, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Name
-      value: MoreLife BuySkill Button
+      value: MoreAtkDmg BuySkill Button
       objectReference: {fileID: 0}
+    - target: {fileID: 5379627649576012475, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b3b31975360d24245855b1eeab935778,
+        type: 3}
     - target: {fileID: 5664799777774353510, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: baseColor.b
@@ -2828,6 +2840,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gridId.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7884283866330464005, guid: d1804c98acd38f54380b43a6f667bbcb,
+        type: 3}
+      propertyPath: skillType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
@@ -2939,7 +2956,7 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2949,17 +2966,17 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -2999,12 +3016,12 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 460
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3034,18 +3051,18 @@ PrefabInstance:
     - target: {fileID: 4744915289642704656, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_text
-      value: Critical Improve
+      value: First Strike
       objectReference: {fileID: 0}
     - target: {fileID: 5283267333821560452, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Name
-      value: CriticalImp BuySkill Button
+      value: FirstStrike BuySkill Button
       objectReference: {fileID: 0}
     - target: {fileID: 5379627649576012475, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ea37a7ef3587711439661cf4bc48a4bf,
+      objectReference: {fileID: 21300000, guid: 00f5ec615e33f0c4b9c7a9cfff9b6cc9,
         type: 3}
     - target: {fileID: 5664799777774353510, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3090,7 +3107,7 @@ PrefabInstance:
     - target: {fileID: 7884283866330464005, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: skillType
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
@@ -3192,7 +3209,7 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3202,17 +3219,17 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3252,12 +3269,12 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3287,18 +3304,18 @@ PrefabInstance:
     - target: {fileID: 4744915289642704656, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_text
-      value: More Attack
+      value: Vampire
       objectReference: {fileID: 0}
     - target: {fileID: 5283267333821560452, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Name
-      value: MoreAtkDmg BuySkill Button
+      value: Vampire BuySkill Button
       objectReference: {fileID: 0}
     - target: {fileID: 5379627649576012475, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b3b31975360d24245855b1eeab935778,
+      objectReference: {fileID: 21300000, guid: d7781c4d6ae51c9419bfb8d11e9467af,
         type: 3}
     - target: {fileID: 5664799777774353510, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3338,7 +3355,7 @@ PrefabInstance:
     - target: {fileID: 7884283866330464005, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: skillType
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}
@@ -3435,7 +3452,7 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3445,17 +3462,17 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3495,12 +3512,12 @@ PrefabInstance:
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3281020705692724684, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3530,18 +3547,18 @@ PrefabInstance:
     - target: {fileID: 4744915289642704656, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_text
-      value: Heal
+      value: More Life
       objectReference: {fileID: 0}
     - target: {fileID: 5283267333821560452, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Name
-      value: Heal BuySkill Button
+      value: MoreLife BuySkill Button
       objectReference: {fileID: 0}
     - target: {fileID: 5379627649576012475, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a13258cae85b9724496b81922feb4b29,
+      objectReference: {fileID: 21300000, guid: b06d473aa154a294eb1d1a2da4486f2d,
         type: 3}
     - target: {fileID: 5664799777774353510, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
@@ -3576,7 +3593,7 @@ PrefabInstance:
     - target: {fileID: 7884283866330464005, guid: d1804c98acd38f54380b43a6f667bbcb,
         type: 3}
       propertyPath: skillType
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1804c98acd38f54380b43a6f667bbcb, type: 3}

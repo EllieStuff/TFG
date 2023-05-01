@@ -411,7 +411,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &2069013489625910314
 MonoBehaviour:
@@ -2485,7 +2485,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &2069013490311953413
 MonoBehaviour:
@@ -7050,6 +7050,7 @@ GameObject:
   - component: {fileID: 3098043202142236374}
   - component: {fileID: 6783811005931364646}
   - component: {fileID: 4324987556055281818}
+  - component: {fileID: 5329866586421695529}
   m_Layer: 0
   m_Name: InGameScene CanvasGroup
   m_TagString: Untagged
@@ -7148,6 +7149,24 @@ MonoBehaviour:
   menusToDisable:
     usedMenus: []
     otherUI: []
+--- !u!114 &5329866586421695529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7825479283717588138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f4087195111b5049903a7c4545661cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miscCanvas: {fileID: 2069013489625910315}
+  radialMenu: {fileID: 6481193805554786609}
+  UIShortcutsKeys: {fileID: 2069013491332508889}
+  cardGrid: {fileID: 2069013491007403039}
+  gameOverMenu: {fileID: 2069013490882701663}
+  pauseMenu: {fileID: 2069013490311953434}
 --- !u!1 &7980206104019051550
 GameObject:
   m_ObjectHideFlags: 0
@@ -8283,7 +8302,7 @@ PrefabInstance:
     - target: {fileID: 3124570844114879015, guid: bb05679f21f140e49a4a208d42f341ec,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6009655347090098945, guid: bb05679f21f140e49a4a208d42f341ec,
         type: 3}
@@ -8652,6 +8671,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b3732c20d996794fb18ac79a2d0f67f, type: 3}
+--- !u!1 &6481193805554786609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4992046277744090995, guid: 1b3732c20d996794fb18ac79a2d0f67f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2069013490012618306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6481193805554786614 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4992046277744090996, guid: 1b3732c20d996794fb18ac79a2d0f67f,
@@ -8905,6 +8930,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7604412909852613287, guid: 6e7eb5b424c976649ba6327956e6a9c7,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7604412909852613340, guid: 6e7eb5b424c976649ba6327956e6a9c7,
         type: 3}
       propertyPath: m_Name
@@ -9124,6 +9154,11 @@ PrefabInstance:
         type: 3}
       propertyPath: COLOR_LERP_SPEED
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988575037192658389, guid: 352f4f56464c3e140866d0e1bd49d868,
+        type: 3}
+      propertyPath: switchUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4760391057499352588, guid: 352f4f56464c3e140866d0e1bd49d868,
         type: 3}
@@ -9492,6 +9527,12 @@ PrefabInstance:
 --- !u!224 &2069013491007403032 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5860327862265287185, guid: 4fc012b21471a5d40a736ec725d2c8bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5612204125700302345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2069013491007403039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5860327862265287190, guid: 4fc012b21471a5d40a736ec725d2c8bb,
     type: 3}
   m_PrefabInstance: {fileID: 5612204125700302345}
   m_PrefabAsset: {fileID: 0}

@@ -18,30 +18,52 @@ public class ShopManager : MonoBehaviour
     ShopItemData[] itemsInfo;
     //Transform cardListPivot;
     bool inited = false;
-
+    float timer = 1;
 
     // Start is called before the first frame update
-    void Awake()
+    void Update()
     {
-        //skillsManager = FindObjectOfType<PassiveSkills_Manager>();
-        //cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
-        passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
-        InitOwnedSkills();
-        InitItemsInfo();
+        if(!inited)
+        {
+            timer -= Time.deltaTime;
 
-        GetComponent<CanvasGroup>().alpha = 1f;
-        gameObject.SetActive(false);
-        inited = true;
+            if(timer <= 0)
+            {
+                //skillsManager = FindObjectOfType<PassiveSkills_Manager>();
+                //cardListPivot = GameObject.FindGameObjectWithTag("CardGrid").transform;
+                passiveSkillsSave = GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>();
+                InitOwnedSkills();
+                InitItemsInfo();
+
+                GetComponent<CanvasGroup>().alpha = 1f;
+                gameObject.SetActive(false);
+                inited = true; 
+            }
+        }
     }
+
+    private void Start()
+    {
+        InitItemsInfo();
+    }
+
 
     private void OnEnable()
     {
+        GetComponent<Canvas>().sortingOrder = 3;
+
         if (inited) RefreshAllItemsInfo();
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<Canvas>().sortingOrder = 2;
     }
 
     void InitOwnedSkills()
     {
         //passiveSkillsSave.ResetSave(LoadPassiveSkills.ShopPath);
+        ownedSkills = new List<PassiveSkill_Base>();
         SavedPassiveSkills save = passiveSkillsSave.LoadSave(LoadPassiveSkills.ShopPath);
         foreach (Tuple<PassiveSkill_Base.SkillType, int> element in save.savedElements)
         {
@@ -52,6 +74,24 @@ public class ShopManager : MonoBehaviour
             ownedSkills.Add(skillToAdd);
         }
 
+    }
+
+    public void ReestartInfo()
+    {
+        for(int i = 0; i < ownedSkills.Count; i++)
+        {
+            ownedSkills[i].SetShopLevel(0);
+            RefreshItemInfo(i);
+            itemsInfo[i].priceText.text = itemsInfo[i].data.Price.ToString();
+            Button bttn = itemsInfo[i].GetComponent<Button>();
+            if (!bttn.interactable)
+            {
+                itemsInfo[i].iconImage.color = Color.white;
+                itemsInfo[i].GetComponent<Button>().interactable = true;
+            }
+            extraInfoBox.SetExtraInfo(ownedSkills[i]);
+        }
+        RefreshAllItemsInfo();
     }
 
     void InitItemsInfo()
@@ -75,21 +115,6 @@ public class ShopManager : MonoBehaviour
 
     void RefreshItemInfo(int _itemIdx, PassiveSkill_Base _playerItemData = null)
     {
-        ///ToDo: Revisar quan sistema de guardat estigui fet
-        //if (_playerItemData == null)
-        //    _playerItemData = skillsManager.FindSkill(itemsInfo[_itemIdx].data);
-        //if (_playerItemData != null)
-        //{
-        //    itemsInfo[_itemIdx].data.SetShopLevel(_playerItemData.Level);
-        //    if (!_playerItemData.CanBeImproved)
-        //    {
-        //        itemsInfo[_itemIdx].iconImage.color = Color.gray;
-        //        itemsInfo[_itemIdx].GetComponent<Button>().interactable = false;
-        //        itemsInfo[_itemIdx].priceText.text = "Sold Out";
-        //        return;
-        //    }
-        //}
-
         if (_playerItemData == null)
         {
             PassiveSkill_Base.SkillType tmpItemDataType = itemsInfo[_itemIdx].data.skillType;
@@ -120,7 +145,6 @@ public class ShopManager : MonoBehaviour
             MoneyManager.SetMoney(MoneyManager.MoneyAmount - tmpItemData.Price);
             MoneyManager.SaveCurrentMoney();
 
-            //PassiveSkill_Base playerSkill = skillsManager.FindSkill(tmpItemData.data);
             PassiveSkill_Base playerSkill = ownedSkills.Find(_skill => _skill.skillType == tmpItemData.skillType);
             if (playerSkill == null)
             {
@@ -136,38 +160,38 @@ public class ShopManager : MonoBehaviour
 
             extraInfoBox.SetExtraInfo(itemsInfo[_itemIdx].data);
             playerMoneyText.text = MoneyManager.MoneyAmount.ToString();
-            passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
-            //SpawnCardInUI(itemsInfo[_itemIdx].data.skillType, itemsInfo[_itemIdx].iconImage);
+            if(tmpItemData != null)
+                passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
+        }
+        else
+        {
+            if (!itemsInfo[_itemIdx].busy)
+                StartCoroutine(NotEnoughMoneyFeedback(itemsInfo[_itemIdx]));
         }
     }
 
 
-    //CardUIScript CheckIfThisCardExistsAlready(PassiveSkill_Base.SkillType _skillType)
-    //{
-    //    foreach (Transform child in cardListPivot)
-    //    {
-    //        if (child.GetComponent<CardUIScript>().skillType.Equals(_skillType))
-    //            return child.GetComponent<CardUIScript>();
-    //    }
+    IEnumerator NotEnoughMoneyFeedback(ShopItemData _shopItem, float _lerpTime = 0.2f)
+    {
+        _shopItem.busy = true;
+        Image shopItemImage = _shopItem.GetComponent<Image>();
+        Color originColor = shopItemImage.color;
+        float timer = 0f;
+        while(timer < _lerpTime)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+            shopItemImage.color = Color.Lerp(originColor, Color.red, timer / _lerpTime);
+        }
+        timer = 0f;
+        while (timer < _lerpTime)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+            shopItemImage.color = Color.Lerp(Color.red, originColor, timer / _lerpTime);
+        }
+        _shopItem.busy = false;
+    }
 
-    //    return null;
-    //}
-
-    //void SpawnCardInUI(PassiveSkill_Base.SkillType _skillType, Image _iconImage)
-    //{
-    //    CardUIScript cardCheck = CheckIfThisCardExistsAlready(_skillType);
-
-    //    if (cardCheck != null)
-    //    {
-    //        cardCheck.ModifyCardTier();
-    //    }
-    //    else
-    //    {
-    //        CardUIScript card = Instantiate(cardPrefabUI, cardListPivot).GetComponent<CardUIScript>();
-
-    //        card.skillType = _skillType;
-    //        card.cardSprite = _iconImage.sprite;
-    //    }
-    //}
 
 }

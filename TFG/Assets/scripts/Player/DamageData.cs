@@ -113,14 +113,14 @@ public class DamageData : MonoBehaviour
         LifeSystem lifeSystem = _enemy.GetComponent<LifeSystem>();
         //Debug.Log("Damaged by: " + this.name);
 
-        //if (dataProj.dmgData.stealLifePercentage > 0)
-        //    lifeSystem.DamageWithLifeSteal(damage + GetDamageVariation(), attackElement, dataProj, playerLifeSystem);
-        //else
-        //    lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
+        if (dataProj.dmgData.stealLifePercentage > 0)
+            lifeSystem.DamageWithLifeSteal(damage + GetDamageVariation(), attackElement, dataProj, playerLifeSystem);
+        else
+            lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
 
-        lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
-        if (dataProj.dmgData.stealLifePercentage > 0 && lifeSystem.isDead)
-            lifeSystem.LifeSteal(attackElement, dataProj, playerLifeSystem);
+        //lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
+        //if (dataProj.dmgData.stealLifePercentage > 0 && lifeSystem.isDead)
+        //    lifeSystem.LifeSteal(attackElement, dataProj, playerLifeSystem);
 
         if (critPercentage > 0)
             lifeSystem.CritFeedback();

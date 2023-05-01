@@ -17,6 +17,7 @@ public class LoadPassiveSkills : MonoBehaviour
     public const string InGamePath = "/inGameSave.dat", ShopPath = "/shopSave.dat";
 
     SavedPassiveSkills inGameSkillsSave, shopSkillsSave;
+    Stream stream;
 
     private void Awake()
     {
@@ -33,10 +34,16 @@ public class LoadPassiveSkills : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        if(stream != null)
+            stream.Close();
+    }
+
     public void Save_InGame()
     {
         IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(Application.dataPath + InGamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
+        stream = new FileStream(Application.dataPath + InGamePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
         formatter.Serialize(stream, inGameSkillsSave);
         stream.Close();
@@ -45,7 +52,7 @@ public class LoadPassiveSkills : MonoBehaviour
     public void Save_Shop()
     {
         IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(Application.dataPath + ShopPath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
+        stream = new FileStream(Application.dataPath + ShopPath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
         formatter.Serialize(stream, shopSkillsSave);
         stream.Close();
@@ -55,7 +62,15 @@ public class LoadPassiveSkills : MonoBehaviour
     public SavedPassiveSkills LoadSave(string _path)
     {
         IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(Application.dataPath + _path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+        try 
+        {
+            stream = new FileStream(Application.dataPath + _path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        }
+        catch(Exception ex) 
+        {
+            stream = new FileStream(Application.dataPath + ShopPath, FileMode.Create, FileAccess.ReadWrite);
+        }
 
         if (stream.Length == 0)
         {
@@ -73,10 +88,22 @@ public class LoadPassiveSkills : MonoBehaviour
 
     public void ResetSave(string _path)
     {
+        if (stream != null)
+            stream.Close();
+
         File.Delete(Application.dataPath + _path);
-        Stream stream = new FileStream(Application.dataPath + _path, FileMode.Create, FileAccess.Write);
+        stream = new FileStream(Application.dataPath + _path, FileMode.Create, FileAccess.Write);
         stream.Close();
     }
+
+    [ContextMenu("ResetBoughtSkills")]
+    public void ResetBoughtSkills()
+    {
+        File.Delete(Application.dataPath + ShopPath);
+        stream = new FileStream(Application.dataPath + ShopPath, FileMode.Create, FileAccess.Write);
+        stream.Close();
+    }
+    
 
     public void AddElementToSave_InGame(PassiveSkill_Base.SkillType _skill)
     {
