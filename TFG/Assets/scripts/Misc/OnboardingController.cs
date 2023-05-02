@@ -95,15 +95,16 @@ public class OnboardingController : MonoBehaviour
         yield return WaitUntilTrue(CheckIfRatEnemyDead);
         paredInvisible2.SetActive(false);
         Time.timeScale = 0;
-        sixthTextAUTO.enabled = false;
-        sixthTextAUTO.gameObject.SetActive(false);
         seventhTextAUTO.enabled = true;
         tablaDebilidadesAUTO.enabled = true;
+        sixthTextAUTO.enabled = false;
+        sixthTextAUTO.gameObject.SetActive(false);
         yield return WaitUntilTrue(IsMousePressed);  //Tarda en aparecer el panel
-        seventhTextAUTO.enabled = false;
-        seventhTextAUTO.gameObject.SetActive(false);
         canvasFocus.SetActive(true);
         demostrationElementsAUTO.enabled = true;
+        //seventhTextAUTO.enabled = false;
+        //seventhTextAUTO.gameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(4f);  //Tarda en aparecer el panel
         yield return WaitUntilTrue(IsMousePressed);
         demostrationElementsAUTO.enabled = false;
         demostrationElementsAUTO.gameObject.SetActive(false);

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 19
+  controlID: 20
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 73
+  controlID: 21
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 74
+  controlID: 22
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -504,9 +504,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.9969332, y: 32.180054, z: 33.179344}
+    m_Target: {x: 9.38438, y: 11.954586, z: -5.9064474}
     speed: 2
-    m_Value: {x: 3.9969327, y: 32.180054, z: 33.179344}
+    m_Value: {x: 9.38438, y: 11.954586, z: -5.9064474}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -523,7 +523,7 @@ MonoBehaviour:
     showImageEffects: 1
     showParticleSystems: 1
     showVisualEffectGraphs: 1
-    m_FxEnabled: 1
+    m_FxEnabled: 0
   m_Grid:
     xGrid:
       m_Fade:
@@ -553,13 +553,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.027765442, y: -0.34726152, z: 0.009659645, w: 0.9374144}
+    m_Target: {x: 0.31628227, y: -0.5917391, z: 0.27143818, w: 0.69027156}
     speed: 2
-    m_Value: {x: 0.027704207, y: -0.35284436, z: 0.009825078, w: 0.93522024}
+    m_Value: {x: 0.31622803, y: -0.5916376, z: 0.27139163, w: 0.6901532}
   m_Size:
-    m_Target: 18.485107
+    m_Target: 0.046064153
     speed: 2
-    m_Value: 17.689098
+    m_Value: 0.046064153
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -616,9 +616,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 565bfcff165cfcffa804fdff5e27fdff123dfdffbce6fdfff6c7fefffac7feff14c9feff201affffee42ffff70efffff220301001e0c0100
+      m_SelectedIDs: a23effff
+      m_LastClickedID: -49502
+      m_ExpandedIDs: f83bffffa23effff064effffcaf8ffffd6e5000000ef0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -701,10 +701,10 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 1
+    m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -912,22 +912,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Models
+    - Assets/scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Models
+  - Assets/scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\ENTI ALBERT\TFG\TFG
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 238}
-    m_SelectedIDs: 3af00000
-    m_LastClickedID: 61498
-    m_ExpandedIDs: 00000000dcef0000deef0000e0ef0000e2ef0000e4ef0000e6ef0000e8ef0000eaef0000ecef0000eeef0000f0ef0000f2ef000034f00000223a0100243a010000ca9a3b
+    scrollPos: {x: 0, y: 846}
+    m_SelectedIDs: a0e30000
+    m_LastClickedID: 58272
+    m_ExpandedIDs: 0000000094e3000096e3000098e300009ae300009ce300009ee30000a0e30000a2e30000a4e30000a6e30000a8e30000aae3000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -955,7 +955,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000dcef0000deef0000e0ef0000e2ef0000e4ef0000e6ef0000e8ef0000eaef0000ecef0000eeef0000f0ef0000f2ef0000
+    m_ExpandedIDs: 0000000094e3000096e3000098e300009ae300009ce300009ee30000a0e30000a2e30000a4e30000a6e30000a8e30000aae30000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1071,7 +1071,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -4886
+  m_LastSelectedObjectID: -49502
 --- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
