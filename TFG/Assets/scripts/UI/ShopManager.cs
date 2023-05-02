@@ -160,7 +160,8 @@ public class ShopManager : MonoBehaviour
 
             extraInfoBox.SetExtraInfo(itemsInfo[_itemIdx].data);
             playerMoneyText.text = MoneyManager.MoneyAmount.ToString();
-            passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
+            if(tmpItemData != null)
+                passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
         }
         else
         {

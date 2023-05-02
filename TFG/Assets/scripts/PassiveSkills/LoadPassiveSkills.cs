@@ -62,7 +62,15 @@ public class LoadPassiveSkills : MonoBehaviour
     public SavedPassiveSkills LoadSave(string _path)
     {
         IFormatter formatter = new BinaryFormatter();
-        stream = new FileStream(Application.dataPath + _path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+        try 
+        {
+            stream = new FileStream(Application.dataPath + _path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        }
+        catch(Exception ex) 
+        {
+            stream = new FileStream(Application.dataPath + ShopPath, FileMode.Create, FileAccess.ReadWrite);
+        }
 
         if (stream.Length == 0)
         {
