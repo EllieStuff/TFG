@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using FMODUnity;
 
 public class AbilityButton : MonoBehaviour
 {
@@ -43,6 +44,11 @@ public class AbilityButton : MonoBehaviour
     const float TEXT_SIZE_MULTIPLIER_NAME = 1.1f;
 
     bool pushedButton;
+
+    //AUDIO
+    private bool uiSelectPlayed = false;
+    private EventReference uiButtonSelect;
+    private EventReference uiSelectAbility;
 
     private void Start()
     {
@@ -185,6 +191,13 @@ public class AbilityButton : MonoBehaviour
         uiTextDescription.text = skillText;
         imageTransform.sizeDelta = Vector2.Lerp(imageTransform.sizeDelta, biggerSize, Time.deltaTime * SIZE_RECT_LERP_SPEED);
         isMouseOver = true;
+
+        //AUDIO
+        if (!uiSelectPlayed)
+        {
+            uiSelectPlayed = true;
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.uiButtonSelect, this.transform.position);
+        }
     }
 
     private void OnMouseExit()
@@ -196,6 +209,9 @@ public class AbilityButton : MonoBehaviour
         }
 
         firstOverIteration = true;
+
+        //AUDIO
+        uiSelectPlayed = false;
     }
 
     private void OnMouseDown()
@@ -288,6 +304,9 @@ public class AbilityButton : MonoBehaviour
             float lifeToAdd = ACHIEVE_SKILL_HEAL_PERCENTAGE * playerLife.maxLife;
             playerLife.AddLife(lifeToAdd);
             playerSkills.AddSkill(skill, true);
+
+            //AUDIO
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.uiSelectAbility, this.transform.position);
 
             if (cardListPivot != null && cardPrefabUI != null)
                 SpawnCardInUI();

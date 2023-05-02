@@ -22,6 +22,9 @@ public class UIFeedback_Default : UIFeedback_Base
     
     Vector3 originalSize, targetSize;
 
+    //AUDIO
+    private bool uiSelectPlayed = false;
+
     internal override void Start_Call() { base.Start_Call(); }
     internal override void Init()
     {
@@ -61,6 +64,13 @@ public class UIFeedback_Default : UIFeedback_Base
         EliTween.Scale(transform, targetSize, selectIncreaseSizeSpeed);
         EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed, clickIncreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, selectedColor, colorSpeed);
+
+        //AUDIO
+        if (!uiSelectPlayed)
+        {
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.uiButtonSelect, this.transform.position);
+            uiSelectPlayed = true;
+        }
     }
 
     internal override void UnSelect_Feedback()
@@ -68,6 +78,9 @@ public class UIFeedback_Default : UIFeedback_Base
         base.UnSelect_Feedback();
         EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, baseColor, colorSpeed);
+
+        //AUDIO
+        uiSelectPlayed = false;
     }
 
     internal override void Click_Feedback()
@@ -75,6 +88,9 @@ public class UIFeedback_Default : UIFeedback_Base
         base.Click_Feedback();
         EliTween.Scale(transform, targetSize, clickIncreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, clickedColor, colorSpeed);
+
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.uiButtonClick, this.transform.position);
     }
 
     internal override void UnClick_Feedback()

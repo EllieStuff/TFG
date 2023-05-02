@@ -99,6 +99,10 @@ public class PlantEnemy : BaseEnemyScript
         //place shoot animation here
         plantAttacking = true;
         ChangeAnim(AnimState.ATTACKING);
+
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.plantAttack, this.transform.position);
+
         blockAnim = true;
         yield return new WaitForSeconds(attackAnimationTime);
         RaycastHit hit;

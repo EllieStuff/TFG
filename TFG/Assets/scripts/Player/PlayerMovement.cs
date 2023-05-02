@@ -62,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
-        //audio = GetComponent<AudioManager>();
         baseSpeed = speedMultiplier;
         rb = GetComponent<Rigidbody>();
         lifeStatus = GetComponent<LifeSystem>();
