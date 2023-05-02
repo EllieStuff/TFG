@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FMOD.Studio;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     PlayerAttack attackScript;
 
     public ParticleSystem dustParticleWalking;
-    //private AudioManager audio;
 
     bool damage;
 
@@ -51,6 +51,12 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Moving { get { return moving; } }
 
+    //AUDIO
+    private AudioManager audioManager;
+    private EventInstance playerFootsteps;
+
+    const float SOUND_BASE_TIMER = 0.5f;
+    float soundTimer = SOUND_BASE_TIMER;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +72,10 @@ public class PlayerMovement : MonoBehaviour
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
 
         ResetSpeed();
+
+        //AUDIO
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        playerFootsteps = audioManager.CreateInstance(FMODEvents.instance.playerFootsteps);
     }
 
     // Update is called once per frame
@@ -89,9 +99,6 @@ public class PlayerMovement : MonoBehaviour
 
             rb.constraints = (RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation);
 
-            //if (!audio.IsPlayingSound() || audio.GetClipCurrentState() >= MAX_WALK_PLAYTIME)
-            //    audio.PlaySound();
-
             //if (rb.velocity.magnitude > MIN_SPEED_WALK)
             //{
             //    playerAnimator.speed = 1f;
@@ -108,6 +115,9 @@ public class PlayerMovement : MonoBehaviour
             Vector3 finalVelocity = ClampVector(rb.velocity, -actualMaxSpeed * speedMultiplier, actualMaxSpeed * speedMultiplier) + new Vector3(0, rb.velocity.y, 0);
             rb.velocity = finalVelocity;
             dustParticleWalking.Play();
+
+            //AUDIO
+            PlaySound();
         }
         else if (moving)
         {
@@ -128,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
                 reducedVel = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / SPEED_REDUCTION);
 
             rb.velocity = reducedVel;
+
         }
         else if (!moving)
         {
@@ -153,6 +164,19 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
 
+    }
+
+    //AUDIO
+    void PlaySound()
+    {
+        soundTimer -= Time.deltaTime;
+
+        if(soundTimer <= 0)
+        {
+            playerFootsteps.start();
+            soundTimer = SOUND_BASE_TIMER;
+        }
+           
     }
 
     Vector2 GetMouseLookVector()
