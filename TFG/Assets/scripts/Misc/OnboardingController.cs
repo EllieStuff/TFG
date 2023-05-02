@@ -16,6 +16,7 @@ public class OnboardingController : MonoBehaviour
     [SerializeField] Animator tablaDebilidadesAUTO;
     [SerializeField] GameObject canvasFocus;
     [SerializeField] GameObject paredInvisibleRaton;
+    [SerializeField] GameObject paredInvisible2;
 
     [SerializeField] GameObject player;
     [SerializeField] GameObject ratEnemy;   //Solo necesito freeze para que no se mueva hasta x momento
@@ -23,11 +24,11 @@ public class OnboardingController : MonoBehaviour
 
     private bool isAttacking;
     private bool secondCheckPointReached;
+
+    [SerializeField] ElementsManager manager;
     // Start is called before the first frame update
     void Start()
     {
-        
-
         isAttacking = false;
         secondCheckPointReached = false;
 
@@ -83,6 +84,7 @@ public class OnboardingController : MonoBehaviour
         fourthTextAUTO.enabled = false;
         fourthTextAUTO.gameObject.SetActive(false);
         fifthTextAUTO.enabled = true;
+        manager.tutorialDone = true;
         yield return WaitUntilTrue(IsButton2Pressed);
         Time.timeScale = 1;
         fifthTextAUTO.enabled = false;
@@ -91,12 +93,15 @@ public class OnboardingController : MonoBehaviour
 
         //Cuando muera raton
         yield return WaitUntilTrue(CheckIfRatEnemyDead);
+        paredInvisible2.SetActive(false);
         Time.timeScale = 0;
         sixthTextAUTO.enabled = false;
         sixthTextAUTO.gameObject.SetActive(false);
         seventhTextAUTO.enabled = true;
         tablaDebilidadesAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(7f);  //Tarda en aparecer el panel
+        yield return WaitUntilTrue(IsMousePressed);  //Tarda en aparecer el panel
+        seventhTextAUTO.enabled = false;
+        seventhTextAUTO.gameObject.SetActive(false);
         canvasFocus.SetActive(true);
         demostrationElementsAUTO.enabled = true;
         yield return WaitUntilTrue(IsMousePressed);
@@ -106,6 +111,7 @@ public class OnboardingController : MonoBehaviour
         Time.timeScale = 1;
 
         PlayerPrefs.SetInt("TutorialHasPlayed", 1);
+       
     }
 
     void CheckIfFirstEnemyDead()
@@ -119,7 +125,7 @@ public class OnboardingController : MonoBehaviour
 
     bool CheckIfRatEnemyDead()
     {
-        return ratEnemy == null;
+        return ratEnemy.GetComponent<LifeSystem>().currLife <= 0;
     }
 
     bool CheckIfAttacking()

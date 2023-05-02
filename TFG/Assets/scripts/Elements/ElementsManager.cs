@@ -25,6 +25,7 @@ public class ElementsManager : MonoBehaviour
     LifeSystem playerLife;
     [SerializeField] bool allowElementChangeOneStarted = false;
     bool changingElement = false;
+    public bool tutorialDone = false;
     [SerializeField] Slider changeElementSlider;
     Elements elementChanging = Elements.FIRE;
     Elements elementIdx;
@@ -125,7 +126,7 @@ public class ElementsManager : MonoBehaviour
 
     void KeyboardInputsManager()
     {
-        if (!CanChangeElement) return;
+        if (!CanChangeElement || !tutorialDone) return;
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && attackManager.currentAttackElement != Elements.FIRE)
         {
@@ -146,7 +147,7 @@ public class ElementsManager : MonoBehaviour
 
     void MouseInputsManager()
     {
-        if (!CanChangeElement) return;
+        if (!CanChangeElement || !tutorialDone) return;
 
         if ((mouseClockWise && Input.GetAxis("Mouse ScrollWheel") < 0f) || (!mouseClockWise && Input.GetAxis("Mouse ScrollWheel") > 0f))
         {
