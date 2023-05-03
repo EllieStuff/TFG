@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         ResetSpeed();
 
         //AUDIO
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         playerFootsteps = audioManager.CreateInstance(FMODEvents.instance.playerFootsteps);
     }
 
