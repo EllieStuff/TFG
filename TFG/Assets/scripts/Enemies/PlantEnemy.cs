@@ -80,6 +80,7 @@ public class PlantEnemy : BaseEnemyScript
     {
         base.DeathStart();
         ChangeAnim(AnimState.DEAD);
+        Destroy(gameObject, baseDeathTime);
     }
 
     internal override void DeathUpdate()
