@@ -23,6 +23,7 @@ public class MoneyManager : MonoBehaviour
         {
             uiManager.moneyText.text = moneyAmount.ToString();
             uiManager.DeactivateMoneyFeedback(1f, 2f);
+            
         }
     }
 
@@ -48,8 +49,13 @@ public class MoneyManager : MonoBehaviour
         if (uiManager != null)
         {
             if (!uiManager.feedbackActive)
+            {
                 uiManager.ActivateMoneyFeedback();
+            }
             uiManager.moneyText.text = moneyAmount.ToString();
+            //Animacion dineros
+            if (uiManager.moneyUpAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f)
+                uiManager.moneyUpAnim.Play("Base Layer.AnimationCoinsUp",0,0.25f);
         }
     }
 

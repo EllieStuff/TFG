@@ -6,12 +6,17 @@ public class OnboardingController : MonoBehaviour
 {
     [SerializeField] Animator firstTextAUTO;
     [SerializeField] Animator secondTextAUTO;
-    [SerializeField] Animator thirdTextAUTO;
+    //[SerializeField] Animator thirdTextAUTO;
     [SerializeField] Animator fourthTextAUTO;
+    [SerializeField] Animator fifthTextAUTO;
+    [SerializeField] Animator sixthTextAUTO;
+    [SerializeField] Animator seventhTextAUTO;
 
     [SerializeField] Animator demostrationElementsAUTO;
     [SerializeField] Animator tablaDebilidadesAUTO;
     [SerializeField] GameObject canvasFocus;
+    [SerializeField] GameObject paredInvisibleRaton;
+    //[SerializeField] GameObject paredInvisible2;
 
     [SerializeField] GameObject player;
     [SerializeField] GameObject ratEnemy;   //Solo necesito freeze para que no se mueva hasta x momento
@@ -19,6 +24,8 @@ public class OnboardingController : MonoBehaviour
 
     private bool isAttacking;
     private bool secondCheckPointReached;
+
+    [SerializeField] ElementsManager manager;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +34,11 @@ public class OnboardingController : MonoBehaviour
 
         firstTextAUTO.enabled = false;
         secondTextAUTO.enabled = false;
-        thirdTextAUTO.enabled = false;
+        //thirdTextAUTO.enabled = false;
         fourthTextAUTO.enabled = false;
+        fifthTextAUTO.enabled = false;
+        sixthTextAUTO.enabled = false;
+        seventhTextAUTO.enabled = false;
 
         demostrationElementsAUTO.enabled = false;
         tablaDebilidadesAUTO.enabled = false;
@@ -39,8 +49,8 @@ public class OnboardingController : MonoBehaviour
     {
         CheckIfAttacking();
         CheckIfSecondCheckpointReached();
-        if (ratEnemy != null && ratEnemy.gameObject.activeInHierarchy)
-            CheckIfFirstEnemyDead();
+        //if (ratEnemy != null && ratEnemy.gameObject.activeInHierarchy)
+        //    ;//CheckIfFirstEnemyDead();
     }
 
     IEnumerator Manager()
@@ -63,33 +73,50 @@ public class OnboardingController : MonoBehaviour
         yield return WaitUntilTrue(IsMousePressed);
         Time.timeScale = 1;
 
-        //Cuando vea el siguiente enemigo pausar y decir puede coger cobertura
+        //Cuando vea el siguiente enemigo pausar y decir funcion elementos
         yield return WaitUntilTrue(CheckIfSecondCheckpointReached);
         Time.timeScale = 0;
-        thirdTextAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(1.5f);//animacion
-        yield return WaitUntilTrue(IsMousePressed);
-        Time.timeScale = 1;
+        paredInvisibleRaton.SetActive(false);
+        //ratEnemy.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePosition;  //Desfreeze al raton
 
-        //Pausar para enseñar como enseñar elemento
-        yield return WaitUntilTrue(CheckIfThirdCheckpointReached);
-        Time.timeScale = 0;
         fourthTextAUTO.enabled = true;
-        demostrationElementsAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(0.5f);  //Tarda en aparecer el panel
-        canvasFocus.SetActive(true);
-        yield return WaitUntilTrue(IsMousePressed);
-        canvasFocus.SetActive(false);
+        yield return new WaitForSecondsRealtime(4.5f);
         fourthTextAUTO.enabled = false;
         fourthTextAUTO.gameObject.SetActive(false);
-        tablaDebilidadesAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(3f);
-        yield return WaitUntilTrue(IsMousePressed);
+        fifthTextAUTO.enabled = true;
+        manager.tutorialDone = true;
+        yield return WaitUntilTrue(IsButton2Pressed);
         Time.timeScale = 1;
+        fifthTextAUTO.enabled = false;
+        fifthTextAUTO.gameObject.SetActive(false);
+        sixthTextAUTO.enabled = true;
+
+        //Cuando muera raton
+        yield return WaitUntilTrue(CheckIfRatEnemyDead);
+
+        yield return WaitUntilTrue(CheckIfThirdCheckpointReached);
+        //paredInvisible2.SetActive(false);
+        Time.timeScale = 0;
+        seventhTextAUTO.enabled = true;
+        tablaDebilidadesAUTO.enabled = true;
+        sixthTextAUTO.enabled = false;
+        sixthTextAUTO.gameObject.SetActive(false);
+        yield return WaitUntilTrue(IsMousePressed);  //Tarda en aparecer el panel
+        canvasFocus.SetActive(true);
+        demostrationElementsAUTO.enabled = true;
+        seventhTextAUTO.enabled = false;
+        seventhTextAUTO.gameObject.SetActive(false);
+        tablaDebilidadesAUTO.enabled = false;
+        tablaDebilidadesAUTO.gameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(4f);  //Tarda en aparecer el panel
+        yield return WaitUntilTrue(IsMousePressed);
         demostrationElementsAUTO.enabled = false;
         demostrationElementsAUTO.gameObject.SetActive(false);
+        canvasFocus.SetActive(false);
+        Time.timeScale = 1;
 
-
+        PlayerPrefs.SetInt("TutorialHasPlayed", 1);
+       
     }
 
     void CheckIfFirstEnemyDead()
@@ -99,6 +126,11 @@ public class OnboardingController : MonoBehaviour
         {
             ratEnemy.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePosition;
         }
+    }
+
+    bool CheckIfRatEnemyDead()
+    {
+        return ratEnemy.GetComponent<LifeSystem>().currLife <= 0;
     }
 
     bool CheckIfAttacking()
@@ -126,7 +158,7 @@ public class OnboardingController : MonoBehaviour
 
     bool CheckIfThirdCheckpointReached()
     {
-        if (player.gameObject.transform.position.z >= 0f)
+        if (player.gameObject.transform.position.z >= 3f)
         {
             return true;
         }
@@ -136,6 +168,11 @@ public class OnboardingController : MonoBehaviour
     bool IsMousePressed()
     {
         return Input.GetKeyDown(KeyCode.Mouse1);
+    }
+
+    bool IsButton2Pressed()
+    {
+        return Input.GetKeyDown(KeyCode.Alpha2);
     }
 
     IEnumerator WaitUntilTrue(System.Func<bool> checkMethod)
