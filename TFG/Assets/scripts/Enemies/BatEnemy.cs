@@ -79,6 +79,13 @@ public class BatEnemy : BaseEnemyScript
         }
 
     }
+
+    internal override void DeathStart()
+    {
+        base.DeathStart();
+        ChangeAnim(AnimState.DEAD);
+    }
+
     internal override void DeathUpdate()
     {
         ChangeAnim(AnimState.DEAD);
