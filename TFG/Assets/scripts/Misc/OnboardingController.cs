@@ -16,7 +16,7 @@ public class OnboardingController : MonoBehaviour
     [SerializeField] Animator tablaDebilidadesAUTO;
     [SerializeField] GameObject canvasFocus;
     [SerializeField] GameObject paredInvisibleRaton;
-    [SerializeField] GameObject paredInvisible2;
+    //[SerializeField] GameObject paredInvisible2;
 
     [SerializeField] GameObject player;
     [SerializeField] GameObject ratEnemy;   //Solo necesito freeze para que no se mueva hasta x momento
@@ -93,7 +93,9 @@ public class OnboardingController : MonoBehaviour
 
         //Cuando muera raton
         yield return WaitUntilTrue(CheckIfRatEnemyDead);
-        paredInvisible2.SetActive(false);
+
+        yield return WaitUntilTrue(CheckIfThirdCheckpointReached);
+        //paredInvisible2.SetActive(false);
         Time.timeScale = 0;
         seventhTextAUTO.enabled = true;
         tablaDebilidadesAUTO.enabled = true;
@@ -102,8 +104,10 @@ public class OnboardingController : MonoBehaviour
         yield return WaitUntilTrue(IsMousePressed);  //Tarda en aparecer el panel
         canvasFocus.SetActive(true);
         demostrationElementsAUTO.enabled = true;
-        //seventhTextAUTO.enabled = false;
-        //seventhTextAUTO.gameObject.SetActive(false);
+        seventhTextAUTO.enabled = false;
+        seventhTextAUTO.gameObject.SetActive(false);
+        tablaDebilidadesAUTO.enabled = false;
+        tablaDebilidadesAUTO.gameObject.SetActive(false);
         yield return new WaitForSecondsRealtime(4f);  //Tarda en aparecer el panel
         yield return WaitUntilTrue(IsMousePressed);
         demostrationElementsAUTO.enabled = false;
@@ -154,7 +158,7 @@ public class OnboardingController : MonoBehaviour
 
     bool CheckIfThirdCheckpointReached()
     {
-        if (player.gameObject.transform.position.z >= 0f)
+        if (player.gameObject.transform.position.z >= 3f)
         {
             return true;
         }
