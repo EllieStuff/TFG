@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour
         eventInstances = new List<EventInstance>();
     }
 
-    //function to play 2D Action FMOD Events
+    //function to play Action FMOD Events
     public void PlayOneShot(EventReference sound, Vector3 worldPos)
     {
         RuntimeManager.PlayOneShot(sound, worldPos);
@@ -45,7 +45,6 @@ public class AudioManager : MonoBehaviour
     //clean up the instances
     private void CleanUp()
     {
-        // stop and release any created instances
         foreach (EventInstance eventInstance in eventInstances)
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);

@@ -216,6 +216,7 @@ public class PlayerAttack : MonoBehaviour
         {
             AudioManager.instance.SetFMODLabeledParameter("element", "water", playerAttackSound);
         }
+
         playerAttackSound.start();
     }
 }

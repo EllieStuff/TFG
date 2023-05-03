@@ -56,8 +56,6 @@ public class UIFeedback_Default : UIFeedback_Base
             feedbackImage.color = clickedColor;
     }
 
-
-
     internal override void Select_Feedback()
     {
         base.Select_Feedback();
@@ -68,7 +66,7 @@ public class UIFeedback_Default : UIFeedback_Base
         //AUDIO
         if (!uiSelectPlayed)
         {
-            AudioManager.instance.PlayOneShot(FMODEvents.instance.uiButtonSelect, this.transform.position);
+            //AudioManager.instance.PlayOneShot(FMODEvents.instance.uiButtonSelect, this.transform.position);
             uiSelectPlayed = true;
         }
     }

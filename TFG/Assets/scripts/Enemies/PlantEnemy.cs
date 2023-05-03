@@ -100,11 +100,12 @@ public class PlantEnemy : BaseEnemyScript
         plantAttacking = true;
         ChangeAnim(AnimState.ATTACKING);
 
+        blockAnim = true;
+        yield return new WaitForSeconds(attackAnimationTime);
+
         //AUDIO
         AudioManager.instance.PlayOneShot(FMODEvents.instance.plantAttack, this.transform.position);
 
-        blockAnim = true;
-        yield return new WaitForSeconds(attackAnimationTime);
         RaycastHit hit;
         if (Physics.Raycast(shootPoint.position, (player.position - shootPoint.position).normalized, out hit))
         {

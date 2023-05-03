@@ -116,6 +116,9 @@ public class MeleeEnemy : BaseEnemyScript
         //Feedback
         yield return new WaitForSeconds(0.2f);
 
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.ratAttack, this.transform.position);
+
         // Attacks
         //Justo aqui activar feedback viento vientoso ataque rata particulas
         fastRatVFX.Play();

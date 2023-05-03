@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
 
 public class BatEnemy : BaseEnemyScript
 {
@@ -23,7 +24,33 @@ public class BatEnemy : BaseEnemyScript
 
     const float RESET_ANIM_TIMER = 3;
 
-    internal override void Start_Call() { base.Start_Call(); }
+    //AUDIO
+    private EventInstance batAttack;
+
+    //function to play bat attack sound
+    private void BatAttackSound()
+    {
+        if (currentAnim == AnimState.ATTACKING)
+        {
+            PLAYBACK_STATE playbackState;
+            batAttack.getPlaybackState(out playbackState);
+            if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+            {
+                //falta añadir el timer del proyectil
+                batAttack.start();
+            }
+        }
+        else
+        {
+            batAttack.stop(STOP_MODE.ALLOWFADEOUT);
+        }
+    }
+
+    internal override void Start_Call()
+    {
+        base.Start_Call();
+        batAttack = AudioManager.instance.CreateInstance(FMODEvents.instance.batAttack);
+    }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -39,6 +66,9 @@ public class BatEnemy : BaseEnemyScript
             enemyAnimator.SetInteger("state", (int) _state);
             currentAnim = _state;
         }
+
+        //AUDIO
+        BatAttackSound();
     }
 
     internal override void IdleUpdate()
@@ -67,6 +97,7 @@ public class BatEnemy : BaseEnemyScript
         if (!hitCollided || !hit.transform.CompareTag("Player"))
         {
             ChangeState(States.IDLE);
+
             return;
         }
 
