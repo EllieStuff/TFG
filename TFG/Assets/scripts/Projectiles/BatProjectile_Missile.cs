@@ -12,6 +12,7 @@ public class BatProjectile_Missile : ProjectileData
     [SerializeField] float destroyTime = 4f;
     [SerializeField] TrailRenderer trail;
     [SerializeField] ParticleSystemRenderer particles;
+    [SerializeField] LifeSystem playerLife;
     //[SerializeField] bool testing = false;
 
     Transform playerRef;
@@ -24,6 +25,7 @@ public class BatProjectile_Missile : ProjectileData
         affectedByObstacles = false;
         dmgData.attackElement = _origin.GetComponent<LifeSystem>().entityElement;
         playerRef = GameObject.FindGameObjectWithTag("Player").transform;
+        playerLife = playerRef.GetComponent<LifeSystem>();
         if (playerRef != null)
         {
             moveDir = (playerRef.position - _origin.position).normalized;
@@ -38,6 +40,9 @@ public class BatProjectile_Missile : ProjectileData
 
     protected override void Update_Call()
     {
+        if(playerLife != null && playerLife.isDead)
+            Destroy(gameObject);
+
         if (Vector3.Distance(transform.position, playerRef.position) > CLOSE_RANGE_THRESHOLD) 
             { ancorePos = transform.position; speedInc = BASE_SPEED_INC; }
         else 

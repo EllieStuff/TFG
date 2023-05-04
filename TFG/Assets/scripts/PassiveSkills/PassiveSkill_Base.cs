@@ -12,12 +12,22 @@ public class PassiveSkill_Base
     int level = 0;
     protected int maxLevel = 3;
 
-    internal string name;
-    internal string initialDescription, improvementDescription;
+    protected string name;
+    protected string initialDescription, improvementDescription;
+    protected int basePrice = 0, priceInc = 0;
     protected float appearRatio = 1f;
 
+    internal string Name { get { return name; } }
+    internal string Description { 
+        get {
+            if (level == 0) return initialDescription;
+            else return improvementDescription;
+        } 
+    }
     internal int Level { get { return level; } }
+    internal int MaxLevel { get { return maxLevel; } }
     internal float AppearRatio { get { return appearRatio; } }
+    internal int Price { get { return basePrice + priceInc * level; } }
     internal bool CanBeImproved { get { return level < maxLevel || maxLevel < 0; } }
 
     public virtual void Init(Transform _playerRef)
@@ -43,6 +53,11 @@ public class PassiveSkill_Base
                 AddLevelEvent();
             }
         }
+    }
+
+    public void SetShopLevel(int _level)
+    {
+        level = _level;
     }
 
     internal virtual void AddLevelEvent()

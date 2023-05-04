@@ -101,11 +101,10 @@ public class AbilityButton : MonoBehaviour
         } while (!skill.CanBeImproved);
         //Debug.Log("Skill Spammed: " + skill.skillType.ToString());
 
-        if (skill.Level == 0) skillText = skill.initialDescription;
-        else skillText = skill.improvementDescription;
+        skillText = skill.Description;
 
         GetComponent<Image>().sprite = playerSkills.SearchSkillImage(skillType);
-        uiTextName.text = skill.name;
+        uiTextName.text = skill.Name;
     }
 
     void CheckRepeatedAbility()
@@ -281,6 +280,7 @@ public class AbilityButton : MonoBehaviour
         playerMovement.canMove = true;
     }
 
+
     private void AddAbility()
     {
         if(!pushedButton)
@@ -296,6 +296,7 @@ public class AbilityButton : MonoBehaviour
             pushedButton = true;
         }
     }
+
 
     IEnumerator DisableUI()
     {

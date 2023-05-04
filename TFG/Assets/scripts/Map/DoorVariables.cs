@@ -20,6 +20,7 @@ public class DoorVariables : MonoBehaviour
 
     void CloseDoorAnimCall()
     {
+        //soroll tancar porta
         closed = true;
         Animation anim = GetComponent<Animation>();
         anim.clip = closeDoorClip;
