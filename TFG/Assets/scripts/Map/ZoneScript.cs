@@ -155,16 +155,19 @@ public class ZoneScript : MonoBehaviour
         {
             if (items[i] == null) continue;
             if(Vector3.Distance(items[i].transform.position, player.transform.position) <= DOOR_DISTANCE
-                && !items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor
-                && !doorOpenFlag)
+                && !items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor)
             {
                 items[i].Play();
                 DoorVariables door = items[i].GetComponent<DoorVariables>();
-                doorOpenFlag = door.openedDoor = true;
+                door.openedDoor = true;
                 door.ChangeDoorTag();
 
                 //AUDIO
-                AudioManager.instance.PlayOneShot(FMODEvents.instance.doorOpen, this.transform.position);
+                if (!doorOpenFlag)
+                {
+                    doorOpenFlag = true;
+                    AudioManager.instance.PlayOneShot(FMODEvents.instance.doorOpen, this.transform.position);
+                }
             }
         }
     }
