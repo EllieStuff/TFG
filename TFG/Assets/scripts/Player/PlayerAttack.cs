@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -58,6 +59,8 @@ public class PlayerAttack : MonoBehaviour
 
     bool IsMoving { get { return playerMovement.moveDir != Vector3.zero && playerMovement.targetMousePos != Vector3.zero; } }
 
+    //AUDIO
+    private EventInstance playerAttackSound;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +75,9 @@ public class PlayerAttack : MonoBehaviour
         attacksDictionary.Add(ElementsManager.Elements.GRASS, grassAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.WATER, waterAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.NORMAL, normalAttack.prefab);
+
+        //AUDIO
+        playerAttackSound = AudioManager.instance.CreateInstance(FMODEvents.instance.playerAttackSound);
     }
 
     // Update is called once per frame
@@ -193,6 +199,9 @@ public class PlayerAttack : MonoBehaviour
 
         attack.dmgData.stealLifePercentage = stealLifePercentage;
         attack.dmgData.damage += dmgIncrease;
+
+        //AUDIO
+        PlayerAttackSound();
     }
 
 
@@ -212,4 +221,24 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForEndOfFrame();
     }
 
+
+    //AUDIO
+    //changes the element and plays attack sound 
+    public void PlayerAttackSound()
+    {
+        if (currentAttackElement == ElementsManager.Elements.FIRE)
+        {
+            AudioManager.instance.SetFMODLabeledParameter("element", "fire", playerAttackSound);
+        }
+        else if (currentAttackElement == ElementsManager.Elements.GRASS)
+        {
+            AudioManager.instance.SetFMODLabeledParameter("element", "plant", playerAttackSound);
+        }
+        else if (currentAttackElement == ElementsManager.Elements.WATER)
+        {
+            AudioManager.instance.SetFMODLabeledParameter("element", "water", playerAttackSound);
+        }
+
+        playerAttackSound.start();
+    }
 }

@@ -67,7 +67,7 @@ public class LoadPassiveSkills : MonoBehaviour
         {
             stream = new FileStream(Application.dataPath + _path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         }
-        catch(Exception ex) 
+        catch 
         {
             stream = new FileStream(Application.dataPath + ShopPath, FileMode.Create, FileAccess.ReadWrite);
         }

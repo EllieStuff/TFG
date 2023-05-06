@@ -353,7 +353,7 @@ MonoBehaviour:
   sourceProjectPath: 
   sourceBankPath: Assets/FMOD_banks
   sourceBankPathUnformatted: 
-  BankRefreshCooldown: 5
+  BankRefreshCooldown: 1
   ShowBankRefreshWindow: 1
   AutomaticEventLoading: 1
   BankLoadType: 0
@@ -376,7 +376,9 @@ MonoBehaviour:
   - Desktop/Master
   Banks:
   - Desktop/ambients
+  - Desktop/enemies
   - Desktop/ost
+  - Desktop/player
   - Desktop/sfx
   BanksToLoad: []
   LiveUpdatePort: 9264

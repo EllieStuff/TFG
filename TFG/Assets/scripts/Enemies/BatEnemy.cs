@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
 
 public class BatEnemy : BaseEnemyScript
 {
@@ -9,7 +10,7 @@ public class BatEnemy : BaseEnemyScript
     [Header("Bat Enemy")]
     [SerializeField] protected float attackAnimationTime;
     [SerializeField] protected float attackDamage;
-    [SerializeField] Animator enemyAnimator;
+    [SerializeField] protected Animator enemyAnimator;
     [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] protected Transform shootPoint;
     [SerializeField] protected int numOfAttacks = 1;
@@ -23,7 +24,35 @@ public class BatEnemy : BaseEnemyScript
 
     const float RESET_ANIM_TIMER = 3;
 
-    internal override void Start_Call() { base.Start_Call(); }
+    //AUDIO
+    private EventInstance batAttack;
+
+    //function to play bat attack sound
+    private void BatAttackSound()
+    {
+        //if (currentAnim == AnimState.ATTACKING)
+        //{
+            PLAYBACK_STATE playbackState;
+            batAttack.getPlaybackState(out playbackState);
+            if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+            {
+                //falta añadir el timer del proyectil
+                batAttack.start();
+            }
+        //}
+        //else
+        //{
+        //    batAttack.stop(STOP_MODE.ALLOWFADEOUT);
+        //}
+    }
+
+    internal override void Start_Call()
+    {
+        base.Start_Call();
+
+        //AUDIO
+        batAttack = AudioManager.instance.CreateInstance(FMODEvents.instance.batAttack);
+    }
 
     internal override void Update_Call() { base.Update_Call(); }
 
@@ -67,6 +96,7 @@ public class BatEnemy : BaseEnemyScript
         if (!hitCollided || !hit.transform.CompareTag("Player"))
         {
             ChangeState(States.IDLE);
+
             return;
         }
 
@@ -108,24 +138,30 @@ public class BatEnemy : BaseEnemyScript
     {
         //place shoot animation here
         ChangeAnim(AnimState.ATTACKING);
+        enemyAnimator.speed = 1.5f;
         blockAnim = true;
-        yield return new WaitForSeconds(attackChargingTime);
+        //yield return new WaitForSeconds(attackChargingTime);
+        yield return new WaitForSeconds(attackAnimationTime);
+
+        //AUDIO
+        BatAttackSound();
 
         canRotate = false;
         for (int i = 0; i < numOfAttacks; i++)
         {
-            yield return new WaitForSeconds(attackAnimationTime);
             BatProjectile_Tornado projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Tornado>();
             projectile.zigzagDir = i % 2 == 0 ? -1 : 1;
             //BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
             projectile.dmgData.damage = attackDamage;
+            
             yield return new WaitForSeconds(attackSeparationTime);
         }
 
         blockAnim = false;
         ChangeAnim(AnimState.IDLE);
+        enemyAnimator.speed = 1f;
 
         canRotate = true;
     }

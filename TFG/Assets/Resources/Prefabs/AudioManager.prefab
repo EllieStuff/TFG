@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2859570871586219932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2859570871586219922}
+  - component: {fileID: 2859570871586219923}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: AudioManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2859570871586219922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859570871586219932}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2859570871849011637}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2859570871586219923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859570871586219932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99b67e4b433994b31a891ec64666c35b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2859570871849011638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2859570871849011637}
+  - component: {fileID: 2859570871849011636}
+  m_Layer: 0
+  m_Name: FMODEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2859570871849011637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859570871849011638}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2859570871586219922}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2859570871849011636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859570871849011638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed8b841e11ad43cd9026dfc59587069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <criticonSound>k__BackingField:
+    Guid:
+      Data1: -920025532
+      Data2: 1272445471
+      Data3: -621739844
+      Data4: -979952839
+    Path: event:/lvl1/abilities/criticon
+  <curaSound>k__BackingField:
+    Guid:
+      Data1: 992577925
+      Data2: 1176108060
+      Data3: 1018705802
+      Data4: -920375112
+    Path: event:/lvl1/abilities/cura
+  <ambientSound>k__BackingField:
+    Guid:
+      Data1: 2123168811
+      Data2: 1275599408
+      Data3: -1637526644
+      Data4: -135663950
+    Path: event:/lvl1/ambients/ambient
+  <batAttack>k__BackingField:
+    Guid:
+      Data1: 1553820829
+      Data2: 1141366354
+      Data3: 559122328
+      Data4: 2068654141
+    Path: event:/lvl1/enemies/enemies_bat/bat_attack
+  <plantAttack>k__BackingField:
+    Guid:
+      Data1: -2001696679
+      Data2: 1203233751
+      Data3: -1517098355
+      Data4: 1417603663
+    Path: event:/lvl1/enemies/enemies_plant/plant_attack
+  <ratAttack>k__BackingField:
+    Guid:
+      Data1: -1436712391
+      Data2: 1127727528
+      Data3: 945396381
+      Data4: -10447356
+    Path: event:/lvl1/enemies/enemies_rat/rat_attack
+  <enemyDeath>k__BackingField:
+    Guid:
+      Data1: 1739031561
+      Data2: 1100638667
+      Data3: 1682751628
+      Data4: 927201115
+    Path: event:/lvl1/enemies/enemy_death
+  <playerFootsteps>k__BackingField:
+    Guid:
+      Data1: -1391261343
+      Data2: 1160798417
+      Data3: -594914675
+      Data4: 288837096
+    Path: event:/lvl1/player/player_footsteps
+  <playerAttackSound>k__BackingField:
+    Guid:
+      Data1: -229465273
+      Data2: 1154809688
+      Data3: 1576464028
+      Data4: 1385245114
+    Path: event:/lvl1/player/player_attack
+  <doorSound>k__BackingField:
+    Guid:
+      Data1: -1458696290
+      Data2: 1330835256
+      Data3: -1354074732
+      Data4: -575268771
+    Path: event:/lvl1/props/props_door/door
+  <uiButtonClick>k__BackingField:
+    Guid:
+      Data1: -925297010
+      Data2: 1203314642
+      Data3: -702920029
+      Data4: -1128668637
+    Path: event:/lvl1/ui/ui_button_click
+  <uiButtonSelect>k__BackingField:
+    Guid:
+      Data1: -42871310
+      Data2: 1141867790
+      Data3: 1497086860
+      Data4: 696457283
+    Path: event:/lvl1/ui/ui_button_select
+  <uiSelectAbility>k__BackingField:
+    Guid:
+      Data1: 1507658381
+      Data2: 1293874298
+      Data3: 700166787
+      Data4: 382721942
+    Path: event:/lvl1/ui/ui_select_ability
+  <uiChangeElement>k__BackingField:
+    Guid:
+      Data1: -982835034
+      Data2: 1296620884
+      Data3: 1319348156
+      Data4: 1940125278
+    Path: event:/lvl1/ui/ui_change_element
+  <uiBuyItem>k__BackingField:
+    Guid:
+      Data1: -1283913180
+      Data2: 1118239506
+      Data3: 1878585247
+      Data4: -386417434
+    Path: event:/lvl1/ui/ui_buy_item

@@ -995,7 +995,7 @@ MonoBehaviour:
   movesToTarget: 0
   needsToRest: 0
   idleWait: {x: 0, y: 0}
-  attackWait: {x: 1, y: 1.5}
+  attackWait: {x: 1.5, y: 2}
   restWait: {x: 3, y: 3.5}
   attackChargingTime: 1
   numOfRndMoves: 0
@@ -1021,6 +1021,7 @@ MonoBehaviour:
   attackStyle: 0
   numOfAttacks: 2
   attackSeparationTime: 0.15
+  plantAttacking: 0
 --- !u!114 &3025498072861595482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,8 +1038,8 @@ MonoBehaviour:
   entityElement: 0
   healthStates: []
   healthStatesFeedback: {fileID: 1455472645762347635}
-  maxLife: 2400
-  currLife: 2400
+  maxLife: 2200
+  currLife: 2200
   healWithSameElement: 1
   healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,

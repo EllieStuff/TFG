@@ -6,7 +6,7 @@ public class CoinScript : MonoBehaviour
 {
     const int COIN_VALUE = 10;
     const float PLAYER_ABSORB_DISTANCE = 2f;
-    const float END_MOVEMENT_TIMER = 0.5f, GO_TO_PLAYER_TIMER = 2f, ROOM_EMPTY_TIMER = 0.1f;
+    const float END_MOVEMENT_TIMER = 0.5f, GO_TO_PLAYER_TIMER = 2f, ROOM_EMPTY_TIMER = 0.1f, DESTROY_DIST = 200f;
 
     float timer = 0;
     float moveSpeed = 15f;
@@ -49,6 +49,11 @@ public class CoinScript : MonoBehaviour
             if (rbActive) DeactivateRb();
             Vector3 moveDir = (playerRef.position - transform.position).normalized;
             transform.position += moveDir * moveSpeed * Time.deltaTime;
+        }
+
+        if(Vector3.Distance(transform.position, playerRef.position) > DESTROY_DIST)
+        {
+            Destroy(gameObject);
         }
 
     }

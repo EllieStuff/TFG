@@ -34645,7 +34645,7 @@ MonoBehaviour:
   enemyMeshTmp: {fileID: 3397121725640670360}
   transparentMat: {fileID: 2100000, guid: 1842dea320bdc504399c250340f3a7af, type: 2}
   attackAnimationTime: 0.15
-  attackDamage: 240
+  attackDamage: 220
   shootWithObstacles: 1
   enemyAnimator: {fileID: 6042878772204485282}
   projectilePrefab: {fileID: 507451495234348787, guid: 1f2e3d08540022a47a495f19204de83a,
@@ -34654,6 +34654,7 @@ MonoBehaviour:
   attackStyle: 0
   numOfAttacks: 1
   attackSeparationTime: 0.2
+  plantAttacking: 0
 --- !u!114 &8351470923921754958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34670,8 +34671,8 @@ MonoBehaviour:
   entityElement: 2
   healthStates: []
   healthStatesFeedback: {fileID: 936959598569564534}
-  maxLife: 1200
-  currLife: 1200
+  maxLife: 1000
+  currLife: 1000
   healWithSameElement: 0
   healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,

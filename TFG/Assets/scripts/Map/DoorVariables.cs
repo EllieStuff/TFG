@@ -25,6 +25,9 @@ public class DoorVariables : MonoBehaviour
         Animation anim = GetComponent<Animation>();
         anim.clip = closeDoorClip;
         anim.Play();
+
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.doorClose, this.transform.position);
     }
 
     internal void ChangeDoorTag()

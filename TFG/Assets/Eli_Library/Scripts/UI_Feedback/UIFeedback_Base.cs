@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using FMODUnity;
 
 public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IPointerClickHandler, IDeselectHandler, IPointerDownHandler
 {
@@ -18,7 +19,6 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
     string acceptButton = "Submit";
 
     bool MenuInUse { get { return menuManager != null && menuManager.menuInUse; } }
-
 
     void Start()
     {
@@ -85,6 +85,7 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public virtual void Select()
     {
         selected = true;
+
         if (gameObject.activeInHierarchy)
             Select_Feedback();
     }
@@ -112,7 +113,8 @@ public class UIFeedback_Base : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
 
         clicked = true;
-        if(menuManager != null) menuManager.SelectOption(this);
+
+        if (menuManager != null) menuManager.SelectOption(this);
         if (gameObject.activeInHierarchy)
             Click_Feedback();
 
