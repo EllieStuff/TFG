@@ -51,4 +51,5 @@ public class FadeInFadeOut_UI : MonoBehaviour
     {
         image.color = Color.Lerp(image.color, fadeOutColor, Time.deltaTime * COLOR_LERP_SPEED);
     }
+
 }

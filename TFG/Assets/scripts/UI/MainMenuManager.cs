@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject options, credits;
+    [SerializeField] GameObject shop, options, credits;
     [SerializeField] TMP_Dropdown resolutionDropdown;
-    [SerializeField] ChangeMenuSelectionScript deactivateOptions, deactivateCredits;
+    [SerializeField] ChangeMenuSelectionScript deactivateShop, deactivateOptions, deactivateCredits;
     [SerializeField] Image bg;
 
     Vector3 initBgPos, initCreditsPos, initOptionsPos;
@@ -17,11 +17,13 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+
         initBgPos = bg.transform.position;
         creditsChild = credits.transform.GetChild(0);
         initCreditsPos = creditsChild.localPosition;
         optionsChild = options.transform.GetChild(0);
         initOptionsPos = optionsChild.localPosition;
+        
     }
 
     void Update()
@@ -31,9 +33,10 @@ public class MainMenuManager : MonoBehaviour
             if (credits.activeSelf) deactivateCredits.ChangeMenuSelection();
             else if (options.activeSelf)
             {
-                if(!resolutionDropdown.IsExpanded)
+                if (!resolutionDropdown.IsExpanded)
                     deactivateOptions.ChangeMenuSelection();
             }
+            else if (shop.activeSelf) deactivateShop.ChangeMenuSelection();
         }
 
 
@@ -45,7 +48,10 @@ public class MainMenuManager : MonoBehaviour
 
     public void Play()
     {
-        CustomSceneManager.Instance.ChangeScene(1);
+        if (PlayerPrefs.GetInt("TutorialHasPlayed", 0) <= 0)
+            CustomSceneManager.Instance.ChangeScene(1);
+        else
+            CustomSceneManager.Instance.ChangeScene(2);
     }
 
     public void Exit()

@@ -8,7 +8,7 @@ public class TornadoScript : MonoBehaviour
     [SerializeField] float tornadoDamage = 0.5f;
     [SerializeField] float dmgFrequency = 0.5f;
     [SerializeField] float suctionSpeed;
-    [SerializeField] AudioManager audioManager;
+    //[SerializeField] AudioManager audioManager;
     //HealthState windState = new Wind_HealthState();
 
 
@@ -78,8 +78,8 @@ public class TornadoScript : MonoBehaviour
             {
                 //yield return new WaitForEndOfFrame();
 
-                if (!audioManager.IsPlayingSound() && life.currLife > 0)
-                    audioManager.PlaySound();
+                //if (!audioManager.IsPlayingSound() && life.currLife > 0)
+                //    audioManager.PlaySound();
 
                 dmgTimer = dmgFrequency;
 

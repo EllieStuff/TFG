@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BatEnemy : BaseEnemyScript
 {
+    enum AnimState { IDLE, ATTACKING, DEAD }
+
     [Header("Bat Enemy")]
     [SerializeField] protected float attackAnimationTime;
     [SerializeField] protected float attackDamage;
@@ -15,22 +17,40 @@ public class BatEnemy : BaseEnemyScript
 
     protected float attackTimer;
 
+    private bool blockAnim = false;
+
+    AnimState currentAnim = AnimState.IDLE;
+
+    const float RESET_ANIM_TIMER = 3;
 
     internal override void Start_Call() { base.Start_Call(); }
 
     internal override void Update_Call() { base.Update_Call(); }
 
-    internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
+    internal override void FixedUpdate_Call() 
+    { 
+        base.FixedUpdate_Call();
+    }
 
+    private void ChangeAnim(AnimState _state)
+    {
+        if (!blockAnim || _state.Equals(AnimState.DEAD))
+        {
+            enemyAnimator.SetInteger("state", (int) _state);
+            currentAnim = _state;
+        }
+    }
 
     internal override void IdleUpdate()
     {
-        enemyAnimator.SetFloat("state", 0);
+        ChangeAnim(AnimState.IDLE);
+
         base.IdleUpdate();
     }
     internal override void MoveToTargetUpdate()
     {
-        enemyAnimator.SetFloat("state", 1);
+        ChangeAnim(AnimState.IDLE);
+
         base.MoveToTargetUpdate();
     }
     //internal override void DamageUpdate()
@@ -53,20 +73,44 @@ public class BatEnemy : BaseEnemyScript
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
+            StartCoroutine(ResetAnimCor());
             StartCoroutine(Attack_Cor());
             attackTimer = AttackWait + attackChargingTime;
         }
 
     }
+
+    internal override void DeathStart()
+    {
+        base.DeathStart();
+        ChangeAnim(AnimState.DEAD);
+        Destroy(gameObject, baseDeathTime);
+    }
+
     internal override void DeathUpdate()
     {
+        ChangeAnim(AnimState.DEAD);
         base.DeathUpdate();
+    }
+
+    private IEnumerator ResetAnimCor()
+    {
+        yield return new WaitForSeconds(RESET_ANIM_TIMER);
+
+        if (!currentAnim.Equals(AnimState.DEAD))
+        {
+            blockAnim = false;
+            ChangeAnim(AnimState.IDLE);
+        }
     }
 
     protected virtual IEnumerator Attack_Cor()
     {
-        yield return new WaitForSeconds(attackChargingTime);
         //place shoot animation here
+        ChangeAnim(AnimState.ATTACKING);
+        blockAnim = true;
+        yield return new WaitForSeconds(attackChargingTime);
+
         canRotate = false;
         for (int i = 0; i < numOfAttacks; i++)
         {
@@ -79,8 +123,11 @@ public class BatEnemy : BaseEnemyScript
             projectile.dmgData.damage = attackDamage;
             yield return new WaitForSeconds(attackSeparationTime);
         }
-        canRotate = true;
 
+        blockAnim = false;
+        ChangeAnim(AnimState.IDLE);
+
+        canRotate = true;
     }
     protected override void EndRndMovesBehaviour()
     {
@@ -105,7 +152,6 @@ public class BatEnemy : BaseEnemyScript
     internal override void AttackStart()
     {
         base.AttackStart();
-        enemyAnimator.SetFloat("state", 0);
         attackTimer = 0f;
         moveDir = Vector3.zero;
         StopRB(stopForce);

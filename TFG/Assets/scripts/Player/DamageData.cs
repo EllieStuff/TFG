@@ -16,7 +16,7 @@ public class DamageData : MonoBehaviour
     [SerializeField] internal float critPercentage = 0;
     [SerializeField] List<string> tagsAffected;
 
-    [SerializeField] AudioManager audio;
+    //[SerializeField] AudioManager audio;
 
     private LifeSystem playerLifeSystem;
 
@@ -90,8 +90,8 @@ public class DamageData : MonoBehaviour
 
     void DamageToPlayer(Transform _player)
     {
-        if (audio != null)
-            audio.PlaySound();
+        //if (audio != null)
+        //    audio.PlaySound();
 
         LifeSystem lifeSystem = _player.GetComponent<LifeSystem>();
         lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
@@ -103,8 +103,8 @@ public class DamageData : MonoBehaviour
         if (critPercentage > 0)
             damage = damage + GetDamageVariation() + (damage * DAMAGE_CRIT_MULTIPLIER);
 
-        if (audio != null)
-            audio.PlaySound();
+        //if (audio != null)
+        //    audio.PlaySound();
 
         if (playerLifeSystem == null)
             playerLifeSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeSystem>();
@@ -113,14 +113,14 @@ public class DamageData : MonoBehaviour
         LifeSystem lifeSystem = _enemy.GetComponent<LifeSystem>();
         //Debug.Log("Damaged by: " + this.name);
 
-        //if (dataProj.dmgData.stealLifePercentage > 0)
-        //    lifeSystem.DamageWithLifeSteal(damage + GetDamageVariation(), attackElement, dataProj, playerLifeSystem);
-        //else
-        //    lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
+        if (dataProj.dmgData.stealLifePercentage > 0)
+            lifeSystem.DamageWithLifeSteal(damage + GetDamageVariation(), attackElement, dataProj, playerLifeSystem);
+        else
+            lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
 
-        lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
-        if (dataProj.dmgData.stealLifePercentage > 0 && lifeSystem.isDead)
-            lifeSystem.LifeSteal(attackElement, dataProj, playerLifeSystem);
+        //lifeSystem.Damage(damage + GetDamageVariation(), attackElement);
+        //if (dataProj.dmgData.stealLifePercentage > 0 && lifeSystem.isDead)
+        //    lifeSystem.LifeSteal(attackElement, dataProj, playerLifeSystem);
 
         if (critPercentage > 0)
             lifeSystem.CritFeedback();

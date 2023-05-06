@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlantEnemy : BaseEnemyScript
 {
-    enum AnimState { IDLE, MOVING, ATTACKING, RESTING, DEAD }
+    enum AnimState { IDLE, ATTACKING, DEAD }
     enum AttackType { NORMAL_THROW, CIRCLE_ATTACK, FOUR_PROJECTILES, THREE_PROJECTILES }
 
 
@@ -20,9 +20,14 @@ public class PlantEnemy : BaseEnemyScript
     [SerializeField] protected float attackSeparationTime = 0.2f;
 
     float attackTimer;
-
+    public bool plantAttacking = false;
     const int CIRCLE_ITERATIONS = 24;
     const int CIRCLE_MULTIPLIER = 50;
+    const float RESET_ANIM_TIMER = 1.5f;
+
+    private bool blockAnim = false;
+
+    AnimState currentAnim = AnimState.IDLE;
 
     internal override void Start_Call() { base.Start_Call(); }
 
@@ -30,15 +35,22 @@ public class PlantEnemy : BaseEnemyScript
 
     internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
 
+    private void ChangeAnim(AnimState _state)
+    {
+        if (!blockAnim || _state.Equals(AnimState.DEAD))
+        {
+            enemyAnimator.SetInteger("state", (int)_state);
+            currentAnim = _state;
+        }
+    }
 
     internal override void IdleUpdate()
     {
-        enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
+        ChangeAnim(AnimState.IDLE);
         base.IdleUpdate();
     }
     internal override void MoveToTargetUpdate()
     {
-        enemyAnimator.SetFloat("state", (int)AnimState.MOVING);
         base.MoveToTargetUpdate();
     }
     //internal override void DamageUpdate()
@@ -53,19 +65,39 @@ public class PlantEnemy : BaseEnemyScript
         if (!dmgActivated)
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
 
-        enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
         attackTimer -= Time.fixedDeltaTime;
 
         if (attackTimer <= 0)
         {
             StartCoroutine(AttackCorroutine());
+            StartCoroutine(ResetAnimCor());
             attackTimer = AttackWait + attackChargingTime;
         }
 
     }
+
+    internal override void DeathStart()
+    {
+        base.DeathStart();
+        ChangeAnim(AnimState.DEAD);
+        Destroy(gameObject, baseDeathTime);
+    }
+
     internal override void DeathUpdate()
     {
+        ChangeAnim(AnimState.DEAD);
         base.DeathUpdate();
+    }
+
+    private IEnumerator ResetAnimCor()
+    {
+        yield return new WaitForSeconds(RESET_ANIM_TIMER);
+
+        if (!currentAnim.Equals(AnimState.DEAD))
+        {
+            blockAnim = false;
+            ChangeAnim(AnimState.IDLE);
+        }
     }
 
     IEnumerator AttackCorroutine()
@@ -73,7 +105,9 @@ public class PlantEnemy : BaseEnemyScript
         yield return new WaitForSeconds(attackChargingTime);
 
         //place shoot animation here
-        enemyAnimator.SetFloat("state", (int)AnimState.ATTACKING);
+        plantAttacking = true;
+        ChangeAnim(AnimState.ATTACKING);
+        blockAnim = true;
         yield return new WaitForSeconds(attackAnimationTime);
         RaycastHit hit;
         if (Physics.Raycast(shootPoint.position, (player.position - shootPoint.position).normalized, out hit))
@@ -91,6 +125,8 @@ public class PlantEnemy : BaseEnemyScript
                 }
             }
         }
+        plantAttacking = false;
+        blockAnim = false;
     }
 
     void AttackStateMachine(AttackType type)
