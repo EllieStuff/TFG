@@ -34,6 +34,7 @@ public class BatBossEnemy : BatEnemy
     {
         base.Start_Call();
         camShake = Camera.main.GetComponent<CameraShake>();
+        enemyAnimator.speed = 0.5f;
     }
 
     private void OnEnable()
