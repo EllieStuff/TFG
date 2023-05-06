@@ -141,7 +141,6 @@ public class BatBossEnemy : BatEnemy
 
         changingPhase = true;
         canRotate = false;
-        attackDamage *= secondPhaseAttackMultiplier;
         attackWait *= secondPhaseWaitMultiplier;
         attackChargingTime *= secondPhaseWaitMultiplier;
         projectileSizeMultiplier *= secondPhaseProjSizeMultiplier;
@@ -184,7 +183,8 @@ public class BatBossEnemy : BatEnemy
             BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
-            projectile.dmgData.damage = attackDamage;
+            if (secondPhaseEntered) projectile.dmgData.damage = AttackDamage * secondPhaseAttackMultiplier;
+            else projectile.dmgData.damage = AttackDamage;
             projectile.transform.localScale *= projectileSizeMultiplier;
             projectile.moveSpeed *= projectileSpeedMultiplier;
             projectiles.Add(projectile);

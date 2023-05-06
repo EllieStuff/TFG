@@ -33,6 +33,21 @@ public class LifeSystem : MonoBehaviour
     EnemyShake enemyShake;
     Transform parentCanvas;
 
+    protected float InitialLife
+    {
+        get
+        {
+            switch (BaseEnemyScript.difficulty)
+            {
+                case Difficulty.EASY: return maxLife * 0.8f;
+                case Difficulty.NORMAL: return maxLife;
+                case Difficulty.HARD: return maxLife * 1.2f;
+                default: return maxLife;
+            }
+        }
+    }
+    float initialLife;
+
     // Crec que ser� millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
     //[SerializeField] internal bool managesDeath = true;
     //[SerializeField] internal float deathDelay = 3.0f;
@@ -51,6 +66,8 @@ public class LifeSystem : MonoBehaviour
         if (EnemyLifeBar != null)
             EnemyLifeBar.gameObject.SetActive(true);
 
+        initialLife = InitialLife;
+        if (currLife == maxLife) currLife = initialLife;
         CheckLifeLimits();
     }
 
@@ -58,7 +75,7 @@ public class LifeSystem : MonoBehaviour
     {
         if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
         {
-            EnemyLifeBar.value = currLife / maxLife;
+            EnemyLifeBar.value = currLife / InitialLife;
             parentCanvas.LookAt(cameraRef.transform);
             Vector3 canvasRot = parentCanvas.rotation.eulerAngles;
             parentCanvas.rotation = Quaternion.Euler(-canvasRot.x, 0, 0);
@@ -67,14 +84,14 @@ public class LifeSystem : MonoBehaviour
 
     public float GetLifePercentage(float _multiplier = 1.0f)
     {
-        return currLife / maxLife * _multiplier;
+        return currLife / InitialLife * _multiplier;
     }
 
     internal void CheckLifeLimits()
     {
-        if (currLife > maxLife)
+        if (currLife > InitialLife)
         {
-            currLife = maxLife;
+            currLife = InitialLife;
         }
         else if (currLife <= 0)
         {
@@ -250,7 +267,7 @@ public class LifeSystem : MonoBehaviour
 
     void HealEntity()
     {
-        int lifeHealed = Mathf.CeilToInt(maxLife * healPercentage);
+        int lifeHealed = Mathf.CeilToInt(InitialLife * healPercentage);
         currLife += lifeHealed;
         CheckLifeLimits();
 

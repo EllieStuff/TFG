@@ -9,7 +9,6 @@ public class BatEnemy : BaseEnemyScript
 
     [Header("Bat Enemy")]
     [SerializeField] protected float attackAnimationTime;
-    [SerializeField] protected float attackDamage;
     [SerializeField] protected Animator enemyAnimator;
     [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] protected Transform shootPoint;
@@ -154,7 +153,7 @@ public class BatEnemy : BaseEnemyScript
             //BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
-            projectile.dmgData.damage = attackDamage;
+            projectile.dmgData.damage = AttackDamage;
             
             yield return new WaitForSeconds(attackSeparationTime);
         }
