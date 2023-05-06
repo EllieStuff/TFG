@@ -6,7 +6,7 @@ using UnityEngine;
 public class ZoneScript : MonoBehaviour
 {
     internal bool zoneEnabled;
-    internal bool zoneDefused;
+    internal bool zoneDefused = false;
     [SerializeField] private int roomNumber;
     [SerializeField] internal int enemiesQuantity;
     [SerializeField] Animation[] doorOpenAnims;
@@ -27,6 +27,8 @@ public class ZoneScript : MonoBehaviour
 
     internal bool showRoom;
     bool loadedRoomSave = false;
+
+    bool doorOpenFlag = false;
 
     private void Start()
     {
@@ -152,14 +154,17 @@ public class ZoneScript : MonoBehaviour
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i] == null) continue;
-            if(Vector3.Distance(items[i].transform.position, player.transform.position) <= DOOR_DISTANCE && !items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor)
+            if(Vector3.Distance(items[i].transform.position, player.transform.position) <= DOOR_DISTANCE
+                && !items[i].isPlaying && items[i].enabled && !items[i].GetComponent<DoorVariables>().openedDoor
+                && !doorOpenFlag)
             {
-                //play sound and particles
-                //items[i].GetComponent<AudioSource>().Play();
                 items[i].Play();
                 DoorVariables door = items[i].GetComponent<DoorVariables>();
-                door.openedDoor = true;
+                doorOpenFlag = door.openedDoor = true;
                 door.ChangeDoorTag();
+
+                //AUDIO
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.doorOpen, this.transform.position);
             }
         }
     }

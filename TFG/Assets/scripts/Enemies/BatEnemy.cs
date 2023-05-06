@@ -30,8 +30,8 @@ public class BatEnemy : BaseEnemyScript
     //function to play bat attack sound
     private void BatAttackSound()
     {
-        if (currentAnim == AnimState.ATTACKING)
-        {
+        //if (currentAnim == AnimState.ATTACKING)
+        //{
             PLAYBACK_STATE playbackState;
             batAttack.getPlaybackState(out playbackState);
             if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
@@ -39,16 +39,18 @@ public class BatEnemy : BaseEnemyScript
                 //falta añadir el timer del proyectil
                 batAttack.start();
             }
-        }
-        else
-        {
-            batAttack.stop(STOP_MODE.ALLOWFADEOUT);
-        }
+        //}
+        //else
+        //{
+        //    batAttack.stop(STOP_MODE.ALLOWFADEOUT);
+        //}
     }
 
     internal override void Start_Call()
     {
         base.Start_Call();
+
+        //AUDIO
         batAttack = AudioManager.instance.CreateInstance(FMODEvents.instance.batAttack);
     }
 
@@ -66,9 +68,6 @@ public class BatEnemy : BaseEnemyScript
             enemyAnimator.SetInteger("state", (int) _state);
             currentAnim = _state;
         }
-
-        //AUDIO
-        BatAttackSound();
     }
 
     internal override void IdleUpdate()
@@ -133,6 +132,9 @@ public class BatEnemy : BaseEnemyScript
         ChangeAnim(AnimState.ATTACKING);
         blockAnim = true;
         yield return new WaitForSeconds(attackChargingTime);
+
+        //AUDIO
+        BatAttackSound();
 
         canRotate = false;
         for (int i = 0; i < numOfAttacks; i++)

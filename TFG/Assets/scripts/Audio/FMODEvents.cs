@@ -23,7 +23,8 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference playerAttackSound { get; private set; }
 
     [field: Header("Props SFX")]
-    [field: SerializeField] public EventReference doorSound { get; private set; }
+    [field: SerializeField] public EventReference doorOpen { get; private set; }
+    [field: SerializeField] public EventReference doorClose { get; private set; }
 
     [field: Header("UI SFX")]
     [field: SerializeField] public EventReference uiButtonClick { get; private set; }
