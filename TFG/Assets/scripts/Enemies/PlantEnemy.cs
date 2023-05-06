@@ -75,6 +75,14 @@ public class PlantEnemy : BaseEnemyScript
         }
 
     }
+
+    internal override void DeathStart()
+    {
+        base.DeathStart();
+        ChangeAnim(AnimState.DEAD);
+        Destroy(gameObject, baseDeathTime);
+    }
+
     internal override void DeathUpdate()
     {
         ChangeAnim(AnimState.DEAD);

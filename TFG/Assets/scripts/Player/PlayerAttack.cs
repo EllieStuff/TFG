@@ -50,6 +50,9 @@ public class PlayerAttack : MonoBehaviour
     //const float CRIT_PERCENTAGE = 3;
 
     public GameObject glowBurstPS;
+    [SerializeField] GameObject feedbackElementoFuerteFuego;
+    [SerializeField] GameObject feedbackElementoFuerteAgua;
+    [SerializeField] GameObject feedbackElementoFuerteHierba;
     
 
     int critSwapQuantity = 5;
@@ -163,6 +166,25 @@ public class PlayerAttack : MonoBehaviour
         referenceGlowBurst.transform.SetParent(null);
 
         Destroy(referenceGlowBurst.gameObject, 3f);
+
+        if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.FIRE)
+        {
+            feedbackElementoFuerteAgua.SetActive(true);
+            feedbackElementoFuerteFuego.SetActive(false);
+            feedbackElementoFuerteHierba.SetActive(false);
+        }
+        else if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.WATER)
+        {
+            feedbackElementoFuerteAgua.SetActive(false);
+            feedbackElementoFuerteFuego.SetActive(false);
+            feedbackElementoFuerteHierba.SetActive(true);
+        }
+        else if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.GRASS)
+        {
+            feedbackElementoFuerteAgua.SetActive(false);
+            feedbackElementoFuerteFuego.SetActive(true);
+            feedbackElementoFuerteHierba.SetActive(false);
+        }
 
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);

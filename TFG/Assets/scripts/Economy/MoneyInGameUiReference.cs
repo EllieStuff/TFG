@@ -7,6 +7,7 @@ public class MoneyInGameUiReference : MonoBehaviour
 {
     public CanvasGroup moneyFeedback;
     public TextMeshProUGUI moneyText;
+    public Animator moneyUpAnim;
 
     internal bool activatingFeedback = false, deactivatingFeedback = false, feedbackActive = true;
 
