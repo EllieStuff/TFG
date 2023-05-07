@@ -46,7 +46,6 @@ public class LifeSystem : MonoBehaviour
             }
         }
     }
-    float initialLife;
 
     // Crec que ser� millor que cada personatge controli la seva mort quan vegi que el state es HealthStates.DEAD
     //[SerializeField] internal bool managesDeath = true;
@@ -66,8 +65,11 @@ public class LifeSystem : MonoBehaviour
         if (EnemyLifeBar != null)
             EnemyLifeBar.gameObject.SetActive(true);
 
-        initialLife = InitialLife;
-        if (currLife == maxLife) currLife = initialLife;
+    }
+
+    private void OnEnable()
+    {
+        if (currLife == maxLife) currLife = InitialLife;
         CheckLifeLimits();
     }
 
