@@ -1,22 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public enum DifficultyMode { EASY, NORMAL, HARD }
 
 public class DifficultyManager : MonoBehaviour
 {
+    public TMP_Dropdown dropdown;
+
     static DifficultyMode difficulty = DifficultyMode.NORMAL;
     public static DifficultyMode Difficulty { get { return difficulty; } }
 
 
-    public static void SetDifficulty(int _difficultyId)
+    private void Start()
     {
-        difficulty = (DifficultyMode)_difficultyId;
+        if (dropdown.gameObject.activeInHierarchy)
+        {
+            dropdown.value = PlayerPrefs.GetInt("DifficultyMode", 1);
+        }
+        else
+        {
+            difficulty = (DifficultyMode)PlayerPrefs.GetInt("DifficultyMode", 1);
+        }
     }
-    public static void SetDifficulty(DifficultyMode _difficulty)
+
+    public void SetDifficulty()
     {
-        difficulty = _difficulty;
+        difficulty = (DifficultyMode)dropdown.value;
     }
 
 }
