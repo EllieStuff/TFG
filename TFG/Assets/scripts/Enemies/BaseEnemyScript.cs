@@ -79,9 +79,9 @@ public class BaseEnemyScript : MonoBehaviour
         get {
             switch (DifficultyManager.Difficulty)
             {
-                case DifficultyMode.EASY: return baseAttackDamage * 0.7f;
-                case DifficultyMode.NORMAL: return baseAttackDamage;
-                case DifficultyMode.HARD: return baseAttackDamage * 1.3f;
+                case DifficultyMode.EASY: return baseAttackDamage * DifficultyManager.Enemies_AtkDmgMultiplier_EasyMode;
+                case DifficultyMode.NORMAL: return baseAttackDamage * DifficultyManager.Enemies_AtkDmgMultiplier_NormalMode;
+                case DifficultyMode.HARD: return baseAttackDamage * DifficultyManager.Enemies_AtkDmgMultiplier_HardMode;
                 default: return baseAttackDamage;
             }
         }
@@ -91,9 +91,9 @@ public class BaseEnemyScript : MonoBehaviour
             float rndWait = Random.Range(attackWait.x, attackWait.y);
             switch (DifficultyManager.Difficulty)
             {
-                case DifficultyMode.EASY: return rndWait * 1.3f;
-                case DifficultyMode.NORMAL: return rndWait;
-                case DifficultyMode.HARD: return rndWait * 0.7f;
+                case DifficultyMode.EASY: return rndWait * DifficultyManager.Enemies_AtkWaitMultiplier_EasyMode;
+                case DifficultyMode.NORMAL: return rndWait * DifficultyManager.Enemies_AtkWaitMultiplier_NormalMode;
+                case DifficultyMode.HARD: return rndWait * DifficultyManager.Enemies_AtkWaitMultiplier_HardMode;
                 default: return rndWait;
             }
         }

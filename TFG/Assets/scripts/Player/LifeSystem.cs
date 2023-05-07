@@ -39,9 +39,9 @@ public class LifeSystem : MonoBehaviour
         {
             switch (DifficultyManager.Difficulty)
             {
-                case DifficultyMode.EASY: return maxLife * 0.8f;
-                case DifficultyMode.NORMAL: return maxLife;
-                case DifficultyMode.HARD: return maxLife * 1.2f;
+                case DifficultyMode.EASY: return maxLife * DifficultyManager.Enemies_LifeMultiplier_EasyMode;
+                case DifficultyMode.NORMAL: return maxLife * DifficultyManager.Enemies_LifeMultiplier_NormalMode;
+                case DifficultyMode.HARD: return maxLife * DifficultyManager.Enemies_LifeMultiplier_HardMode;
                 default: return maxLife;
             }
         }
