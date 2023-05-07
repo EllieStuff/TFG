@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Difficulty { EASY, NORMAL, HARD }
-
 
 public class BaseEnemyScript : MonoBehaviour
 {
-    public static Difficulty difficulty = Difficulty.NORMAL;
-
     public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, REST, /*DAMAGE,*/ DEATH }
     public enum EnemyType { PLANT, BAT, RAT, GHOST }
 
@@ -81,11 +77,11 @@ public class BaseEnemyScript : MonoBehaviour
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
     protected float AttackDamage {
         get {
-            switch (difficulty)
+            switch (DifficultyManager.Difficulty)
             {
-                case Difficulty.EASY: return baseAttackDamage * 0.7f;
-                case Difficulty.NORMAL: return baseAttackDamage;
-                case Difficulty.HARD: return baseAttackDamage * 1.3f;
+                case DifficultyMode.EASY: return baseAttackDamage * 0.7f;
+                case DifficultyMode.NORMAL: return baseAttackDamage;
+                case DifficultyMode.HARD: return baseAttackDamage * 1.3f;
                 default: return baseAttackDamage;
             }
         }
@@ -93,11 +89,11 @@ public class BaseEnemyScript : MonoBehaviour
     protected float AttackWait {
         get {
             float rndWait = Random.Range(attackWait.x, attackWait.y);
-            switch (difficulty)
+            switch (DifficultyManager.Difficulty)
             {
-                case Difficulty.EASY: return rndWait * 1.3f;
-                case Difficulty.NORMAL: return rndWait;
-                case Difficulty.HARD: return rndWait * 0.7f;
+                case DifficultyMode.EASY: return rndWait * 1.3f;
+                case DifficultyMode.NORMAL: return rndWait;
+                case DifficultyMode.HARD: return rndWait * 0.7f;
                 default: return rndWait;
             }
         }
