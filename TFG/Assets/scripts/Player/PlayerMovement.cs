@@ -125,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
             if (attackScript.roomEnemyManager.HasEnemiesRemainging())
             {
                 attackScript.target = attackScript.roomEnemyManager.GetCloserEnemy(transform);
-                attackScript.SetAttackTimer(attackScript.attackDelay / 4f);
+                attackScript.SetAttackTimer(attackScript.attackDelay / 2f);
             }
             rb.constraints = RigidbodyConstraints.FreezeAll;
 
