@@ -88,6 +88,9 @@ public class BatBossEnemy : BatEnemy
         enrageBGVFX.Stop();
         enrageBGVFX.Clear();
         StartCoroutine(EnableUI(false));
+
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.bossDeathSound, this.transform.position);
     }
 
 
@@ -177,6 +180,8 @@ public class BatBossEnemy : BatEnemy
         //place shoot animation here
         isAttacking = true;
         yield return new WaitForSeconds(attackChargingTime);
+
+
         for (int i = 0; i < numOfAttacks; i++)
         {
             yield return new WaitForSeconds(attackAnimationTime);
@@ -187,6 +192,10 @@ public class BatBossEnemy : BatEnemy
             projectile.transform.localScale *= projectileSizeMultiplier;
             projectile.moveSpeed *= projectileSpeedMultiplier;
             projectiles.Add(projectile);
+
+            //AUDIO
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.bossAttackSound, this.transform.position);
+
             yield return new WaitForSeconds(attackSeparationTime);
         }
         isAttacking = false;

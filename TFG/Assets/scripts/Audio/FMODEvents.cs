@@ -5,14 +5,16 @@ using FMODUnity;
 
 public class FMODEvents : MonoBehaviour
 {
-    [field: Header("Abilities SFX")]
-    [field: SerializeField] public EventReference criticonSound { get; private set; }
-    [field: SerializeField] public EventReference curaSound { get; private set; }
+    //[field: Header("Abilities SFX")]
+    //[field: SerializeField] public EventReference criticonSound { get; private set; }
+    //[field: SerializeField] public EventReference curaSound { get; private set; }
 
     [field: Header("Ambients SFX")]
     [field: SerializeField] public EventReference ambientSound { get; private set; }
 
     [field: Header("Enemies SFX")]
+    [field: SerializeField] public EventReference bossAttackSound { get; private set; }
+    [field: SerializeField] public EventReference bossDeathSound { get; private set; }
     [field: SerializeField] public EventReference batAttack { get; private set; }
     [field: SerializeField] public EventReference plantAttack { get; private set; }
     [field: SerializeField] public EventReference ratAttack { get; private set; }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FMOD.Studio;
 
 public class ElementsManager : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class ElementsManager : MonoBehaviour
     private RadialRotation UIRadialRot;
     internal bool mouseClockWise = true;
 
+    //AUDIO
+    EventInstance uiChangeElement;
 
     // Start is called before the first frame update
     void Awake()
@@ -173,6 +176,9 @@ public class ElementsManager : MonoBehaviour
         PlayParticles(_element);
         elementChanging = _element;
         StartCoroutine(ChangeElementCor(_element, _changeAttackDelay));
+
+        //AUDIO
+        ChangeElementSound(_element);
     }
 
     IEnumerator ChangeElementCor(Elements _element, float _changeAttackDelay)
@@ -291,5 +297,23 @@ public class ElementsManager : MonoBehaviour
         };
 
     }
+    //AUDIO
+    //changes the element and plays attack sound 
+    public void ChangeElementSound(Elements _element)
+    {
+        if (_element == ElementsManager.Elements.FIRE)
+        {
+            AudioManager.instance.SetFMODLabeledParameter("element", "fire", uiChangeElement);
+        }
+        else if (_element == ElementsManager.Elements.GRASS)
+        {
+            AudioManager.instance.SetFMODLabeledParameter("element", "plant", uiChangeElement);
+        }
+        else if (_element == ElementsManager.Elements.WATER)
+        {
+            AudioManager.instance.SetFMODLabeledParameter("element", "water", uiChangeElement);
+        }
 
+        uiChangeElement.start();
+    }
 }

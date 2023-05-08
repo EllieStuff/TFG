@@ -89,20 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed8b841e11ad43cd9026dfc59587069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <criticonSound>k__BackingField:
-    Guid:
-      Data1: -920025532
-      Data2: 1272445471
-      Data3: -621739844
-      Data4: -979952839
-    Path: event:/lvl1/abilities/criticon
-  <curaSound>k__BackingField:
-    Guid:
-      Data1: 992577925
-      Data2: 1176108060
-      Data3: 1018705802
-      Data4: -920375112
-    Path: event:/lvl1/abilities/cura
   <ambientSound>k__BackingField:
     Guid:
       Data1: 2123168811
@@ -110,27 +96,41 @@ MonoBehaviour:
       Data3: -1637526644
       Data4: -135663950
     Path: event:/lvl1/ambients/ambient
+  <bossAttackSound>k__BackingField:
+    Guid:
+      Data1: -728905471
+      Data2: 1077963684
+      Data3: 1893771674
+      Data4: 932728969
+    Path: event:/lvl1/enemies/boss/boss_attack
+  <bossDeathSound>k__BackingField:
+    Guid:
+      Data1: 1715526692
+      Data2: 1155327611
+      Data3: -1772159818
+      Data4: -1121525181
+    Path: event:/lvl1/enemies/boss/boss_death
   <batAttack>k__BackingField:
     Guid:
-      Data1: 1553820829
-      Data2: 1141366354
-      Data3: 559122328
-      Data4: 2068654141
-    Path: event:/lvl1/enemies/enemies_bat/bat_attack
+      Data1: -397498707
+      Data2: 1129167616
+      Data3: -173371467
+      Data4: -3744036
+    Path: event:/lvl1/enemies/enemies_bat/enemies_bat_attack
   <plantAttack>k__BackingField:
     Guid:
-      Data1: -2001696679
-      Data2: 1203233751
-      Data3: -1517098355
-      Data4: 1417603663
-    Path: event:/lvl1/enemies/enemies_plant/plant_attack
+      Data1: -1898807078
+      Data2: 1176906202
+      Data3: -660982856
+      Data4: 638859431
+    Path: event:/lvl1/enemies/enemies_plant/enemies_plant_attack
   <ratAttack>k__BackingField:
     Guid:
-      Data1: -1436712391
-      Data2: 1127727528
-      Data3: 945396381
-      Data4: -10447356
-    Path: event:/lvl1/enemies/enemies_rat/rat_attack
+      Data1: -1864259171
+      Data2: 1301624027
+      Data3: -1224493140
+      Data4: 1669658327
+    Path: event:/lvl1/enemies/enemies_rat/enemies_rat_attack
   <enemyDeath>k__BackingField:
     Guid:
       Data1: -1585486229
@@ -151,7 +151,7 @@ MonoBehaviour:
       Data2: 1160798417
       Data3: -594914675
       Data4: 288837096
-    Path: event:/lvl1/player/player_footsteps
+    Path: event:/lvl1/player/footsteps_grass
   <playerAttackSound>k__BackingField:
     Guid:
       Data1: -229465273
