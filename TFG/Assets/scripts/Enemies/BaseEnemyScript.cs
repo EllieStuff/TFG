@@ -547,6 +547,9 @@ public class BaseEnemyScript : MonoBehaviour
             dropRb.AddExplosionForce(Random.Range(50f, 600f), transform.position, distRange);
             dropRb.GetComponent<CoinScript>().roomManager = roomManager;
         }
+
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.enemyDeath, this.transform.position);
     }
     protected virtual void EndRndMovesBehaviour() { rndMovesDone = 0; }
 
