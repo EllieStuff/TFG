@@ -53,6 +53,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] GameObject feedbackElementoFuerteFuego;
     [SerializeField] GameObject feedbackElementoFuerteAgua;
     [SerializeField] GameObject feedbackElementoFuerteHierba;
+    [SerializeField] GameObject botonUI1;
+    [SerializeField] GameObject botonUI2;
+    [SerializeField] GameObject botonUI3;
     
 
     int critSwapQuantity = 5;
@@ -78,6 +81,10 @@ public class PlayerAttack : MonoBehaviour
 
         //AUDIO
         playerAttackSound = AudioManager.instance.CreateInstance(FMODEvents.instance.playerAttackSound);
+
+        botonUI1.GetComponent<Animator>().enabled = false;
+        botonUI2.GetComponent<Animator>().enabled = false;
+        botonUI3.GetComponent<Animator>().enabled = false;
     }
 
     // Update is called once per frame
@@ -92,8 +99,18 @@ public class PlayerAttack : MonoBehaviour
             attackTimer = attackDelay;
         }
 
-        if (attackTimer > 0) attackTimer -= Time.deltaTime;
-        
+        if (attackTimer > 0 /*&& !changingAttackType*/) attackTimer -= Time.deltaTime;
+        //else if (changeAttackTimer > 0 && changingAttackType) attackTimer -= Time.deltaTime;
+        //else if(changeAttackTimer <= 0 && changingAttackType)
+        //{
+        //    changingAttackType = false;
+        //    changeAttackTimer = changeAttackDelay;
+        //    attackTimer = attackTimer / 2f;
+        //}
+
+        if (target != null)
+            SetFeedbackUI();
+
     }
 
     public bool ShouldPlayAttackAnim()
@@ -118,6 +135,38 @@ public class PlayerAttack : MonoBehaviour
         }
 
         return false;
+    }
+
+    void SetFeedbackUI()
+    {
+        if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.FIRE)
+        {
+            feedbackElementoFuerteAgua.SetActive(true);
+            feedbackElementoFuerteFuego.SetActive(false);
+            feedbackElementoFuerteHierba.SetActive(false);
+            botonUI2.GetComponent<Animator>().enabled = true;
+            botonUI1.GetComponent<Animator>().enabled = false;
+            botonUI3.GetComponent<Animator>().enabled = false;
+
+        }
+        else if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.WATER)
+        {
+            feedbackElementoFuerteAgua.SetActive(false);
+            feedbackElementoFuerteFuego.SetActive(false);
+            feedbackElementoFuerteHierba.SetActive(true);
+            botonUI3.GetComponent<Animator>().enabled = true;
+            botonUI2.GetComponent<Animator>().enabled = false;
+            botonUI1.GetComponent<Animator>().enabled = false;
+        }
+        else if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.GRASS)
+        {
+            feedbackElementoFuerteAgua.SetActive(false);
+            feedbackElementoFuerteFuego.SetActive(true);
+            feedbackElementoFuerteHierba.SetActive(false);
+            botonUI1.GetComponent<Animator>().enabled = true;
+            botonUI2.GetComponent<Animator>().enabled = false;
+            botonUI3.GetComponent<Animator>().enabled = false;
+        }
     }
 
     public void ResetCritQuantity()
@@ -160,24 +209,6 @@ public class PlayerAttack : MonoBehaviour
 
         Destroy(referenceGlowBurst.gameObject, 3f);
 
-        if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.FIRE)
-        {
-            feedbackElementoFuerteAgua.SetActive(true);
-            feedbackElementoFuerteFuego.SetActive(false);
-            feedbackElementoFuerteHierba.SetActive(false);
-        }
-        else if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.WATER)
-        {
-            feedbackElementoFuerteAgua.SetActive(false);
-            feedbackElementoFuerteFuego.SetActive(false);
-            feedbackElementoFuerteHierba.SetActive(true);
-        }
-        else if (target.gameObject.GetComponent<LifeSystem>().entityElement == ElementsManager.Elements.GRASS)
-        {
-            feedbackElementoFuerteAgua.SetActive(false);
-            feedbackElementoFuerteFuego.SetActive(true);
-            feedbackElementoFuerteHierba.SetActive(false);
-        }
 
         PlayerProjectileData attack = Instantiate(attacksDictionary[currentAttackElement], transform).GetComponent<PlayerProjectileData>();
         attack.transform.SetParent(null);
