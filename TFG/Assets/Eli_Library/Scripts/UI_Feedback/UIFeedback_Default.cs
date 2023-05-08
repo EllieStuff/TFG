@@ -63,10 +63,11 @@ public class UIFeedback_Default : UIFeedback_Base
         EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed, clickIncreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, selectedColor, colorSpeed);
 
-        //AUDIO
         if (!uiSelectPlayed)
         {
-            //AudioManager.instance.PlayOneShot(FMODEvents.instance.uiButtonSelect, this.transform.position);
+            //AUDIO
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.uiButtonSelect, this.transform.position);
+
             uiSelectPlayed = true;
         }
     }
@@ -77,7 +78,6 @@ public class UIFeedback_Default : UIFeedback_Base
         EliTween.Scale(transform, originalSize, selectDecreaseSizeSpeed);
         EliTween.ChangeColor(feedbackImage, baseColor, colorSpeed);
 
-        //AUDIO
         uiSelectPlayed = false;
     }
 

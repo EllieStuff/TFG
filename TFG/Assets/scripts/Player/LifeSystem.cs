@@ -168,6 +168,9 @@ public class LifeSystem : MonoBehaviour
         {
             playerLifeBar.Damage();
             //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.5f, 0.0002f));
+
+            //AUDIO
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.playerDamageSound, this.transform.position);
         }
 
         if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))

@@ -18,9 +18,13 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference ratAttack { get; private set; }
     [field: SerializeField] public EventReference enemyDeath { get; private set; }
 
+    [field: Header("Music")]
+    [field: SerializeField] public EventReference gameplayMusic { get; private set; }
+
     [field: Header("Player SFX")]
     [field: SerializeField] public EventReference playerFootsteps { get; private set; }
     [field: SerializeField] public EventReference playerAttackSound { get; private set; }
+    [field: SerializeField] public EventReference playerDamageSound { get; private set; }
 
     [field: Header("Props SFX")]
     [field: SerializeField] public EventReference doorOpen { get; private set; }

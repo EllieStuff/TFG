@@ -162,6 +162,9 @@ public class ShopManager : MonoBehaviour
             playerMoneyText.text = MoneyManager.MoneyAmount.ToString();
             if(tmpItemData != null)
                 passiveSkillsSave.AddElementToSave_Shop(tmpItemData.skillType);
+
+            //AUDIO
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.uiBuyItem, this.transform.position);
         }
         else
         {

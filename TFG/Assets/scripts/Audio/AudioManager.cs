@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance { get; private set; }
 
+    private EventInstance gameplayMusicInstance;
+
     private void Awake()
     {
         //secure we only have one AudioManager on the scene
@@ -20,6 +22,11 @@ public class AudioManager : MonoBehaviour
         instance = this;
 
         eventInstances = new List<EventInstance>();
+    }
+
+    private void Start()
+    {
+        StartGamePlayMusic(FMODEvents.instance.gameplayMusic);
     }
 
     //function to play Action FMOD Events
@@ -34,6 +41,14 @@ public class AudioManager : MonoBehaviour
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
         eventInstances.Add(eventInstance);
         return eventInstance;
+    }
+
+    //function to start gameplay music
+    private void StartGamePlayMusic(EventReference gameplayMusic)
+    {
+        gameplayMusicInstance = CreateInstance(gameplayMusic);
+        gameplayMusicInstance.start();
+
     }
 
     //set labeled parameter on FMOD
