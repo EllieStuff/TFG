@@ -23,7 +23,7 @@ public class OpenCardSelectMenu : MonoBehaviour
     private void FixedUpdate()
     {
         if(pasiveSkillUI == null)
-            pasiveSkillUI = GameObject.FindGameObjectWithTag("EnemyManager").transform.GetChild(0).GetComponent<RoomEnemyManager>().elementChoose;
+            pasiveSkillUI = GameObject.FindGameObjectWithTag("EnemyManager").transform.GetChild(1).GetComponent<RoomEnemyManager>().elementChoose;
 
         DestroyCircleAnimation();
     }

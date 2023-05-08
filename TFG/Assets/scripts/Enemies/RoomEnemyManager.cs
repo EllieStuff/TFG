@@ -160,11 +160,14 @@ public class RoomEnemyManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            Transform enemy = enemies[i].transform;
-
-            if (PlayerCheck(enemy))
+            if(enemies[i] != null)
             {
-                return enemy;
+                Transform enemy = enemies[i].transform;
+
+                if (PlayerCheck(enemy))
+                {
+                    return enemy;
+                }
             }
         }
 
