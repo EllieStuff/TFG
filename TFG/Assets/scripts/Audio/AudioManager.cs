@@ -12,6 +12,8 @@ public class AudioManager : MonoBehaviour
 
     private EventInstance gameplayMusicInstance;
 
+    private EventInstance ambientSoundInstance;
+
     private void Awake()
     {
         //secure we only have one AudioManager on the scene
@@ -26,6 +28,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        StartAmbientSound(FMODEvents.instance.ambientSound);
         StartGamePlayMusic(FMODEvents.instance.gameplayMusic);
     }
 
@@ -43,12 +46,18 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
+    //function to start ambient sound
+    private void StartAmbientSound(EventReference ambientSound)
+    {
+        ambientSoundInstance = CreateInstance(ambientSound);
+        ambientSoundInstance.start();
+    }
+
     //function to start gameplay music
     private void StartGamePlayMusic(EventReference gameplayMusic)
     {
         gameplayMusicInstance = CreateInstance(gameplayMusic);
         gameplayMusicInstance.start();
-
     }
 
     //set labeled parameter on FMOD

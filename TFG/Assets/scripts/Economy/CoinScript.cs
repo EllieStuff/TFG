@@ -73,6 +73,10 @@ public class CoinScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             MoneyManager.AddMoney(COIN_VALUE);
+
+            //AUDIO
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.uiGetCoin, this.transform.position);
+
             Destroy(gameObject);
         }
     }

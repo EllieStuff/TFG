@@ -38,6 +38,7 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference uiSelectAbility { get; private set; }
     [field: SerializeField] public EventReference uiChangeElement { get; private set; }
     [field: SerializeField] public EventReference uiBuyItem { get; private set; }
+    [field: SerializeField] public EventReference uiGetCoin { get; private set; }
 
     public static FMODEvents instance { get; private set; }
 

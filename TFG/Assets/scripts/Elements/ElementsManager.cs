@@ -65,6 +65,12 @@ public class ElementsManager : MonoBehaviour
             InitElementsData();
     }
 
+    private void Start()
+    {
+        //AUDIO
+        uiChangeElement = AudioManager.instance.CreateInstance(FMODEvents.instance.uiChangeElement);
+    }
+
     void InitElementsData()
     {
         elementsData = new Dictionary<Elements, ElementClass>();
@@ -301,15 +307,15 @@ public class ElementsManager : MonoBehaviour
     //changes the element and plays attack sound 
     public void ChangeElementSound(Elements _element)
     {
-        if (_element == ElementsManager.Elements.FIRE)
+        if (_element == Elements.FIRE)
         {
             AudioManager.instance.SetFMODLabeledParameter("element", "fire", uiChangeElement);
         }
-        else if (_element == ElementsManager.Elements.GRASS)
+        else if (_element == Elements.GRASS)
         {
             AudioManager.instance.SetFMODLabeledParameter("element", "plant", uiChangeElement);
         }
-        else if (_element == ElementsManager.Elements.WATER)
+        else if (_element == Elements.WATER)
         {
             AudioManager.instance.SetFMODLabeledParameter("element", "water", uiChangeElement);
         }
