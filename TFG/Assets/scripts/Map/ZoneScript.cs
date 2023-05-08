@@ -28,8 +28,6 @@ public class ZoneScript : MonoBehaviour
     internal bool showRoom;
     bool loadedRoomSave = false;
 
-    bool doorOpenFlag = false;
-
     private void Start()
     {
         blackTile.enabled = true;
@@ -163,11 +161,7 @@ public class ZoneScript : MonoBehaviour
                 door.ChangeDoorTag();
 
                 //AUDIO
-                if (!doorOpenFlag)
-                {
-                    doorOpenFlag = true;
-                    AudioManager.instance.PlayOneShot(FMODEvents.instance.doorOpen, this.transform.position);
-                }
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.doorOpen, this.transform.position);
             }
         }
     }
