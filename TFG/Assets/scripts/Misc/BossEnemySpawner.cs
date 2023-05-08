@@ -12,7 +12,7 @@ public class BossEnemySpawner : MonoBehaviour
     [SerializeField] GameObject spawnParticles;
     [SerializeField] Transform roomEnemyListPivot;
 
-    const float SPAWNER_TIMER = 15;
+    const float SPAWNER_TIMER = 8;
     const float DESTROY_PARTICLES_TIMER = 5;
     const int MAX_SPAWNS = 3;
     const float UP_MULTIPLIER = 0;
