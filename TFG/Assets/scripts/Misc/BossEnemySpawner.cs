@@ -20,6 +20,9 @@ public class BossEnemySpawner : MonoBehaviour
     float timer = SPAWNER_TIMER / 2;
     bool[] spawnedPlaces;
 
+    bool enemiesCleared = false;
+    List<LifeSystem> enemies;
+
     void Update()
     {
         if(!bossLife.isDead && boss.secondPhaseEntered)
@@ -28,6 +31,12 @@ public class BossEnemySpawner : MonoBehaviour
 
             if(timer <= 0)
                 SpawnEnemies();
+        }
+
+        if(!enemiesCleared && bossLife.isDead)
+        {
+            DestroyEnemies();
+            enemiesCleared = true;
         }
     }
 
@@ -51,12 +60,22 @@ public class BossEnemySpawner : MonoBehaviour
             enemy.transform.parent = roomEnemyListPivot;
             roomEnemyListPivot.GetComponent<RoomEnemyManager>().UpdateRoomEnemies();
             enemy.GetComponent<BaseEnemyScript>().waiting = false;
-            
+
+            enemies.Add(enemy.GetComponent<LifeSystem>());
+
             ParticleSystem particles = Instantiate(spawnParticles, spawnPoints[spawnIndex].position + (Vector3.up * UP_MULTIPLIER), spawnParticles.transform.rotation).GetComponent<ParticleSystem>();
             particles.Play();
             Destroy(particles.gameObject, DESTROY_PARTICLES_TIMER);
         }
 
         timer = SPAWNER_TIMER;
+    }
+
+    void DestroyEnemies()
+    {
+        foreach(LifeSystem enemyLife in enemies) 
+        {
+            enemyLife.currLife = 0;
+        }
     }
 }
