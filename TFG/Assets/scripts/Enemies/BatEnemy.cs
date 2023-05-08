@@ -5,7 +5,7 @@ using FMOD.Studio;
 
 public class BatEnemy : BaseEnemyScript
 {
-    enum AnimState { IDLE, ATTACKING, DEAD }
+    protected enum AnimState { IDLE, ATTACKING, DEAD }
 
     [Header("Bat Enemy")]
     [SerializeField] protected float attackAnimationTime;
@@ -60,7 +60,7 @@ public class BatEnemy : BaseEnemyScript
         base.FixedUpdate_Call();
     }
 
-    private void ChangeAnim(AnimState _state)
+    protected void ChangeAnim(AnimState _state)
     {
         if (!blockAnim || _state.Equals(AnimState.DEAD))
         {
