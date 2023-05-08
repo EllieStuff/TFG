@@ -92,14 +92,7 @@ public class PlayerAttack : MonoBehaviour
             attackTimer = attackDelay;
         }
 
-        if (attackTimer > 0 /*&& !changingAttackType*/) attackTimer -= Time.deltaTime;
-        //else if (changeAttackTimer > 0 && changingAttackType) attackTimer -= Time.deltaTime;
-        //else if(changeAttackTimer <= 0 && changingAttackType)
-        //{
-        //    changingAttackType = false;
-        //    changeAttackTimer = changeAttackDelay;
-        //    attackTimer = attackTimer / 2f;
-        //}
+        if (attackTimer > 0) attackTimer -= Time.deltaTime;
         
     }
 
