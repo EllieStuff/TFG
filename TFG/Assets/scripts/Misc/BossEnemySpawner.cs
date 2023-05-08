@@ -105,8 +105,6 @@ public class BossEnemySpawner : MonoBehaviour
                 enemiesNum++;
         }
 
-        Debug.Log("Enemies " + enemiesNum);
-
         return enemiesNum;
     }
 }
