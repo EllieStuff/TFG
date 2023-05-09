@@ -33,6 +33,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         StartAmbientSound(FMODEvents.instance.ambientSound);
+        PlayMusic(FMODEvents.instance.allMusic);
     }
 
     //function to play Action FMOD Events
@@ -60,6 +61,7 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(EventReference playMusicReference)
     {
         playMusicInstance = CreateInstance(playMusicReference);
+        SetFMODMusic(SceneManager.GetActiveScene().name);
         playMusicInstance.start();
     }
 
