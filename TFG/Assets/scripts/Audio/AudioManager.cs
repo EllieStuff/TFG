@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -10,9 +11,12 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance { get; private set; }
 
-    private EventInstance gameplayMusicInstance;
+    public EventInstance playMusicInstance;
 
     private EventInstance ambientSoundInstance;
+
+    const string
+        MENU_MUSIC_STR = "Menu Music";
 
     private void Awake()
     {
@@ -29,7 +33,6 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         StartAmbientSound(FMODEvents.instance.ambientSound);
-        StartGamePlayMusic(FMODEvents.instance.gameplayMusic);
     }
 
     //function to play Action FMOD Events
@@ -54,16 +57,28 @@ public class AudioManager : MonoBehaviour
     }
 
     //function to start gameplay music
-    private void StartGamePlayMusic(EventReference gameplayMusic)
+    public void PlayMusic(EventReference playMusicReference)
     {
-        gameplayMusicInstance = CreateInstance(gameplayMusic);
-        gameplayMusicInstance.start();
+        playMusicInstance = CreateInstance(playMusicReference);
+        playMusicInstance.start();
     }
 
     //set labeled parameter on FMOD
     public void SetFMODLabeledParameter(string parameterName, string parameterValue, EventInstance parameterInstance)
     {
         parameterInstance.setParameterByNameWithLabel(parameterName, parameterValue);
+    }
+
+    public void SetFMODMusic(string sceneName)
+    {
+        if (sceneName == "Main Menu")
+        {
+            SetFMODLabeledParameter("musicScene", "menuMusic", playMusicInstance);
+        }
+        else
+        {
+            SetFMODLabeledParameter("musicScene", "gameplayMusic", playMusicInstance);
+        }
     }
 
     //clean up the instances

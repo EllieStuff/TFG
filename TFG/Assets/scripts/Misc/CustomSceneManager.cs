@@ -24,11 +24,26 @@ public class CustomSceneManager : MonoBehaviour
     public void ChangeScene(string _sceneName)
     {
         StopAllCoroutines();
+
+        //AUDIO
+        //AudioManager.instance.SetFMODMusic(_sceneName);
+
         StartCoroutine(ChangeScene_Cor(_sceneName));
     }
     public void ChangeScene(int _sceneId)
     {
         StopAllCoroutines();
+
+        //AUDIO
+        /*if (_sceneId == 0)
+        {
+            AudioManager.instance.SetFMODMusic("Main Menu");
+        }
+        else
+        {
+            AudioManager.instance.SetFMODMusic("Albert Scene");
+        }*/
+
         StartCoroutine(ChangeScene_Cor(_sceneId));
     }
 
