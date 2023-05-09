@@ -67,7 +67,7 @@ public class BossEnemySpawner : MonoBehaviour
             else
                 spawnedPlaces[spawnIndex] = true;
 
-            GameObject enemy = Instantiate(enemiesList[randomEnemy], spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
+            GameObject enemy = Instantiate(enemiesList[randomEnemy], spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation, roomEnemyListPivot);
             enemy.transform.parent = roomEnemyListPivot;
             roomEnemyListPivot.GetComponent<RoomEnemyManager>().UpdateRoomEnemies();
             enemy.GetComponent<BaseEnemyScript>().waiting = false;
