@@ -51,8 +51,6 @@ public class AudioManager : MonoBehaviour
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
         eventInstances.Add(eventInstance);
-        //global volume for every new volume
-        eventInstance.setVolume(SOUND_PLAY_VOLUME);
         return eventInstance;
     }
 
@@ -60,8 +58,6 @@ public class AudioManager : MonoBehaviour
     private void StartAmbientSound(EventReference ambientSound)
     {
         ambientSoundInstance = CreateInstance(ambientSound);
-        //ambient volume
-        ambientSoundInstance.setVolume(AMBIENT_VOLUME);
         ambientSoundInstance.start();
     }
 
@@ -70,8 +66,6 @@ public class AudioManager : MonoBehaviour
     {
         playMusicInstance = CreateInstance(playMusicReference);
         SetFMODMusic(SceneManager.GetActiveScene().name);
-        //song volume
-        playMusicInstance.setVolume(SONG_VOLUME);
         playMusicInstance.start();
     }
 
