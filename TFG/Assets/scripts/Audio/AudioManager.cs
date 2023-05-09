@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -10,7 +11,12 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance { get; private set; }
 
-    private EventInstance gameplayMusicInstance;
+    public EventInstance playMusicInstance;
+
+    private EventInstance ambientSoundInstance;
+
+    const string
+        MENU_MUSIC_STR = "Menu Music";
 
     private void Awake()
     {
@@ -26,7 +32,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        StartGamePlayMusic(FMODEvents.instance.gameplayMusic);
+        StartAmbientSound(FMODEvents.instance.ambientSound);
+        PlayMusic(FMODEvents.instance.allMusic);
     }
 
     //function to play Action FMOD Events
@@ -43,18 +50,37 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
-    //function to start gameplay music
-    private void StartGamePlayMusic(EventReference gameplayMusic)
+    //function to start ambient sound
+    private void StartAmbientSound(EventReference ambientSound)
     {
-        gameplayMusicInstance = CreateInstance(gameplayMusic);
-        gameplayMusicInstance.start();
+        ambientSoundInstance = CreateInstance(ambientSound);
+        ambientSoundInstance.start();
+    }
 
+    //function to start gameplay music
+    public void PlayMusic(EventReference playMusicReference)
+    {
+        playMusicInstance = CreateInstance(playMusicReference);
+        SetFMODMusic(SceneManager.GetActiveScene().name);
+        playMusicInstance.start();
     }
 
     //set labeled parameter on FMOD
     public void SetFMODLabeledParameter(string parameterName, string parameterValue, EventInstance parameterInstance)
     {
         parameterInstance.setParameterByNameWithLabel(parameterName, parameterValue);
+    }
+
+    public void SetFMODMusic(string sceneName)
+    {
+        if (sceneName == "Main Menu")
+        {
+            SetFMODLabeledParameter("musicScene", "menuMusic", playMusicInstance);
+        }
+        else
+        {
+            SetFMODLabeledParameter("musicScene", "gameplayMusic", playMusicInstance);
+        }
     }
 
     //clean up the instances
