@@ -7,6 +7,9 @@ using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
+
+    private Bus musicBus, sfxBus;
+
     private List<EventInstance> eventInstances;
 
     public static AudioManager instance { get; private set; }
@@ -32,12 +35,25 @@ public class AudioManager : MonoBehaviour
         instance = this;
 
         eventInstances = new List<EventInstance>();
+
+        musicBus = RuntimeManager.GetBus("bus:/music");
+        sfxBus = RuntimeManager.GetBus("bus:/sfx");
     }
 
     private void Start()
     {
         StartAmbientSound(FMODEvents.instance.ambientSound);
         PlayMusic(FMODEvents.instance.allMusic);
+    }
+
+    public void SetMusicVolume(float _musicVolume)
+    {
+        musicBus.setVolume(_musicVolume);
+    }
+
+    public void SetSfxVolume(float _sfxVolume)
+    {
+        sfxBus.setVolume(_sfxVolume);
     }
 
     //function to play Action FMOD Events
