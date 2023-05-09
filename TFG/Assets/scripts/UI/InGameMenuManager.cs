@@ -6,6 +6,8 @@ using TMPro;
 
 public class InGameMenuManager : MonoBehaviour
 {
+    const float LEVEL_COMPLETED_DELAY = 6f;
+
     [SerializeField] GameObject inGameMenu, options, levelCompleted;
     [SerializeField] ChangeMenuSelectionScript activateMenuScript, deactivateMenuScript, deactivateOptionsScript, activateLevelCompleted;
     [SerializeField] TMP_Dropdown resolutionDropdown;
@@ -72,7 +74,7 @@ public class InGameMenuManager : MonoBehaviour
 
     IEnumerator ActivateLevelCompletedScreen()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(LEVEL_COMPLETED_DELAY);
         activateLevelCompleted.ChangeMenuSelection();
         Time.timeScale = 0.0000001f;
     }
