@@ -7,7 +7,6 @@ public class MeleeEnemy : BaseEnemyScript
     enum AnimState { IDLE, MOVING, ATTACKING, RESTING, DEAD }
 
     [Header("MeleeEnemy")]
-    [SerializeField] float attackDmg = 15f;
     [SerializeField] float attackForce = 10.0f;
     [SerializeField] float attackDuration = 1.0f;
     [SerializeField] Vector3 atkVelocityLimit = new Vector3(20, 0, 20);
@@ -123,7 +122,7 @@ public class MeleeEnemy : BaseEnemyScript
         //Justo aqui activar feedback viento vientoso ataque rata particulas
         fastRatVFX.Play();
         touchBodyDamageData.StopAllCoroutines();
-        touchBodyDamageData.damage = attackDmg;
+        touchBodyDamageData.damage = AttackDamage;
         touchBodyDamageData.disabled = false;
         canMove = isAttacking = true;
         yield return null;

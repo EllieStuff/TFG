@@ -143,7 +143,7 @@ public class ZoneScript : MonoBehaviour
             showRoom = false;
             BlockBackBoor();
             assignedRoom.ActivateRoom(false);
-
+            RoomIdManager.NextRoom();
         }
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BaseEnemyScript : MonoBehaviour
 {
     public enum States { IDLE, RANDOM_MOVEMENT, MOVE_TO_TARGET, ATTACK, REST, /*DAMAGE,*/ DEATH }
@@ -34,6 +35,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] Vector2 restWait = new Vector2(3.0f, 3.5f);
     [SerializeField] protected float attackChargingTime = 1f;
     [SerializeField] int numOfRndMoves = 0;
+    [SerializeField] float baseAttackDamage = 100f;
     [SerializeField] protected float dmgOnTouch = 5f;
     [SerializeField] Vector2Int moneyDropped;
     [SerializeField] GameObject coinPrefab;
@@ -73,7 +75,30 @@ public class BaseEnemyScript : MonoBehaviour
 
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
-    protected float AttackWait { get { return Random.Range(attackWait.x, attackWait.y); } }
+    protected float AttackDamage {
+        get {
+            switch (DifficultyManager.Difficulty)
+            {
+                case DifficultyMode.EASY: return baseAttackDamage * DifficultyManager.Enemies_AtkDmgMultiplier_EasyMode;
+                case DifficultyMode.NORMAL: return baseAttackDamage * DifficultyManager.Enemies_AtkDmgMultiplier_NormalMode;
+                case DifficultyMode.HARD: return baseAttackDamage * DifficultyManager.Enemies_AtkDmgMultiplier_HardMode;
+                default: return baseAttackDamage;
+            }
+        }
+    }
+    protected float AttackWait {
+        get {
+            float rndWait = Random.Range(attackWait.x, attackWait.y);
+            switch (DifficultyManager.Difficulty)
+            {
+                case DifficultyMode.EASY: return rndWait * DifficultyManager.Enemies_AtkWaitMultiplier_EasyMode;
+                case DifficultyMode.NORMAL: return rndWait * DifficultyManager.Enemies_AtkWaitMultiplier_NormalMode;
+                case DifficultyMode.HARD: return rndWait * DifficultyManager.Enemies_AtkWaitMultiplier_HardMode;
+                default: return rndWait;
+            }
+        }
+    }
+
 
     //PLACEHOLDER
     [SerializeField] protected SkinnedMeshRenderer enemyMesh;

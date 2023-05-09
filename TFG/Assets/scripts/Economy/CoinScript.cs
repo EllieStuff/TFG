@@ -43,7 +43,7 @@ public class CoinScript : MonoBehaviour
 
 
         timer += Time.deltaTime;
-        if (timer > GO_TO_PLAYER_TIMER || (!roomManager.HasEnemiesRemainging() && timer > ROOM_EMPTY_TIMER) 
+        if (timer > GO_TO_PLAYER_TIMER || (!roomManager.IsBossRoom && !roomManager.HasEnemiesRemainging() && timer > ROOM_EMPTY_TIMER) 
             || Vector3.Distance(transform.position, playerRef.position) < PLAYER_ABSORB_DISTANCE)
         {
             if (rbActive) DeactivateRb();

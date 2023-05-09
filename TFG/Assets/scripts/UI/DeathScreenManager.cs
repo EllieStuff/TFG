@@ -39,6 +39,7 @@ public class DeathScreenManager : MonoBehaviour
     {
         Time.timeScale = 1;
         PlayerPrefs.SetString("UseDeathRoomCoordinates", "true");
+        PlayerPrefs.SetInt(RoomIdManager.SAVED_ROOM_ID_PATH, RoomIdManager.CurrentRoomId);
         CustomSceneManager.Instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
 

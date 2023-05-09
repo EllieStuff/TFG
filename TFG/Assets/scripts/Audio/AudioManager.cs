@@ -18,6 +18,10 @@ public class AudioManager : MonoBehaviour
     const string
         MENU_MUSIC_STR = "Menu Music";
 
+    const float SONG_VOLUME = 0.2f;
+    const float AMBIENT_VOLUME = 0.05f;
+    const float SOUND_PLAY_VOLUME = 0.5f;
+
     private void Awake()
     {
         //secure we only have one AudioManager on the scene

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BatBossEnemy : BatEnemy
 {
     const float CHANGE_PHASE_BASE_DELAY = 0.5f;
+    const float BASE_ANIM_SPEED = 0.5f, ATK_ANIM_SPEED = 1f;
 
     [Header("BatBoss Enemy")]
     [SerializeField] float changeElementDelay = 1.5f;
@@ -34,6 +35,7 @@ public class BatBossEnemy : BatEnemy
     {
         base.Start_Call();
         camShake = Camera.main.GetComponent<CameraShake>();
+        enemyAnimator.speed = BASE_ANIM_SPEED;
     }
 
     private void OnEnable()
@@ -143,7 +145,6 @@ public class BatBossEnemy : BatEnemy
 
         changingPhase = true;
         canRotate = false;
-        attackDamage *= secondPhaseAttackMultiplier;
         attackWait *= secondPhaseWaitMultiplier;
         attackChargingTime *= secondPhaseWaitMultiplier;
         projectileSizeMultiplier *= secondPhaseProjSizeMultiplier;
@@ -180,15 +181,16 @@ public class BatBossEnemy : BatEnemy
         //place shoot animation here
         isAttacking = true;
         yield return new WaitForSeconds(attackChargingTime);
-
-
+        ChangeAnim(AnimState.ATTACKING);
+        enemyAnimator.speed = ATK_ANIM_SPEED;
+        yield return new WaitForSeconds(attackAnimationTime);
         for (int i = 0; i < numOfAttacks; i++)
         {
-            yield return new WaitForSeconds(attackAnimationTime);
             BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
-            projectile.dmgData.damage = attackDamage;
+            if (secondPhaseEntered) projectile.dmgData.damage = AttackDamage * secondPhaseAttackMultiplier;
+            else projectile.dmgData.damage = AttackDamage;
             projectile.transform.localScale *= projectileSizeMultiplier;
             projectile.moveSpeed *= projectileSpeedMultiplier;
             projectiles.Add(projectile);
@@ -198,6 +200,8 @@ public class BatBossEnemy : BatEnemy
 
             yield return new WaitForSeconds(attackSeparationTime);
         }
+        ChangeAnim(AnimState.IDLE);
+        enemyAnimator.speed = BASE_ANIM_SPEED;
         isAttacking = false;
     }
 

@@ -5,12 +5,11 @@ using FMOD.Studio;
 
 public class BatEnemy : BaseEnemyScript
 {
-    enum AnimState { IDLE, ATTACKING, DEAD }
+    protected enum AnimState { IDLE, ATTACKING, DEAD }
 
     [Header("Bat Enemy")]
     [SerializeField] protected float attackAnimationTime;
-    [SerializeField] protected float attackDamage;
-    [SerializeField] Animator enemyAnimator;
+    [SerializeField] protected Animator enemyAnimator;
     [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] protected Transform shootPoint;
     [SerializeField] protected int numOfAttacks = 1;
@@ -61,7 +60,7 @@ public class BatEnemy : BaseEnemyScript
         base.FixedUpdate_Call();
     }
 
-    private void ChangeAnim(AnimState _state)
+    protected void ChangeAnim(AnimState _state)
     {
         if (!blockAnim || _state.Equals(AnimState.DEAD))
         {
@@ -138,8 +137,10 @@ public class BatEnemy : BaseEnemyScript
     {
         //place shoot animation here
         ChangeAnim(AnimState.ATTACKING);
+        enemyAnimator.speed = 1.5f;
         blockAnim = true;
-        yield return new WaitForSeconds(attackChargingTime);
+        //yield return new WaitForSeconds(attackChargingTime);
+        yield return new WaitForSeconds(attackAnimationTime);
 
         //AUDIO
         BatAttackSound();
@@ -147,18 +148,19 @@ public class BatEnemy : BaseEnemyScript
         canRotate = false;
         for (int i = 0; i < numOfAttacks; i++)
         {
-            yield return new WaitForSeconds(attackAnimationTime);
             BatProjectile_Tornado projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Tornado>();
             projectile.zigzagDir = i % 2 == 0 ? -1 : 1;
             //BatProjectile_Missile projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<BatProjectile_Missile>();
             projectile.Init(transform);
             projectile.transform.SetParent(null);
-            projectile.dmgData.damage = attackDamage;
+            projectile.dmgData.damage = AttackDamage;
+            
             yield return new WaitForSeconds(attackSeparationTime);
         }
 
         blockAnim = false;
         ChangeAnim(AnimState.IDLE);
+        enemyAnimator.speed = 1f;
 
         canRotate = true;
     }

@@ -24813,6 +24813,7 @@ MonoBehaviour:
   restWait: {x: 1.5, y: 2}
   attackChargingTime: 1
   numOfRndMoves: -1
+  baseAttackDamage: 240
   dmgOnTouch: 20
   moneyDropped: {x: 100, y: 400}
   coinPrefab: {fileID: 1195922223204480883, guid: fc1876224772770458364dc8d5a62e39,
@@ -24825,7 +24826,7 @@ MonoBehaviour:
   enemyMesh: {fileID: 7222636839975906104}
   enemyMeshTmp: {fileID: 0}
   transparentMat: {fileID: 2100000, guid: 7a251d39e80caab46be35ceafb2b5310, type: 2}
-  attackDmg: 250
+  attackDmg: 240
   attackForce: 22
   attackDuration: 1
   atkVelocityLimit: {x: 15, y: 0, z: 15}
@@ -24849,8 +24850,8 @@ MonoBehaviour:
   entityElement: 1
   healthStates: []
   healthStatesFeedback: {fileID: 1945083058485135311}
-  maxLife: 1100
-  currLife: 1100
+  maxLife: 1000
+  currLife: 1000
   healWithSameElement: 0
   healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,

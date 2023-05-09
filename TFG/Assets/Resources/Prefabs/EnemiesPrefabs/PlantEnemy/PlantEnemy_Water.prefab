@@ -19719,7 +19719,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2845494840852056608}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.014, z: -0.683}
+  m_LocalPosition: {x: 0, y: -0.014000008, z: -0.6226212}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19738,7 +19738,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.101154454, g: 0.6397671, b: 0.735849, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 2
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -34632,6 +34632,7 @@ MonoBehaviour:
   restWait: {x: 0, y: 0}
   attackChargingTime: 1
   numOfRndMoves: 0
+  baseAttackDamage: 220
   dmgOnTouch: 20
   moneyDropped: {x: 80, y: 360}
   coinPrefab: {fileID: 1195922223204480883, guid: fc1876224772770458364dc8d5a62e39,
@@ -34645,7 +34646,6 @@ MonoBehaviour:
   enemyMeshTmp: {fileID: 3397121725640670360}
   transparentMat: {fileID: 2100000, guid: 1842dea320bdc504399c250340f3a7af, type: 2}
   attackAnimationTime: 0.15
-  attackDamage: 240
   shootWithObstacles: 1
   enemyAnimator: {fileID: 6042878772204485282}
   projectilePrefab: {fileID: 507451495234348787, guid: 1f2e3d08540022a47a495f19204de83a,
@@ -34654,6 +34654,7 @@ MonoBehaviour:
   attackStyle: 0
   numOfAttacks: 1
   attackSeparationTime: 0.2
+  plantAttacking: 0
 --- !u!114 &8351470923921754958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34670,8 +34671,8 @@ MonoBehaviour:
   entityElement: 2
   healthStates: []
   healthStatesFeedback: {fileID: 936959598569564534}
-  maxLife: 1200
-  currLife: 1200
+  maxLife: 1000
+  currLife: 1000
   healWithSameElement: 0
   healPercentage: 0.05
   bloodPrefab: {fileID: 8161046788835331719, guid: de7fc57dc592a194cb43a44cfe00d67f,
@@ -40080,7 +40081,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.101960786, g: 0.6431373, b: 0.7372549, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.71
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

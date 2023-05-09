@@ -10,7 +10,6 @@ public class PlantEnemy : BaseEnemyScript
 
     [Header("PlantEnemy")]
     [SerializeField] float attackAnimationTime;
-    [SerializeField] float attackDamage;
     [SerializeField] bool shootWithObstacles = true;
     [SerializeField] Animator enemyAnimator;
     [SerializeField] GameObject projectilePrefab;
@@ -201,7 +200,7 @@ public class PlantEnemy : BaseEnemyScript
                 projectile = Instantiate(projectilePrefab, shootPoint).GetComponent<ProjectileData>();
                 projectile.Init(transform);
                 projectile.transform.SetParent(null);
-                projectile.dmgData.damage = attackDamage;
+                projectile.dmgData.damage = AttackDamage;
                 //projectile.moveDir = (player.position - transform.position).normalized;
                 break;
         }
