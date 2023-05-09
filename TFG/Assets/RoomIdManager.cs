@@ -12,6 +12,8 @@ public class RoomIdManager : MonoBehaviour
 
     [SerializeField] bool isTutorial = false;
 
+    public static int CurrentRoomId { get { return currentRoom; } }
+
     // Start is called before the first frame update
     void Start()
     {

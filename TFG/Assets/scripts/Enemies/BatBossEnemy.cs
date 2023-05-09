@@ -90,6 +90,9 @@ public class BatBossEnemy : BatEnemy
         enrageBGVFX.Stop();
         enrageBGVFX.Clear();
         StartCoroutine(EnableUI(false));
+
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.bossDeathSound, this.transform.position);
     }
 
 
@@ -191,6 +194,10 @@ public class BatBossEnemy : BatEnemy
             projectile.transform.localScale *= projectileSizeMultiplier;
             projectile.moveSpeed *= projectileSpeedMultiplier;
             projectiles.Add(projectile);
+
+            //AUDIO
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.bossAttackSound, this.transform.position);
+
             yield return new WaitForSeconds(attackSeparationTime);
         }
         ChangeAnim(AnimState.IDLE);
@@ -214,6 +221,9 @@ public class BatBossEnemy : BatEnemy
         StartCoroutine(camShake.ShakeCamera(flashDuration * 2f, 0.1f));
         EliTween.ChangeColor(flashImage, GetFlashColor(newElement), flashDuration);
         yield return new WaitForSeconds(flashDuration);
+
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.bossChangeElementSound, this.transform.position);
 
         ChangeElementMaterialsAndLights(newElement);
         enemyLife.entityElement = newElement;

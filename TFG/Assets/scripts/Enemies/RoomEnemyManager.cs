@@ -11,6 +11,7 @@ public class RoomEnemyManager : MonoBehaviour
     [SerializeField] bool roomActive = false;
     [SerializeField] bool roomWithTargetSystem;
     [SerializeField] internal bool notLoadableRoom;
+    [SerializeField] bool isBossRoom = false;
 
     PlayerAttack playerAttack;
     Rigidbody playerRB;
@@ -23,6 +24,8 @@ public class RoomEnemyManager : MonoBehaviour
 
     bool endRoomEventIsTriggered = false;
     bool changingPointerTarget = false;
+
+    public bool IsBossRoom { get { return isBossRoom; } }
 
     // Start is called before the first frame update
     void Awake()

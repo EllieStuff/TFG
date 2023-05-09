@@ -10,7 +10,7 @@ public class OnboardingChangeScene : MonoBehaviour
         bool isPlayer = other.tag.Equals("Player");
         if (isPlayer)
         {
-            SceneManager.LoadScene("Albert Scene");
+            CustomSceneManager.Instance.ChangeScene("Albert Scene");
         }
     }
 }
