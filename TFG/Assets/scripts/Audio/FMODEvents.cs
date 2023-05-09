@@ -14,6 +14,7 @@ public class FMODEvents : MonoBehaviour
 
     [field: Header("Enemies SFX")]
     [field: SerializeField] public EventReference bossAttackSound { get; private set; }
+    [field: SerializeField] public EventReference bossChangeElementSound { get; private set; }
     [field: SerializeField] public EventReference bossDeathSound { get; private set; }
     [field: SerializeField] public EventReference batAttack { get; private set; }
     [field: SerializeField] public EventReference plantAttack { get; private set; }

@@ -218,6 +218,9 @@ public class BatBossEnemy : BatEnemy
         EliTween.ChangeColor(flashImage, GetFlashColor(newElement), flashDuration);
         yield return new WaitForSeconds(flashDuration);
 
+        //AUDIO
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.bossChangeElementSound, this.transform.position);
+
         ChangeElementMaterialsAndLights(newElement);
         enemyLife.entityElement = newElement;
         for (int i = 0; i < projectiles.Count; i++) projectiles[i].DestroyObject();
