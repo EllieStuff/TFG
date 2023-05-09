@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   switchSettingsMigration: 1
   HasSourceProject: 0
-  HasPlatforms: 0
+  HasPlatforms: 1
   sourceProjectPath: 
   sourceBankPath: Assets/FMOD_banks
   sourceBankPathUnformatted: 
@@ -315,13 +315,13 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - FMOD_banks/Desktop/Master
+  - Master
   Banks:
-  - FMOD_banks/Desktop/ambients
-  - FMOD_banks/Desktop/enemies
-  - FMOD_banks/Desktop/music
-  - FMOD_banks/Desktop/player
-  - FMOD_banks/Desktop/sfx
+  - ambients
+  - enemies
+  - music
+  - player
+  - sfx
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
