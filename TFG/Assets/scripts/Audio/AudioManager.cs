@@ -18,6 +18,10 @@ public class AudioManager : MonoBehaviour
     const string
         MENU_MUSIC_STR = "Menu Music";
 
+    const float SONG_VOLUME = 0.2f;
+    const float AMBIENT_VOLUME = 0.05f;
+    const float SOUND_PLAY_VOLUME = 0.5f;
+
     private void Awake()
     {
         //secure we only have one AudioManager on the scene
@@ -47,6 +51,7 @@ public class AudioManager : MonoBehaviour
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
         eventInstances.Add(eventInstance);
+        eventInstance.setVolume(SOUND_PLAY_VOLUME);
         return eventInstance;
     }
 
@@ -54,6 +59,7 @@ public class AudioManager : MonoBehaviour
     private void StartAmbientSound(EventReference ambientSound)
     {
         ambientSoundInstance = CreateInstance(ambientSound);
+        ambientSoundInstance.setVolume(AMBIENT_VOLUME);
         ambientSoundInstance.start();
     }
 
@@ -62,6 +68,7 @@ public class AudioManager : MonoBehaviour
     {
         playMusicInstance = CreateInstance(playMusicReference);
         SetFMODMusic(SceneManager.GetActiveScene().name);
+        playMusicInstance.setVolume(SONG_VOLUME);
         playMusicInstance.start();
     }
 
