@@ -44,10 +44,10 @@ public class MenuCheats : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F5))
         {
+            PlayerPrefs.DeleteAll();
             GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>().ResetBoughtSkills();
             FindObjectOfType<ShopManager>().ReestartInfo();
         }
-
     }
 
 
