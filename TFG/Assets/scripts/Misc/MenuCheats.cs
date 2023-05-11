@@ -45,6 +45,8 @@ public class MenuCheats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F5))
         {
             PlayerPrefs.DeleteAll();
+            MoneyManager.SetMoney(0);
+            moneyText.text = "0";
             GameObject.FindGameObjectWithTag("save").GetComponent<LoadPassiveSkills>().ResetBoughtSkills();
             FindObjectOfType<ShopManager>().ReestartInfo();
         }
