@@ -44,7 +44,7 @@ public class DeckManager : MonoBehaviour
 
     public void UseSelectedCard(int _idx, PlayerMovement _playerData)
     {
-        if (playerLife.currLife > 0 && _idx < cards.Count && !cards[_idx].inCooldown)
+        if (playerLife.CurrLife > 0 && _idx < cards.Count && !cards[_idx].inCooldown)
         {
             cards[_idx].cardBehaviour.Activate(_playerData);
             cards[_idx].StartCooldown();

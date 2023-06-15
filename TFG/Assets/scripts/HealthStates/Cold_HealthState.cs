@@ -35,10 +35,10 @@ public class Cold_HealthState : HealthState
     {
         base.StartEffect();
 
-        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
-            lifeSystem.GetComponent<PlayerMovement>().speedMultiplier = playerSpeedInc;
-        else if (lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
-            lifeSystem.GetComponent<BaseEnemyScript>().speedMultiplier = enemySpeedInc;
+        //if (lifeSystem.EntityType == LifeSystem.EntityTypes.PLAYER)
+        //    lifeSystem.GetComponent<PlayerMovement>().speedMultiplier = playerSpeedInc;
+        //else if (lifeSystem.EntityType == LifeSystem.EntityTypes.ENEMY)
+        //    lifeSystem.GetComponent<BaseEnemyScript>().speedMultiplier = enemySpeedInc;
 
     }
 
@@ -46,10 +46,10 @@ public class Cold_HealthState : HealthState
     {
         base.EndEffect();
 
-        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
-            lifeSystem.GetComponent<PlayerMovement>().speedMultiplier = 1.0f;
-        else if (lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
-            lifeSystem.GetComponent<BaseEnemyScript>().speedMultiplier = 1.0f;
+        //if (lifeSystem.EntityType == LifeSystem.EntityTypes.PLAYER)
+        //    lifeSystem.GetComponent<PlayerMovement>().speedMultiplier = 1.0f;
+        //else if (lifeSystem.EntityType == LifeSystem.EntityTypes.ENEMY)
+        //    lifeSystem.GetComponent<BaseEnemyScript>().speedMultiplier = 1.0f;
     }
 
 

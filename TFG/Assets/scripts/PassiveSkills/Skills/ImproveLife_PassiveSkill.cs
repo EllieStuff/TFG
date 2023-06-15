@@ -35,7 +35,7 @@ public class ImproveLife_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         LifeSystem playerLife = playerRef.GetComponent<LifeSystem>();
-        playerLife.maxLife += LIFE_TO_ADD;
+        playerLife.MaxLife += LIFE_TO_ADD;
         playerLife.AddLife(LIFE_TO_ADD);
     }
 

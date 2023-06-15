@@ -10,13 +10,13 @@ public class ElementsManager : MonoBehaviour
         EFFECTIVE_HIT_MULTIPLIER = 2.0f,
         SAME_ELEMENT_HIT_MULTIPLIER = 0.7f,
         NOT_EFFECTIVE_HIT_MULTIPLIER = 0.1f,
-        NORMAL_ELEMENT_MULTIPLIER = 1.0f;
+        NEUTRAL_ELEMENT_MULTIPLIER = 1.0f;
 
-    public enum Elements { FIRE, GRASS, WATER, NORMAL, COUNT }
+    public enum Elements { FIRE, GRASS, WATER, NEUTRAL, COUNT }
     public class ElementClass
     {
         public Dictionary<Elements, float> receiveDamage = new Dictionary<Elements, float>();
-        public Dictionary<Elements, float> inflictDamage = new Dictionary<Elements, float>();
+        //public Dictionary<Elements, float> inflictDamage = new Dictionary<Elements, float>();
         public Color colorParticles;
     }
 
@@ -24,7 +24,7 @@ public class ElementsManager : MonoBehaviour
 
     PlayerAttack attackManager;
     LifeSystem playerLife;
-    [SerializeField] bool allowElementChangeOneStarted = false;
+    [SerializeField] bool allowElementChangeOnceStarted = false;
     bool changingElement = false;
     public bool tutorialDone = false;
     [SerializeField] Slider changeElementSlider;
@@ -40,7 +40,7 @@ public class ElementsManager : MonoBehaviour
     public ParticleSystem changeElementRed;
     public ParticleSystem changeElementNeutral;
 
-    bool CanChangeElement { get { return !(!allowElementChangeOneStarted && changingElement); } }
+    bool CanChangeElement { get { return !(!allowElementChangeOnceStarted && changingElement); } }
     public bool ChangingElement { get { return changingElement; } }
 
     private RadialRotation UIRadialRot;
@@ -76,50 +76,34 @@ public class ElementsManager : MonoBehaviour
         elementsData = new Dictionary<Elements, ElementClass>();
         ElementClass normalCompatibility = new ElementClass();
         normalCompatibility.colorParticles = Color.white;
-        normalCompatibility.receiveDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
-        normalCompatibility.receiveDamage.Add(Elements.FIRE, NORMAL_ELEMENT_MULTIPLIER);
-        normalCompatibility.receiveDamage.Add(Elements.GRASS, NORMAL_ELEMENT_MULTIPLIER);
-        normalCompatibility.receiveDamage.Add(Elements.WATER, NORMAL_ELEMENT_MULTIPLIER);
-        normalCompatibility.inflictDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
-        normalCompatibility.inflictDamage.Add(Elements.FIRE, NORMAL_ELEMENT_MULTIPLIER);
-        normalCompatibility.inflictDamage.Add(Elements.GRASS, NORMAL_ELEMENT_MULTIPLIER);
-        normalCompatibility.inflictDamage.Add(Elements.WATER, NORMAL_ELEMENT_MULTIPLIER);
-        elementsData.Add(Elements.NORMAL, normalCompatibility);
+        normalCompatibility.receiveDamage.Add(Elements.NEUTRAL, NEUTRAL_ELEMENT_MULTIPLIER);
+        normalCompatibility.receiveDamage.Add(Elements.FIRE, NEUTRAL_ELEMENT_MULTIPLIER);
+        normalCompatibility.receiveDamage.Add(Elements.GRASS, NEUTRAL_ELEMENT_MULTIPLIER);
+        normalCompatibility.receiveDamage.Add(Elements.WATER, NEUTRAL_ELEMENT_MULTIPLIER);
+        elementsData.Add(Elements.NEUTRAL, normalCompatibility);
 
         ElementClass fireCompatibility = new ElementClass();
         fireCompatibility.colorParticles = Color.red;
-        fireCompatibility.receiveDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
+        fireCompatibility.receiveDamage.Add(Elements.NEUTRAL, NEUTRAL_ELEMENT_MULTIPLIER);
         fireCompatibility.receiveDamage.Add(Elements.FIRE, SAME_ELEMENT_HIT_MULTIPLIER);
         fireCompatibility.receiveDamage.Add(Elements.GRASS, NOT_EFFECTIVE_HIT_MULTIPLIER);
         fireCompatibility.receiveDamage.Add(Elements.WATER, EFFECTIVE_HIT_MULTIPLIER);
-        fireCompatibility.inflictDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
-        fireCompatibility.inflictDamage.Add(Elements.FIRE, SAME_ELEMENT_HIT_MULTIPLIER);
-        fireCompatibility.inflictDamage.Add(Elements.GRASS, EFFECTIVE_HIT_MULTIPLIER);
-        fireCompatibility.inflictDamage.Add(Elements.WATER, NOT_EFFECTIVE_HIT_MULTIPLIER);
         elementsData.Add(Elements.FIRE, fireCompatibility);
 
         ElementClass grassCompatibility = new ElementClass();
         grassCompatibility.colorParticles = Color.green;
-        grassCompatibility.receiveDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
+        grassCompatibility.receiveDamage.Add(Elements.NEUTRAL, NEUTRAL_ELEMENT_MULTIPLIER);
         grassCompatibility.receiveDamage.Add(Elements.FIRE, EFFECTIVE_HIT_MULTIPLIER);
         grassCompatibility.receiveDamage.Add(Elements.GRASS, SAME_ELEMENT_HIT_MULTIPLIER);
         grassCompatibility.receiveDamage.Add(Elements.WATER, NOT_EFFECTIVE_HIT_MULTIPLIER);
-        grassCompatibility.inflictDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
-        grassCompatibility.inflictDamage.Add(Elements.FIRE, NOT_EFFECTIVE_HIT_MULTIPLIER);
-        grassCompatibility.inflictDamage.Add(Elements.GRASS, SAME_ELEMENT_HIT_MULTIPLIER);
-        grassCompatibility.inflictDamage.Add(Elements.WATER, EFFECTIVE_HIT_MULTIPLIER);
         elementsData.Add(Elements.GRASS, grassCompatibility);
 
         ElementClass waterCompatibility = new ElementClass();
         waterCompatibility.colorParticles = Color.cyan;
-        waterCompatibility.receiveDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
+        waterCompatibility.receiveDamage.Add(Elements.NEUTRAL, NEUTRAL_ELEMENT_MULTIPLIER);
         waterCompatibility.receiveDamage.Add(Elements.FIRE, NOT_EFFECTIVE_HIT_MULTIPLIER);
         waterCompatibility.receiveDamage.Add(Elements.GRASS, EFFECTIVE_HIT_MULTIPLIER);
         waterCompatibility.receiveDamage.Add(Elements.WATER, SAME_ELEMENT_HIT_MULTIPLIER);
-        waterCompatibility.inflictDamage.Add(Elements.NORMAL, NORMAL_ELEMENT_MULTIPLIER);
-        waterCompatibility.inflictDamage.Add(Elements.FIRE, EFFECTIVE_HIT_MULTIPLIER);
-        waterCompatibility.inflictDamage.Add(Elements.GRASS, NOT_EFFECTIVE_HIT_MULTIPLIER);
-        waterCompatibility.inflictDamage.Add(Elements.WATER, SAME_ELEMENT_HIT_MULTIPLIER);
         elementsData.Add(Elements.WATER, waterCompatibility);
 
         SwitchElementParticles(elementIdx);
@@ -181,13 +165,13 @@ public class ElementsManager : MonoBehaviour
         attackManager.ResetCritQuantity();
         PlayParticles(_element);
         elementChanging = _element;
-        StartCoroutine(ChangeElementCor(_element, _changeAttackDelay));
+        StartCoroutine(ChangeElement_Cor(_element, _changeAttackDelay));
 
         //AUDIO
         ChangeElementSound(_element);
     }
 
-    IEnumerator ChangeElementCor(Elements _element, float _changeAttackDelay)
+    IEnumerator ChangeElement_Cor(Elements _element, float _changeAttackDelay)
     {
         changingElement = true;
         effectTypeParticles.Stop();
@@ -203,7 +187,7 @@ public class ElementsManager : MonoBehaviour
         while(timer < maxTime)
         {
             yield return new WaitForEndOfFrame();
-            if (allowElementChangeOneStarted && elementChanging != _element) 
+            if (allowElementChangeOnceStarted && elementChanging != _element) 
             {
                 StopParticles(_element);
                 yield break;  
@@ -251,10 +235,10 @@ public class ElementsManager : MonoBehaviour
     {
         return elementsData[_entityElement].receiveDamage[_damageElement];
     }
-    public static float GetInflictDamageMultiplier(Elements _entityElement, Elements _damageElement)
-    {
-        return elementsData[_entityElement].inflictDamage[_damageElement];
-    }
+    //public static float GetInflictDamageMultiplier(Elements _entityElement, Elements _damageElement)
+    //{
+    //    return elementsData[_entityElement].inflictDamage[_damageElement];
+    //}
 
     void StopParticles(Elements _element)
     {
@@ -272,7 +256,7 @@ public class ElementsManager : MonoBehaviour
                 changeElementGreen.Stop();
                 changeElementGreen.Clear();
                 break;
-            case Elements.NORMAL:
+            case Elements.NEUTRAL:
                 changeElementNeutral.Stop();
                 changeElementNeutral.Clear();
                 break;
@@ -295,7 +279,7 @@ public class ElementsManager : MonoBehaviour
             case Elements.GRASS:
                 changeElementGreen.Play();
                 break;
-            case Elements.NORMAL:
+            case Elements.NEUTRAL:
                 changeElementNeutral.Play();
                 break;
             default: break;

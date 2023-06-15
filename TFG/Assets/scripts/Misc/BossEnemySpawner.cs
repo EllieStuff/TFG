@@ -39,7 +39,7 @@ public class BossEnemySpawner : MonoBehaviour
                 SpawnEnemies();
         }
 
-        if(!enemiesCleared && bossLife.currLife < 100)
+        if(!enemiesCleared && bossLife.CurrLife < 100)
         {
             DestroyEnemies();
             enemiesCleared = true;
@@ -88,7 +88,7 @@ public class BossEnemySpawner : MonoBehaviour
         {
             if (enemyLife != null)
             {
-                enemyLife.currLife = 0;
+                enemyLife.CurrLife = 0;
                 enemyLife.isDead = true;
                 enemyLife.GetComponent<BaseEnemyScript>().ChangeState(BaseEnemyScript.States.DEATH);
             }

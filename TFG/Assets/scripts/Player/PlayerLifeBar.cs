@@ -20,7 +20,7 @@ public class PlayerLifeBar : MonoBehaviour
 
     private void Update()
     {
-        lifeSlider.value = playerLifeStatus.currLife / playerLifeStatus.maxLife;
+        lifeSlider.value = playerLifeStatus.CurrLife / playerLifeStatus.MaxLife;
     }
 
     public void Damage()

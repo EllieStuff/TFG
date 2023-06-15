@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         if (!canMove) moveDir = Vector3.zero;
         if (canMove && targetMousePos != Vector3.zero
             && (Mathf.Abs(verticalInput) > INPUT_THRESHOLD || Mathf.Abs(horizontalInput) > INPUT_THRESHOLD) && moveDir != Vector3.zero
-            && lifeStatus.currLife > 0)
+            && lifeStatus.CurrLife > 0)
         {
             moving = true;
 
@@ -152,12 +152,12 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = FallSystem(rb.velocity);
 
 
-        if (canRotate && (moveDir == Vector3.zero || moveDir != Vector3.zero) && lifeStatus.currLife > 0)
+        if (canRotate && (moveDir == Vector3.zero || moveDir != Vector3.zero) && lifeStatus.CurrLife > 0)
         {
             targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);
         }
-        else if (!moving && lifeStatus.currLife > 0)
+        else if (!moving && lifeStatus.CurrLife > 0)
         {
             targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplierRot * Time.deltaTime);

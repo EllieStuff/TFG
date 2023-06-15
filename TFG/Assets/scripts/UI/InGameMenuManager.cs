@@ -40,7 +40,7 @@ public class InGameMenuManager : MonoBehaviour
 
         if(!levelCompletedFlag)
         {
-            if (finalBossRef != null && finalBossRef.state.Equals(BaseEnemyScript.States.DEATH))
+            if (finalBossRef != null && finalBossRef.State.Equals(BaseEnemyScript.States.DEATH))
             {
                 levelCompletedFlag = true;
                 levelCompleted.SetActive(true);

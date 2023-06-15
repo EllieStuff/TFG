@@ -35,7 +35,7 @@ public class Heal_PassiveSkill : PassiveSkill_Base
     {
         base.AddLevelEvent();
         LifeSystem playerLife = playerRef.GetComponent<LifeSystem>();
-        float actualLifeToHeal = playerLife.maxLife * LIFE_PERCENTAGE_TO_HEAL;
+        float actualLifeToHeal = playerLife.MaxLife * LIFE_PERCENTAGE_TO_HEAL;
         playerLife.AddLife(actualLifeToHeal);
     }
 

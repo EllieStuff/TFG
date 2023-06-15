@@ -5,25 +5,22 @@ using UnityEngine;
 public class DamageData : MonoBehaviour
 {
     public enum DamageBehaviour { ON_ENTER, ON_STAY, ON_EXIT }
+    
+    const float DAMAGE_CRIT_MULTIPLIER = 0.25f;
+    const float DMG_VARIATION = 0.02f;
 
-    [SerializeField] internal Transform ownerTransform;
-    [SerializeField] internal DamageBehaviour dmgBehaviour = DamageBehaviour.ON_ENTER;
-    [SerializeField] internal float damage = 10;
-    [SerializeField] internal ElementsManager.Elements attackElement;
-    [SerializeField] internal bool alwaysAttacking = false;
-    [SerializeField] internal float timeDisabledAfterColl = -1f;
-    [SerializeField] internal float stealLifePercentage = 0;
-    [SerializeField] internal float critPercentage = 0;
+    [SerializeField] public Transform ownerTransform;
+    [SerializeField] public DamageBehaviour dmgBehaviour = DamageBehaviour.ON_ENTER;
+    [SerializeField] public float damage = 10;
+    [SerializeField] public ElementsManager.Elements attackElement;
+    [SerializeField] bool alwaysAttacking = false;
+    [SerializeField] public float timeDisabledAfterColl = -1f;
+    [SerializeField] public float stealLifePercentage = 0;
+    [SerializeField] public float critPercentage = 0;
     [SerializeField] List<string> tagsAffected;
 
-    //[SerializeField] AudioManager audio;
+    [HideInInspector] public bool disabled = false;
 
-    private LifeSystem playerLifeSystem;
-
-    internal bool disabled = false;
-    float dmgVariation = 0.02f;
-
-    const float DAMAGE_CRIT_MULTIPLIER = 0.25f;
 
     public bool IsAttacking
     {
@@ -32,14 +29,14 @@ public class DamageData : MonoBehaviour
             if (alwaysAttacking) return true;
             if (ownerTransform == null) return false;
 
-            LifeSystem.EntityType entityType = ownerTransform.GetComponent<LifeSystem>().entityType;
-            if (entityType == LifeSystem.EntityType.PLAYER)
+            LifeSystem.EntityTypes entityType = ownerTransform.GetComponent<LifeSystem>().EntityType;
+            if (entityType == LifeSystem.EntityTypes.PLAYER)
             {
                 return ownerTransform.GetComponent<PlayerSword>().isAttacking;
             }
-            else if (entityType == LifeSystem.EntityType.ENEMY)
+            else if (entityType == LifeSystem.EntityTypes.ENEMY)
             {
-                return ownerTransform.GetComponent<BaseEnemyScript>().isAttacking;
+                return ownerTransform.GetComponent<BaseEnemyScript>().IsAttacking;
             }
 
             Debug.LogWarning("Entity not assigned");
@@ -106,8 +103,7 @@ public class DamageData : MonoBehaviour
         //if (audio != null)
         //    audio.PlaySound();
 
-        if (playerLifeSystem == null)
-            playerLifeSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeSystem>();
+        LifeSystem playerLifeSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeSystem>();
 
         PlayerProjectileData dataProj = GetComponent<PlayerProjectileData>();
         LifeSystem lifeSystem = _enemy.GetComponent<LifeSystem>();
@@ -153,7 +149,7 @@ public class DamageData : MonoBehaviour
 
     float GetDamageVariation()
     {
-        return (damage * Random.Range(-dmgVariation, dmgVariation));
+        return (damage * Random.Range(-DMG_VARIATION, DMG_VARIATION));
     }
 
 

@@ -25,11 +25,11 @@ public class StrongBlow_HealthState : HealthState
     public override void StartEffect()
     {
         base.StartEffect();
-        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER) 
+        if (lifeSystem.EntityType == LifeSystem.EntityTypes.PLAYER) 
         {
             //Stun
         }
-        if(lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
+        if(lifeSystem.EntityType == LifeSystem.EntityTypes.ENEMY)
         {
             //Stun
         }

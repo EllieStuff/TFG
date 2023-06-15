@@ -11,23 +11,23 @@ public class BaseEnemyScript : MonoBehaviour
     const float DEFAULT_SPEED_REDUCTION = 1.4f;
     const float ATTACK_ANGLE_THRESHOLD = 15f;
     const float ATTACK_MARGIN = 0.03f;
-    const float THRESHOLD = 1f;
+    const float ATTACK_DISTANCE_THRESHOLD = 1f;
 
 
     [Header("Base Enemy")]
-    [SerializeField] internal EnemyType enemyType;
+    [SerializeField] EnemyType enemyType;
     [SerializeField] protected LayerMask layerMask;
-    [SerializeField] internal float baseRotSpeed = 4;
-    [SerializeField] internal float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f, attackRange = -1f;
+    [SerializeField] protected float baseRotSpeed = 4;
+    [SerializeField] protected float playerDetectionDistance = 8f, playerStopDetectionDistance = 15f, attackRange = -1f;
     [SerializeField] protected float stopForce = 90f;
-    [SerializeField] internal bool isAttacking = false;
-    [SerializeField] internal float baseMoveSpeed, playerFoundSpeed;
+    [SerializeField] protected bool isAttacking = false;
+    [SerializeField] protected float baseMoveSpeed, playerFoundSpeed;
     [SerializeField] protected bool attacksTargetWOSeeingIt = false;  // WO == Without
     [SerializeField] bool movesToTargetWOSeeingIt = false;
     [SerializeField] bool stopRndMoveWhenSeeingTarget = true;
     [SerializeField] bool endsAttackWhenTargetOutOfRange = true;
-    [SerializeField] internal float baseDamageTimer;
-    [SerializeField] internal float baseDeathTime;
+    [SerializeField] protected float baseDamageTimer;
+    [SerializeField] protected float baseDeathTime;
     [SerializeField] protected bool movesToTarget = true;
     [SerializeField] bool needsToRest = false;
     [SerializeField] Vector2 idleWait = new Vector2(0.6f, 2.0f);
@@ -36,7 +36,7 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] protected float attackChargingTime = 1f;
     [SerializeField] int numOfRndMoves = 0;
     [SerializeField] float baseAttackDamage = 100f;
-    [SerializeField] protected float dmgOnTouch = 5f;
+    [SerializeField] protected float dmgOnTouch = 20f;
     [SerializeField] Vector2Int moneyDropped;
     [SerializeField] GameObject coinPrefab;
     [SerializeField] Transform enemyLightsHolder;
@@ -44,8 +44,8 @@ public class BaseEnemyScript : MonoBehaviour
     [SerializeField] bool disableAutoGravity;
     [SerializeField] bool test = false;
 
-    internal ZoneScript zoneSystem;
-    internal float damageTimer = 0;
+    [HideInInspector] public ZoneScript zoneSystem;
+    protected float damageTimer = 0;
     float idleWaitTimer = 0f;
     int rndMovesDone = 0;
     Vector3 rndTarget;
@@ -55,24 +55,26 @@ public class BaseEnemyScript : MonoBehaviour
     protected DamageData touchBodyDamageData;
     protected bool dmgActivated = false;
 
-    readonly internal Vector3 
+    readonly protected Vector3 
         baseMinVelocity = new Vector3(-10, 0, -10), 
         baseMaxVelocity = new Vector3(10, 0, 10);
 
-    internal States state = States.IDLE;
-    internal Rigidbody rb;
-    internal Transform player;
-    internal float actualMoveSpeed;
-    internal float actualRotSpeed;
-    internal float speedMultiplier = 0.5f;
-    internal Vector3 actualMinVelocity, actualMaxVelocity;
-    [HideInInspector] public Vector3 moveDir = Vector3.zero;
-    internal bool canMove = true, canRotate = true, canAttack = true;
-    internal Quaternion targetRot;
-    internal bool canEnterDamageState = true;
+    States state = States.IDLE;
+    protected Rigidbody rb;
+    protected Transform playerRef;
+    protected float actualMoveSpeed;
+    protected float actualRotSpeed;
+    protected float speedMultiplier = 0.5f;
+    protected Vector3 actualMinVelocity, actualMaxVelocity;
+    protected Vector3 moveDir = Vector3.zero;
+    protected bool canMove = true, canRotate = true, canAttack = true;
+    protected Quaternion targetRot;
+    [HideInInspector] public bool canEnterDamageState = true;
     protected List<Light> enemyLights = new List<Light>();
-    internal bool waiting = true;
+    [HideInInspector] public bool waiting = true;
 
+    public bool IsAttacking { get { return isAttacking; } }
+    public States State { get { return state; } }
     bool MakesRandomMoves { get { return numOfRndMoves != 0; } }
     bool HaveRandomMovesAvailable { get { return numOfRndMoves < 0 || rndMovesDone < numOfRndMoves; } }
     protected float AttackDamage {
@@ -114,12 +116,12 @@ public class BaseEnemyScript : MonoBehaviour
     {
         Start_Call();
     }
-    internal virtual void Start_Call()
+    protected virtual void Start_Call()
     {
         rb = GetComponent<Rigidbody>();
         enemyLife = GetComponent<LifeSystem>();
         touchBodyDamageData = transform.Find("DamageArea").GetComponent<DamageData>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerRef = GameObject.FindGameObjectWithTag("Player").transform;
         //if(enemyMesh != null) enemyMesh.material = new Material(enemyMesh.material);
         //else enemyMeshTmp.material = new Material(enemyMeshTmp.material);
 
@@ -148,13 +150,13 @@ public class BaseEnemyScript : MonoBehaviour
     {
         Update_Call();
     }
-    internal virtual void Update_Call() { }
+    protected virtual void Update_Call() { }
 
     void FixedUpdate()
     {
         FixedUpdate_Call();
     }
-    internal virtual void FixedUpdate_Call()
+    protected virtual void FixedUpdate_Call()
     {
         if (!waiting)
         {
@@ -175,7 +177,7 @@ public class BaseEnemyScript : MonoBehaviour
             }
             else
             {
-                targetRot = Quaternion.LookRotation((player.position - transform.position).normalized, Vector3.up);
+                targetRot = Quaternion.LookRotation((playerRef.position - transform.position).normalized, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, actualRotSpeed * speedMultiplier * Time.deltaTime);
                 Vector3 auxRot = transform.eulerAngles;
                 transform.rotation = Quaternion.Euler(0, auxRot.y, 0);
@@ -185,7 +187,7 @@ public class BaseEnemyScript : MonoBehaviour
 
 
     #region StateMachine
-    internal virtual void UpdateStateMachine()
+    protected virtual void UpdateStateMachine()
     {
         switch (state)
         {
@@ -289,14 +291,14 @@ public class BaseEnemyScript : MonoBehaviour
     #endregion StateMachine
 
     #region Updates
-    internal virtual void IdleUpdate()
+    protected virtual void IdleUpdate()
     {
         idleWaitTimer -= Time.deltaTime;
         if (idleWaitTimer > 0) return;
         else idleWaitTimer = Random.Range(idleWait.x, idleWait.y);
 
         //Debug.Log("Dbg Idle");
-        float distToPlayer = Vector3.Distance(transform.position, player.position);
+        float distToPlayer = Vector3.Distance(transform.position, playerRef.position);
         if (movesToTarget)
         {
             if (canMove && distToPlayer <= playerDetectionDistance)
@@ -306,7 +308,7 @@ public class BaseEnemyScript : MonoBehaviour
                 else
                 {
                     RaycastHit hit;
-                    bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
+                    bool hitCollided = Physics.Raycast(transform.position, (playerRef.position - transform.position).normalized, out hit, distToPlayer, layerMask);
                     if (hitCollided && hit.transform.CompareTag("Player"))
                     {
                         if (!InAttackRange())
@@ -326,10 +328,10 @@ public class BaseEnemyScript : MonoBehaviour
             else
             {
                 RaycastHit hit;
-                bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, distToPlayer, layerMask);
+                bool hitCollided = Physics.Raycast(transform.position, (playerRef.position - transform.position).normalized, out hit, distToPlayer, layerMask);
                 if (hitCollided && hit.transform.CompareTag("Player"))
                 {
-                    if (Vector3.Angle(transform.forward, player.position - transform.position) < ATTACK_ANGLE_THRESHOLD)
+                    if (Vector3.Angle(transform.forward, playerRef.position - transform.position) < ATTACK_ANGLE_THRESHOLD)
                         ChangeState(States.ATTACK);
                     else idleWaitTimer = -1;
                     return;
@@ -345,7 +347,7 @@ public class BaseEnemyScript : MonoBehaviour
         }
 
     }
-    internal virtual void RandomMovementUpdate()
+    protected virtual void RandomMovementUpdate()
     {
         rndMoveTimer += Time.deltaTime;
         moveDir = (rndTarget - transform.position).normalized;
@@ -354,8 +356,8 @@ public class BaseEnemyScript : MonoBehaviour
         if (stopRndMoveWhenSeeingTarget)
         {
             RaycastHit hit;
-            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit,
-                Vector3.Distance(transform.position, player.position), layerMask);
+            bool hitCollided = Physics.Raycast(transform.position, (playerRef.position - transform.position).normalized, out hit,
+                Vector3.Distance(transform.position, playerRef.position), layerMask);
             if (hitCollided && hit.transform.CompareTag("Player"))
             {
                 if (movesToTarget)
@@ -372,29 +374,29 @@ public class BaseEnemyScript : MonoBehaviour
         }
 
         if ((lookPoint != null && Physics.Raycast(lookPoint.position, lookPoint.forward, 3f))
-            || Vector3.Distance(transform.position, rndTarget) < THRESHOLD
+            || Vector3.Distance(transform.position, rndTarget) < ATTACK_DISTANCE_THRESHOLD
             || rndMoveTimer >= rndMoveWait)
         {
             //Debug.Log("ExitRandomMovement");
             ChangeState(States.IDLE);
         }
     }
-    internal virtual void MoveToTargetUpdate()
+    protected virtual void MoveToTargetUpdate()
     {
         if(!disableAutoGravity)
             rb.useGravity = false;
 
-        Vector3 targetMoveDir = (player.position - transform.position).normalized;
+        Vector3 targetMoveDir = (playerRef.position - transform.position).normalized;
         MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
 
 
-        if (Vector3.Distance(transform.position, player.position) > playerStopDetectionDistance)
+        if (Vector3.Distance(transform.position, playerRef.position) > playerStopDetectionDistance)
             ChangeState(States.IDLE);
 
         if (!movesToTargetWOSeeingIt)
         {
             RaycastHit hit;
-            bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, playerStopDetectionDistance, layerMask);
+            bool hitCollided = Physics.Raycast(transform.position, (playerRef.position - transform.position).normalized, out hit, playerStopDetectionDistance, layerMask);
             if (!hitCollided || !hit.transform.CompareTag("Player"))
                 ChangeState(States.IDLE);
         }
@@ -402,7 +404,7 @@ public class BaseEnemyScript : MonoBehaviour
         if (canAttack && InAttackRange())
             ChangeState(States.ATTACK);
     }
-    internal virtual void AttackUpdate()
+    protected virtual void AttackUpdate()
     {
         if (!canAttack) { ChangeState(States.IDLE); return; }
 
@@ -420,13 +422,13 @@ public class BaseEnemyScript : MonoBehaviour
             return;
         }
     }
-    internal virtual void RestUpdate()
+    protected virtual void RestUpdate()
     {
         restTimer -= Time.deltaTime;
         //Debug.Log("Dbg Resting");
         if (restTimer <= 0f) ChangeState(States.IDLE);
     }
-    //internal virtual void DamageUpdate()
+    //protected virtual void DamageUpdate()
     //{
     //    damageTimer -= Time.deltaTime;
 
@@ -444,7 +446,7 @@ public class BaseEnemyScript : MonoBehaviour
     //        else ChangeState(States.IDLE);
     //    }
     //}
-    internal virtual void DeathUpdate()
+    protected virtual void DeathUpdate()
     {
         damageTimer -= Time.deltaTime;
 
@@ -483,8 +485,8 @@ public class BaseEnemyScript : MonoBehaviour
     #endregion Updates
 
     #region Starts
-    internal virtual void IdleStart() { StopRB(stopForce); moveDir = Vector3.zero; idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
-    internal virtual void RandomMovementStart()
+    protected virtual void IdleStart() { StopRB(stopForce); moveDir = Vector3.zero; idleWaitTimer = Random.Range(idleWait.x, idleWait.y); }
+    protected virtual void RandomMovementStart()
     {
         float rndFactor = 4f;
         bool collided = true;
@@ -501,11 +503,11 @@ public class BaseEnemyScript : MonoBehaviour
         rndMoveTimer = 0f;
         if (collided) ChangeState(States.IDLE);
     }
-    internal virtual void MoveToTargetStart() { if (numOfRndMoves > 0) rndMovesDone = 0; actualMoveSpeed = playerFoundSpeed; }
-    internal virtual void AttackStart() { if (numOfRndMoves > 0) rndMovesDone = 0; }
-    internal virtual void RestStart() { restTimer = Random.Range(restWait.x, restWait.y); canMove = canRotate = false; }
-    internal virtual void DamageStart() { damageTimer = baseDamageTimer; }
-    internal virtual void DeathStart()
+    protected virtual void MoveToTargetStart() { if (numOfRndMoves > 0) rndMovesDone = 0; actualMoveSpeed = playerFoundSpeed; }
+    protected virtual void AttackStart() { if (numOfRndMoves > 0) rndMovesDone = 0; }
+    protected virtual void RestStart() { restTimer = Random.Range(restWait.x, restWait.y); canMove = canRotate = false; }
+    //protected virtual void DamageStart() { damageTimer = baseDamageTimer; }
+    protected virtual void DeathStart()
     {
         GetComponent<Collider>().enabled = false;
         touchBodyDamageData.GetComponent<Collider>().enabled = false;
@@ -528,18 +530,18 @@ public class BaseEnemyScript : MonoBehaviour
     #endregion Starts
 
     #region Exits
-    internal virtual void IdleExit() { }
-    internal virtual void RandomMovementExit() { if (numOfRndMoves > 0) rndMovesDone++; }
-    internal virtual void MoveToTargetExit() { }
-    internal virtual void AttackExit() { }
-    internal virtual void RestExit() { canMove = canRotate = true; }
-    internal virtual void DamageExit() { }
-    internal virtual void DeathExit() { Destroy(gameObject); }
+    protected virtual void IdleExit() { }
+    protected virtual void RandomMovementExit() { if (numOfRndMoves > 0) rndMovesDone++; }
+    protected virtual void MoveToTargetExit() { }
+    protected virtual void AttackExit() { }
+    protected virtual void RestExit() { canMove = canRotate = true; }
+    protected virtual void DamageExit() { }
+    protected virtual void DeathExit() { Destroy(gameObject); }
     #endregion Exits
 
 
     #region Misc
-    internal void ActivateDamage()
+    public void ActivateDamage()
     {
         if (enemyLife.isDead)
         {
@@ -578,7 +580,7 @@ public class BaseEnemyScript : MonoBehaviour
     }
     protected virtual void EndRndMovesBehaviour() { rndMovesDone = 0; }
 
-    internal Vector3 ClampVector(Vector3 _originalVec, Vector3 _minVec, Vector3 _maxVec)
+    private Vector3 ClampVector(Vector3 _originalVec, Vector3 _minVec, Vector3 _maxVec)
     {
         return new Vector3(
             Mathf.Clamp(_originalVec.x, _minVec.x, _maxVec.x),
@@ -587,16 +589,16 @@ public class BaseEnemyScript : MonoBehaviour
         );
     }
 
-    internal void MoveRB(Vector3 _moveDir, float _moveForce, ForceMode _forceMode = ForceMode.Force)
+    protected void MoveRB(Vector3 _moveDir, float _moveForce, ForceMode _forceMode = ForceMode.Force)
     {
         if (canMove)
             rb.velocity = _moveDir * _moveForce;
     }
-    internal void StopRB(float _speedReduction = DEFAULT_SPEED_REDUCTION)
+    protected void StopRB(float _speedReduction = DEFAULT_SPEED_REDUCTION)
     {
         rb.velocity = new Vector3(rb.velocity.x / _speedReduction, rb.velocity.y, rb.velocity.z / _speedReduction);
     }
-    internal void SetVelocityLimit(Vector3 _minSpeed, Vector3 _maxSpeed)
+    protected void SetVelocityLimit(Vector3 _minSpeed, Vector3 _maxSpeed)
     {
         actualMinVelocity = _minSpeed;
         actualMaxVelocity = _maxSpeed;
@@ -624,32 +626,16 @@ public class BaseEnemyScript : MonoBehaviour
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
         return screenPosition.x > -Screen.width * ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + ATTACK_MARGIN) 
             && screenPosition.y > -Screen.height * ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + ATTACK_MARGIN)
-            && (attackRange < 0 || Vector3.Distance(transform.position, player.position) <= attackRange);
+            && (attackRange < 0 || Vector3.Distance(transform.position, playerRef.position) <= attackRange);
     }
     #endregion Misc
-
-
-    internal Vector3 NormalizeDirection(Vector3 moveDir)
-    {
-        if (moveDir.x > 0.5f)
-            moveDir = new Vector3(1, moveDir.y, moveDir.z);
-        if (moveDir.x < -0.5f)
-            moveDir = new Vector3(-1, moveDir.y, moveDir.z);
-
-        if (moveDir.z > 0.5f)
-            moveDir = new Vector3(moveDir.x, moveDir.y, 1);
-        if (moveDir.z < -0.5f)
-            moveDir = new Vector3(moveDir.x, moveDir.y, -1);
-
-        return moveDir;
-    }
 
 
     void OnCollisionEnter(Collision col)
     {
         CollisionEnterEvent(col);
     }
-    internal virtual void CollisionEnterEvent(Collision col)
+    protected virtual void CollisionEnterEvent(Collision col)
     {
         if (!disableAutoGravity && col.gameObject.CompareTag("floor"))
             rb.useGravity = false;
@@ -662,7 +648,7 @@ public class BaseEnemyScript : MonoBehaviour
     {
         CollisionExitEvent(col);
     }
-    internal virtual void CollisionExitEvent(Collision col)
+    protected virtual void CollisionExitEvent(Collision col)
     {
         if (!disableAutoGravity && col.gameObject.CompareTag("floor"))
             rb.useGravity = true;
