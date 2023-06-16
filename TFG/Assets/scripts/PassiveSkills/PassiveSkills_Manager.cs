@@ -104,7 +104,7 @@ public class PassiveSkills_Manager : MonoBehaviour
     {
         foreach(PassiveSkill_Base skill in skills)
         {
-            skill.UpdateCall();
+            skill.Update_Call();
         }
 
         if (haveToLoadPassiveSkills)

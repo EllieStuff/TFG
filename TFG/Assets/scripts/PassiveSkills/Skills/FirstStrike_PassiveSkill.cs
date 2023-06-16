@@ -24,13 +24,13 @@ public class FirstStrike_PassiveSkill : PassiveSkill_Base
     }
 
 
-    public override void UpdateCall()
+    public override void Update_Call()
     {
-        base.UpdateCall();
+        base.Update_Call();
     }
 
 
-    internal override void AddLevelEvent()
+    protected override void AddLevelEvent()
     {
         base.AddLevelEvent();
 

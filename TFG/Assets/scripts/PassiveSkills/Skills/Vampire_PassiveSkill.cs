@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Vampire_PassiveSkill : PassiveSkill_Base
 {
-    float stealLifePercentageToAdd = 0.05f;
+    const float STEAL_LIFE_PERCENTAGE_TO_ADD = 0.05f;
 
     public Vampire_PassiveSkill()
     {
@@ -27,17 +27,17 @@ public class Vampire_PassiveSkill : PassiveSkill_Base
     }
 
 
-    public override void UpdateCall()
+    public override void Update_Call()
     {
-        base.UpdateCall();
+        base.Update_Call();
     }
 
 
-    internal override void AddLevelEvent()
+    protected override void AddLevelEvent()
     {
         base.AddLevelEvent();
         PlayerAttack playerAttack = playerRef.GetComponent<PlayerAttack>();
-        playerAttack.stealLifePercentage += stealLifePercentageToAdd;
+        playerAttack.stealLifePercentage += STEAL_LIFE_PERCENTAGE_TO_ADD;
     }
 
 }
