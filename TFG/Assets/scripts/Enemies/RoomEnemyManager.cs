@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomEnemyManager : MonoBehaviour
 {
-    const float ENEMIES_INIT_WAIT = 2f;
+    const float ENEMIES_INIT_WAIT = 2f, BOSS_INIT_WAIT = 6f;
     const float PLAYER_ATTACK_MARGIN = 0.03f;
 
     [SerializeField] ZoneScript linkedZone;
@@ -253,7 +253,8 @@ public class RoomEnemyManager : MonoBehaviour
 
     public IEnumerator DisableEnemiesWait()
     {
-        yield return new WaitForSeconds(ENEMIES_INIT_WAIT);
+        if(isBossRoom) yield return new WaitForSeconds(BOSS_INIT_WAIT);
+        else yield return new WaitForSeconds(ENEMIES_INIT_WAIT);
         foreach (BaseEnemyScript enemy in enemies)
         {
             enemy.waiting = false;

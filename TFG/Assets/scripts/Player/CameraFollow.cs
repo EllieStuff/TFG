@@ -7,6 +7,7 @@ public class CameraFollow : MonoBehaviour
     private Transform playerToFollow;
     [SerializeField] internal float camSpeed;
     [SerializeField] internal Vector3 camLimits;
+    internal bool inCinematic = false;
 
     private void Start()
     {
@@ -15,6 +16,8 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
+        if (inCinematic) return;
+
         Vector3 posToFollow = new Vector3(playerToFollow.position.x, transform.position.y, playerToFollow.position.z);
         transform.position = Vector3.Lerp(transform.position, posToFollow, Time.deltaTime * camSpeed);
         if(transform.parent != null)
