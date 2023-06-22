@@ -78,7 +78,7 @@ public class BatBossEnemy : BatEnemy
 
     protected override void AttackStart()
     {
-        attackTimer = AttackWait + attackChargingTime; ;
+        attackTimer = AttackWait + attackChargingTime;
     }
 
     protected override void DeathStart()

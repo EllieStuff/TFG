@@ -12,17 +12,27 @@ public class BossEnemySpawner : MonoBehaviour
     [SerializeField] GameObject spawnParticles;
     [SerializeField] Transform roomEnemyListPivot;
 
-    const float SPAWNER_TIMER = 8;
+    const float SPAWNER_TIMER_MIN = 10f, SPAWN_TIMER_MAX = 20f;
     const float DESTROY_PARTICLES_TIMER = 5;
     const int MAX_SPAWNS = 3;
     const float UP_MULTIPLIER = 0;
-    const int MAX_ENEMIES = 2;
+    const int MAX_ENEMIES = 1, MAX_ENEMIES_HARD = 2;
 
-    float timer = SPAWNER_TIMER / 2;
+    float timer = SPAWNER_TIMER_MIN / 2;
     bool[] spawnedPlaces;
 
     bool enemiesCleared = false;
     List<LifeSystem> enemies;
+
+    int MaxEnemies { 
+        get
+        {
+            if (DifficultyManager.Difficulty == DifficultyMode.HARD) return MAX_ENEMIES_HARD;
+            else return MAX_ENEMIES;
+        } 
+    }
+    float SpawnTime { get { return Random.Range(SPAWNER_TIMER_MIN, SPAWN_TIMER_MAX); } }
+
 
     private void Start()
     {
@@ -53,9 +63,9 @@ public class BossEnemySpawner : MonoBehaviour
 
         for (int index = 0; index < randomIterations; index++)
         {
-            if (GetCurrentSceneEnemies() >= MAX_ENEMIES)
+            if (GetCurrentSceneEnemies() >= MaxEnemies)
             {
-                timer = SPAWNER_TIMER;
+                timer = SpawnTime;
                 return;
             }
 
@@ -79,7 +89,7 @@ public class BossEnemySpawner : MonoBehaviour
             Destroy(particles.gameObject, DESTROY_PARTICLES_TIMER);
         }
 
-        timer = SPAWNER_TIMER;
+        timer = SpawnTime;
     }
 
     void DestroyEnemies()

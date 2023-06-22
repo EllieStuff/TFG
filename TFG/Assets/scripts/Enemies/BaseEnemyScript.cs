@@ -67,7 +67,7 @@ public class BaseEnemyScript : MonoBehaviour
     protected float speedMultiplier = 0.5f;
     protected Vector3 actualMinVelocity, actualMaxVelocity;
     protected Vector3 moveDir = Vector3.zero;
-    protected bool canMove = true, canRotate = true, canAttack = true;
+    [HideInInspector] public bool canMove = true, canRotate = true, canAttack = true;
     protected Quaternion targetRot;
     [HideInInspector] public bool canEnterDamageState = true;
     protected List<Light> enemyLights = new List<Light>();
