@@ -49,7 +49,7 @@ public class MainMenuManager : MonoBehaviour
     public void Play()
     {
         if (PlayerPrefs.GetInt("TutorialHasPlayed", 0) <= 0)
-            CustomSceneManager.Instance.ChangeScene(1);
+            CustomSceneManager.Instance.ChangeScene("IntroVideo Scene");
         else
             CustomSceneManager.Instance.ChangeScene(2);
     }

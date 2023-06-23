@@ -153,7 +153,7 @@ public class RoomEnemyManager : MonoBehaviour
 
     bool InAttackRange(Transform _target)
     {
-        if (_target == null) return false;
+        if (_target == null || Camera.main == null) return false;
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(_target.position);
         return screenPosition.x > -Screen.width * PLAYER_ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + PLAYER_ATTACK_MARGIN) 
             && screenPosition.y > -Screen.height * PLAYER_ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + PLAYER_ATTACK_MARGIN);

@@ -8,6 +8,8 @@ public class CoinScript : MonoBehaviour
     const float PLAYER_ABSORB_DISTANCE = 2f;
     const float END_MOVEMENT_TIMER = 0.5f, GO_TO_PLAYER_TIMER = 2f, ROOM_EMPTY_TIMER = 0.1f, DESTROY_DIST = 200f;
 
+    public static int CoinsInScene = 0;
+
     float timer = 0;
     float moveSpeed = 15f;
     Vector3 lastPos = Vector3.zero;
@@ -19,6 +21,7 @@ public class CoinScript : MonoBehaviour
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player").transform;
+        CoinsInScene++;
     }
 
     // Update is called once per frame
@@ -53,6 +56,8 @@ public class CoinScript : MonoBehaviour
 
         if(Vector3.Distance(transform.position, playerRef.position) > DESTROY_DIST)
         {
+            CoinsInScene--;
+            if (CoinsInScene < 0) CoinsInScene = 0;
             Destroy(gameObject);
         }
 
@@ -77,6 +82,8 @@ public class CoinScript : MonoBehaviour
             //AUDIO
             AudioManager.instance.PlayOneShot(FMODEvents.instance.uiGetCoin, this.transform.position);
 
+            CoinsInScene--;
+            if (CoinsInScene < 0) CoinsInScene = 0;
             Destroy(gameObject);
         }
     }

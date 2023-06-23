@@ -75,8 +75,11 @@ public class InGameMenuManager : MonoBehaviour
     IEnumerator ActivateLevelCompletedScreen()
     {
         yield return new WaitForSeconds(LEVEL_COMPLETED_DELAY);
-        activateLevelCompleted.ChangeMenuSelection();
-        Time.timeScale = 0.0000001f;
+        while (CoinScript.CoinsInScene > 0) { yield return null; }
+        CustomSceneManager.Instance.ChangeScene("Lvl1Video Scene");
+        //yield return new WaitForSeconds(LEVEL_COMPLETED_DELAY);
+        //activateLevelCompleted.ChangeMenuSelection();
+        //Time.timeScale = 0.0000001f;
     }
 
 }
