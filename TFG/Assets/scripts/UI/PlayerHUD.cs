@@ -31,7 +31,7 @@ public class PlayerHUD : MonoBehaviour
     void Update()
     {
         if (lifeHUD)
-            lifeSlider.value = playerLifeStatus.currLife / playerLifeStatus.maxLife;
+            lifeSlider.value = playerLifeStatus.CurrLife / playerLifeStatus.MaxLife;
         if (dashHUD)
             dashSlider.value = 1 - (playerDodge.dodgeRechargeTimer / playerDodge.dodgeRechargeDelay);
     }

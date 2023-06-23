@@ -301,7 +301,7 @@ public class AbilityButton : MonoBehaviour
     {
         if(!pushedButton)
         {
-            float lifeToAdd = ACHIEVE_SKILL_HEAL_PERCENTAGE * playerLife.maxLife;
+            float lifeToAdd = ACHIEVE_SKILL_HEAL_PERCENTAGE * playerLife.MaxLife;
             playerLife.AddLife(lifeToAdd);
             playerSkills.AddSkill(skill, true);
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomEnemyManager : MonoBehaviour
 {
-    const float ENEMIES_INIT_WAIT = 2f;
+    const float ENEMIES_INIT_WAIT = 2f, BOSS_INIT_WAIT = 6f;
     const float PLAYER_ATTACK_MARGIN = 0.03f;
 
     [SerializeField] ZoneScript linkedZone;
@@ -153,7 +153,7 @@ public class RoomEnemyManager : MonoBehaviour
 
     bool InAttackRange(Transform _target)
     {
-        if (_target == null) return false;
+        if (_target == null || Camera.main == null) return false;
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(_target.position);
         return screenPosition.x > -Screen.width * PLAYER_ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + PLAYER_ATTACK_MARGIN) 
             && screenPosition.y > -Screen.height * PLAYER_ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + PLAYER_ATTACK_MARGIN);
@@ -253,7 +253,8 @@ public class RoomEnemyManager : MonoBehaviour
 
     public IEnumerator DisableEnemiesWait()
     {
-        yield return new WaitForSeconds(ENEMIES_INIT_WAIT);
+        if(isBossRoom) yield return new WaitForSeconds(BOSS_INIT_WAIT);
+        else yield return new WaitForSeconds(ENEMIES_INIT_WAIT);
         foreach (BaseEnemyScript enemy in enemies)
         {
             enemy.waiting = false;

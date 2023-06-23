@@ -25,17 +25,17 @@ public class ImproveLife_PassiveSkill : PassiveSkill_Base
     }
 
 
-    public override void UpdateCall()
+    public override void Update_Call()
     {
-        base.UpdateCall();
+        base.Update_Call();
     }
 
 
-    internal override void AddLevelEvent()
+    protected override void AddLevelEvent()
     {
         base.AddLevelEvent();
         LifeSystem playerLife = playerRef.GetComponent<LifeSystem>();
-        playerLife.maxLife += LIFE_TO_ADD;
+        playerLife.MaxLife += LIFE_TO_ADD;
         playerLife.AddLife(LIFE_TO_ADD);
     }
 

@@ -26,9 +26,9 @@ public class Frozen_HealthState : HealthState
 
     public override void StartEffect()
     {
-        if(lifeSystem.entityType == LifeSystem.EntityType.ENEMY)
+        if(lifeSystem.EntityType == LifeSystem.EntityTypes.ENEMY)
         {
-            BaseEnemyScript.EnemyType enemyType = lifeSystem.GetComponent<BaseEnemyScript>().enemyType;
+            //BaseEnemyScript.EnemyType enemyType = lifeSystem.GetComponent<BaseEnemyScript>().enemyType;
             //if (enemyType == BaseEnemyScript.EnemyType.LITTLE_SNAKE) effectDuration = 15f;
             //else if (enemyType == BaseEnemyScript.EnemyType.SKINY_RAT) effectDuration = 8f;
             //else if (enemyType == BaseEnemyScript.EnemyType.FAT_RAT || enemyType == BaseEnemyScript.EnemyType.BIG_SNAKE) 
@@ -40,7 +40,7 @@ public class Frozen_HealthState : HealthState
         // TODO:
         // - Crear el Frozen_Feedback
         // - Congelar animación
-        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
+        if (lifeSystem.EntityType == LifeSystem.EntityTypes.PLAYER)
         {
             PlayerMovement player = lifeSystem.GetComponent<PlayerMovement>();
             player.canMove = player.canRotate = player.GetComponent<PlayerSword>().canAttack = false;
@@ -48,7 +48,7 @@ public class Frozen_HealthState : HealthState
         else
         {
             BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
-            enemy.canMove = enemy.canRotate = enemy.canAttack = false;
+            //enemy.canMove = enemy.canRotate = enemy.canAttack = false;
         }
 
     }
@@ -60,7 +60,7 @@ public class Frozen_HealthState : HealthState
         // TODO:
         // - Deshacer frozen feedback? Creo que se deshacia solo pero not sure ahora
         // - Descongelar animación
-        if (lifeSystem.entityType == LifeSystem.EntityType.PLAYER)
+        if (lifeSystem.EntityType == LifeSystem.EntityTypes.PLAYER)
         {
             PlayerMovement player = lifeSystem.GetComponent<PlayerMovement>();
             player.canMove = player.canRotate = true;
@@ -68,7 +68,7 @@ public class Frozen_HealthState : HealthState
         else
         {
             BaseEnemyScript enemy = lifeSystem.GetComponent<BaseEnemyScript>();
-            enemy.canMove = enemy.canRotate = enemy.canAttack = true;
+            //enemy.canMove = enemy.canRotate = enemy.canAttack = true;
         }
 
         base.EndEffect();

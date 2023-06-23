@@ -19,22 +19,22 @@ public class MeleeEnemy : BaseEnemyScript
     Vector3 attackMoveDir = Vector3.zero;
 
 
-    internal override void Start_Call() { base.Start_Call(); }
+    protected override void Start_Call() { base.Start_Call(); }
 
-    internal override void Update_Call() { base.Update_Call(); }
+    protected override void Update_Call() { base.Update_Call(); }
 
-    internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
+    protected override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
 
 
-    internal override void IdleUpdate() 
+    protected override void IdleUpdate() 
     {
         base.IdleUpdate(); 
     }
-    internal override void MoveToTargetUpdate() 
+    protected override void MoveToTargetUpdate() 
     {
         base.MoveToTargetUpdate(); 
     }
-    internal override void AttackUpdate()
+    protected override void AttackUpdate()
     {
         base.AttackUpdate();
 
@@ -48,30 +48,30 @@ public class MeleeEnemy : BaseEnemyScript
     }
 
 
-    internal override void IdleStart()
+    protected override void IdleStart()
     {
         base.IdleStart();
         enemyAnimator.SetInteger("state", (int)AnimState.IDLE);
     }
-    internal override void RandomMovementStart()
+    protected override void RandomMovementStart()
     {
         base.RandomMovementStart();
         enemyAnimator.SetInteger("state", (int)AnimState.MOVING);
     }
-    internal override void MoveToTargetStart()
+    protected override void MoveToTargetStart()
     {
         base.MoveToTargetStart();
         enemyAnimator.SetInteger("state", (int)AnimState.MOVING);
     }
-    internal override void AttackStart()
+    protected override void AttackStart()
     {
         base.AttackStart();
         SetVelocityLimit(-atkVelocityLimit, atkVelocityLimit);
         canEnterDamageState = false;
         moveDir = Vector3.zero;
-        StartCoroutine(AttackCoroutine());
+        StartCoroutine(Attack_Cor());
     }
-    internal override void DeathStart()
+    protected override void DeathStart()
     {
         enemyAnimator.SetInteger("state", (int)AnimState.DEAD);
         fastRatVFX.Stop();
@@ -79,30 +79,30 @@ public class MeleeEnemy : BaseEnemyScript
     }
 
 
-    internal override void IdleExit() { base.IdleExit(); }
-    internal override void MoveToTargetExit() { base.MoveToTargetExit(); }
-    internal override void AttackExit()
+    protected override void IdleExit() { base.IdleExit(); }
+    protected override void MoveToTargetExit() { base.MoveToTargetExit(); }
+    protected override void AttackExit()
     { 
         base.AttackExit();
         SetVelocityLimit(baseMinVelocity, baseMaxVelocity);
         isAttacking = false;
     }
 
-    internal override void RestStart()
+    protected override void RestStart()
     {
         base.RestStart();
         //Activar particulas sudor
         restTears.Play();
     }
 
-    internal override void RestExit()
+    protected override void RestExit()
     {
         base.RestExit();
         //Desactivar particulas sudor
         restTears.Stop();
     }
 
-    IEnumerator AttackCoroutine()
+    IEnumerator Attack_Cor()
     {
         // Prepares For Attack
         canMove = false;
@@ -154,18 +154,5 @@ public class MeleeEnemy : BaseEnemyScript
 
     }
 
-
-    //IEnumerator LerpTransformsPosition(Transform _affectedTrans, Transform _initPointTrans, Transform _targetPointTrans, float _lerpDuration = 0.5f)
-    //{
-    //    float timer = 0, maxTime = _lerpDuration;
-    //    while (timer < maxTime)
-    //    {
-    //        yield return new WaitForEndOfFrame();
-    //        timer += Time.deltaTime;
-    //        _affectedTrans.position = Vector3.Lerp(_initPointTrans.position, _targetPointTrans.position, timer / maxTime);
-    //    }
-    //    yield return new WaitForEndOfFrame();
-    //    _affectedTrans.position = _targetPointTrans.position;
-    //}
 
 }

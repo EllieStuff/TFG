@@ -21,14 +21,14 @@ public class HealthStates_Feedback : MonoBehaviour
     
     internal IEnumerator EndFeedback_InTime(float _feedbackDuration)
     {
-        float endEffectTimeStamp = Time.timeSinceLevelLoad + _feedbackDuration;
-        while(Time.timeSinceLevelLoad < endEffectTimeStamp)
-        {
+        //float endEffectTimeStamp = Time.timeSinceLevelLoad + _feedbackDuration;
+        //while(Time.timeSinceLevelLoad < endEffectTimeStamp)
+        //{
             yield return new WaitForSeconds(0.3f);
-            if (manager.lifeSystem.healthStates.Find(_effect => _effect.state == relatedEffect) == null)
-                break;
-        }
-        EndFeedback();
+        //    if (manager.lifeSystem.healthStates.Find(_effect => _effect.state == relatedEffect) == null)
+        //        break;
+        //}
+        //EndFeedback();
     }
 
 }

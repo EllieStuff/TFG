@@ -77,7 +77,7 @@ public class PlayerAttack : MonoBehaviour
         attacksDictionary.Add(ElementsManager.Elements.FIRE, fireAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.GRASS, grassAttack.prefab);
         attacksDictionary.Add(ElementsManager.Elements.WATER, waterAttack.prefab);
-        attacksDictionary.Add(ElementsManager.Elements.NORMAL, normalAttack.prefab);
+        attacksDictionary.Add(ElementsManager.Elements.NEUTRAL, normalAttack.prefab);
 
         //AUDIO
         playerAttackSound = AudioManager.instance.CreateInstance(FMODEvents.instance.playerAttackSound);

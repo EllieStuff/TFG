@@ -130,12 +130,12 @@ public class OnboardingController : MonoBehaviour
 
     bool CheckIfRatEnemyDead()
     {
-        return ratEnemy.GetComponent<LifeSystem>().currLife <= 0;
+        return ratEnemy.GetComponent<LifeSystem>().CurrLife <= 0;
     }
 
     bool CheckIfAttacking()
     {
-        if (enemyFirst != null && enemyFirst.plantAttacking)
+        if (enemyFirst != null && enemyFirst.IsAttacking)
         {
             isAttacking = true;
         }

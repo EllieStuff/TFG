@@ -31,7 +31,7 @@ public class BatBossEnemy : BatEnemy
     bool changingPhase = false;
     float projectileSizeMultiplier = 1f, projectileSpeedMultiplier = 1f;
 
-    internal override void Start_Call()
+    protected override void Start_Call()
     {
         base.Start_Call();
         camShake = Camera.main.GetComponent<CameraShake>();
@@ -49,7 +49,7 @@ public class BatBossEnemy : BatEnemy
         if (lifeBarRef != null) lifeBarRef.gameObject.SetActive(false);
     }
 
-    internal override void Update_Call()
+    protected override void Update_Call()
     {
         //if(enemyLife.currLife <= secondPhaseStartLife && !secondPhaseEntered && !isAttacking && !changingElement)
         //{
@@ -71,17 +71,17 @@ public class BatBossEnemy : BatEnemy
         }
         else if(!isAttacking)
         {
-            Vector3 targetMoveDir = (player.position - transform.position).normalized;
+            Vector3 targetMoveDir = (playerRef.position - transform.position).normalized;
             MoveRB(targetMoveDir, actualMoveSpeed * speedMultiplier);
         }
     }
 
-    internal override void AttackStart()
+    protected override void AttackStart()
     {
-        attackTimer = AttackWait + attackChargingTime; ;
+        attackTimer = AttackWait + attackChargingTime;
     }
 
-    internal override void DeathStart()
+    protected override void DeathStart()
     {
         StopAllCoroutines();
         base.DeathStart();
@@ -164,7 +164,7 @@ public class BatBossEnemy : BatEnemy
 
     protected override IEnumerator Attack_Cor()
     {
-        if (enemyLife.currLife <= secondPhaseStartLife && !secondPhaseEntered)
+        if (enemyLife.CurrLife <= secondPhaseStartLife && !secondPhaseEntered)
             ChangePhase(changeElementDelay + flashDuration * 2f);
 
         float rnd = Random.Range(0f, repeatAttackProbability);
@@ -175,7 +175,7 @@ public class BatBossEnemy : BatEnemy
             changingElement = false;
         }
 
-        if (enemyLife.currLife <= secondPhaseStartLife && !secondPhaseEntered)
+        if (enemyLife.CurrLife <= secondPhaseStartLife && !secondPhaseEntered)
             ChangePhase(0f);
 
         //place shoot animation here
@@ -218,7 +218,8 @@ public class BatBossEnemy : BatEnemy
 
         flashImage.gameObject.SetActive(true);
 
-        StartCoroutine(camShake.ShakeCamera(flashDuration * 2f, 0.1f));
+        if(camShake != null) StartCoroutine(camShake.ShakeCamera(flashDuration * 2f, 0.1f));
+        else if(Camera.main != null) camShake = Camera.main.GetComponent<CameraShake>();
         EliTween.ChangeColor(flashImage, GetFlashColor(newElement), flashDuration);
         yield return new WaitForSeconds(flashDuration);
 

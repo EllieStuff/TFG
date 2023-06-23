@@ -6,19 +6,15 @@ using UnityEngine.UI;
 
 public class LifeSystem : MonoBehaviour
 {
-    public enum EntityType { PLAYER, ENEMY, BOSS, OTHER }
+    public enum EntityTypes { PLAYER, ENEMY, BOSS, OTHER }
 
-    [SerializeField] internal EntityType entityType = EntityType.PLAYER;
+    [SerializeField] EntityTypes entityType = EntityTypes.PLAYER;
     [SerializeField] internal ElementsManager.Elements entityElement;
-    //[SerializeField] internal HealthState.Effect state = HealthState.Effect.NORMAL;
-    [SerializeField] internal List<HealthState> healthStates = new List<HealthState>();
-    [SerializeField] internal HealthStates_FeedbackManager healthStatesFeedback;
-    [SerializeField] internal float maxLife = 100;
-    [SerializeField] internal float currLife = 100;
+    [SerializeField] float maxLife = 100;
+    [SerializeField] float currLife = 100;
     [SerializeField] bool healWithSameElement = false;
-    [SerializeField] internal float healPercentage = 0.05f;
+    [SerializeField] float healPercentage = 0.05f;
     [SerializeField] private GameObject bloodPrefab;
-    //[SerializeField] private GameObject deathParticlesPrefab;
     [SerializeField] private PlayerLifeBar playerLifeBar;
     [SerializeField] private Slider EnemyLifeBar;
     [SerializeField] private GameObject damageTextPrefab;
@@ -33,16 +29,21 @@ public class LifeSystem : MonoBehaviour
     EnemyShake enemyShake;
     Transform parentCanvas;
 
-    protected float InitialLife
+    public EntityTypes EntityType { get { return entityType; } }
+    public float MaxLife { get { return maxLife; } set { maxLife = value; } }
+    public float CurrLife { get { return currLife; } set { currLife = value; } }
+
+    float InitialLife
     {
         get
         {
+            if (EntityType == EntityTypes.PLAYER) return MaxLife;
             switch (DifficultyManager.Difficulty)
             {
-                case DifficultyMode.EASY: return maxLife * DifficultyManager.Enemies_LifeMultiplier_EasyMode;
-                case DifficultyMode.NORMAL: return maxLife * DifficultyManager.Enemies_LifeMultiplier_NormalMode;
-                case DifficultyMode.HARD: return maxLife * DifficultyManager.Enemies_LifeMultiplier_HardMode;
-                default: return maxLife;
+                case DifficultyMode.EASY: return MaxLife * DifficultyManager.Enemies_LifeMultiplier_EasyMode;
+                case DifficultyMode.NORMAL: return MaxLife * DifficultyManager.Enemies_LifeMultiplier_NormalMode;
+                case DifficultyMode.HARD: return MaxLife * DifficultyManager.Enemies_LifeMultiplier_HardMode;
+                default: return MaxLife;
             }
         }
     }
@@ -53,9 +54,9 @@ public class LifeSystem : MonoBehaviour
 
     private void Start()
     {
-        if (entityType.Equals(EntityType.PLAYER))
+        if (EntityType.Equals(EntityTypes.PLAYER))
             playerMovementScript = GetComponent<PlayerMovement>();
-        if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
+        if (EntityType.Equals(EntityTypes.ENEMY) || EntityType.Equals(EntityTypes.BOSS))
         {
             parentCanvas = EnemyLifeBar.transform.parent;
             cameraRef = Camera.main.transform.GetComponent<CameraShake>();
@@ -69,15 +70,15 @@ public class LifeSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        if (currLife == maxLife) currLife = InitialLife;
+        if (CurrLife == MaxLife) currLife = InitialLife;
         CheckLifeLimits();
     }
 
     private void Update()
     {
-        if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
+        if (EntityType.Equals(EntityTypes.ENEMY) || EntityType.Equals(EntityTypes.BOSS))
         {
-            EnemyLifeBar.value = currLife / InitialLife;
+            EnemyLifeBar.value = CurrLife / InitialLife;
             parentCanvas.LookAt(cameraRef.transform);
             Vector3 canvasRot = parentCanvas.rotation.eulerAngles;
             parentCanvas.rotation = Quaternion.Euler(-canvasRot.x, 0, 0);
@@ -86,16 +87,16 @@ public class LifeSystem : MonoBehaviour
 
     public float GetLifePercentage(float _multiplier = 1.0f)
     {
-        return currLife / InitialLife * _multiplier;
+        return CurrLife / InitialLife * _multiplier;
     }
 
-    internal void CheckLifeLimits()
+    private void CheckLifeLimits()
     {
-        if (currLife > InitialLife)
+        if (CurrLife > InitialLife)
         {
             currLife = InitialLife;
         }
-        else if (currLife <= 0)
+        else if (CurrLife <= 0)
         {
             currLife = 0;
             isDead = true;
@@ -183,7 +184,7 @@ public class LifeSystem : MonoBehaviour
         currLife -= dmgDealt;
         CheckLifeLimits();
 
-        if (entityType.Equals(EntityType.PLAYER) && currLife > 0)
+        if (EntityType.Equals(EntityTypes.PLAYER) && CurrLife > 0)
         {
             playerLifeBar.Damage();
             //StartCoroutine(Camera.main.GetComponentInParent<CameraShake>().ShakeCamera(0.5f, 0.0002f));
@@ -192,13 +193,13 @@ public class LifeSystem : MonoBehaviour
             AudioManager.instance.PlayOneShot(FMODEvents.instance.playerDamageSound, this.transform.position);
         }
 
-        if (entityType.Equals(EntityType.PLAYER) || entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
+        if (EntityType.Equals(EntityTypes.PLAYER) || EntityType.Equals(EntityTypes.ENEMY) || EntityType.Equals(EntityTypes.BOSS))
         {
-            if (currLife > 0)
+            if (CurrLife > 0)
                 Instantiate(bloodPrefab, transform);
 
             GameObject damageTextInstance;
-            if (entityType.Equals(EntityType.BOSS))
+            if (EntityType.Equals(EntityTypes.BOSS))
             {
                 Transform appearTransform = transform.Find("EnemyCanvas");
                 damageTextInstance = Instantiate(damageTextPrefab, new Vector3(appearTransform.position.x, appearTransform.position.y, appearTransform.position.z + 1f), damageTextPrefab.transform.rotation);
@@ -212,7 +213,7 @@ public class LifeSystem : MonoBehaviour
 
             TextMeshProUGUI textUI = damageTextInstance.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
 
-            if (entityType.Equals(EntityType.PLAYER))
+            if (EntityType.Equals(EntityTypes.PLAYER))
             {
                 textUI.color = Color.red;
                 damageText = "-" + damageText;
@@ -222,7 +223,7 @@ public class LifeSystem : MonoBehaviour
 
            
 
-            if (entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
+            if (EntityType.Equals(EntityTypes.ENEMY) || EntityType.Equals(EntityTypes.BOSS))
             {
                 if (dmgMultiplier > 1.9f)
                 {
@@ -248,7 +249,7 @@ public class LifeSystem : MonoBehaviour
         
         if (isDead)
         {
-            if(entityType.Equals(EntityType.ENEMY) || entityType.Equals(EntityType.BOSS))
+            if(EntityType.Equals(EntityTypes.ENEMY) || EntityType.Equals(EntityTypes.BOSS))
             {
                 parentCanvas.gameObject.SetActive(false);
                 RoomEnemyManager assignedRoom = transform.GetComponentInParent<RoomEnemyManager>();
@@ -256,7 +257,7 @@ public class LifeSystem : MonoBehaviour
                 if (assignedRoom == null) Debug.LogWarning("Assigned Room not found.");
                 else assignedRoom.DiscardEnemy(GetComponent<BaseEnemyScript>());
             }
-            else if (entityType.Equals(EntityType.PLAYER))
+            else if (EntityType.Equals(EntityTypes.PLAYER))
             {
                 FindObjectOfType<DeathScreenManager>().DeathScreenAppear();
             }
@@ -266,7 +267,7 @@ public class LifeSystem : MonoBehaviour
         }
 
         //if (!healthState.initialized) _healthState.Init(this);
-        if (entityType.Equals(EntityType.PLAYER)/* && !isDead*/) playerMovementScript.DamageStartCorroutine();
+        if (EntityType.Equals(EntityTypes.PLAYER)/* && !isDead*/) playerMovementScript.DamageStartCorroutine();
 
     }
 
@@ -277,7 +278,7 @@ public class LifeSystem : MonoBehaviour
         CheckLifeLimits();
 
         GameObject addLifeTextInstance; // = Instantiate(damageTextPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f), damageTextPrefab.transform.rotation);
-        if (entityType.Equals(EntityType.BOSS))
+        if (EntityType.Equals(EntityTypes.BOSS))
         {
             Transform appearTransform = transform.Find("EnemyCanvas");
             addLifeTextInstance = Instantiate(damageTextPrefab, new Vector3(appearTransform.position.x, appearTransform.position.y, appearTransform.position.z + 1f), damageTextPrefab.transform.rotation);
@@ -291,80 +292,6 @@ public class LifeSystem : MonoBehaviour
         TextMeshProUGUI textUI = addLifeTextInstance.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         textUI.color = Color.green;
         textUI.text = lifeHealedText;
-    }
-
-    public void StartHealthState(HealthState _healthState)
-    {
-        healthStates.Add(_healthState);
-        _healthState.StartEffect();
-        if (healthStatesFeedback != null) healthStatesFeedback.ActivateFeedback(_healthState.state, _healthState.effectDuration);
-        else Debug.LogWarning("HealthStatesFeedback for " + healthStates[healthStates.Count - 1].state.ToString() + " was not assigned");
-    }
-
-    internal void ChangeHealthState(HealthState _currHealthState, HealthState _newHealthState)
-    {
-        if (_currHealthState != null)
-        {
-            _currHealthState.EndEffect();
-            //healthStates.Remove(_currHealthState);
-        }
-
-        if (!_newHealthState.initialized) _newHealthState.Init(this);
-        healthStates[healthStates.IndexOf(_currHealthState)] = _newHealthState;
-        //healthStates.Add(_newHealthState);
-        //_currHealthState = _newHealthState;
-
-        _newHealthState.StartEffect();
-        if (healthStatesFeedback != null) healthStatesFeedback.ActivateFeedback(_newHealthState.state, _newHealthState.effectDuration);
-        else Debug.LogWarning("HealthStatesFeedback for " + healthStates[healthStates.Count - 1].state.ToString() + " was not assigned");
-    }
-
-    void CleanRepeatedHealthEffects()
-    {
-        for(int i = 0; i < healthStates.Count; i++)
-        {
-            HealthState.Effect searchedEffect = healthStates[i].state;
-            if (searchedEffect == HealthState.Effect.BLEEDING) continue;
-
-            for (int j = 0; j < healthStates.Count; j++)
-            {
-                if (i == j) continue;
-                if(searchedEffect == healthStates[j].state)
-                {
-                    healthStates.RemoveAt(j);
-                    j--;
-                }
-            }
-        }
-    }
-
-
-    //IEnumerator Despawn()
-    //{
-    //    yield return new WaitForSeconds(deathDelay);
-    //    Destroy(gameObject);
-    //}
-
-    /*void OnMouseOver()
-    {
-        if(entityType.Equals(EntityType.ENEMY))
-            EnemyLifeBar.gameObject.SetActive(true);
-    }
-
-    private void OnMouseExit()
-    {
-        if (entityType.Equals(EntityType.ENEMY))
-            EnemyLifeBar.gameObject.SetActive(false);
-    }*/
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("SwordRegion") || other.CompareTag("Weapon"))
-        {
-            //DamageData dmgData = col.GetComponent<DamageData>();
-            //Damage(dmgData.damage, dmgData.effect);
-            //Damage(10, new HealthState());
-        }
     }
 
 

@@ -55,26 +55,26 @@ public class HealthState
     }
     internal virtual bool ApplyCompatibilityEffect(float _baseDmg, float _dmgMultiplier, HealthState _finalHealthState)
     {
-        lifeSystem.currLife -= _baseDmg * _dmgMultiplier;
-        lifeSystem.CheckLifeLimits();
-        if (lifeSystem.isDead) return false;
+        //lifeSystem.currLife -= _baseDmg * _dmgMultiplier;
+        //lifeSystem.CheckLifeLimits();
+        //if (lifeSystem.isDead) return false;
 
 
-        if (_finalHealthState == null) //La compatibilidad no altera el efecto
-        {
-            return false;
-        }
-        else if(_finalHealthState.state == Effect.NORMAL) //El efecto resultante es que se anulan mutuamente
-        {
-            _finalHealthState.Init(lifeSystem);
-            lifeSystem.healthStates.Remove(this);
-            EndEffect();
-        }
-        else //El efecto resultante es otro, asi que se sustituye el efecto actual por el resultante
-        {
-            _finalHealthState.Init(lifeSystem);
-            lifeSystem.ChangeHealthState(this, _finalHealthState);
-        }
+        //if (_finalHealthState == null) //La compatibilidad no altera el efecto
+        //{
+        //    return false;
+        //}
+        //else if(_finalHealthState.state == Effect.NORMAL) //El efecto resultante es que se anulan mutuamente
+        //{
+        //    _finalHealthState.Init(lifeSystem);
+        //    lifeSystem.healthStates.Remove(this);
+        //    EndEffect();
+        //}
+        //else //El efecto resultante es otro, asi que se sustituye el efecto actual por el resultante
+        //{
+        //    _finalHealthState.Init(lifeSystem);
+        //    lifeSystem.ChangeHealthState(this, _finalHealthState);
+        //}
 
         return true;
     }
@@ -101,7 +101,7 @@ public class HealthState
     internal virtual void EndEffectByTime()
     {
         EndEffect();
-        lifeSystem.healthStates.Remove(this);
+        //lifeSystem.healthStates.Remove(this);
         //lifeSystem.ChangeHealthState(effectWhenFinished);
     }
 

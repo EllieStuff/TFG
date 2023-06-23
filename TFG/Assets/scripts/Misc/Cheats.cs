@@ -39,7 +39,7 @@ public class Cheats : MonoBehaviour
 
         if (infiniteLife)
         {
-            playerLife.currLife = playerLife.maxLife;
+            playerLife.CurrLife = playerLife.MaxLife;
         }
 
         if (Input.GetKeyDown(KeyCode.F7))

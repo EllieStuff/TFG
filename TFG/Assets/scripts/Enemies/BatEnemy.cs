@@ -7,6 +7,8 @@ public class BatEnemy : BaseEnemyScript
 {
     protected enum AnimState { IDLE, ATTACKING, DEAD }
 
+    const float RESET_ANIM_TIMER = 3;
+    
     [Header("Bat Enemy")]
     [SerializeField] protected float attackAnimationTime;
     [SerializeField] protected Animator enemyAnimator;
@@ -21,7 +23,6 @@ public class BatEnemy : BaseEnemyScript
 
     AnimState currentAnim = AnimState.IDLE;
 
-    const float RESET_ANIM_TIMER = 3;
 
     //AUDIO
     private EventInstance batAttack;
@@ -45,7 +46,7 @@ public class BatEnemy : BaseEnemyScript
         //}
     }
 
-    internal override void Start_Call()
+    protected override void Start_Call()
     {
         base.Start_Call();
 
@@ -53,9 +54,9 @@ public class BatEnemy : BaseEnemyScript
         batAttack = AudioManager.instance.CreateInstance(FMODEvents.instance.batAttack);
     }
 
-    internal override void Update_Call() { base.Update_Call(); }
+    protected override void Update_Call() { base.Update_Call(); }
 
-    internal override void FixedUpdate_Call() 
+    protected override void FixedUpdate_Call() 
     { 
         base.FixedUpdate_Call();
     }
@@ -69,29 +70,29 @@ public class BatEnemy : BaseEnemyScript
         }
     }
 
-    internal override void IdleUpdate()
+    protected override void IdleUpdate()
     {
         ChangeAnim(AnimState.IDLE);
 
         base.IdleUpdate();
     }
-    internal override void MoveToTargetUpdate()
+    protected override void MoveToTargetUpdate()
     {
         ChangeAnim(AnimState.IDLE);
 
         base.MoveToTargetUpdate();
     }
-    //internal override void DamageUpdate()
+    //protected override void DamageUpdate()
     //{
     //    enemyAnimator.SetFloat("state", 2);
     //    base.DamageUpdate();
     //}
-    internal override void AttackUpdate()
+    protected override void AttackUpdate()
     {
         base.AttackUpdate();
 
         RaycastHit hit;
-        bool hitCollided = Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, Vector3.Distance(transform.position, player.position), layerMask);
+        bool hitCollided = Physics.Raycast(transform.position, (playerRef.position - transform.position).normalized, out hit, Vector3.Distance(transform.position, playerRef.position), layerMask);
         if (!hitCollided || !hit.transform.CompareTag("Player"))
         {
             ChangeState(States.IDLE);
@@ -109,14 +110,14 @@ public class BatEnemy : BaseEnemyScript
 
     }
 
-    internal override void DeathStart()
+    protected override void DeathStart()
     {
         base.DeathStart();
         ChangeAnim(AnimState.DEAD);
         Destroy(gameObject, baseDeathTime);
     }
 
-    internal override void DeathUpdate()
+    protected override void DeathUpdate()
     {
         ChangeAnim(AnimState.DEAD);
         base.DeathUpdate();
@@ -182,9 +183,9 @@ public class BatEnemy : BaseEnemyScript
         }
     }
 
-    internal override void IdleStart() { base.IdleStart(); }
-    internal override void MoveToTargetStart() { base.MoveToTargetStart(); }
-    internal override void AttackStart()
+    protected override void IdleStart() { base.IdleStart(); }
+    protected override void MoveToTargetStart() { base.MoveToTargetStart(); }
+    protected override void AttackStart()
     {
         base.AttackStart();
         attackTimer = 0f;
@@ -194,8 +195,8 @@ public class BatEnemy : BaseEnemyScript
     }
 
 
-    internal override void IdleExit() { base.IdleExit(); }
-    internal override void MoveToTargetExit() { base.MoveToTargetExit(); }
-    internal override void AttackExit() { base.AttackExit(); }
+    protected override void IdleExit() { base.IdleExit(); }
+    protected override void MoveToTargetExit() { base.MoveToTargetExit(); }
+    protected override void AttackExit() { base.AttackExit(); }
 
 }

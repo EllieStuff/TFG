@@ -25,17 +25,17 @@ public class Heal_PassiveSkill : PassiveSkill_Base
     }
 
 
-    public override void UpdateCall()
+    public override void Update_Call()
     {
-        base.UpdateCall();
+        base.Update_Call();
     }
 
 
-    internal override void AddLevelEvent()
+    protected override void AddLevelEvent()
     {
         base.AddLevelEvent();
         LifeSystem playerLife = playerRef.GetComponent<LifeSystem>();
-        float actualLifeToHeal = playerLife.maxLife * LIFE_PERCENTAGE_TO_HEAL;
+        float actualLifeToHeal = playerLife.MaxLife * LIFE_PERCENTAGE_TO_HEAL;
         playerLife.AddLife(actualLifeToHeal);
     }
 

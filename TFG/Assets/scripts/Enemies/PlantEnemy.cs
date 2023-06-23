@@ -7,6 +7,9 @@ public class PlantEnemy : BaseEnemyScript
     enum AnimState { IDLE, ATTACKING, DEAD }
     enum AttackType { NORMAL_THROW, CIRCLE_ATTACK, FOUR_PROJECTILES, THREE_PROJECTILES }
 
+    const int CIRCLE_ITERATIONS = 24;
+    const int CIRCLE_MULTIPLIER = 50;
+    const float RESET_ANIM_TIMER = 1.5f;
 
     [Header("PlantEnemy")]
     [SerializeField] float attackAnimationTime;
@@ -15,24 +18,20 @@ public class PlantEnemy : BaseEnemyScript
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform shootPoint;
     [SerializeField] AttackType attackStyle;
-    [SerializeField] protected int numOfAttacks = 1;
-    [SerializeField] protected float attackSeparationTime = 0.2f;
+    [SerializeField] int numOfAttacks = 1;
+    [SerializeField] float attackSeparationTime = 0.2f;
 
     float attackTimer;
-    public bool plantAttacking = false;
-    const int CIRCLE_ITERATIONS = 24;
-    const int CIRCLE_MULTIPLIER = 50;
-    const float RESET_ANIM_TIMER = 1.5f;
 
     private bool blockAnim = false;
 
     AnimState currentAnim = AnimState.IDLE;
 
-    internal override void Start_Call() { base.Start_Call(); }
+    protected override void Start_Call() { base.Start_Call(); }
 
-    internal override void Update_Call() { base.Update_Call(); }
+    protected override void Update_Call() { base.Update_Call(); }
 
-    internal override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
+    protected override void FixedUpdate_Call() { base.FixedUpdate_Call(); }
 
     private void ChangeAnim(AnimState _state)
     {
@@ -43,21 +42,21 @@ public class PlantEnemy : BaseEnemyScript
         }
     }
 
-    internal override void IdleUpdate()
+    protected override void IdleUpdate()
     {
         ChangeAnim(AnimState.IDLE);
         base.IdleUpdate();
     }
-    internal override void MoveToTargetUpdate()
+    protected override void MoveToTargetUpdate()
     {
         base.MoveToTargetUpdate();
     }
-    //internal override void DamageUpdate()
+    //protected override void DamageUpdate()
     //{
     //    //enemyAnimator.SetFloat("state", (int)AnimState.IDLE);
     //    base.DamageUpdate();
     //}
-    internal override void AttackUpdate()
+    protected override void AttackUpdate()
     {
         base.AttackUpdate();
 
@@ -68,21 +67,21 @@ public class PlantEnemy : BaseEnemyScript
 
         if (attackTimer <= 0)
         {
-            StartCoroutine(AttackCorroutine());
+            StartCoroutine(Attack_Cor());
             StartCoroutine(ResetAnimCor());
             attackTimer = AttackWait + attackChargingTime;
         }
 
     }
 
-    internal override void DeathStart()
+    protected override void DeathStart()
     {
         base.DeathStart();
         ChangeAnim(AnimState.DEAD);
         Destroy(gameObject, baseDeathTime);
     }
 
-    internal override void DeathUpdate()
+    protected override void DeathUpdate()
     {
         ChangeAnim(AnimState.DEAD);
         base.DeathUpdate();
@@ -99,12 +98,12 @@ public class PlantEnemy : BaseEnemyScript
         }
     }
 
-    IEnumerator AttackCorroutine()
+    IEnumerator Attack_Cor()
     {
         yield return new WaitForSeconds(attackChargingTime);
 
         //place shoot animation here
-        plantAttacking = true;
+        isAttacking = true;
         ChangeAnim(AnimState.ATTACKING);
 
         blockAnim = true;
@@ -114,7 +113,7 @@ public class PlantEnemy : BaseEnemyScript
         AudioManager.instance.PlayOneShot(FMODEvents.instance.plantAttack, this.transform.position);
 
         RaycastHit hit;
-        if (Physics.Raycast(shootPoint.position, (player.position - shootPoint.position).normalized, out hit))
+        if (Physics.Raycast(shootPoint.position, (playerRef.position - shootPoint.position).normalized, out hit))
         {
             if (!hit.transform.CompareTag("Wall"))
             {
@@ -129,7 +128,7 @@ public class PlantEnemy : BaseEnemyScript
                 }
             }
         }
-        plantAttacking = false;
+        isAttacking = false;
         blockAnim = false;
     }
 
@@ -206,14 +205,14 @@ public class PlantEnemy : BaseEnemyScript
         }
     }
 
-    internal override void IdleStart() { base.IdleStart(); enemyAnimator.SetFloat("state", (int)AnimState.IDLE); }
-    internal override void MoveToTargetStart() { base.MoveToTargetStart(); }
-    internal override void AttackStart() { base.AttackStart(); attackTimer = 0f; }
+    protected override void IdleStart() { base.IdleStart(); enemyAnimator.SetFloat("state", (int)AnimState.IDLE); }
+    protected override void MoveToTargetStart() { base.MoveToTargetStart(); }
+    protected override void AttackStart() { base.AttackStart(); attackTimer = 0f; }
 
 
-    internal override void IdleExit() { base.IdleExit(); }
-    internal override void MoveToTargetExit() { base.MoveToTargetExit(); }
-    internal override void AttackExit() { base.AttackExit(); }
+    protected override void IdleExit() { base.IdleExit(); }
+    protected override void MoveToTargetExit() { base.MoveToTargetExit(); }
+    protected override void AttackExit() { base.AttackExit(); }
 
 
 }

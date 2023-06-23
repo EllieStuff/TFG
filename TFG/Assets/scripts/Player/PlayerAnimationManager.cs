@@ -44,7 +44,8 @@ public class PlayerAnimationManager : MonoBehaviour
         }
         else if (elementsManager.ChangingElement)
         {
-            SetAnimation(AnimState.CHANGE_ELEMENT, 1f);
+            SetAnimation(AnimState.IDLE, 1f);
+            //SetAnimation(AnimState.CHANGE_ELEMENT, 1f);
         }
         else if (playerAttack.ShouldPlayAttackAnim())
         {
@@ -57,7 +58,7 @@ public class PlayerAnimationManager : MonoBehaviour
     }
 
 
-    void SetAnimation(AnimState _animState, float _animSpeed)
+    void SetAnimation(AnimState _animState, float _animSpeed = 1f)
     {
         if (prevAnimState == _animState) return;
         prevAnimState = _animState;
