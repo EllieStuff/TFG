@@ -34,7 +34,7 @@ public class BossCinematicManager : MonoBehaviour
         yield return LerpImageColor_Cor(fader, Color.clear, Color.black);
         animCam.SetActive(true);
         originalCam.SetActive(false);
-        GameObject playerModel = _player.transform.Find("Modelo Raton").gameObject;
+        GameObject playerModel = _player.transform.Find("RATA atacar").gameObject;
         playerModel.SetActive(false);
         yield return LerpImageColor_Cor(fader, Color.black, Color.clear);
 
