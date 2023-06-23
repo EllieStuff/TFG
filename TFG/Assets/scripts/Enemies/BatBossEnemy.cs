@@ -219,7 +219,7 @@ public class BatBossEnemy : BatEnemy
         flashImage.gameObject.SetActive(true);
 
         if(camShake != null) StartCoroutine(camShake.ShakeCamera(flashDuration * 2f, 0.1f));
-        else camShake = Camera.main.GetComponent<CameraShake>();
+        else if(Camera.main != null) camShake = Camera.main.GetComponent<CameraShake>();
         EliTween.ChangeColor(flashImage, GetFlashColor(newElement), flashDuration);
         yield return new WaitForSeconds(flashDuration);
 

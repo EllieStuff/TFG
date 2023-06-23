@@ -623,6 +623,7 @@ public class BaseEnemyScript : MonoBehaviour
     }
     protected bool InAttackRange()
     {
+        if (playerRef == null || Camera.main == null) return false;
         Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
         return screenPosition.x > -Screen.width * ATTACK_MARGIN && screenPosition.x < Screen.width * (1f + ATTACK_MARGIN) 
             && screenPosition.y > -Screen.height * ATTACK_MARGIN && screenPosition.y < Screen.height * (1f + ATTACK_MARGIN)
