@@ -11,7 +11,7 @@ public class ImproveAttackSpeed_PassiveSkill : PassiveSkill_Base
         skillType = SkillType.IMPROVE_ATTACK_SPEED;
         maxLevel = 3;
         appearRatio = 0.6f;
-        basePrice = 30000;
+        basePrice = 28000;
         priceInc = 14000;
         name = "Quicker Attack";
         //initialDescription = "Your attack rate gets quicker!";

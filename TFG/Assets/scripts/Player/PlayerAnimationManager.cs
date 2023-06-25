@@ -40,7 +40,7 @@ public class PlayerAnimationManager : MonoBehaviour
         }
         else if (playerMovement.Moving)
         {
-            SetAnimation(AnimState.MOVING, 1f);
+            SetAnimation(AnimState.MOVING, 1.5f);
         }
         else if (elementsManager.ChangingElement)
         {

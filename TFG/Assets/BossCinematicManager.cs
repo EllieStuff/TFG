@@ -6,7 +6,7 @@ using UnityEngine.Video;
 
 public class BossCinematicManager : MonoBehaviour
 {
-    const float ANIM_LEFTOVER_TIME = 0.6f;
+    const float ANIM_LEFTOVER_TIME = 0.7f;
     const float WAIT_BEFORE_FIGHT = 1f;
 
     [SerializeField] AnimationClip camAnimClip;
@@ -36,6 +36,8 @@ public class BossCinematicManager : MonoBehaviour
         originalCam.SetActive(false);
         GameObject playerModel = _player.transform.Find("Modelo Raton").gameObject;
         playerModel.SetActive(false);
+        GameObject playerCanvas = _player.transform.parent.Find("PlayerCanvas").gameObject;
+        playerCanvas.SetActive(false);
         yield return LerpImageColor_Cor(fader, Color.black, Color.clear);
 
         yield return new WaitForSeconds(camAnimClip.length - ANIM_LEFTOVER_TIME);
@@ -53,6 +55,7 @@ public class BossCinematicManager : MonoBehaviour
         videoPlayer.gameObject.SetActive(false);
         videoImg.SetActive(false);
         playerModel.SetActive(true);
+        playerCanvas.SetActive(true);
         yield return LerpImageColor_Cor(fader, Color.black, Color.clear);
 
         fader.gameObject.SetActive(false);
@@ -62,7 +65,7 @@ public class BossCinematicManager : MonoBehaviour
         bossScript.canAttack = true;
     }
 
-    IEnumerator LerpImageColor_Cor(Image _image, Color _initColor, Color _targetColor, float _lerpTime = 0.2f)
+    IEnumerator LerpImageColor_Cor(Image _image, Color _initColor, Color _targetColor, float _lerpTime = 0.4f)
     {
         _image.color = _initColor;
         float timer = 0f;

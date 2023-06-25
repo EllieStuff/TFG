@@ -8,7 +8,7 @@ public class FirstStrike_PassiveSkill : PassiveSkill_Base
     {
         skillType = SkillType.FIRST_STRIKE;
         maxLevel = 3;
-        basePrice = 22000;
+        basePrice = 16000;
         priceInc = 10000;
         name = "First Strike";
         //initialDescription = "Increases your damage with every element switch!";

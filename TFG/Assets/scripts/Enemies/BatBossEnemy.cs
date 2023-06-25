@@ -60,6 +60,12 @@ public class BatBossEnemy : BatEnemy
         //    StopCoroutine(Attack_Cor());
         //    StartCoroutine(ChangePhase_Cor());
         //}
+        if (!canAttack)
+        {
+            StopAllCoroutines();
+            ChangeState(States.IDLE);
+            return;
+        }
         if (changingPhase) return;
 
         attackTimer -= Time.deltaTime;
