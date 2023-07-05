@@ -7,8 +7,12 @@ public class Cheats : MonoBehaviour
 {
     LifeSystem playerLife;
     bool infiniteLife = false;
+    bool f7;
+    bool f8;
     [SerializeField] GameObject cardSelectCheat;
     [SerializeField] Transform preBossLocation;
+
+    [SerializeField] Transform enemyRoomsParent;
 
     private WalkMark walkmark;
 
@@ -42,10 +46,33 @@ public class Cheats : MonoBehaviour
             playerLife.CurrLife = playerLife.MaxLife;
         }
 
-        if (Input.GetKeyDown(KeyCode.F7))
+        if (!f7 && Input.GetKeyDown(KeyCode.F7))
         {
             playerLife.transform.position = new Vector3(preBossLocation.transform.position.x, playerLife.transform.position.y, preBossLocation.transform.position.z);
             walkmark.ResetMousePos();
+            ResetAllRooms();
+            RoomIdManager.SetRoomIndex(21);
+            f7 = true;
+        }
+
+        if(!f8 && Input.GetKeyDown(KeyCode.F8))
+        {
+            playerLife.transform.position = new Vector3(0, playerLife.transform.position.y, 261.5f);
+            walkmark.ResetMousePos();
+            ResetAllRooms();
+            RoomIdManager.SetRoomIndex(12);
+            f8 = true;
+        }
+    }
+
+    void ResetAllRooms()
+    {
+        foreach(Transform room in enemyRoomsParent)
+        {
+            RoomEnemyManager roomScript = room.GetComponent<RoomEnemyManager>();
+
+            if (roomScript != null)
+                roomScript.DisableRoom();
         }
     }
 

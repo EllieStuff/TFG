@@ -273,4 +273,8 @@ public class RoomEnemyManager : MonoBehaviour
         yield return enemyPointer.Appear_Cor();
     }
 
+    public void DisableRoom()
+    {
+        roomActive = false;
+    }
 }

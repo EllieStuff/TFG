@@ -42,4 +42,10 @@ public class RoomIdManager : MonoBehaviour
         roomText.text = ROOM_TEXT + currentRoom.ToString();
     }
 
+    public static void SetRoomIndex(int _index)
+    {
+        currentRoom = _index;
+        roomText.text = ROOM_TEXT + currentRoom.ToString();
+    }
+
 }
