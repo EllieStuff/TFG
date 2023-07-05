@@ -80,7 +80,7 @@ public class OnboardingController : MonoBehaviour
         //ratEnemy.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePosition;  //Desfreeze al raton
 
         fourthTextAUTO.enabled = true;
-        yield return new WaitForSecondsRealtime(4.5f);
+        yield return new WaitForSecondsRealtime(5.5f);
         fourthTextAUTO.enabled = false;
         fourthTextAUTO.gameObject.SetActive(false);
         fifthTextAUTO.enabled = true;
