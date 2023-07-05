@@ -85,6 +85,11 @@ public class AudioManager : MonoBehaviour
         playMusicInstance.start();
     }
 
+    public void StopMusic(EventInstance playMusicInstance)
+    {
+        playMusicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
     //set labeled parameter on FMOD
     public void SetFMODLabeledParameter(string parameterName, string parameterValue, EventInstance parameterInstance)
     {
