@@ -27,11 +27,13 @@ public class BossCinematicManager : MonoBehaviour
 
     IEnumerator BossAnimation_Cor(PlayerAttack _player)
     {
+        AudioManager.instance.StopMusic(AudioManager.instance.playMusicInstance);
         _player.canAttack = false;
         bossScript.canAttack = false;
         fader.gameObject.SetActive(true);
 
         yield return LerpImageColor_Cor(fader, Color.clear, Color.black);
+        AudioManager.instance.PlayMusic(FMODEvents.instance.bossMusic);
         animCam.SetActive(true);
         originalCam.SetActive(false);
         GameObject playerModel = _player.transform.Find("Modelo Raton").gameObject;
